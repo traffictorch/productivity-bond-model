@@ -1,0 +1,6 @@
+bond_type,expected_cost,cost_volatility,distress_prob,welfare,effective_yield,price
+conventional,0.4521,0.0892,0.1832,0.8954,0.0400,0.9987
+inflation_linked,0.4387,0.0851,0.1715,0.8645,0.0385,0.9923
+gdp_linked,0.4213,0.0784,0.1563,0.8264,0.0362,0.9851
+productivity,0.4056,0.0712,0.1421,0.7889,0.0348,0.9764
+hybrid,0.3987,0.0689,0.1356,0.7712,0.0339,0.9718
