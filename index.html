@@ -19,11 +19,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&display=swap" rel="stylesheet" />
   <link rel="preconnect" href="https://cdn.plot.ly" />
 
-  <!-- PWA Manifest (Already in your code) -->
+  <!-- PWA Manifest -->
   <link rel="manifest" href="/manifest.json" />
 
+  <!-- Custom SVG Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%236366f1'/%3E%3Cpath d='M20 70 L40 50 L60 60 L80 30' stroke='%23ffffff' stroke-width='8' fill='none' stroke-linecap='round' stroke-linejoin='round' /%3E%3C/svg%3E" />
+
   <!-- ============================================================
-  SCHEMA.ORG — Full Structured Data (CreativeWork + DefinedTermSet + HowTo)
+  SCHEMA.ORG — Full Structured Data
   ============================================================ -->
   <script type="application/ld+json">
     {
@@ -103,7 +106,7 @@
 
   <style>
     /* ============================================================
-               RESET & BASE (kept from previous)
+               RESET & BASE
                ============================================================ */
     * {
       margin: 0;
@@ -315,6 +318,21 @@
     .btn-success:hover:not(:disabled) {
       background: #34d399;
     }
+    .share-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #eef2f8;
+      padding: 0.5rem 1.5rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .share-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: scale(1.02);
+    }
 
     /* ============================================================
                SECTIONS SPACING
@@ -432,62 +450,25 @@
     }
 
     /* ============================================================
-               QUICK REFERENCE SIDEBAR (desktop)
+               QUICK REFERENCE ACCORDION (Mobile friendly replacement for sidebar)
                ============================================================ */
-    .page-wrapper {
-      display: flex;
-      gap: 2rem;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
-    .main-content {
-      flex: 1;
-      min-width: 0;
-    }
-    .sidebar {
-      display: none;
-      flex: 0 0 260px;
-      position: sticky;
-      top: 80px;
-      align-self: flex-start;
-      max-height: calc(100vh - 100px);
-      overflow-y: auto;
-      padding: 1.5rem 1rem;
-      background: rgba(12, 15, 25, 0.6);
-      backdrop-filter: blur(12px);
-      border-radius: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      font-size: 0.85rem;
-    }
-    .sidebar h4 {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      opacity: 0.4;
-      margin-bottom: 0.5rem;
-    }
-    .sidebar .param {
+    .param-row {
       display: flex;
       justify-content: space-between;
-      padding: 0.3rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      padding: 0.4rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 0.9rem;
     }
-    .sidebar .param .sym {
+    .param-row .sym {
       font-family: monospace;
       color: #a5b4fc;
     }
-    .sidebar .param .val {
+    .param-row .val {
       opacity: 0.6;
-    }
-    @media (min-width: 1100px) {
-      .sidebar {
-        display: block;
-      }
     }
 
     /* ============================================================
-               REST: Simulator, Tables, etc. (unchanged from previous)
+               REST: Simulator, Tables, etc.
                ============================================================ */
     .sim-grid {
       display: grid;
@@ -985,9 +966,6 @@
       .sticky-nav {
         display: none !important;
       }
-      .sidebar {
-        display: none !important;
-      }
     }
 
     @media (max-width: 640px) {
@@ -1027,27 +1005,24 @@
     }
 
     /* ============================================================
-               NEW: PWA INSTALL BUTTON & IOS MODAL (Glass Style)
+               PWA INSTALL BUTTON & IOS MODAL
                ============================================================ */
     .pwa-install-btn {
       position: fixed;
       bottom: 2rem;
       right: 2rem;
       z-index: 9999;
-      display: flex;
+      display: none; /* Hidden initially, appears after 5s delay */
       align-items: center;
       gap: 12px;
       padding: 14px 28px;
-      /* Glassmorphism background matching screenshot */
       background: rgba(215, 255, 210, 0.35);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      /* Border and Pill shape */
       border: 2px solid rgba(230, 176, 137, 0.8);
       border-radius: 999px;
-      /* Text styling */
-      color: #3063d4;
-      font-weight: 700;
+      color: #ffffff; /* WHITE TEXT */
+      font-weight: 600;
       font-size: 20px;
       letter-spacing: -0.5px;
       cursor: pointer;
@@ -1163,7 +1138,7 @@
     <a href="#citation">Cite</a>
   </nav>
 
-  <!-- ====== PAGE WRAPPER (for sidebar) ====== -->
+  <!-- ====== PAGE WRAPPER ====== -->
   <div class="page-wrapper">
     <div class="main-content">
 
@@ -1176,9 +1151,48 @@
           <p style="font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:300; opacity:0.7; max-width:640px; margin:1rem 0 2rem;">
             A sovereign debt instrument for a finite planet — formal definition, variables, and live simulation.
           </p>
-          <div style="display:flex; flex-wrap:wrap; gap:1rem;">
+          <div style="display:flex; flex-wrap:wrap; gap:1rem; align-items:center;">
             <a href="#simulator" class="btn-primary">🚀 Run Live Simulation</a>
             <a href="#citation" class="btn-secondary">📖 Cite This Model</a>
+            <button class="share-btn" style="margin-left: 0.5rem;">📤 Share</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== MOBILE-FRIENDLY QUICK REFERENCE ACCORDION ====== -->
+      <section class="container section-spacing-sm" style="padding-top:0;">
+        <div class="glass-card quick-ref">
+          <div class="accordion-toggle open" onclick="toggleAccordion(this)">
+            <span style="font-weight:700; font-size:1.1rem;">📖 Quick Reference</span>
+            <span class="arrow">▼</span>
+          </div>
+          <div class="accordion-content open">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem;">
+              <div>
+                <h4 style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; opacity:0.4; margin-bottom:0.5rem;">Model Parameters</h4>
+                <div class="param-row"><span class="sym">θ_AI</span><span class="val">0.05–0.55</span></div>
+                <div class="param-row"><span class="sym">α_N</span><span class="val">0.30–0.90</span></div>
+                <div class="param-row"><span class="sym">C</span><span class="val">2–6%</span></div>
+                <div class="param-row"><span class="sym">F</span><span class="val">0%</span></div>
+              </div>
+              <div>
+                <h4 style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; opacity:0.4; margin-bottom:0.5rem;">Key Equations</h4>
+                <div style="font-family:monospace; font-size:0.7rem; opacity:0.7; line-height:1.4;">
+                  c = (1+π)(1+min[max(αg_NPI,0%),C])−1
+                </div>
+                <div style="font-family:monospace; font-size:0.65rem; opacity:0.5; margin-top:0.3rem;">
+                  NPI = GDP / (H^0.40 E^0.25 M^0.20 K^0.15)
+                </div>
+                <h4 style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; opacity:0.4; margin-top:1rem;">Results</h4>
+                <div class="param-row"><span class="sym">Cost saving</span><span class="val" style="color:#34d399;">−3.1%</span></div>
+                <div class="param-row"><span class="sym">Distress</span><span class="val" style="color:#f87171;">+77.2pp</span></div>
+                <div class="param-row"><span class="sym">Optimal share</span><span class="val">30%</span></div>
+                <div class="param-row"><span class="sym">Version</span><span class="val">v1.0.0</span></div>
+              </div>
+            </div>
+            <div style="margin-top:0.5rem; padding-top:0.5rem; border-top:1px solid rgba(255,255,255,0.04);">
+              <a href="#citation" style="color:#818cf8; text-decoration:none; font-size:0.8rem;">📖 Cite this model</a>
+            </div>
           </div>
         </div>
       </section>
@@ -1805,40 +1819,10 @@
 
     </div>
     <!-- end main-content -->
-
-    <!-- ====== SIDEBAR (Quick Reference) ====== -->
-    <aside class="sidebar no-print">
-      <h4>Model Parameters</h4>
-      <div class="param"><span class="sym">θ_AI</span><span class="val">0.05–0.55</span></div>
-      <div class="param"><span class="sym">α_N</span><span class="val">0.30–0.90</span></div>
-      <div class="param"><span class="sym">C</span><span class="val">2–6%</span></div>
-      <div class="param"><span class="sym">F</span><span class="val">0%</span></div>
-
-      <h4 style="margin-top:1.5rem;">Key Equations</h4>
-      <div style="font-family:monospace; font-size:0.7rem; opacity:0.7; line-height:1.4;">
-        c = (1+π)(1+min[max(αg_NPI,0%),C])−1
-      </div>
-      <div style="font-family:monospace; font-size:0.65rem; opacity:0.5; margin-top:0.3rem;">
-        NPI = GDP / (H^0.40 E^0.25 M^0.20 K^0.15)
-      </div>
-
-      <h4 style="margin-top:1.5rem;">Results</h4>
-      <div class="param"><span class="sym">Cost saving</span><span class="val" style="color:#34d399;">−3.1%</span></div>
-      <div class="param"><span class="sym">Distress</span><span class="val" style="color:#f87171;">+77.2pp</span></div>
-      <div class="param"><span class="sym">Optimal share</span><span class="val">30%</span></div>
-
-      <h4 style="margin-top:1.5rem;">Version</h4>
-      <div class="param"><span class="sym">v1.0.0</span><span class="val">2026-08-13</span></div>
-
-      <div style="margin-top:1.5rem; border-top:1px solid rgba(255,255,255,0.04); padding-top:1rem;">
-        <a href="#citation" style="color:#818cf8; text-decoration:none; font-size:0.8rem;">📖 Cite this model</a>
-      </div>
-    </aside>
-
   </div>
   <!-- end page-wrapper -->
 
-  <!-- ====== NEW: PWA INSTALL BUTTON & IOS MODAL (HTML) ====== -->
+  <!-- ====== PWA INSTALL BUTTON & IOS MODAL ====== -->
   <button id="pwaInstallBtn" class="pwa-install-btn">
     <span class="icon">📱</span>
     <span>Install Apps</span>
@@ -1866,13 +1850,13 @@
   <!-- ====== FOOTER ====== -->
   <footer class="footer">
     <div class="container">
-      <p>© 2026 Ylia Callan · <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> · Version 1.0.0</p>
+      <p>© 2026 Ylia Callan · <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> · Version 1.0.0 · <button class="share-btn" style="background:transparent; border:none; color:#818cf8; padding:0; font-size:0.85rem; cursor:pointer;">📤 Share</button></p>
       <p style="font-size:0.7rem; margin-top:0.3rem;">Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI · <span id="last-updated"></span></p>
     </div>
   </footer>
 
   <!-- ============================================================
-  JAVASCRIPT — Full Monty (Simulator + Accordion + Presets + Plotly + PWA)
+  JAVASCRIPT — Full Monty
   ============================================================ -->
   <script>
     (function() {
@@ -2232,12 +2216,43 @@
   </script>
 
   <!-- ============================================================
-  NEW: PWA INSTALL LOGIC (Browsers + iOS Fallback)
+  PWA INSTALL LOGIC & NATIVE SHARING
   ============================================================ -->
   <script>
     (function() {
       'use strict';
 
+      // ---------- NATIVE SHARING (Works on iPhone, Android, Chrome, falls back to Copy) ----------
+      function sharePage() {
+        const url = window.location.href;
+        const title = document.title;
+        const text = 'Check out The Productivity Bond Model';
+
+        if (navigator.share) {
+          navigator.share({
+            title: title,
+            text: text,
+            url: url
+          }).catch((err) => {
+            if (err.name !== 'AbortError') console.error('Share failed:', err);
+          });
+        } else if (navigator.clipboard) {
+          navigator.clipboard.writeText(url).then(() => {
+            alert('Link copied to clipboard!');
+          }).catch(() => {
+            prompt("Copy this link manually:", url);
+          });
+        } else {
+          prompt("Copy this link manually:", url);
+        }
+      }
+
+      // Attach share events to all buttons with class 'share-btn'
+      document.querySelectorAll('.share-btn').forEach(btn => {
+        btn.addEventListener('click', sharePage);
+      });
+
+      // ---------- PWA INSTALL (5s delay + White text) ----------
       const installBtn = document.getElementById('pwaInstallBtn');
       const iosOverlay = document.getElementById('pwaIosOverlay');
       const closeIosBtn = document.getElementById('pwaCloseIosModal');
@@ -2247,41 +2262,39 @@
       window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
-        installBtn.style.display = 'flex'; // Ensure button is visible
+        // Triggered after 5s below, just store the event.
       });
 
-      // 2. Button Click Handler
+      // 2. Show button after 5 seconds
+      setTimeout(() => {
+        installBtn.style.display = 'flex';
+      }, 5000);
+
+      // 3. Button Click Handler
       installBtn.addEventListener('click', async () => {
-        // Case A: Native prompt available (Chrome Android/Desktop, Edge)
         if (deferredPrompt) {
           deferredPrompt.prompt();
           const { outcome } = await deferredPrompt.userChoice;
           console.log(`User responded to PWA install: ${outcome}`);
           deferredPrompt = null;
-        } 
-        // Case B: iOS / Safari (detected via User Agent)
-        else if (/iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase())) {
+        } else if (/iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase())) {
           iosOverlay.style.display = 'flex';
-        } 
-        // Case C: Fallback for unsupported browsers
-        else {
+        } else {
           alert("To install this app, look for 'Install' or 'Add to Home Screen' in your browser's menu.");
         }
       });
 
-      // 3. Close iOS Modal
+      // 4. Close iOS Modal
       closeIosBtn.addEventListener('click', () => {
         iosOverlay.style.display = 'none';
       });
 
-      // Close modal if clicking outside the content
       iosOverlay.addEventListener('click', (e) => {
         if (e.target === e.currentTarget) {
           iosOverlay.style.display = 'none';
         }
       });
 
-      console.log('PWA Install logic initialized.');
     })();
   </script>
 
