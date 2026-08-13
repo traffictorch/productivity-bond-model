@@ -36,7 +36,7 @@ class ModelConfig:
     tau: float = 0.32
     theta_ai: float = 0.30
     phi: float = 0.70
-    g0_over_y0: float = 0.30
+    g0_over_y0: float = 0.36  # <-- Critical: 2% deficit
     d0_over_y0: float = 0.60
     y0: float = 100.0
 
@@ -56,9 +56,9 @@ class ModelConfig:
     alpha_g: float = 0.70
     alpha_f: float = 0.30
     floor: float = 0.00
-    cap: float = 0.05
+    cap: float = 0.04
 
-    # Pricing
+    # Pricing (risk-adjusted discounting)
     r_f: float = 0.02
     gamma_risk: float = 0.50
     lambda_ai_risk: float = 0.10
@@ -66,7 +66,7 @@ class ModelConfig:
     # Government welfare
     kappa: float = 2.0
     eta: float = 5.0
-    distress_threshold: float = 0.15
+    distress_threshold: float = 0.15  # <-- Back to 15%
 
     # Portfolio optimisation
     share_grid: Tuple[float, ...] = (

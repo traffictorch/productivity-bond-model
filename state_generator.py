@@ -107,14 +107,19 @@ def simulate_paths(cfg: Optional[ModelConfig] = None) -> EconomicPaths:
         r[:, t] = cfg.tau * y[:, t] + cfg.theta_ai * ai_gain
         g_r[:, t] = np.where(r_prev > 1e-8, (r[:, t] / r_prev) - 1.0, 0.0)
 
-        auto_stab = -0.10 * (g_y[:, t] - cfg.mu_y) * y[:, t]
+        # Spending: baseline + automatic stabilizer (countercyclical)
+        # In bad years (g_y < mu_y), this increases spending
+        auto_stab = -0.05 * (g_y[:, t] - cfg.mu_y) * y[:, t]
         g_spend[:, t] = (
             cfg.g0_over_y0 * y[:, t] * (1.0 + 0.3 * (g_y[:, t] - cfg.mu_y))
             + auto_stab
         )
         g_spend[:, t] = np.maximum(g_spend[:, t], 0.10 * y[:, t])
 
+        # Primary balance = revenue - spending
         primary_balance[:, t] = r[:, t] - g_spend[:, t]
+
+        # Base debt path using conventional coupon (for reference only)
         d[:, t] = d_prev * (1.0 + i_neutral) - primary_balance[:, t]
         d[:, t] = np.maximum(d[:, t], 0.0)
 
@@ -126,7 +131,15 @@ def simulate_paths(cfg: Optional[ModelConfig] = None) -> EconomicPaths:
         r_prev = r[:, t]
 
     return EconomicPaths(
-        g_y=g_y, g_n=g_n, pi=pi, y=y, r=r, g=g_spend, d=d,
-        ai_shock=ai_shock, ai_jump=ai_jump, g_r=g_r,
+        g_y=g_y,
+        g_n=g_n,
+        pi=pi,
+        y=y,
+        r=r,
+        g=g_spend,
+        d=d,
+        ai_shock=ai_shock,
+        ai_jump=ai_jump,
+        g_r=g_r,
         primary_balance=primary_balance,
     )
