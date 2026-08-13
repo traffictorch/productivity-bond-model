@@ -12,13 +12,13 @@
   <meta property="og:description" content="Interactive simulation, results tables, and sensitivity charts for the AI-driven Productivity Bond." />
   <meta property="og:type" content="website" />
 
-  <!-- Preconnect for Fonts & Plotly -->
+  <!-- Preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&display=swap" rel="stylesheet" />
   <link rel="preconnect" href="https://cdn.plot.ly" />
 
-  <!-- JSON-LD Structured Data -->
+  <!-- JSON‑LD -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -113,6 +113,35 @@
     }
 
     /* ============================================================
+               STICKY NAV
+               ============================================================ */
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(5, 6, 10, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 0.6rem 0;
+      display: flex;
+      justify-content: center;
+      gap: 1.8rem;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    .sticky-nav a {
+      color: #a5b4fc;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+    .sticky-nav a:hover {
+      color: #eef2f8;
+    }
+
+    /* ============================================================
                CONTAINER & CARDS
                ============================================================ */
     .container {
@@ -193,7 +222,7 @@
       font-weight: 500;
       padding: 0.8rem 2.2rem;
       border-radius: 60px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       text-decoration: none;
       transition: 0.2s;
       cursor: pointer;
@@ -211,7 +240,17 @@
     }
 
     /* ============================================================
-               SIMULATOR DASHBOARD (unchanged)
+               SECTIONS SPACING
+               ============================================================ */
+    .section-spacing {
+      padding: 6rem 0;
+    }
+    .section-spacing-sm {
+      padding: 3rem 0;
+    }
+
+    /* ============================================================
+               SIMULATOR
                ============================================================ */
     .sim-grid {
       display: grid;
@@ -371,6 +410,37 @@
     }
 
     /* ============================================================
+               HEADLINE METRICS
+               ============================================================ */
+    .headline-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0 0.5rem;
+    }
+    .headline-metrics .metric-card {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 1.2rem;
+      padding: 1rem 1.2rem;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .headline-metrics .metric-card .big-number {
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .headline-metrics .metric-card .desc {
+      font-size: 0.8rem;
+      opacity: 0.6;
+      margin-top: 0.1rem;
+    }
+    .headline-metrics .metric-card .tooltip-trigger {
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+      cursor: help;
+    }
+
+    /* ============================================================
                TABLES
                ============================================================ */
     .table-wrap {
@@ -395,39 +465,47 @@
     table.data-table td {
       padding: 0.5rem 0.8rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      text-align: right;
+    }
+    table.data-table td:first-child {
+      text-align: left;
+      font-weight: 500;
     }
     table.data-table tr:hover td {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.03);
     }
     table.data-table .highlight-row td {
-      background: rgba(167, 139, 250, 0.08);
+      background: rgba(167, 139, 250, 0.12);
       border-left: 3px solid #a78bfa;
     }
+    table.data-table .highlight-row td:first-child {
+      border-left: none;
+    }
 
-    /* ============================================================
-               PLOTLY CHARTS
-               ============================================================ */
-    .chart-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin: 1.5rem 0;
+    .accordion-toggle {
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     }
-    @media (max-width: 800px) {
-      .chart-grid {
-        grid-template-columns: 1fr;
-      }
+    .accordion-toggle .arrow {
+      transition: transform 0.2s;
     }
-    .plot-container {
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 1.5rem;
-      padding: 0.5rem;
+    .accordion-toggle.open .arrow {
+      transform: rotate(180deg);
     }
-    .plot-container .plot-title {
-      font-size: 0.9rem;
-      font-weight: 600;
-      padding: 0.5rem 1rem 0;
-      opacity: 0.7;
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+      padding: 0 0.2rem;
+    }
+    .accordion-content.open {
+      max-height: 800px;
+      padding: 0.8rem 0.2rem 0;
     }
 
     /* ============================================================
@@ -506,6 +584,32 @@
     }
 
     /* ============================================================
+               PLOTLY CHARTS
+               ============================================================ */
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    @media (max-width: 800px) {
+      .chart-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .plot-container {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 1.5rem;
+      padding: 0.5rem;
+    }
+    .plot-container .plot-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.5rem 1rem 0;
+      opacity: 0.7;
+    }
+
+    /* ============================================================
                CODE BLOCK
                ============================================================ */
     .code-block {
@@ -564,7 +668,58 @@
     }
 
     /* ============================================================
-               PRINT STYLES
+               FOOTER
+               ============================================================ */
+    .footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 2rem 0;
+      text-align: center;
+      font-size: 0.85rem;
+      opacity: 0.5;
+    }
+    .footer a {
+      color: #818cf8;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* ============================================================
+               TOOLTIP
+               ============================================================ */
+    .tooltip-trigger {
+      position: relative;
+      cursor: help;
+    }
+    .tooltip-trigger .tooltip-text {
+      visibility: hidden;
+      width: 260px;
+      background: #1a1f2e;
+      color: #eef2f8;
+      text-align: left;
+      padding: 0.8rem 1rem;
+      border-radius: 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      position: absolute;
+      z-index: 10;
+      bottom: 130%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.2s;
+      font-weight: 400;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      backdrop-filter: blur(4px);
+    }
+    .tooltip-trigger:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* ============================================================
+               PRINT
                ============================================================ */
     @media print {
       body {
@@ -600,9 +755,6 @@
         color: #111 !important;
         border-color: #ccc !important;
       }
-      #policy-brief-section {
-        page-break-before: always;
-      }
       .btn-primary,
       .btn-secondary,
       .btn-preset {
@@ -619,6 +771,9 @@
       .plot-container {
         background: #fff !important;
         border: 1px solid #ddd !important;
+      }
+      .sticky-nav {
+        display: none !important;
       }
     }
 
@@ -648,6 +803,17 @@
       .chart-grid {
         grid-template-columns: 1fr;
       }
+      .headline-metrics {
+        grid-template-columns: 1fr;
+      }
+      .sticky-nav {
+        gap: 0.8rem;
+        font-size: 0.7rem;
+        padding: 0.4rem 0;
+      }
+      .sticky-nav a {
+        padding: 0.2rem 0.4rem;
+      }
     }
   </style>
 </head>
@@ -659,8 +825,20 @@
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
 
+  <!-- ====== STICKY NAV ====== -->
+  <nav class="sticky-nav no-print">
+    <a href="#problem">Problem</a>
+    <a href="#solution">Solution</a>
+    <a href="#simulator">Simulator</a>
+    <a href="#results-data">Results</a>
+    <a href="#sensitivity">Sensitivity</a>
+    <a href="#adoption">Scenarios</a>
+    <a href="#reproduce">Reproduce</a>
+    <a href="#policy-brief-section">Brief</a>
+  </nav>
+
   <!-- ====== HERO ====== -->
-  <section class="container hero" style="min-height:90vh; display:flex; align-items:center; padding:4rem 0;">
+  <section class="container hero" style="min-height:90vh; display:flex; align-items:center; padding:4rem 0 2rem;">
     <div>
       <span class="badge-glow">🤖 AI-Powered Finance</span>
       <h1 class="text-gradient" style="font-size:clamp(3rem,12vw,6rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">The Infinite<br />Debt Problem</h1>
@@ -674,24 +852,67 @@
     </div>
   </section>
 
-  <!-- ====== AI PARADOX ====== -->
-  <section class="container" style="padding-bottom:2rem;">
+  <!-- ====== PROBLEM STATEMENT ====== -->
+  <section id="problem" class="container section-spacing-sm" style="padding-top:0;">
     <div class="glass-card" style="text-align:center;">
-      <span class="badge-glow" style="margin-bottom:0.5rem;">The AI Paradox</span>
-      <h2 style="font-size:2rem; font-weight:700; max-width:700px; margin:0 auto 1rem;">
-        The technology that could <span style="color:#34d399;">save</span> the system<br />
-        or <span style="color:#f87171;">destroy</span> it.
+      <span class="badge-glow" style="margin-bottom:0.8rem;">The Contradiction</span>
+      <h2 style="font-size:2.2rem; font-weight:700; max-width:800px; margin:0 auto 1rem;">
+        Two lines. Two opposite stories.
       </h2>
-      <p style="opacity:0.7; max-width:700px; margin:0 auto;">
-        AI can solve the productivity wall — but if the gains are captured by a few, it breaks the circular flow.
-        The <strong style="color:#a5b4fc;">θ_AI</strong> slider below determines whether the Productivity Bond
-        succeeds or fails.
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; max-width:700px; margin:0 auto;">
+        <div style="background:rgba(99,102,241,0.08); border-radius:1.5rem; padding:1.5rem;">
+          <div style="font-size:3rem; font-weight:800; color:#818cf8;">$300T+</div>
+          <div style="font-size:0.9rem; opacity:0.7;">Global debt (exponential)</div>
+        </div>
+        <div style="background:rgba(16,185,129,0.08); border-radius:1.5rem; padding:1.5rem;">
+          <div style="font-size:3rem; font-weight:800; color:#34d399;">📉</div>
+          <div style="font-size:0.9rem; opacity:0.7;">Resource extraction (flattening)</div>
+        </div>
+      </div>
+      <p style="opacity:0.8; max-width:700px; margin:1.5rem auto 0; font-size:1.1rem;">
+        We have built a financial system that makes promises about an <strong>unlimited future</strong> on a planet with <strong>limits</strong>.
+        This is the <span style="color:#a78bfa; font-weight:600;">infinite debt problem</span>.
       </p>
     </div>
   </section>
 
+  <!-- ====== SOLUTION ====== -->
+  <section id="solution" class="container section-spacing-sm" style="padding-top:0;">
+    <div class="glass-card" style="text-align:center;">
+      <span class="badge-glow" style="margin-bottom:0.8rem;">The Solution</span>
+      <h2 style="font-size:2rem; font-weight:700; max-width:700px; margin:0 auto 1rem;">
+        The Productivity Bond
+      </h2>
+      <p style="opacity:0.8; max-width:700px; margin:0 auto 1.5rem;">
+        A sovereign debt instrument whose return is linked to <strong>measurable productivity gains</strong> –
+        not fixed compounding.
+      </p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:1rem; max-width:800px; margin:0 auto;">
+        <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem; border-left:3px solid #818cf8;">
+          <div style="font-weight:700;">🛡️ Floor</div>
+          <div style="font-size:0.9rem; opacity:0.7;">0% real return</div>
+        </div>
+        <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem; border-left:3px solid #a78bfa;">
+          <div style="font-weight:700;">📈 Cap</div>
+          <div style="font-size:0.9rem; opacity:0.7;">5% real return</div>
+        </div>
+        <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem; border-left:3px solid #34d399;">
+          <div style="font-weight:700;">📊 Participation</div>
+          <div style="font-size:0.9rem; opacity:0.7;">70% of NPI growth</div>
+        </div>
+        <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem; border-left:3px solid #fbbf24;">
+          <div style="font-weight:700;">💹 Inflation</div>
+          <div style="font-size:0.9rem; opacity:0.7;">CPI‑linked</div>
+        </div>
+      </div>
+      <div style="margin-top:1.5rem;">
+        <a href="#simulator" class="btn-primary" style="padding:0.6rem 2rem; font-size:1rem;">Try the Live Simulator</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ====== LIVE SIMULATOR ====== -->
-  <section id="simulator" class="container" style="padding:1rem 0 3rem;">
+  <section id="simulator" class="container section-spacing" style="padding-top:0;">
     <div class="glass-card" style="border-color:rgba(99,102,241,0.2);">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:1.5rem;">
         <h2 style="font-size:1.8rem; font-weight:700;">⚡ Live Monte Carlo Simulator</h2>
@@ -761,14 +982,28 @@
               <div class="label">Productivity Distress</div>
             </div>
           </div>
-          <div style="margin-top:1rem; text-align:center; background:rgba(0,0,0,0.2); border-radius:1rem; padding:0.5rem;">
-            <span style="font-weight:700;" id="cost-diff">Cost Saving: -3.1%</span>
-            <span style="opacity:0.4; margin-left:1rem;">|</span>
-            <span style="font-weight:700;" id="distress-diff">Distress: +77.2pp</span>
+          <!-- Headline metrics -->
+          <div class="headline-metrics">
+            <div class="metric-card">
+              <div class="big-number" style="color:#34d399;" id="headline-cost">−3.1%</div>
+              <div class="desc">Expected cost vs conventional</div>
+            </div>
+            <div class="metric-card">
+              <div class="big-number" style="color:#f87171;" id="headline-distress">+77.2pp</div>
+              <div class="desc">
+                <span class="tooltip-trigger">
+                  Distress increase (under current calibration)
+                  <span class="tooltip-text">
+                    The feedback loop: higher coupons in good years increase debt service → more borrowing → larger debt stock → higher future debt service. This can be fixed with a principal‑adjustment mechanism.
+                  </span>
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
+      <!-- Bar Chart -->
       <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.04);">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
           <span style="font-weight:600; font-size:0.9rem;">Expected Cost Comparison</span>
@@ -803,17 +1038,20 @@
             </div>
           </div>
         </div>
+        <div style="font-size:0.8rem; opacity:0.4; margin-top:0.3rem; text-align:center;">
+          10,000 Monte Carlo paths · 10-year horizon · seed 42 · <a href="#reproduce" style="color:#818cf8; text-decoration:none;">full code & data</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ====== RESULTS TABLES + CHARTS ====== -->
-  <section id="results-data" class="container" style="padding:1rem 0 3rem;">
+  <!-- ====== RESULTS TABLES ====== -->
+  <section id="results-data" class="container section-spacing" style="padding-top:0;">
     <div class="glass-card">
-      <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">📊 Simulation Results & Sensitivity</h2>
+      <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">📊 Simulation Results</h2>
       <p style="opacity:0.7; margin-bottom:1.5rem;">Data from Appendix C – 10,000 paths, 10‑year horizon.</p>
 
-      <!-- Table 1: Bond Comparison -->
+      <!-- Bond Comparison (always visible) -->
       <h3 style="font-size:1.1rem; font-weight:600; margin:1.5rem 0 0.5rem;">Bond Type Comparison</h3>
       <div class="table-wrap">
         <table class="data-table">
@@ -830,26 +1068,38 @@
         </table>
       </div>
 
-      <!-- Table 2: Portfolio Optimisation -->
-      <h3 style="font-size:1.1rem; font-weight:600; margin:1.5rem 0 0.5rem;">Portfolio Optimisation (Productivity Share)</h3>
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead><tr><th>Share</th><th>Expected Cost</th><th>Distress Prob.</th><th>Welfare</th></tr></thead>
-          <tbody>
-            <tr><td>0% (Conv. only)</td><td>0.5154</td><td>11.05%</td><td>1.0687</td></tr>
-            <tr><td>10%</td><td>0.5139</td><td>19.20%</td><td>1.437</td></tr>
-            <tr><td>20%</td><td>0.5112</td><td>35.40%</td><td>2.320</td></tr>
-            <tr class="highlight-row"><td><strong>30%</strong></td><td><strong>0.5088</strong></td><td><strong>52.10%</strong></td><td><strong>3.451</strong></td></tr>
-            <tr><td>40%</td><td>0.5061</td><td>67.80%</td><td>4.501</td></tr>
-            <tr><td>50%</td><td>0.5035</td><td>76.50%</td><td>5.112</td></tr>
-            <tr><td>100%</td><td>0.4994</td><td>88.17%</td><td>4.9134</td></tr>
-          </tbody>
-        </table>
-        <div style="font-size:0.8rem; opacity:0.5; margin-top:0.3rem;">Optimal portfolio: <strong>30%</strong> Productivity Bonds</div>
+      <!-- Portfolio Optimisation (accordion, default collapsed) -->
+      <div style="margin-top:2rem;">
+        <div class="accordion-toggle" onclick="toggleAccordion(this)">
+          <span style="font-weight:600; font-size:1rem;">📈 Portfolio Optimisation</span>
+          <span class="arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Share</th><th>Expected Cost</th><th>Distress Prob.</th><th>Welfare</th></tr></thead>
+              <tbody>
+                <tr><td>0% (Conv. only)</td><td>0.5154</td><td>11.05%</td><td>1.0687</td></tr>
+                <tr><td>10%</td><td>0.5139</td><td>19.20%</td><td>1.437</td></tr>
+                <tr><td>20%</td><td>0.5112</td><td>35.40%</td><td>2.320</td></tr>
+                <tr class="highlight-row"><td><strong>30%</strong></td><td><strong>0.5088</strong></td><td><strong>52.10%</strong></td><td><strong>3.451</strong></td></tr>
+                <tr><td>40%</td><td>0.5061</td><td>67.80%</td><td>4.501</td></tr>
+                <tr><td>50%</td><td>0.5035</td><td>76.50%</td><td>5.112</td></tr>
+                <tr><td>100%</td><td>0.4994</td><td>88.17%</td><td>4.9134</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="font-size:0.8rem; opacity:0.5; margin-top:0.3rem;">Optimal portfolio: <strong>30%</strong> Productivity Bonds</div>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <!-- Interactive Plotly Charts -->
-      <h3 style="font-size:1.1rem; font-weight:600; margin:1.5rem 0 0.5rem;">Sensitivity Analysis</h3>
+  <!-- ====== SENSITIVITY CHARTS ====== -->
+  <section id="sensitivity" class="container section-spacing" style="padding-top:0;">
+    <div class="glass-card">
+      <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">🎯 Sensitivity Analysis</h2>
+      <p style="opacity:0.7; margin-bottom:1.5rem;">How key parameters affect outcomes.</p>
       <div class="chart-grid">
         <div class="plot-container">
           <div class="plot-title">Cost vs θ_AI (Gov. capture of AI gains)</div>
@@ -867,7 +1117,7 @@
   </section>
 
   <!-- ====== ADOPTION SCENARIOS ====== -->
-  <section id="adoption" class="container" style="padding:1rem 0 3rem;">
+  <section id="adoption" class="container section-spacing" style="padding-top:0;">
     <div class="glass-card">
       <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">🌍 Adoption Scenarios</h2>
       <p style="opacity:0.7; margin-bottom:1.5rem;">
@@ -920,8 +1170,8 @@
     </div>
   </section>
 
-  <!-- ====== HOW TO REPRODUCE ====== -->
-  <section id="reproduce" class="container" style="padding:1rem 0 3rem;">
+  <!-- ====== REPRODUCE ====== -->
+  <section id="reproduce" class="container section-spacing" style="padding-top:0;">
     <div class="glass-card">
       <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">⚙️ How to Reproduce</h2>
       <p style="opacity:0.7; margin-bottom:1rem;">
@@ -942,7 +1192,7 @@
   </section>
 
   <!-- ====== POLICY BRIEF ====== -->
-  <section id="policy-brief-section" class="container" style="padding:1rem 0 3rem;">
+  <section id="policy-brief-section" class="container section-spacing" style="padding-top:0;">
     <div class="glass-card" style="border-color:rgba(16,185,129,0.15);">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:1.5rem;">
         <h2 style="font-size:1.8rem; font-weight:700;">📄 Policy Brief</h2>
@@ -1000,21 +1250,21 @@
   </section>
 
   <!-- ====== FOOTER ====== -->
-  <footer style="border-top:1px solid rgba(255,255,255,0.03); padding:2rem 0; text-align:center; font-size:0.85rem; opacity:0.4;">
+  <footer class="footer">
     <div class="container">
-      <p>© 2026 Ylia Callan · <a href="https://github.com/traffictorch/productivity-bond-model" style="color:#818cf8; text-decoration:none;">GitHub Repository</a></p>
-      <p style="font-size:0.7rem; margin-top:0.3rem;">Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI</p>
+      <p>© 2026 Ylia Callan · <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a></p>
+      <p style="font-size:0.7rem; margin-top:0.3rem;">Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI · <span id="last-updated"></span></p>
     </div>
   </footer>
 
   <!-- ============================================================
-  JAVASCRIPT — SIMULATOR + TABLES + PLOTLY CHARTS + PRESETS
+  JAVASCRIPT — SIMULATOR + ACCORDION + PRESETS + PLOTLY + TOOLTIP
   ============================================================ -->
   <script>
     (function() {
       'use strict';
 
-      // ---------- CANVAS: Neural Network Background ----------
+      // ---------- CANVAS NETWORK ----------
       const canvas = document.getElementById('network-bg');
       const ctx = canvas.getContext('2d');
       let w, h;
@@ -1063,6 +1313,17 @@
       }
       drawNetwork();
 
+      // ---------- ACCORDION TOGGLE ----------
+      window.toggleAccordion = function(el) {
+        const content = el.nextElementSibling;
+        const arrow = el.querySelector('.arrow');
+        if (content) {
+          content.classList.toggle('open');
+          el.classList.toggle('open');
+          if (arrow) arrow.classList.toggle('open');
+        }
+      };
+
       // ---------- SIMULATOR ENGINE ----------
       const thetaSlider = document.getElementById('theta-slider');
       const alphaSlider = document.getElementById('alpha-slider');
@@ -1076,8 +1337,8 @@
       const costProd = document.getElementById('cost-prod');
       const distressConv = document.getElementById('distress-conv');
       const distressProd = document.getElementById('distress-prod');
-      const costDiff = document.getElementById('cost-diff');
-      const distressDiff = document.getElementById('distress-diff');
+      const headlineCost = document.getElementById('headline-cost');
+      const headlineDistress = document.getElementById('headline-distress');
 
       const barConv = document.getElementById('bar-conv');
       const barProd = document.getElementById('bar-prod');
@@ -1206,9 +1467,9 @@
           distressProd.textContent = pDist.toFixed(1) + '%';
 
           const costSave = ((cCost - pCost) / cCost * 100);
-          costDiff.textContent = `Cost Saving: ${costSave.toFixed(1)}%`;
           const distDiff = pDist - cDist;
-          distressDiff.textContent = `Distress: ${distDiff > 0 ? '+' : ''}${distDiff.toFixed(1)}pp`;
+          headlineCost.textContent = costSave.toFixed(1) + '%';
+          headlineDistress.textContent = (distDiff > 0 ? '+' : '') + distDiff.toFixed(1) + 'pp';
 
           const maxCost = 0.55;
           const scale = 140 / maxCost;
@@ -1283,21 +1544,15 @@
         window.print();
       });
 
-      // ---------- PLOTLY CHARTS (Lazy load) ----------
+      // ---------- PLOTLY CHARTS ----------
       function loadPlotlyAndRender() {
-        // Hardcoded data from Appendix C sensitivity tables
-        // Cost vs θ_AI
         const thetaValues = [0.10, 0.20, 0.30, 0.40, 0.50];
-        const costConv = [0.5154, 0.5154, 0.5154, 0.5154, 0.5154]; // fixed
+        const costConv = [0.5154, 0.5154, 0.5154, 0.5154, 0.5154];
         const costProd = [0.5079, 0.5035, 0.4994, 0.4959, 0.4923];
-
-        // Distress vs α_N (for α_N values 0.3, 0.5, 0.7, 0.9, 1.0)
         const alphaValues = [0.30, 0.50, 0.70, 0.90, 1.00];
         const distressAlpha = [82.5, 85.8, 88.17, 89.6, 90.1];
 
-        // Use Plotly if loaded
         if (typeof Plotly !== 'undefined') {
-          // Chart 1: Cost vs θ_AI
           const trace1 = {
             x: thetaValues,
             y: costConv,
@@ -1327,7 +1582,6 @@
           };
           Plotly.newPlot('chart-cost-theta', [trace1, trace2], layout1, { responsive: true });
 
-          // Chart 2: Distress vs α_N
           const trace3 = {
             x: alphaValues,
             y: distressAlpha,
@@ -1347,22 +1601,20 @@
             legend: { orientation: 'h', x: 0, y: 1.05 }
           };
           Plotly.newPlot('chart-distress-alpha', [trace3], layout2, { responsive: true });
-        } else {
-          // Fallback: if Plotly fails, show text
-          document.querySelector('.plot-container').innerHTML += '<p style="text-align:center;opacity:0.5;">Plotly not loaded. Please refresh or check network.</p>';
         }
       }
 
-      // Load Plotly CDN and then render
       const script = document.createElement('script');
       script.src = 'https://cdn.plot.ly/plotly-2.27.1.min.js';
       script.onload = loadPlotlyAndRender;
       script.onerror = function() {
-        // Fallback if CDN fails
         document.querySelector('.plot-container').innerHTML +=
           '<p style="text-align:center;opacity:0.5;">Plotly could not load. Please try again later.</p>';
       };
       document.head.appendChild(script);
+
+      // ---------- FOOTER LAST UPDATED ----------
+      document.getElementById('last-updated').textContent = 'Last simulation: ' + new Date().toLocaleString();
 
     })();
   </script>
