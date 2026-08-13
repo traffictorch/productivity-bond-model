@@ -19,6 +19,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&display=swap" rel="stylesheet" />
   <link rel="preconnect" href="https://cdn.plot.ly" />
 
+  <!-- PWA Manifest (Already in your code) -->
+  <link rel="manifest" href="/manifest.json" />
+
   <!-- ============================================================
   SCHEMA.ORG — Full Structured Data (CreativeWork + DefinedTermSet + HowTo)
   ============================================================ -->
@@ -1022,6 +1025,119 @@
         padding: 0.1rem 0.3rem;
       }
     }
+
+    /* ============================================================
+               NEW: PWA INSTALL BUTTON & IOS MODAL (Glass Style)
+               ============================================================ */
+    .pwa-install-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 28px;
+      /* Glassmorphism background matching screenshot */
+      background: rgba(215, 255, 210, 0.35);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      /* Border and Pill shape */
+      border: 2px solid rgba(230, 176, 137, 0.8);
+      border-radius: 999px;
+      /* Text styling */
+      color: #3063d4;
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: -0.5px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      transition: all 0.2s ease;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    .pwa-install-btn:hover {
+      transform: scale(1.05);
+      background: rgba(215, 255, 210, 0.55);
+    }
+    .pwa-install-btn .icon {
+      font-size: 24px;
+    }
+
+    .pwa-ios-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      backdrop-filter: blur(4px);
+    }
+    .pwa-ios-modal {
+      background: #0f111a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 24px;
+      border-radius: 16px;
+      max-width: 340px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    }
+    .pwa-ios-modal h3 {
+      color: #eef2f8;
+      margin-top: 0;
+    }
+    .pwa-ios-modal p {
+      color: #a5b4fc;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    .pwa-ios-modal .step {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 12px 0;
+      font-size: 14px;
+      color: #eef2f8;
+    }
+    .pwa-ios-modal .step-icon {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 6px 12px;
+      border-radius: 6px;
+    }
+    .pwa-ios-modal .close-btn {
+      margin-top: 16px;
+      padding: 10px 32px;
+      background: #6366f1;
+      color: white;
+      border: none;
+      border-radius: 40px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .pwa-ios-modal .close-btn:hover {
+      background: #818cf8;
+      transform: scale(1.02);
+    }
+
+    @media (max-width: 640px) {
+      .pwa-install-btn {
+        bottom: 1rem;
+        right: 1rem;
+        padding: 10px 18px;
+        font-size: 16px;
+        gap: 8px;
+      }
+      .pwa-install-btn .icon {
+        font-size: 20px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1722,6 +1838,31 @@
   </div>
   <!-- end page-wrapper -->
 
+  <!-- ====== NEW: PWA INSTALL BUTTON & IOS MODAL (HTML) ====== -->
+  <button id="pwaInstallBtn" class="pwa-install-btn">
+    <span class="icon">📱</span>
+    <span>Install Apps</span>
+    <span class="icon">💻</span>
+  </button>
+
+  <div id="pwaIosOverlay" class="pwa-ios-overlay">
+    <div class="pwa-ios-modal">
+      <h3>Install on iPhone</h3>
+      <p>To add this app to your home screen:</p>
+      <div class="step">
+        <span>1.</span>
+        <span class="step-icon">⬆️</span>
+        <span>Tap the <strong>Share</strong> button at the bottom.</span>
+      </div>
+      <div class="step">
+        <span>2.</span>
+        <span class="step-icon">➕</span>
+        <span>Scroll down and tap <strong>"Add to Home Screen"</strong>.</span>
+      </div>
+      <button id="pwaCloseIosModal" class="close-btn">Got it</button>
+    </div>
+  </div>
+
   <!-- ====== FOOTER ====== -->
   <footer class="footer">
     <div class="container">
@@ -1731,7 +1872,7 @@
   </footer>
 
   <!-- ============================================================
-  JAVASCRIPT — Full Monty (Simulator + Accordion + Presets + Plotly)
+  JAVASCRIPT — Full Monty (Simulator + Accordion + Presets + Plotly + PWA)
   ============================================================ -->
   <script>
     (function() {
@@ -2089,5 +2230,60 @@
 
     })();
   </script>
+
+  <!-- ============================================================
+  NEW: PWA INSTALL LOGIC (Browsers + iOS Fallback)
+  ============================================================ -->
+  <script>
+    (function() {
+      'use strict';
+
+      const installBtn = document.getElementById('pwaInstallBtn');
+      const iosOverlay = document.getElementById('pwaIosOverlay');
+      const closeIosBtn = document.getElementById('pwaCloseIosModal');
+      let deferredPrompt = null;
+
+      // 1. Catch the browser's native PWA install prompt
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        installBtn.style.display = 'flex'; // Ensure button is visible
+      });
+
+      // 2. Button Click Handler
+      installBtn.addEventListener('click', async () => {
+        // Case A: Native prompt available (Chrome Android/Desktop, Edge)
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          console.log(`User responded to PWA install: ${outcome}`);
+          deferredPrompt = null;
+        } 
+        // Case B: iOS / Safari (detected via User Agent)
+        else if (/iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase())) {
+          iosOverlay.style.display = 'flex';
+        } 
+        // Case C: Fallback for unsupported browsers
+        else {
+          alert("To install this app, look for 'Install' or 'Add to Home Screen' in your browser's menu.");
+        }
+      });
+
+      // 3. Close iOS Modal
+      closeIosBtn.addEventListener('click', () => {
+        iosOverlay.style.display = 'none';
+      });
+
+      // Close modal if clicking outside the content
+      iosOverlay.addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) {
+          iosOverlay.style.display = 'none';
+        }
+      });
+
+      console.log('PWA Install logic initialized.');
+    })();
+  </script>
+
 </body>
 </html>
