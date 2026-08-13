@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Infinite Debt Problem – Productivity Bond for a Finite Planet</title>
+  <meta name="description" content="A new sovereign debt instrument that replaces perpetual growth with productive prosperity. Read the book, policy brief, and simulation results." />
+  <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/" />
+
+  <!-- Open Graph / Social -->
+  <meta property="og:title" content="The Infinite Debt Problem" />
+  <meta property="og:description" content="How to Replace Perpetual Growth with Productive Prosperity." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://traffictorch.github.io/productivity-bond-model/" />
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet" />
+
+  <!-- JSON‑LD Structured Data (FAQ & Article) for AEO/SEO -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "The Infinite Debt Problem – Productivity Bond",
+      "description": "A sovereign debt instrument whose return is linked to measurable improvements in productivity.",
+      "author": { "@type": "Person", "name": "Ylia Callan" }
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the infinite debt problem?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The gap between exponential global debt growth (over $300 trillion) and finite planetary resources."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a Productivity Bond?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A sovereign debt instrument whose coupon is linked to productivity growth, with inflation protection, a 0% floor, and a 5% cap."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the National Productivity Index (NPI) work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The NPI measures GDP per unit of labour, energy, materials, and capital using a weighted geometric average."
+          }
+        }
+      ]
+    }
+  </script>
+
+  <style>
+    /* ---------- Reset & Base ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #07080d;
+      color: #e8edf5;
+      line-height: 1.6;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    body.light-mode {
+      background: #f4f7fc;
+      color: #1a1f2e;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ---------- Scrollbar ---------- */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #111827;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #3b82f6;
+      border-radius: 10px;
+    }
+    body.light-mode ::-webkit-scrollbar-track {
+      background: #d1d9e6;
+    }
+    body.light-mode ::-webkit-scrollbar-thumb {
+      background: #2563eb;
+    }
+
+    /* ---------- Container ---------- */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ---------- Glass Card ---------- */
+    .card {
+      background: rgba(17, 24, 39, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: 2rem;
+      padding: 2rem 1.8rem;
+      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.6);
+      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    body.light-mode .card {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ---------- Buttons ---------- */
+    .btn-primary {
+      display: inline-block;
+      background: #2563eb;
+      color: #fff;
+      font-weight: 600;
+      padding: 0.8rem 2rem;
+      border-radius: 60px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    }
+    .btn-primary:hover {
+      background: #1d4ed8;
+      transform: scale(1.02);
+    }
+    .btn-secondary {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.08);
+      color: #e8edf5;
+      font-weight: 600;
+      padding: 0.8rem 2rem;
+      border-radius: 60px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    body.light-mode .btn-secondary {
+      background: rgba(0, 0, 0, 0.05);
+      color: #1a1f2e;
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* ---------- Dark Mode Toggle ---------- */
+    #theme-toggle {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      z-index: 999;
+      background: rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 60px;
+      padding: 0.6rem 1rem;
+      color: #e8edf5;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background 0.3s;
+    }
+    body.light-mode #theme-toggle {
+      background: rgba(255, 255, 255, 0.8);
+      border-color: rgba(0, 0, 0, 0.08);
+      color: #1a1f2e;
+    }
+    #theme-toggle svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* ---------- SVG Chart (The Problem) ---------- */
+    .chart-svg {
+      width: 100%;
+      max-height: 220px;
+      border-radius: 1rem;
+    }
+
+    /* ---------- CSS Bar Chart ---------- */
+    .bar-container {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      height: 160px;
+      gap: 0.4rem;
+      padding-top: 1rem;
+    }
+    .bar-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+    }
+    .bar {
+      width: 100%;
+      max-width: 48px;
+      border-radius: 8px 8px 4px 4px;
+      background: #3b82f6;
+      min-height: 8px;
+      transition: height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+    }
+    .bar-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      margin-top: 0.5rem;
+      text-align: center;
+      opacity: 0.8;
+    }
+    .bar-value {
+      font-size: 0.6rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      opacity: 0.7;
+    }
+    .highlight-bar .bar {
+      background: #8b5cf6;
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+    }
+
+    /* ---------- Scenarios Accordion ---------- */
+    .scenario-card {
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .scenario-card:hover {
+      transform: translateY(-2px);
+      border-color: #3b82f6;
+    }
+    .scenario-detail {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+    .scenario-detail.open {
+      max-height: 800px;
+      opacity: 1;
+    }
+
+    /* ---------- FAQ Accordion ---------- */
+    .faq-question {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      font-weight: 600;
+    }
+    body.light-mode .faq-question {
+      border-bottom-color: rgba(0, 0, 0, 0.06);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 0.2rem;
+      opacity: 0.8;
+    }
+    .faq-answer.open {
+      max-height: 300px;
+      padding: 0.8rem 0.2rem;
+    }
+    .faq-icon {
+      transition: transform 0.2s;
+    }
+    .faq-icon.open {
+      transform: rotate(180deg);
+    }
+
+    /* ---------- Misc ---------- */
+    .text-gradient {
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(37, 99, 235, 0.2);
+      color: #60a5fa;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.8rem;
+      border-radius: 60px;
+      letter-spacing: 0.5px;
+    }
+    body.light-mode .badge {
+      background: rgba(37, 99, 235, 0.08);
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 768px) {
+      .card {
+        padding: 1.5rem 1.2rem;
+        border-radius: 1.5rem;
+      }
+      #theme-toggle {
+        top: 1rem;
+        right: 1rem;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+      }
+      .bar-container {
+        height: 120px;
+      }
+    }
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 1rem;
+      }
+      .bar {
+        max-width: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====== DARK MODE TOGGLE ====== -->
+  <button id="theme-toggle" aria-label="Toggle dark mode">
+    <span id="theme-icon">🌙</span>
+    <span id="theme-label">Dark</span>
+  </button>
+
+  <!-- ====== HERO ====== -->
+  <section class="container" style="padding-top: 4rem; padding-bottom: 2rem;">
+    <div class="card" style="text-align: center; border: none; background: transparent; backdrop-filter: none; box-shadow: none; padding: 0;">
+      <p class="badge" style="margin-bottom: 1rem;">🇺🇳 GLOBAL FINANCE REBOOT</p>
+      <h1 class="text-gradient" style="font-size: clamp(2.8rem, 10vw, 5.5rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 0.5rem;">
+        The Infinite Debt Problem
+      </h1>
+      <p style="font-size: clamp(1.2rem, 2.5vw, 1.8rem); font-weight: 300; opacity: 0.8; max-width: 720px; margin: 0.5rem auto 2rem;">
+        How to Replace Perpetual Growth with Productive Prosperity
+      </p>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;">
+        <a href="#policy-brief" class="btn-primary">📄 Read the Policy Brief</a>
+        <a href="#downloads" class="btn-secondary">⬇️ Download the Book</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== THE PROBLEM ====== -->
+  <section id="problem" class="container" style="padding: 2rem 0;">
+    <div class="card">
+      <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.5rem;">📉 The Chart That Changed Everything</h2>
+      <p style="opacity: 0.7; margin-bottom: 1.5rem; max-width: 640px;">
+        Global debt (exponential) vs. resource extraction (flattening). The gap is the infinite debt problem.
+      </p>
+      <!-- Inline SVG Chart -->
+      <svg class="chart-svg" viewBox="0 0 600 180" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="debtGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.0"/>
+          </linearGradient>
+          <linearGradient id="resGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.0"/>
+          </linearGradient>
+        </defs>
+        <!-- Grid lines -->
+        <line x1="40" y1="20" x2="560" y2="20" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
+        <line x1="40" y1="80" x2="560" y2="80" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
+        <line x1="40" y1="140" x2="560" y2="140" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
+        <!-- Debt (exponential curve) -->
+        <path d="M40,140 C100,130 180,100 280,60 C380,20 480,5 560,2" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round"/>
+        <!-- Resource (flattening) -->
+        <path d="M40,130 C120,120 220,115 320,110 C420,108 500,110 560,112" fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+        <!-- Labels -->
+        <text x="220" y="45" fill="#3b82f6" font-size="10" font-weight="600">Global Debt</text>
+        <text x="420" y="100" fill="#f59e0b" font-size="10" font-weight="600">Resources</text>
+        <text x="40" y="160" fill="#ffffff" font-size="8" opacity="0.4">1980</text>
+        <text x="540" y="160" fill="#ffffff" font-size="8" opacity="0.4">2025</text>
+      </svg>
+      <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.5rem; justify-content: center;">
+        <div><span style="display: inline-block; width: 12px; height: 12px; background: #3b82f6; border-radius: 4px; margin-right: 8px;"></span> Debt: $300T+ (exponential)</div>
+        <div><span style="display: inline-block; width: 12px; height: 12px; background: #f59e0b; border-radius: 4px; margin-right: 8px;"></span> Resources: flattening / declining</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== SOLUTION: PRODUCTIVITY BOND ====== -->
+  <section id="solution" class="container" style="padding: 2rem 0;">
+    <div class="card">
+      <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.25rem;">🔧 The Productivity Bond</h2>
+      <p style="opacity: 0.7; margin-bottom: 1.5rem;">A sovereign debt instrument linked to measurable productivity gains.</p>
+      <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 1.2rem; font-family: 'Courier New', monospace; font-size: 0.9rem; overflow-x: auto; margin-bottom: 1.5rem;">
+        c(t) = (1 + π(t)) × (1 + min[max(0.7 × g<sub>NPI</sub>(t), 0%), 5%]) – 1
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem;">
+        <div><span style="font-weight: 600; color: #60a5fa;">🛡️ Floor</span> 0% real return</div>
+        <div><span style="font-weight: 600; color: #a78bfa;">📈 Cap</span> 5% real return</div>
+        <div><span style="font-weight: 600; color: #34d399;">📊 Participation</span> 70% of NPI</div>
+        <div><span style="font-weight: 600; color: #fbbf24;">💹 Inflation</span> CPI‑linked</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== NPI (4 CARDS) ====== -->
+  <section id="npi" class="container" style="padding: 2rem 0;">
+    <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
+      <div class="card">
+        <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.25rem;">📐 National Productivity Index (NPI)</h2>
+        <p style="opacity: 0.7; margin-bottom: 1.5rem;">GDP per unit of labour, energy, materials, and capital.</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
+          <div style="background: rgba(59,130,246,0.08); padding: 1rem; border-radius: 1rem; border-left: 4px solid #3b82f6;">
+            <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Weight 40%</div>
+            <div style="font-weight: 700;">Labour</div>
+            <div style="font-size: 0.9rem; opacity: 0.7;">GDP / Hours</div>
+          </div>
+          <div style="background: rgba(245,158,11,0.08); padding: 1rem; border-radius: 1rem; border-left: 4px solid #f59e0b;">
+            <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Weight 25%</div>
+            <div style="font-weight: 700;">Energy</div>
+            <div style="font-size: 0.9rem; opacity: 0.7;">GDP / Joules</div>
+          </div>
+          <div style="background: rgba(52,211,153,0.08); padding: 1rem; border-radius: 1rem; border-left: 4px solid #34d399;">
+            <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Weight 20%</div>
+            <div style="font-weight: 700;">Materials</div>
+            <div style="font-size: 0.9rem; opacity: 0.7;">GDP / Tonnes</div>
+          </div>
+          <div style="background: rgba(168,85,247,0.08); padding: 1rem; border-radius: 1rem; border-left: 4px solid #a855f7;">
+            <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Weight 15%</div>
+            <div style="font-weight: 700;">Capital</div>
+            <div style="font-size: 0.9rem; opacity: 0.7;">GDP / Stock</div>
+          </div>
+        </div>
+        <p style="font-size: 0.8rem; opacity: 0.5; margin-top: 1rem;">Geometric weighting prevents manipulation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== SIMULATION RESULTS (CSS Bar Chart) ====== -->
+  <section id="results" class="container" style="padding: 2rem 0;">
+    <div class="card">
+      <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.25rem;">📊 Simulation Results (10,000 paths)</h2>
+      <p style="opacity: 0.7; margin-bottom: 1.5rem;">Expected cost comparison across bond types.</p>
+      <div class="bar-container">
+        <!-- Conventional -->
+        <div class="bar-wrapper">
+          <div class="bar-value">0.515</div>
+          <div class="bar" style="height: 90px; background: #6b7280;"></div>
+          <div class="bar-label">Conv.</div>
+        </div>
+        <!-- ILB -->
+        <div class="bar-wrapper">
+          <div class="bar-value">0.489</div>
+          <div class="bar" style="height: 85px; background: #3b82f6;"></div>
+          <div class="bar-label">ILB</div>
+        </div>
+        <!-- GDP -->
+        <div class="bar-wrapper">
+          <div class="bar-value">0.511</div>
+          <div class="bar" style="height: 89px; background: #8b5cf6;"></div>
+          <div class="bar-label">GDP</div>
+        </div>
+        <!-- Productivity (Highlight) -->
+        <div class="bar-wrapper highlight-bar">
+          <div class="bar-value" style="color: #a78bfa;">0.499</div>
+          <div class="bar" style="height: 87px; background: #a78bfa;"></div>
+          <div class="bar-label" style="font-weight: 700;">Productivity</div>
+        </div>
+        <!-- Hybrid -->
+        <div class="bar-wrapper">
+          <div class="bar-value">0.527</div>
+          <div class="bar" style="height: 92px; background: #f59e0b;"></div>
+          <div class="bar-label">Hybrid</div>
+        </div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.5rem; margin-top: 0.5rem; font-size: 0.75rem; opacity: 0.6;">
+        <span>🔹 Lower cost = better</span>
+        <span>⭐ Productivity Bond: <strong style="color: #a78bfa;">−3.1%</strong> cost vs conventional</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== POLICY BRIEF (CTA) ====== -->
+  <section id="policy-brief" class="container" style="padding: 2rem 0;">
+    <div class="card" style="text-align: center; border: 2px solid #3b82f6;">
+      <h2 style="font-size: 2rem; font-weight: 600;">📄 Read the Policy Brief</h2>
+      <p style="opacity: 0.8; max-width: 560px; margin: 0.5rem auto 1.5rem;">
+        A 5‑page summary for policymakers, journalists, and general readers.
+      </p>
+      <a href="#downloads" class="btn-primary" style="font-size: 1.1rem;">⬇️ Download PDF</a>
+    </div>
+  </section>
+
+  <!-- ====== ADOPTION SCENARIOS (Cards with Accordion) ====== -->
+  <section id="scenarios" class="container" style="padding: 2rem 0;">
+    <div class="card">
+      <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.25rem;">🌍 Adoption Scenarios</h2>
+      <p style="opacity: 0.7; margin-bottom: 1.5rem;">Click a country type to see the pathway.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+        <!-- Advanced -->
+        <div class="card scenario-card" onclick="toggleScenario(this)" style="cursor: pointer; padding: 1.5rem;">
+          <h3 style="font-weight: 700;">🏛️ Advanced</h3>
+          <p style="font-size: 0.85rem; opacity: 0.7;">High debt, ageing population</p>
+          <div class="scenario-detail" style="margin-top: 1rem; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1rem;">
+            <strong>Pathway:</strong> Pilot $1‑5B → 10‑15% issuance → 30% portfolio.<br>
+            <span style="opacity: 0.6;">Enablers: deep capital markets, strong stats.</span>
+          </div>
+        </div>
+        <!-- Emerging -->
+        <div class="card scenario-card" onclick="toggleScenario(this)" style="cursor: pointer; padding: 1.5rem;">
+          <h3 style="font-weight: 700;">🚀 Emerging</h3>
+          <p style="font-size: 0.85rem; opacity: 0.7;">Growth potential, developing capacity</p>
+          <div class="scenario-detail" style="margin-top: 1rem; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1rem;">
+            <strong>Pathway:</strong> Multilateral guarantee → 5‑10Y bonds → 20% portfolio.<br>
+            <span style="opacity: 0.6;">Enablers: World Bank/IMF support, capacity building.</span>
+          </div>
+        </div>
+        <!-- Small Open -->
+        <div class="card scenario-card" onclick="toggleScenario(this)" style="cursor: pointer; padding: 1.5rem;">
+          <h3 style="font-weight: 700;">🏝️ Small Open</h3>
+          <p style="font-size: 0.85rem; opacity: 0.7;">Strong institutions, global hub</p>
+          <div class="scenario-detail" style="margin-top: 1rem; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1rem;">
+            <strong>Pathway:</strong> Demonstration project → 20% portfolio → regional export.<br>
+            <span style="opacity: 0.6;">Enablers: trusted stats, first‑mover advantage.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== DOWNLOADS ====== -->
+  <section id="downloads" class="container" style="padding: 2rem 0 4rem;">
+    <div class="card">
+      <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.25rem;">⬇️ Download Resources</h2>
+      <p style="opacity: 0.7; margin-bottom: 1.5rem;">Full book, white paper, and policy brief.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem;">
+        <a href="book/The_Infinite_Debt_Problem.pdf" class="btn-secondary" style="text-align: center; padding: 1rem;">📖 PDF Book</a>
+        <a href="book/The_Infinite_Debt_Problem.epub" class="btn-secondary" style="text-align: center; padding: 1rem;">📱 EPUB Book</a>
+        <a href="#policy-brief" class="btn-secondary" style="text-align: center; padding: 1rem;">📄 Policy Brief</a>
+        <a href="whitepaper.md" class="btn-secondary" style="text-align: center; padding: 1rem;">📝 White Paper</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FAQ (Accordion) ====== -->
+  <section id="faq" class="container" style="padding: 0 0 4rem;">
+    <div class="card">
+      <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 1.5rem;">❓ Frequently Asked Questions</h2>
+      <!-- Q1 -->
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <span>What is the infinite debt problem?</span>
+          <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer">The gap between exponential global debt growth (over $300 trillion) and finite planetary resources. The financial system assumes unlimited growth on a planet with limits.</div>
+      </div>
+      <!-- Q2 -->
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <span>What is a Productivity Bond?</span>
+          <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer">A sovereign bond with a coupon linked to productivity growth. It offers inflation protection, a 0% real floor, and a 5% cap, sharing risks between government and investors.</div>
+      </div>
+      <!-- Q3 -->
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <span>How does the NPI work?</span>
+          <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer">The National Productivity Index measures GDP per unit of labour (40%), energy (25%), materials (20%), and capital (15%) using a geometric average to prevent manipulation.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FOOTER ====== -->
+  <footer style="border-top: 1px solid rgba(255,255,255,0.05); padding: 2rem 0; text-align: center; font-size: 0.9rem; opacity: 0.5;">
+    <div class="container">
+      <p>© 2026 Ylia Callan · <a href="https://github.com/traffictorch/productivity-bond-model" style="text-decoration: underline; text-underline-offset: 4px;">GitHub Repository</a></p>
+      <p style="font-size: 0.75rem; margin-top: 0.5rem;">Creative Commons BY‑NC‑ND 4.0 · Built with ♥ for a finite planet</p>
+    </div>
+  </footer>
+
+  <!-- ====== JAVASCRIPT ====== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ---------- DARK MODE ----------
+      const toggleBtn = document.getElementById('theme-toggle');
+      const icon = document.getElementById('theme-icon');
+      const label = document.getElementById('theme-label');
+      const html = document.documentElement;
+
+      function applyTheme(theme) {
+        if (theme === 'light') {
+          document.body.classList.add('light-mode');
+          icon.textContent = '☀️';
+          label.textContent = 'Light';
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.body.classList.remove('light-mode');
+          icon.textContent = '🌙';
+          label.textContent = 'Dark';
+          localStorage.setItem('theme', 'dark');
+        }
+      }
+
+      const saved = localStorage.getItem('theme');
+      if (saved === 'light') applyTheme('light');
+      else applyTheme('dark');
+
+      toggleBtn.addEventListener('click', () => {
+        const current = document.body.classList.contains('light-mode') ? 'light' : 'dark';
+        applyTheme(current === 'light' ? 'dark' : 'light');
+      });
+
+      // ---------- SCENARIOS (Toggle detail) ----------
+      window.toggleScenario = function(el) {
+        const detail = el.querySelector('.scenario-detail');
+        if (detail) {
+          detail.classList.toggle('open');
+        }
+      };
+
+      // ---------- FAQ (Accordion) ----------
+      window.toggleFAQ = function(el) {
+        const parent = el.closest('.faq-item');
+        if (!parent) return;
+        const answer = parent.querySelector('.faq-answer');
+        const icon = el.querySelector('.faq-icon');
+        if (answer) {
+          answer.classList.toggle('open');
+          if (icon) icon.classList.toggle('open');
+        }
+      };
+
+      // ---------- SMOOTH SCROLL (for anchors) ----------
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+    })();
+  </script>
+</body>
+</html>
