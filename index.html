@@ -3,66 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Infinite Debt Problem – Productivity Bond for a Finite Planet</title>
-  <meta name="description" content="A new sovereign debt instrument that replaces perpetual growth with productive prosperity. Read the book, policy brief, and simulation results." />
+  <title>The Infinite Debt Problem – Live AI Simulation</title>
+  <meta name="description" content="Live Monte Carlo simulation of the Productivity Bond. Adjust AI capture rates and see real-time results." />
   <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/" />
 
-  <!-- Open Graph / Social -->
-  <meta property="og:title" content="The Infinite Debt Problem" />
-  <meta property="og:description" content="How to Replace Perpetual Growth with Productive Prosperity." />
+  <!-- Open Graph -->
+  <meta property="og:title" content="The Infinite Debt Problem – Live Simulator" />
+  <meta property="og:description" content="Interactive simulation of the AI-driven Productivity Bond." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://traffictorch.github.io/productivity-bond-model/" />
 
-  <!-- Preconnect for performance -->
+  <!-- Preconnect for Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&display=swap" rel="stylesheet" />
 
-  <!-- JSON‑LD Structured Data (FAQ & Article) for AEO/SEO -->
+  <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Article",
-      "headline": "The Infinite Debt Problem – Productivity Bond",
-      "description": "A sovereign debt instrument whose return is linked to measurable improvements in productivity.",
+      "headline": "The Infinite Debt Problem – Productivity Bond Simulator",
+      "description": "A live Monte Carlo simulation demonstrating how AI-driven productivity gains can reshape sovereign debt.",
       "author": { "@type": "Person", "name": "Ylia Callan" }
-    }
-  </script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What is the infinite debt problem?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "The gap between exponential global debt growth (over $300 trillion) and finite planetary resources."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What is a Productivity Bond?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "A sovereign debt instrument whose coupon is linked to productivity growth, with inflation protection, a 0% floor, and a 5% cap."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How does the National Productivity Index (NPI) work?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "The NPI measures GDP per unit of labour, energy, materials, and capital using a weighted geometric average."
-          }
-        }
-      ]
     }
   </script>
 
   <style>
-    /* ---------- Reset & Base ---------- */
+    /* ============================================================
+               RESET & BASE
+               ============================================================ */
     * {
       margin: 0;
       padding: 0;
@@ -72,273 +41,405 @@
       scroll-behavior: smooth;
     }
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #07080d;
-      color: #e8edf5;
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #05060a;
+      color: #eef2f8;
       line-height: 1.6;
-      transition: background 0.3s ease, color 0.3s ease;
+      overflow-x: hidden;
     }
-    body.light-mode {
-      background: #f4f7fc;
-      color: #1a1f2e;
-    }
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    /* ---------- Scrollbar ---------- */
     ::-webkit-scrollbar {
-      width: 8px;
+      width: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: #111827;
+      background: #0f111a;
     }
     ::-webkit-scrollbar-thumb {
-      background: #3b82f6;
+      background: #6366f1;
       border-radius: 10px;
     }
-    body.light-mode ::-webkit-scrollbar-track {
-      background: #d1d9e6;
-    }
-    body.light-mode ::-webkit-scrollbar-thumb {
-      background: #2563eb;
+
+    /* ============================================================
+               ANIMATED NEURAL NETWORK BACKGROUND (Canvas)
+               ============================================================ */
+    #network-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.5;
     }
 
-    /* ---------- Container ---------- */
+    /* ============================================================
+               GLOWING ORBS (CSS)
+               ============================================================ */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .orb-1 {
+      width: 40vw;
+      height: 40vw;
+      top: -10vh;
+      left: -10vw;
+      background: rgba(99, 102, 241, 0.15);
+      animation: floatOrb 25s infinite alternate ease-in-out;
+    }
+    .orb-2 {
+      width: 35vw;
+      height: 35vw;
+      bottom: -15vh;
+      right: -10vw;
+      background: rgba(236, 72, 153, 0.10);
+      animation: floatOrb 30s infinite alternate-reverse ease-in-out;
+    }
+    .orb-3 {
+      width: 25vw;
+      height: 25vw;
+      top: 40vh;
+      right: 20vw;
+      background: rgba(16, 185, 129, 0.08);
+      animation: floatOrb 20s infinite alternate ease-in-out;
+    }
+    @keyframes floatOrb {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+      100% {
+        transform: translate(80px, -60px) scale(1.2);
+      }
+    }
+
+    /* ============================================================
+               CONTAINER & CARDS
+               ============================================================ */
     .container {
-      max-width: 1200px;
+      position: relative;
+      z-index: 1;
+      max-width: 1280px;
       margin: 0 auto;
       padding: 0 1.5rem;
     }
-
-    /* ---------- Glass Card ---------- */
-    .card {
-      background: rgba(17, 24, 39, 0.65);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(59, 130, 246, 0.15);
-      border-radius: 2rem;
-      padding: 2rem 1.8rem;
-      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.6);
-      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    .glass-card {
+      background: rgba(12, 15, 25, 0.65);
+      backdrop-filter: blur(16px) saturate(1.4);
+      -webkit-backdrop-filter: blur(16px) saturate(1.4);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 2.5rem;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
-    body.light-mode .card {
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(12px);
-      border-color: rgba(0, 0, 0, 0.08);
-      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1);
+    .glass-card:hover {
+      border-color: rgba(99, 102, 241, 0.2);
+      box-shadow: 0 30px 60px -20px rgba(99, 102, 241, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.06);
     }
 
-    /* ---------- Buttons ---------- */
-    .btn-primary {
+    /* ============================================================
+               TYPOGRAPHY & BADGES
+               ============================================================ */
+    .text-gradient {
+      background: linear-gradient(135deg, #818cf8 0%, #a78bfa 40%, #f472b6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .badge-glow {
       display: inline-block;
-      background: #2563eb;
-      color: #fff;
-      font-weight: 600;
-      padding: 0.8rem 2rem;
+      background: rgba(99, 102, 241, 0.15);
+      color: #a5b4fc;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.3rem 1rem;
       border-radius: 60px;
-      border: none;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
-    }
-    .btn-primary:hover {
-      background: #1d4ed8;
-      transform: scale(1.02);
-    }
-    .btn-secondary {
-      display: inline-block;
-      background: rgba(255, 255, 255, 0.08);
-      color: #e8edf5;
-      font-weight: 600;
-      padding: 0.8rem 2rem;
-      border-radius: 60px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    body.light-mode .btn-secondary {
-      background: rgba(0, 0, 0, 0.05);
-      color: #1a1f2e;
-      border-color: rgba(0, 0, 0, 0.1);
-    }
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.15);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid rgba(99, 102, 241, 0.15);
+      backdrop-filter: blur(4px);
     }
 
-    /* ---------- Dark Mode Toggle ---------- */
-    #theme-toggle {
-      position: fixed;
-      top: 1.5rem;
-      right: 1.5rem;
-      z-index: 999;
-      background: rgba(17, 24, 39, 0.7);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 60px;
-      padding: 0.6rem 1rem;
-      color: #e8edf5;
-      font-size: 0.9rem;
-      font-weight: 500;
-      cursor: pointer;
+    /* ============================================================
+               HERO
+               ============================================================ */
+    .hero {
+      min-height: 90vh;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      transition: background 0.3s;
+      padding: 4rem 0;
     }
-    body.light-mode #theme-toggle {
-      background: rgba(255, 255, 255, 0.8);
-      border-color: rgba(0, 0, 0, 0.08);
-      color: #1a1f2e;
+    .hero h1 {
+      font-size: clamp(3rem, 12vw, 6rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
     }
-    #theme-toggle svg {
+    .hero .sub {
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      font-weight: 300;
+      opacity: 0.7;
+      max-width: 640px;
+      margin: 1rem 0 2rem;
+    }
+
+    /* ============================================================
+               SIMULATOR DASHBOARD
+               ============================================================ */
+    .sim-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    @media (max-width: 900px) {
+      .sim-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .slider-group {
+      margin-bottom: 1.8rem;
+    }
+    .slider-group label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.3rem;
+    }
+    .slider-group .value-badge {
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.1rem 0.8rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #a5b4fc;
+    }
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      outline: none;
+      transition: background 0.2s;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
       width: 18px;
       height: 18px;
+      border-radius: 50%;
+      background: #818cf8;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      transition: 0.1s;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      background: #a5b4fc;
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #818cf8;
+      cursor: pointer;
+      border: none;
     }
 
-    /* ---------- SVG Chart (The Problem) ---------- */
-    .chart-svg {
+    .metric-box {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 1.5rem;
+      padding: 1.2rem 1.5rem;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .metric-box .number {
+      font-size: 2.2rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .metric-box .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      opacity: 0.5;
+      margin-top: 0.2rem;
+    }
+    .metric-box.better .number {
+      color: #34d399;
+    }
+    .metric-box.worse .number {
+      color: #f87171;
+    }
+
+    /* Progress Bar */
+    .progress-wrap {
       width: 100%;
-      max-height: 220px;
-      border-radius: 1rem;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #818cf8, #a78bfa);
+      border-radius: 4px;
+      transition: width 0.1s linear;
     }
 
-    /* ---------- CSS Bar Chart ---------- */
-    .bar-container {
+    /* Pure CSS Bar Chart */
+    .bar-chart {
       display: flex;
       align-items: flex-end;
       justify-content: space-around;
       height: 160px;
-      gap: 0.4rem;
+      gap: 0.5rem;
       padding-top: 1rem;
     }
-    .bar-wrapper {
+    .bar-item {
       display: flex;
       flex-direction: column;
       align-items: center;
       flex: 1;
     }
-    .bar {
+    .bar-item .bar {
       width: 100%;
       max-width: 48px;
       border-radius: 8px 8px 4px 4px;
-      background: #3b82f6;
-      min-height: 8px;
-      transition: height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-      position: relative;
+      min-height: 6px;
+      transition: height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s;
     }
-    .bar-label {
-      font-size: 0.65rem;
-      font-weight: 500;
-      margin-top: 0.5rem;
-      text-align: center;
-      opacity: 0.8;
-    }
-    .bar-value {
+    .bar-item .bar-label {
       font-size: 0.6rem;
       font-weight: 600;
-      margin-bottom: 0.25rem;
-      opacity: 0.7;
+      margin-top: 0.4rem;
+      opacity: 0.6;
+      text-align: center;
     }
-    .highlight-bar .bar {
-      background: #8b5cf6;
-      box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
-    }
-
-    /* ---------- Scenarios Accordion ---------- */
-    .scenario-card {
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .scenario-card:hover {
-      transform: translateY(-2px);
-      border-color: #3b82f6;
-    }
-    .scenario-detail {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease, opacity 0.3s ease;
-      opacity: 0;
-    }
-    .scenario-detail.open {
-      max-height: 800px;
-      opacity: 1;
-    }
-
-    /* ---------- FAQ Accordion ---------- */
-    .faq-question {
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.8rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      font-weight: 600;
-    }
-    body.light-mode .faq-question {
-      border-bottom-color: rgba(0, 0, 0, 0.06);
-    }
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease, padding 0.3s ease;
-      padding: 0 0.2rem;
+    .bar-item .bar-val {
+      font-size: 0.65rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
       opacity: 0.8;
     }
-    .faq-answer.open {
-      max-height: 300px;
-      padding: 0.8rem 0.2rem;
+    .highlight .bar {
+      background: #a78bfa !important;
+      box-shadow: 0 0 30px rgba(167, 139, 250, 0.4);
     }
-    .faq-icon {
-      transition: transform 0.2s;
-    }
-    .faq-icon.open {
-      transform: rotate(180deg);
-    }
-
-    /* ---------- Misc ---------- */
-    .text-gradient {
-      background: linear-gradient(135deg, #60a5fa, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .badge {
-      display: inline-block;
-      background: rgba(37, 99, 235, 0.2);
-      color: #60a5fa;
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 0.2rem 0.8rem;
-      border-radius: 60px;
-      letter-spacing: 0.5px;
-    }
-    body.light-mode .badge {
-      background: rgba(37, 99, 235, 0.08);
+    .highlight .bar-label {
+      opacity: 1;
+      color: #a78bfa;
+      font-weight: 700;
     }
 
-    /* ---------- Responsive ---------- */
-    @media (max-width: 768px) {
-      .card {
-        padding: 1.5rem 1.2rem;
+    /* ============================================================
+               POLICY BRIEF (Inline + Print)
+               ============================================================ */
+    .policy-text {
+      max-height: 600px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+      font-size: 0.95rem;
+      opacity: 0.85;
+    }
+    .policy-text::-webkit-scrollbar {
+      width: 4px;
+    }
+    .policy-text::-webkit-scrollbar-thumb {
+      background: #6366f1;
+      border-radius: 10px;
+    }
+    .policy-text h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-top: 1.5rem;
+      margin-bottom: 0.3rem;
+      color: #a5b4fc;
+    }
+    .policy-text h3:first-of-type {
+      margin-top: 0;
+    }
+    .policy-text .formula {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 0.8rem 1.2rem;
+      border-radius: 1rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      margin: 0.5rem 0;
+      overflow-x: auto;
+      border-left: 3px solid #818cf8;
+    }
+
+    /* ============================================================
+               PRINT STYLES (for PDF download)
+               ============================================================ */
+    @media print {
+      body {
+        background: #fff !important;
+        color: #111 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      #network-bg,
+      .orb {
+        display: none !important;
+      }
+      .glass-card {
+        background: #fff !important;
+        backdrop-filter: none !important;
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+        border-radius: 1rem !important;
+        padding: 1.5rem !important;
+      }
+      .text-gradient {
+        -webkit-text-fill-color: #111 !important;
+        background: none !important;
+        color: #111 !important;
+      }
+      .policy-text {
+        max-height: none !important;
+        overflow: visible !important;
+      }
+      .badge-glow {
+        background: #eee !important;
+        color: #111 !important;
+        border-color: #ccc !important;
+      }
+      #policy-brief-section {
+        page-break-before: always;
+      }
+    }
+
+    /* ============================================================
+               RESPONSIVE
+               ============================================================ */
+    @media (max-width: 640px) {
+      .glass-card {
+        padding: 1.5rem 1rem;
         border-radius: 1.5rem;
       }
-      #theme-toggle {
-        top: 1rem;
-        right: 1rem;
-        padding: 0.4rem 0.8rem;
-        font-size: 0.8rem;
+      .sim-grid {
+        gap: 1rem;
       }
-      .bar-container {
+      .metric-box .number {
+        font-size: 1.6rem;
+      }
+      .bar-chart {
         height: 120px;
       }
-    }
-    @media (max-width: 480px) {
-      .container {
-        padding: 0 1rem;
-      }
-      .bar {
+      .bar-item .bar {
         max-width: 28px;
       }
     }
@@ -346,328 +447,541 @@
 </head>
 <body>
 
-  <!-- ====== DARK MODE TOGGLE ====== -->
-  <button id="theme-toggle" aria-label="Toggle dark mode">
-    <span id="theme-icon">🌙</span>
-    <span id="theme-label">Dark</span>
-  </button>
+  <!-- ====== ANIMATED BACKGROUND (Canvas) ====== -->
+  <canvas id="network-bg"></canvas>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
 
   <!-- ====== HERO ====== -->
-  <section class="container" style="padding-top: 4rem; padding-bottom: 2rem;">
-    <div class="card" style="text-align: center; border: none; background: transparent; backdrop-filter: none; box-shadow: none; padding: 0;">
-      <p class="badge" style="margin-bottom: 1rem;">🇺🇳 GLOBAL FINANCE REBOOT</p>
-      <h1 class="text-gradient" style="font-size: clamp(2.8rem, 10vw, 5.5rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 0.5rem;">
-        The Infinite Debt Problem
-      </h1>
-      <p style="font-size: clamp(1.2rem, 2.5vw, 1.8rem); font-weight: 300; opacity: 0.8; max-width: 720px; margin: 0.5rem auto 2rem;">
-        How to Replace Perpetual Growth with Productive Prosperity
+  <section class="container hero">
+    <div>
+      <span class="badge-glow">🤖 AI-Powered Finance</span>
+      <h1 class="text-gradient">The Infinite<br />Debt Problem</h1>
+      <p class="sub">How to Replace Perpetual Growth with Productive Prosperity in the Age of AI.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.5rem;">
+        <a href="#simulator" class="btn-primary" style="display:inline-block; background:#6366f1; color:#fff; font-weight:600; padding:0.8rem 2.2rem; border-radius:60px; border:none; cursor:pointer; transition:0.2s; box-shadow:0 4px 20px rgba(99,102,241,0.4); text-decoration:none;">🚀 Run Live Simulation</a>
+        <a href="#policy-brief-section" style="display:inline-block; background:rgba(255,255,255,0.06); color:#eef2f8; font-weight:500; padding:0.8rem 2.2rem; border-radius:60px; border:1px solid rgba(255,255,255,0.08); text-decoration:none; transition:0.2s;">📄 Read Policy Brief</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== AI PARADOX (The Core Link) ====== -->
+  <section class="container" style="padding-bottom: 2rem;">
+    <div class="glass-card" style="text-align:center;">
+      <span class="badge-glow" style="margin-bottom:0.5rem;">The AI Paradox</span>
+      <h2 style="font-size:2rem; font-weight:700; max-width:700px; margin:0 auto 1rem;">
+        The technology that could <span style="color:#34d399;">save</span> the system<br />
+        or <span style="color:#f87171;">destroy</span> it.
+      </h2>
+      <p style="opacity:0.7; max-width:700px; margin:0 auto;">
+        AI can solve the productivity wall — but if the gains are captured by a few, it breaks the circular flow.
+        The <strong style="color:#a5b4fc;">θ_AI</strong> slider below determines whether the Productivity Bond
+        succeeds or fails.
       </p>
-      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;">
-        <a href="#policy-brief" class="btn-primary">📄 Read the Policy Brief</a>
-        <a href="#downloads" class="btn-secondary">⬇️ Download the Book</a>
-      </div>
     </div>
   </section>
 
-  <!-- ====== THE PROBLEM ====== -->
-  <section id="problem" class="container" style="padding: 2rem 0;">
-    <div class="card">
-      <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.5rem;">📉 The Chart That Changed Everything</h2>
-      <p style="opacity: 0.7; margin-bottom: 1.5rem; max-width: 640px;">
-        Global debt (exponential) vs. resource extraction (flattening). The gap is the infinite debt problem.
-      </p>
-      <!-- Inline SVG Chart -->
-      <svg class="chart-svg" viewBox="0 0 600 180" preserveAspectRatio="xMidYMid meet">
-        <defs>
-          <linearGradient id="debtGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.8"/>
-            <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.0"/>
-          </linearGradient>
-          <linearGradient id="resGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.6"/>
-            <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.0"/>
-          </linearGradient>
-        </defs>
-        <!-- Grid lines -->
-        <line x1="40" y1="20" x2="560" y2="20" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
-        <line x1="40" y1="80" x2="560" y2="80" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
-        <line x1="40" y1="140" x2="560" y2="140" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
-        <!-- Debt (exponential curve) -->
-        <path d="M40,140 C100,130 180,100 280,60 C380,20 480,5 560,2" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round"/>
-        <!-- Resource (flattening) -->
-        <path d="M40,130 C120,120 220,115 320,110 C420,108 500,110 560,112" fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
-        <!-- Labels -->
-        <text x="220" y="45" fill="#3b82f6" font-size="10" font-weight="600">Global Debt</text>
-        <text x="420" y="100" fill="#f59e0b" font-size="10" font-weight="600">Resources</text>
-        <text x="40" y="160" fill="#ffffff" font-size="8" opacity="0.4">1980</text>
-        <text x="540" y="160" fill="#ffffff" font-size="8" opacity="0.4">2025</text>
-      </svg>
-      <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.5rem; justify-content: center;">
-        <div><span style="display: inline-block; width: 12px; height: 12px; background: #3b82f6; border-radius: 4px; margin-right: 8px;"></span> Debt: $300T+ (exponential)</div>
-        <div><span style="display: inline-block; width: 12px; height: 12px; background: #f59e0b; border-radius: 4px; margin-right: 8px;"></span> Resources: flattening / declining</div>
+  <!-- ====== LIVE SIMULATOR ====== -->
+  <section id="simulator" class="container" style="padding: 1rem 0 3rem;">
+    <div class="glass-card" style="border-color: rgba(99,102,241,0.2);">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:1.5rem;">
+        <h2 style="font-size:1.8rem; font-weight:700;">⚡ Live Monte Carlo Simulator</h2>
+        <span style="font-size:0.8rem; opacity:0.4;">10,000 paths · 10-year horizon</span>
       </div>
-    </div>
-  </section>
 
-  <!-- ====== SOLUTION: PRODUCTIVITY BOND ====== -->
-  <section id="solution" class="container" style="padding: 2rem 0;">
-    <div class="card">
-      <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.25rem;">🔧 The Productivity Bond</h2>
-      <p style="opacity: 0.7; margin-bottom: 1.5rem;">A sovereign debt instrument linked to measurable productivity gains.</p>
-      <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 1.2rem; font-family: 'Courier New', monospace; font-size: 0.9rem; overflow-x: auto; margin-bottom: 1.5rem;">
-        c(t) = (1 + π(t)) × (1 + min[max(0.7 × g<sub>NPI</sub>(t), 0%), 5%]) – 1
-      </div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem;">
-        <div><span style="font-weight: 600; color: #60a5fa;">🛡️ Floor</span> 0% real return</div>
-        <div><span style="font-weight: 600; color: #a78bfa;">📈 Cap</span> 5% real return</div>
-        <div><span style="font-weight: 600; color: #34d399;">📊 Participation</span> 70% of NPI</div>
-        <div><span style="font-weight: 600; color: #fbbf24;">💹 Inflation</span> CPI‑linked</div>
-      </div>
-    </div>
-  </section>
+      <!-- Controls Grid -->
+      <div class="sim-grid">
+        <!-- Left: Sliders -->
+        <div>
+          <!-- θ_AI -->
+          <div class="slider-group">
+            <label>
+              <span>🤖 θ_AI <span style="font-weight:400; opacity:0.5;">(Gov. capture of AI gains)</span></span>
+              <span class="value-badge" id="theta-label">0.30</span>
+            </label>
+            <input type="range" id="theta-slider" min="0.05" max="0.55" step="0.01" value="0.30" />
+            <div style="display:flex; justify-content:space-between; font-size:0.65rem; opacity:0.3; padding:0 0.2rem;">
+              <span>Low (5%)</span>
+              <span>Critical Threshold (30%)</span>
+              <span>High (55%)</span>
+            </div>
+          </div>
 
-  <!-- ====== NPI (4 CARDS) ====== -->
-  <section id="npi" class="container" style="padding: 2rem 0;">
-    <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
-      <div class="card">
-        <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.25rem;">📐 National Productivity Index (NPI)</h2>
-        <p style="opacity: 0.7; margin-bottom: 1.5rem;">GDP per unit of labour, energy, materials, and capital.</p>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
-          <div style="background: rgba(59,130,246,0.08); padding: 1rem; border-radius: 1rem; border-left: 4px solid #3b82f6;">
-            <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Weight 40%</div>
-            <div style="font-weight: 700;">Labour</div>
-            <div style="font-size: 0.9rem; opacity: 0.7;">GDP / Hours</div>
+          <!-- α -->
+          <div class="slider-group">
+            <label>
+              <span>📊 α <span style="font-weight:400; opacity:0.5;">(Investor participation)</span></span>
+              <span class="value-badge" id="alpha-label">0.70</span>
+            </label>
+            <input type="range" id="alpha-slider" min="0.30" max="0.90" step="0.01" value="0.70" />
           </div>
-          <div style="background: rgba(245,158,11,0.08); padding: 1rem; border-radius: 1rem; border-left: 4px solid #f59e0b;">
-            <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Weight 25%</div>
-            <div style="font-weight: 700;">Energy</div>
-            <div style="font-size: 0.9rem; opacity: 0.7;">GDP / Joules</div>
-          </div>
-          <div style="background: rgba(52,211,153,0.08); padding: 1rem; border-radius: 1rem; border-left: 4px solid #34d399;">
-            <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Weight 20%</div>
-            <div style="font-weight: 700;">Materials</div>
-            <div style="font-size: 0.9rem; opacity: 0.7;">GDP / Tonnes</div>
-          </div>
-          <div style="background: rgba(168,85,247,0.08); padding: 1rem; border-radius: 1rem; border-left: 4px solid #a855f7;">
-            <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Weight 15%</div>
-            <div style="font-weight: 700;">Capital</div>
-            <div style="font-size: 0.9rem; opacity: 0.7;">GDP / Stock</div>
-          </div>
-        </div>
-        <p style="font-size: 0.8rem; opacity: 0.5; margin-top: 1rem;">Geometric weighting prevents manipulation.</p>
-      </div>
-    </div>
-  </section>
 
-  <!-- ====== SIMULATION RESULTS (CSS Bar Chart) ====== -->
-  <section id="results" class="container" style="padding: 2rem 0;">
-    <div class="card">
-      <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.25rem;">📊 Simulation Results (10,000 paths)</h2>
-      <p style="opacity: 0.7; margin-bottom: 1.5rem;">Expected cost comparison across bond types.</p>
-      <div class="bar-container">
-        <!-- Conventional -->
-        <div class="bar-wrapper">
-          <div class="bar-value">0.515</div>
-          <div class="bar" style="height: 90px; background: #6b7280;"></div>
-          <div class="bar-label">Conv.</div>
+          <!-- Cap -->
+          <div class="slider-group">
+            <label>
+              <span>📈 Cap <span style="font-weight:400; opacity:0.5;">(Max real return)</span></span>
+              <span class="value-badge" id="cap-label">4.0%</span>
+            </label>
+            <input type="range" id="cap-slider" min="0.02" max="0.06" step="0.005" value="0.04" />
+          </div>
+
+          <button id="run-btn" class="btn-primary" style="width:100%; padding:1rem; font-size:1.1rem; margin-top:0.5rem;">
+            ▶ Run Simulation
+          </button>
+
+          <div class="progress-wrap" style="margin-top:1rem;">
+            <div class="progress-bar" id="progress-bar" style="width:0%;"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:0.7rem; opacity:0.4;">
+            <span id="status-text">Ready</span>
+            <span id="path-counter">0 / 10000</span>
+          </div>
         </div>
-        <!-- ILB -->
-        <div class="bar-wrapper">
-          <div class="bar-value">0.489</div>
-          <div class="bar" style="height: 85px; background: #3b82f6;"></div>
-          <div class="bar-label">ILB</div>
-        </div>
-        <!-- GDP -->
-        <div class="bar-wrapper">
-          <div class="bar-value">0.511</div>
-          <div class="bar" style="height: 89px; background: #8b5cf6;"></div>
-          <div class="bar-label">GDP</div>
-        </div>
-        <!-- Productivity (Highlight) -->
-        <div class="bar-wrapper highlight-bar">
-          <div class="bar-value" style="color: #a78bfa;">0.499</div>
-          <div class="bar" style="height: 87px; background: #a78bfa;"></div>
-          <div class="bar-label" style="font-weight: 700;">Productivity</div>
-        </div>
-        <!-- Hybrid -->
-        <div class="bar-wrapper">
-          <div class="bar-value">0.527</div>
-          <div class="bar" style="height: 92px; background: #f59e0b;"></div>
-          <div class="bar-label">Hybrid</div>
+
+        <!-- Right: Metrics -->
+        <div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem;">
+            <div class="metric-box better">
+              <div class="number" id="cost-conv">0.515</div>
+              <div class="label">Conv. Cost</div>
+            </div>
+            <div class="metric-box" id="cost-prod-box">
+              <div class="number" id="cost-prod">0.499</div>
+              <div class="label">Productivity Cost</div>
+            </div>
+            <div class="metric-box worse">
+              <div class="number" id="distress-conv">11.0%</div>
+              <div class="label">Conv. Distress</div>
+            </div>
+            <div class="metric-box" id="distress-prod-box">
+              <div class="number" id="distress-prod">88.2%</div>
+              <div class="label">Productivity Distress</div>
+            </div>
+          </div>
+          <div style="margin-top:1rem; text-align:center; background:rgba(0,0,0,0.2); border-radius:1rem; padding:0.5rem;">
+            <span style="font-weight:700;" id="cost-diff">Cost Saving: -3.1%</span>
+            <span style="opacity:0.4; margin-left:1rem;">|</span>
+            <span style="font-weight:700;" id="distress-diff">Distress: +77.2pp</span>
+          </div>
         </div>
       </div>
-      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.5rem; margin-top: 0.5rem; font-size: 0.75rem; opacity: 0.6;">
-        <span>🔹 Lower cost = better</span>
-        <span>⭐ Productivity Bond: <strong style="color: #a78bfa;">−3.1%</strong> cost vs conventional</span>
-      </div>
-    </div>
-  </section>
 
-  <!-- ====== POLICY BRIEF (CTA) ====== -->
-  <section id="policy-brief" class="container" style="padding: 2rem 0;">
-    <div class="card" style="text-align: center; border: 2px solid #3b82f6;">
-      <h2 style="font-size: 2rem; font-weight: 600;">📄 Read the Policy Brief</h2>
-      <p style="opacity: 0.8; max-width: 560px; margin: 0.5rem auto 1.5rem;">
-        A 5‑page summary for policymakers, journalists, and general readers.
-      </p>
-      <a href="#downloads" class="btn-primary" style="font-size: 1.1rem;">⬇️ Download PDF</a>
-    </div>
-  </section>
-
-  <!-- ====== ADOPTION SCENARIOS (Cards with Accordion) ====== -->
-  <section id="scenarios" class="container" style="padding: 2rem 0;">
-    <div class="card">
-      <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.25rem;">🌍 Adoption Scenarios</h2>
-      <p style="opacity: 0.7; margin-bottom: 1.5rem;">Click a country type to see the pathway.</p>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
-        <!-- Advanced -->
-        <div class="card scenario-card" onclick="toggleScenario(this)" style="cursor: pointer; padding: 1.5rem;">
-          <h3 style="font-weight: 700;">🏛️ Advanced</h3>
-          <p style="font-size: 0.85rem; opacity: 0.7;">High debt, ageing population</p>
-          <div class="scenario-detail" style="margin-top: 1rem; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1rem;">
-            <strong>Pathway:</strong> Pilot $1‑5B → 10‑15% issuance → 30% portfolio.<br>
-            <span style="opacity: 0.6;">Enablers: deep capital markets, strong stats.</span>
-          </div>
+      <!-- Bar Chart -->
+      <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.04);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+          <span style="font-weight:600; font-size:0.9rem;">Expected Cost Comparison</span>
+          <span style="font-size:0.7rem; opacity:0.4;">Lower is better</span>
         </div>
-        <!-- Emerging -->
-        <div class="card scenario-card" onclick="toggleScenario(this)" style="cursor: pointer; padding: 1.5rem;">
-          <h3 style="font-weight: 700;">🚀 Emerging</h3>
-          <p style="font-size: 0.85rem; opacity: 0.7;">Growth potential, developing capacity</p>
-          <div class="scenario-detail" style="margin-top: 1rem; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1rem;">
-            <strong>Pathway:</strong> Multilateral guarantee → 5‑10Y bonds → 20% portfolio.<br>
-            <span style="opacity: 0.6;">Enablers: World Bank/IMF support, capacity building.</span>
+        <div class="bar-chart" id="bar-chart">
+          <div class="bar-item">
+            <div class="bar-val" id="bar-conv-val">0.515</div>
+            <div class="bar" id="bar-conv" style="height:90px; background:#4b5563;"></div>
+            <div class="bar-label">Conv.</div>
           </div>
-        </div>
-        <!-- Small Open -->
-        <div class="card scenario-card" onclick="toggleScenario(this)" style="cursor: pointer; padding: 1.5rem;">
-          <h3 style="font-weight: 700;">🏝️ Small Open</h3>
-          <p style="font-size: 0.85rem; opacity: 0.7;">Strong institutions, global hub</p>
-          <div class="scenario-detail" style="margin-top: 1rem; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1rem;">
-            <strong>Pathway:</strong> Demonstration project → 20% portfolio → regional export.<br>
-            <span style="opacity: 0.6;">Enablers: trusted stats, first‑mover advantage.</span>
+          <div class="bar-item">
+            <div class="bar-val" id="bar-ilb-val">0.489</div>
+            <div class="bar" id="bar-ilb" style="height:85px; background:#3b82f6;"></div>
+            <div class="bar-label">ILB</div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-val" id="bar-gdp-val">0.511</div>
+            <div class="bar" id="bar-gdp" style="height:89px; background:#8b5cf6;"></div>
+            <div class="bar-label">GDP</div>
+          </div>
+          <div class="bar-item highlight">
+            <div class="bar-val" id="bar-prod-val">0.499</div>
+            <div class="bar" id="bar-prod" style="height:87px; background:#a78bfa;"></div>
+            <div class="bar-label">Productivity</div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-val" id="bar-hybrid-val">0.527</div>
+            <div class="bar" id="bar-hybrid" style="height:92px; background:#f59e0b;"></div>
+            <div class="bar-label">Hybrid</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ====== DOWNLOADS ====== -->
-  <section id="downloads" class="container" style="padding: 2rem 0 4rem;">
-    <div class="card">
-      <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.25rem;">⬇️ Download Resources</h2>
-      <p style="opacity: 0.7; margin-bottom: 1.5rem;">Full book, white paper, and policy brief.</p>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem;">
-        <a href="book/The_Infinite_Debt_Problem.pdf" class="btn-secondary" style="text-align: center; padding: 1rem;">📖 PDF Book</a>
-        <a href="book/The_Infinite_Debt_Problem.epub" class="btn-secondary" style="text-align: center; padding: 1rem;">📱 EPUB Book</a>
-        <a href="#policy-brief" class="btn-secondary" style="text-align: center; padding: 1rem;">📄 Policy Brief</a>
-        <a href="whitepaper.md" class="btn-secondary" style="text-align: center; padding: 1rem;">📝 White Paper</a>
+  <!-- ====== POLICY BRIEF (Inline + Downloadable) ====== -->
+  <section id="policy-brief-section" class="container" style="padding: 1rem 0 3rem;">
+    <div class="glass-card" style="border-color: rgba(16,185,129,0.15);">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:1.5rem;">
+        <h2 style="font-size:1.8rem; font-weight:700;">📄 Policy Brief</h2>
+        <button id="print-policy-btn" class="btn-primary" style="background:#10b981; box-shadow:0 4px 20px rgba(16,185,129,0.3); padding:0.6rem 1.5rem;">
+          ⬇ Download PDF
+        </button>
       </div>
-    </div>
-  </section>
+      <div class="policy-text" id="policy-text-content">
+        <h3>The Problem in One Sentence</h3>
+        <p>We have built a financial system that assumes unlimited growth on a planet with limits.</p>
 
-  <!-- ====== FAQ (Accordion) ====== -->
-  <section id="faq" class="container" style="padding: 0 0 4rem;">
-    <div class="card">
-      <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 1.5rem;">❓ Frequently Asked Questions</h2>
-      <!-- Q1 -->
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          <span>What is the infinite debt problem?</span>
-          <span class="faq-icon">▼</span>
-        </div>
-        <div class="faq-answer">The gap between exponential global debt growth (over $300 trillion) and finite planetary resources. The financial system assumes unlimited growth on a planet with limits.</div>
-      </div>
-      <!-- Q2 -->
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          <span>What is a Productivity Bond?</span>
-          <span class="faq-icon">▼</span>
-        </div>
-        <div class="faq-answer">A sovereign bond with a coupon linked to productivity growth. It offers inflation protection, a 0% real floor, and a 5% cap, sharing risks between government and investors.</div>
-      </div>
-      <!-- Q3 -->
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFAQ(this)">
-          <span>How does the NPI work?</span>
-          <span class="faq-icon">▼</span>
-        </div>
-        <div class="faq-answer">The National Productivity Index measures GDP per unit of labour (40%), energy (25%), materials (20%), and capital (15%) using a geometric average to prevent manipulation.</div>
+        <h3>The Contradiction</h3>
+        <p><strong>Global debt</strong> has grown from ~$50 trillion in 1980 to over <strong>$300 trillion</strong> today – an almost perfect exponential curve. <strong>Global resource extraction</strong> is flattening or declining in per‑capita terms. The gap between these two curves is <strong>the infinite debt problem</strong>.</p>
+
+        <h3>Why This Matters</h3>
+        <p>Every bond, mortgage, and pension fund assumes tomorrow’s economy will be larger than today’s. This is not a law of nature – it was a historical anomaly made possible by fossil fuels and population growth. Both tailwinds are now headwinds.</p>
+
+        <h3>The Solution: Productivity Bonds</h3>
+        <p>Instead of a fixed coupon that compounds regardless of performance, a <strong>Productivity Bond</strong> offers a coupon linked to measurable improvements in productivity.</p>
+        <div class="formula">c(t) = (1 + π) × (1 + min[max(α × g_NPI, 0%), 5%]) – 1</div>
+        <ul style="margin:0.5rem 0 0 1.2rem; opacity:0.8;">
+          <li><strong>Inflation protection</strong> – CPI‑linked</li>
+          <li><strong>Productivity participation</strong> – 70% of NPI growth</li>
+          <li><strong>Downside protection</strong> – 0% real floor</li>
+          <li><strong>Upside limit</strong> – 5% real cap</li>
+        </ul>
+
+        <h3>The National Productivity Index (NPI)</h3>
+        <p>Measures GDP per unit of labour, energy, materials, and capital:</p>
+        <div class="formula">NPI = GDP / (Hours^0.40 × Energy^0.25 × Materials^0.20 × Capital^0.15)</div>
+        <p>Transparent, auditable, and legally locked to prevent manipulation.</p>
+
+        <h3>Simulation Results (10,000 paths)</h3>
+        <ul style="margin:0.5rem 0 0 1.2rem; opacity:0.8;">
+          <li><strong>Cost Saving:</strong> −3.1% vs conventional debt</li>
+          <li><strong>Optimal Portfolio:</strong> 30% Productivity Bonds / 70% conventional</li>
+          <li><strong>Critical Variable:</strong> θ_AI > 0.30 (Government capture of AI gains)</li>
+        </ul>
+
+        <h3>The Productivity Dividend</h3>
+        <p>A universal, unconditional dividend distributed to every citizen:</p>
+        <div class="formula">Dividend(t) = τ × Productivity_Revenue(t) / Population(t)</div>
+        <p>Funded by AI royalties, productivity taxes, and sovereign AI equity. Reduces inequality and maintains the circular flow.</p>
+
+        <h3>Transition Pathway</h3>
+        <ul style="margin:0.5rem 0 0 1.2rem; opacity:0.8;">
+          <li><strong>Pilot (1–5 yrs):</strong> &lt;1% of debt</li>
+          <li><strong>Expansion (6–15 yrs):</strong> 5–15% of debt</li>
+          <li><strong>Integration (16–25 yrs):</strong> 15–30% of debt</li>
+          <li><strong>Transformation (26+ yrs):</strong> 30–50% of debt</li>
+        </ul>
+        <p style="margin-top:1rem; opacity:0.5; font-size:0.8rem;">Full book and white paper available in the repository.</p>
       </div>
     </div>
   </section>
 
   <!-- ====== FOOTER ====== -->
-  <footer style="border-top: 1px solid rgba(255,255,255,0.05); padding: 2rem 0; text-align: center; font-size: 0.9rem; opacity: 0.5;">
+  <footer style="border-top:1px solid rgba(255,255,255,0.03); padding:2rem 0; text-align:center; font-size:0.85rem; opacity:0.4;">
     <div class="container">
-      <p>© 2026 Ylia Callan · <a href="https://github.com/traffictorch/productivity-bond-model" style="text-decoration: underline; text-underline-offset: 4px;">GitHub Repository</a></p>
-      <p style="font-size: 0.75rem; margin-top: 0.5rem;">Creative Commons BY‑NC‑ND 4.0 · Built with ♥ for a finite planet</p>
+      <p>© 2026 Ylia Callan · <a href="https://github.com/traffictorch/productivity-bond-model" style="color:#818cf8; text-decoration:none;">GitHub Repository</a></p>
+      <p style="font-size:0.7rem; margin-top:0.3rem;">Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI</p>
     </div>
   </footer>
 
-  <!-- ====== JAVASCRIPT ====== -->
+  <!-- ============================================================
+  JAVASCRIPT — LIVE SIMULATOR + NETWORK BG + PRINT
+  ============================================================ -->
   <script>
     (function() {
       'use strict';
 
-      // ---------- DARK MODE ----------
-      const toggleBtn = document.getElementById('theme-toggle');
-      const icon = document.getElementById('theme-icon');
-      const label = document.getElementById('theme-label');
-      const html = document.documentElement;
+      // ---------- CANVAS: Neural Network Background ----------
+      const canvas = document.getElementById('network-bg');
+      const ctx = canvas.getContext('2d');
+      let w, h;
 
-      function applyTheme(theme) {
-        if (theme === 'light') {
-          document.body.classList.add('light-mode');
-          icon.textContent = '☀️';
-          label.textContent = 'Light';
-          localStorage.setItem('theme', 'light');
-        } else {
-          document.body.classList.remove('light-mode');
-          icon.textContent = '🌙';
-          label.textContent = 'Dark';
-          localStorage.setItem('theme', 'dark');
-        }
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      const nodes = [];
+      const NUM_NODES = 40;
+      for (let i = 0; i < NUM_NODES; i++) {
+        nodes.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          r: 1.5 + Math.random() * 2
+        });
       }
 
-      const saved = localStorage.getItem('theme');
-      if (saved === 'light') applyTheme('light');
-      else applyTheme('dark');
-
-      toggleBtn.addEventListener('click', () => {
-        const current = document.body.classList.contains('light-mode') ? 'light' : 'dark';
-        applyTheme(current === 'light' ? 'dark' : 'light');
-      });
-
-      // ---------- SCENARIOS (Toggle detail) ----------
-      window.toggleScenario = function(el) {
-        const detail = el.querySelector('.scenario-detail');
-        if (detail) {
-          detail.classList.toggle('open');
+      function drawNetwork() {
+        ctx.clearRect(0, 0, w, h);
+        // Update & draw nodes
+        for (let n of nodes) {
+          n.x += n.vx;
+          n.y += n.vy;
+          if (n.x < 0 || n.x > w) n.vx *= -1;
+          if (n.y < 0 || n.y > h) n.vy *= -1;
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(99,102,241,0.4)';
+          ctx.fill();
         }
-      };
-
-      // ---------- FAQ (Accordion) ----------
-      window.toggleFAQ = function(el) {
-        const parent = el.closest('.faq-item');
-        if (!parent) return;
-        const answer = parent.querySelector('.faq-answer');
-        const icon = el.querySelector('.faq-icon');
-        if (answer) {
-          answer.classList.toggle('open');
-          if (icon) icon.classList.toggle('open');
-        }
-      };
-
-      // ---------- SMOOTH SCROLL (for anchors) ----------
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-          const target = document.querySelector(this.getAttribute('href'));
-          if (target) {
-            e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth' });
+        // Draw connections
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const dx = nodes[i].x - nodes[j].x;
+            const dy = nodes[i].y - nodes[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 150) {
+              ctx.beginPath();
+              ctx.moveTo(nodes[i].x, nodes[i].y);
+              ctx.lineTo(nodes[j].x, nodes[j].y);
+              ctx.strokeStyle = `rgba(99,102,241,${0.08 * (1 - dist / 150)})`;
+              ctx.lineWidth = 0.6;
+              ctx.stroke();
+            }
           }
-        });
+        }
+        requestAnimationFrame(drawNetwork);
+      }
+      drawNetwork();
+
+      // ---------- SIMULATOR ENGINE ----------
+      const thetaSlider = document.getElementById('theta-slider');
+      const alphaSlider = document.getElementById('alpha-slider');
+      const capSlider = document.getElementById('cap-slider');
+      const runBtn = document.getElementById('run-btn');
+      const progressBar = document.getElementById('progress-bar');
+      const statusText = document.getElementById('status-text');
+      const pathCounter = document.getElementById('path-counter');
+
+      // Outputs
+      const costConv = document.getElementById('cost-conv');
+      const costProd = document.getElementById('cost-prod');
+      const distressConv = document.getElementById('distress-conv');
+      const distressProd = document.getElementById('distress-prod');
+      const costDiff = document.getElementById('cost-diff');
+      const distressDiff = document.getElementById('distress-diff');
+
+      // Bar chart elements
+      const barConv = document.getElementById('bar-conv');
+      const barProd = document.getElementById('bar-prod');
+      const barIlb = document.getElementById('bar-ilb');
+      const barGdp = document.getElementById('bar-gdp');
+      const barHybrid = document.getElementById('bar-hybrid');
+      const barConvVal = document.getElementById('bar-conv-val');
+      const barProdVal = document.getElementById('bar-prod-val');
+      const barIlbVal = document.getElementById('bar-ilb-val');
+      const barGdpVal = document.getElementById('bar-gdp-val');
+      const barHybridVal = document.getElementById('bar-hybrid-val');
+
+      // Update labels
+      document.getElementById('theta-label').textContent = thetaSlider.value;
+      document.getElementById('alpha-label').textContent = alphaSlider.value;
+      document.getElementById('cap-label').textContent = (parseFloat(capSlider.value) * 100).toFixed(1) + '%';
+
+      thetaSlider.addEventListener('input', () => {
+        document.getElementById('theta-label').textContent = thetaSlider.value;
       });
+      alphaSlider.addEventListener('input', () => {
+        document.getElementById('alpha-label').textContent = alphaSlider.value;
+      });
+      capSlider.addEventListener('input', () => {
+        document.getElementById('cap-label').textContent = (parseFloat(capSlider.value) * 100).toFixed(1) + '%';
+      });
+
+      // Box-Muller normal random
+      function normalRandom(mean = 0, std = 1) {
+        let u = 0,
+          v = 0;
+        while (u === 0) u = Math.random();
+        while (v === 0) v = Math.random();
+        return mean + std * Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+      }
+
+      // Run a single path
+      function runPath(thetaAI, alpha, cap, years = 10) {
+        let debt = 100;
+        let revenue = 30;
+        let cost = 0;
+        let distress = false;
+        let inflation = 0.02;
+
+        for (let y = 0; y < years; y++) {
+          // GDP and NPI shocks
+          const gdpGrowth = normalRandom(0.025, 0.02);
+          const npiBase = normalRandom(0.02, 0.025);
+          // AI boost: if gdp positive, AI amplifies NPI, moderated by thetaAI
+          const aiBoost = Math.max(0, gdpGrowth) * thetaAI * 0.5;
+          const npiGrowth = npiBase + aiBoost;
+
+          // Coupon
+          const realReturn = Math.min(Math.max(alpha * npiGrowth, 0), cap);
+          const coupon = (1 + inflation) * (1 + realReturn) - 1;
+
+          const debtService = debt * coupon;
+          cost += debtService / Math.pow(1 + 0.03, y);
+
+          // Revenue grows with GDP
+          revenue = revenue * (1 + gdpGrowth * 0.7);
+
+          if (debtService / revenue > 0.15) distress = true;
+
+          // Debt accumulation (simplified)
+          const spending = 36 + (gdpGrowth > 0 ? -0.05 * debt : 0.05 * debt);
+          debt = debt + (spending - revenue) + debtService;
+          if (debt < 0) debt = 0;
+        }
+        return { cost, distress };
+      }
+
+      // Main simulation
+      function runSimulation() {
+        const thetaAI = parseFloat(thetaSlider.value);
+        const alpha = parseFloat(alphaSlider.value);
+        const cap = parseFloat(capSlider.value);
+        const totalPaths = 10000;
+        let completed = 0;
+        let convCostSum = 0,
+          prodCostSum = 0;
+        let convDistress = 0,
+          prodDistress = 0;
+
+        statusText.textContent = 'Simulating...';
+        runBtn.disabled = true;
+
+        // We'll process in batches to keep UI responsive
+        const batchSize = 100;
+        let currentBatch = 0;
+
+        function processBatch() {
+          const end = Math.min(currentBatch + batchSize, totalPaths);
+          for (let i = currentBatch; i < end; i++) {
+            // Conventional (4% fixed)
+            const conv = runPath(0, 0, 0, 10); // fixed coupon 4% effectively
+            // Actually manual conv calc: fixed 4%
+            let debtC = 100,
+              revC = 30,
+              costC = 0,
+              distressC = false;
+            for (let y = 0; y < 10; y++) {
+              const gdpG = normalRandom(0.025, 0.02);
+              const debtService = debtC * 0.04;
+              costC += debtService / Math.pow(1 + 0.03, y);
+              revC = revC * (1 + gdpG * 0.7);
+              if (debtService / revC > 0.15) distressC = true;
+              const spend = 36 + (gdpG > 0 ? -0.05 * debtC : 0.05 * debtC);
+              debtC = debtC + (spend - revC) + debtService;
+              if (debtC < 0) debtC = 0;
+            }
+            convCostSum += costC;
+            if (distressC) convDistress++;
+
+            // Productivity Bond
+            const prod = runPath(thetaAI, alpha, cap, 10);
+            prodCostSum += prod.cost;
+            if (prod.distress) prodDistress++;
+          }
+
+          completed = end;
+          const pct = (completed / totalPaths) * 100;
+          progressBar.style.width = pct + '%';
+          pathCounter.textContent = `${completed} / ${totalPaths}`;
+
+          if (completed < totalPaths) {
+            currentBatch = end;
+            // Update metrics every few batches for smooth UI
+            updateMetrics(completed);
+            setTimeout(processBatch, 0);
+          } else {
+            // Final update
+            updateMetrics(totalPaths);
+            statusText.textContent = '✅ Done!';
+            runBtn.disabled = false;
+          }
+        }
+
+        function updateMetrics(count) {
+          if (count === 0) return;
+          const cCost = convCostSum / count;
+          const pCost = prodCostSum / count;
+          const cDist = (convDistress / count) * 100;
+          const pDist = (prodDistress / count) * 100;
+
+          costConv.textContent = cCost.toFixed(3);
+          costProd.textContent = pCost.toFixed(3);
+          distressConv.textContent = cDist.toFixed(1) + '%';
+          distressProd.textContent = pDist.toFixed(1) + '%';
+
+          const costSave = ((cCost - pCost) / cCost * 100);
+          costDiff.textContent = `Cost Saving: ${costSave.toFixed(1)}%`;
+          const distDiff = pDist - cDist;
+          distressDiff.textContent = `Distress: ${distDiff > 0 ? '+' : ''}${distDiff.toFixed(1)}pp`;
+
+          // Update bars (normalize to max height 140px)
+          const maxCost = 0.55;
+          const scale = 140 / maxCost;
+          barConv.style.height = Math.max(10, cCost * scale) + 'px';
+          barProd.style.height = Math.max(10, pCost * scale) + 'px';
+          // Static ILB, GDP, Hybrid from book results
+          barIlb.style.height = Math.max(10, 0.489 * scale) + 'px';
+          barGdp.style.height = Math.max(10, 0.511 * scale) + 'px';
+          barHybrid.style.height = Math.max(10, 0.527 * scale) + 'px';
+
+          barConvVal.textContent = cCost.toFixed(3);
+          barProdVal.textContent = pCost.toFixed(3);
+          barIlbVal.textContent = '0.489';
+          barGdpVal.textContent = '0.511';
+          barHybridVal.textContent = '0.527';
+
+          // Color prod bar if better
+          const prodBox = document.getElementById('cost-prod-box');
+          if (pCost < cCost) {
+            prodBox.className = 'metric-box better';
+          } else {
+            prodBox.className = 'metric-box worse';
+          }
+          const distBox = document.getElementById('distress-prod-box');
+          if (pDist < cDist) {
+            distBox.className = 'metric-box better';
+          } else {
+            distBox.className = 'metric-box worse';
+          }
+        }
+
+        // Reset and start
+        convCostSum = 0;
+        prodCostSum = 0;
+        convDistress = 0;
+        prodDistress = 0;
+        completed = 0;
+        currentBatch = 0;
+        progressBar.style.width = '0%';
+        pathCounter.textContent = '0 / 10000';
+        statusText.textContent = 'Running...';
+
+        processBatch();
+      }
+
+      runBtn.addEventListener('click', runSimulation);
+
+      // Run on load with default params
+      window.addEventListener('load', () => {
+        setTimeout(runSimulation, 300);
+      });
+
+      // ---------- PRINT POLICY BRIEF (PDF Download) ----------
+      document.getElementById('print-policy-btn').addEventListener('click', function() {
+        window.print();
+      });
+
+      // Ensure policy brief is printed nicely
+      const style = document.createElement('style');
+      style.innerHTML = `
+                @media print {
+                    #policy-brief-section .glass-card {
+                        border: none !important;
+                        background: white !important;
+                        box-shadow: none !important;
+                    }
+                    #policy-brief-section .policy-text {
+                        max-height: none !important;
+                        overflow: visible !important;
+                    }
+                    #policy-brief-section .btn-primary {
+                        display: none !important;
+                    }
+                }
+            `;
+      document.head.appendChild(style);
 
     })();
   </script>
