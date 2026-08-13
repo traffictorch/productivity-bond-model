@@ -187,6 +187,56 @@
     }
 
     /* ============================================================
+               BUTTONS
+               ============================================================ */
+    .btn-primary {
+      display: inline-block;
+      background: #6366f1;
+      color: #fff;
+      font-weight: 600;
+      padding: 0.8rem 2.2rem;
+      border-radius: 60px;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+      text-decoration: none;
+      text-align: center;
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: #818cf8;
+      transform: scale(1.02);
+    }
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    .btn-secondary {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.06);
+      color: #eef2f8;
+      font-weight: 500;
+      padding: 0.8rem 2.2rem;
+      border-radius: 60px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      text-decoration: none;
+      transition: 0.2s;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+    .btn-success {
+      background: #10b981;
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+    }
+    .btn-success:hover:not(:disabled) {
+      background: #34d399;
+    }
+
+    /* ============================================================
                SIMULATOR DASHBOARD
                ============================================================ */
     .sim-grid {
@@ -280,7 +330,6 @@
       color: #f87171;
     }
 
-    /* Progress Bar */
     .progress-wrap {
       width: 100%;
       height: 4px;
@@ -298,6 +347,10 @@
     }
 
     /* Pure CSS Bar Chart */
+    .bar-chart-wrap {
+      max-height: 180px;
+      overflow: hidden;
+    }
     .bar-chart {
       display: flex;
       align-items: flex-end;
@@ -311,6 +364,7 @@
       flex-direction: column;
       align-items: center;
       flex: 1;
+      min-width: 0;
     }
     .bar-item .bar {
       width: 100%;
@@ -318,6 +372,7 @@
       border-radius: 8px 8px 4px 4px;
       min-height: 6px;
       transition: height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s;
+      background: #4b5563;
     }
     .bar-item .bar-label {
       font-size: 0.6rem;
@@ -325,6 +380,7 @@
       margin-top: 0.4rem;
       opacity: 0.6;
       text-align: center;
+      white-space: nowrap;
     }
     .bar-item .bar-val {
       font-size: 0.65rem;
@@ -340,6 +396,81 @@
       opacity: 1;
       color: #a78bfa;
       font-weight: 700;
+    }
+
+    /* ============================================================
+               ADOPTION SCENARIOS (Interactive)
+               ============================================================ */
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .scenario-card {
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 1.5rem;
+      padding: 1.8rem 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      transition: all 0.3s;
+      cursor: default;
+    }
+    .scenario-card:hover {
+      border-color: rgba(99, 102, 241, 0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -16px rgba(99, 102, 241, 0.15);
+    }
+    .scenario-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    .scenario-card .profile {
+      font-size: 0.85rem;
+      opacity: 0.6;
+      margin-bottom: 1rem;
+    }
+    .scenario-card .preset-info {
+      font-size: 0.8rem;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 0.5rem 0.8rem;
+      border-radius: 0.8rem;
+      margin-bottom: 1rem;
+      font-family: monospace;
+    }
+    .scenario-card .preset-info span {
+      display: inline-block;
+      margin-right: 0.8rem;
+    }
+    .scenario-card .btn-preset {
+      display: inline-block;
+      background: rgba(99, 102, 241, 0.15);
+      color: #a5b4fc;
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .scenario-card .btn-preset:hover {
+      background: rgba(99, 102, 241, 0.25);
+      border-color: rgba(99, 102, 241, 0.4);
+    }
+    .scenario-pathway {
+      margin-top: 0.8rem;
+      font-size: 0.85rem;
+      opacity: 0.7;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      padding-top: 0.8rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
+    }
+    .scenario-card.active .scenario-pathway {
+      max-height: 300px;
+      opacity: 1;
     }
 
     /* ============================================================
@@ -420,6 +551,11 @@
       #policy-brief-section {
         page-break-before: always;
       }
+      .btn-primary,
+      .btn-secondary,
+      .btn-preset {
+        display: none !important;
+      }
     }
 
     /* ============================================================
@@ -442,6 +578,9 @@
       .bar-item .bar {
         max-width: 28px;
       }
+      .scenario-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -460,13 +599,13 @@
       <h1 class="text-gradient">The Infinite<br />Debt Problem</h1>
       <p class="sub">How to Replace Perpetual Growth with Productive Prosperity in the Age of AI.</p>
       <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.5rem;">
-        <a href="#simulator" class="btn-primary" style="display:inline-block; background:#6366f1; color:#fff; font-weight:600; padding:0.8rem 2.2rem; border-radius:60px; border:none; cursor:pointer; transition:0.2s; box-shadow:0 4px 20px rgba(99,102,241,0.4); text-decoration:none;">🚀 Run Live Simulation</a>
-        <a href="#policy-brief-section" style="display:inline-block; background:rgba(255,255,255,0.06); color:#eef2f8; font-weight:500; padding:0.8rem 2.2rem; border-radius:60px; border:1px solid rgba(255,255,255,0.08); text-decoration:none; transition:0.2s;">📄 Read Policy Brief</a>
+        <a href="#simulator" class="btn-primary">🚀 Run Live Simulation</a>
+        <a href="#policy-brief-section" class="btn-secondary">📄 Read Policy Brief</a>
       </div>
     </div>
   </section>
 
-  <!-- ====== AI PARADOX (The Core Link) ====== -->
+  <!-- ====== AI PARADOX ====== -->
   <section class="container" style="padding-bottom: 2rem;">
     <div class="glass-card" style="text-align:center;">
       <span class="badge-glow" style="margin-bottom:0.5rem;">The AI Paradox</span>
@@ -494,7 +633,6 @@
       <div class="sim-grid">
         <!-- Left: Sliders -->
         <div>
-          <!-- θ_AI -->
           <div class="slider-group">
             <label>
               <span>🤖 θ_AI <span style="font-weight:400; opacity:0.5;">(Gov. capture of AI gains)</span></span>
@@ -508,7 +646,6 @@
             </div>
           </div>
 
-          <!-- α -->
           <div class="slider-group">
             <label>
               <span>📊 α <span style="font-weight:400; opacity:0.5;">(Investor participation)</span></span>
@@ -517,7 +654,6 @@
             <input type="range" id="alpha-slider" min="0.30" max="0.90" step="0.01" value="0.70" />
           </div>
 
-          <!-- Cap -->
           <div class="slider-group">
             <label>
               <span>📈 Cap <span style="font-weight:400; opacity:0.5;">(Max real return)</span></span>
@@ -573,33 +709,95 @@
           <span style="font-weight:600; font-size:0.9rem;">Expected Cost Comparison</span>
           <span style="font-size:0.7rem; opacity:0.4;">Lower is better</span>
         </div>
-        <div class="bar-chart" id="bar-chart">
-          <div class="bar-item">
-            <div class="bar-val" id="bar-conv-val">0.515</div>
-            <div class="bar" id="bar-conv" style="height:90px; background:#4b5563;"></div>
-            <div class="bar-label">Conv.</div>
-          </div>
-          <div class="bar-item">
-            <div class="bar-val" id="bar-ilb-val">0.489</div>
-            <div class="bar" id="bar-ilb" style="height:85px; background:#3b82f6;"></div>
-            <div class="bar-label">ILB</div>
-          </div>
-          <div class="bar-item">
-            <div class="bar-val" id="bar-gdp-val">0.511</div>
-            <div class="bar" id="bar-gdp" style="height:89px; background:#8b5cf6;"></div>
-            <div class="bar-label">GDP</div>
-          </div>
-          <div class="bar-item highlight">
-            <div class="bar-val" id="bar-prod-val">0.499</div>
-            <div class="bar" id="bar-prod" style="height:87px; background:#a78bfa;"></div>
-            <div class="bar-label">Productivity</div>
-          </div>
-          <div class="bar-item">
-            <div class="bar-val" id="bar-hybrid-val">0.527</div>
-            <div class="bar" id="bar-hybrid" style="height:92px; background:#f59e0b;"></div>
-            <div class="bar-label">Hybrid</div>
+        <div class="bar-chart-wrap">
+          <div class="bar-chart" id="bar-chart">
+            <div class="bar-item">
+              <div class="bar-val" id="bar-conv-val">0.515</div>
+              <div class="bar" id="bar-conv" style="height:90px;"></div>
+              <div class="bar-label">Conv.</div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-val" id="bar-ilb-val">0.489</div>
+              <div class="bar" id="bar-ilb" style="height:85px; background:#3b82f6;"></div>
+              <div class="bar-label">ILB</div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-val" id="bar-gdp-val">0.511</div>
+              <div class="bar" id="bar-gdp" style="height:89px; background:#8b5cf6;"></div>
+              <div class="bar-label">GDP</div>
+            </div>
+            <div class="bar-item highlight">
+              <div class="bar-val" id="bar-prod-val">0.499</div>
+              <div class="bar" id="bar-prod" style="height:87px; background:#a78bfa;"></div>
+              <div class="bar-label">Productivity</div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-val" id="bar-hybrid-val">0.527</div>
+              <div class="bar" id="bar-hybrid" style="height:92px; background:#f59e0b;"></div>
+              <div class="bar-label">Hybrid</div>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== ADOPTION SCENARIOS (UPGRADED) ====== -->
+  <section id="adoption" class="container" style="padding: 1rem 0 3rem;">
+    <div class="glass-card">
+      <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">🌍 Adoption Scenarios</h2>
+      <p style="opacity:0.7; margin-bottom:1.5rem;">
+        Click a preset to load optimal parameters for your country type and see the projected outcome.
+      </p>
+      <div class="scenario-grid" id="scenario-grid">
+        <!-- Advanced -->
+        <div class="scenario-card" data-theta="0.35" data-alpha="0.70" data-cap="0.04">
+          <h3>🏛️ Advanced</h3>
+          <div class="profile">High debt, ageing pop., strong institutions</div>
+          <div class="preset-info">
+            <span>θ_AI: <strong>0.35</strong></span>
+            <span>α: <strong>0.70</strong></span>
+            <span>Cap: <strong>4.0%</strong></span>
+          </div>
+          <button class="btn-preset" data-preset="advanced">Load Preset</button>
+          <div class="scenario-pathway">
+            <strong>Pathway:</strong> Pilot $1‑5B → 10‑15% issuance → 30% portfolio.<br />
+            <span style="opacity:0.6;">Enablers: deep capital markets, strong stats.</span>
+          </div>
+        </div>
+        <!-- Emerging -->
+        <div class="scenario-card" data-theta="0.25" data-alpha="0.65" data-cap="0.05">
+          <h3>🚀 Emerging</h3>
+          <div class="profile">Growth potential, developing capacity</div>
+          <div class="preset-info">
+            <span>θ_AI: <strong>0.25</strong></span>
+            <span>α: <strong>0.65</strong></span>
+            <span>Cap: <strong>5.0%</strong></span>
+          </div>
+          <button class="btn-preset" data-preset="emerging">Load Preset</button>
+          <div class="scenario-pathway">
+            <strong>Pathway:</strong> Multilateral guarantee → 5‑10Y bonds → 20% portfolio.<br />
+            <span style="opacity:0.6;">Enablers: World Bank/IMF support, capacity building.</span>
+          </div>
+        </div>
+        <!-- Small Open -->
+        <div class="scenario-card" data-theta="0.45" data-alpha="0.75" data-cap="0.035">
+          <h3>🏝️ Small Open</h3>
+          <div class="profile">Strong institutions, global hub</div>
+          <div class="preset-info">
+            <span>θ_AI: <strong>0.45</strong></span>
+            <span>α: <strong>0.75</strong></span>
+            <span>Cap: <strong>3.5%</strong></span>
+          </div>
+          <button class="btn-preset" data-preset="smallopen">Load Preset</button>
+          <div class="scenario-pathway">
+            <strong>Pathway:</strong> Demonstration project → 20% portfolio → regional export.<br />
+            <span style="opacity:0.6;">Enablers: trusted stats, first‑mover advantage.</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:1.5rem; text-align:center; font-size:0.85rem; opacity:0.5;">
+        Presets automatically update the simulator above and run a new simulation.
       </div>
     </div>
   </section>
@@ -609,7 +807,7 @@
     <div class="glass-card" style="border-color: rgba(16,185,129,0.15);">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:1.5rem;">
         <h2 style="font-size:1.8rem; font-weight:700;">📄 Policy Brief</h2>
-        <button id="print-policy-btn" class="btn-primary" style="background:#10b981; box-shadow:0 4px 20px rgba(16,185,129,0.3); padding:0.6rem 1.5rem;">
+        <button id="print-policy-btn" class="btn-primary btn-success" style="padding:0.6rem 1.5rem;">
           ⬇ Download PDF
         </button>
       </div>
@@ -671,7 +869,7 @@
   </footer>
 
   <!-- ============================================================
-  JAVASCRIPT — LIVE SIMULATOR + NETWORK BG + PRINT
+  JAVASCRIPT — LIVE SIMULATOR + NETWORK BG + PRINT + PRESETS
   ============================================================ -->
   <script>
     (function() {
@@ -703,7 +901,6 @@
 
       function drawNetwork() {
         ctx.clearRect(0, 0, w, h);
-        // Update & draw nodes
         for (let n of nodes) {
           n.x += n.vx;
           n.y += n.vy;
@@ -714,7 +911,6 @@
           ctx.fillStyle = 'rgba(99,102,241,0.4)';
           ctx.fill();
         }
-        // Draw connections
         for (let i = 0; i < nodes.length; i++) {
           for (let j = i + 1; j < nodes.length; j++) {
             const dx = nodes[i].x - nodes[j].x;
@@ -764,19 +960,15 @@
       const barHybridVal = document.getElementById('bar-hybrid-val');
 
       // Update labels
-      document.getElementById('theta-label').textContent = thetaSlider.value;
-      document.getElementById('alpha-label').textContent = alphaSlider.value;
-      document.getElementById('cap-label').textContent = (parseFloat(capSlider.value) * 100).toFixed(1) + '%';
-
-      thetaSlider.addEventListener('input', () => {
+      function updateLabels() {
         document.getElementById('theta-label').textContent = thetaSlider.value;
-      });
-      alphaSlider.addEventListener('input', () => {
         document.getElementById('alpha-label').textContent = alphaSlider.value;
-      });
-      capSlider.addEventListener('input', () => {
         document.getElementById('cap-label').textContent = (parseFloat(capSlider.value) * 100).toFixed(1) + '%';
-      });
+      }
+      thetaSlider.addEventListener('input', updateLabels);
+      alphaSlider.addEventListener('input', updateLabels);
+      capSlider.addEventListener('input', updateLabels);
+      updateLabels();
 
       // Box-Muller normal random
       function normalRandom(mean = 0, std = 1) {
@@ -796,26 +988,21 @@
         let inflation = 0.02;
 
         for (let y = 0; y < years; y++) {
-          // GDP and NPI shocks
           const gdpGrowth = normalRandom(0.025, 0.02);
           const npiBase = normalRandom(0.02, 0.025);
-          // AI boost: if gdp positive, AI amplifies NPI, moderated by thetaAI
           const aiBoost = Math.max(0, gdpGrowth) * thetaAI * 0.5;
           const npiGrowth = npiBase + aiBoost;
 
-          // Coupon
           const realReturn = Math.min(Math.max(alpha * npiGrowth, 0), cap);
           const coupon = (1 + inflation) * (1 + realReturn) - 1;
 
           const debtService = debt * coupon;
           cost += debtService / Math.pow(1 + 0.03, y);
 
-          // Revenue grows with GDP
           revenue = revenue * (1 + gdpGrowth * 0.7);
 
           if (debtService / revenue > 0.15) distress = true;
 
-          // Debt accumulation (simplified)
           const spending = 36 + (gdpGrowth > 0 ? -0.05 * debt : 0.05 * debt);
           debt = debt + (spending - revenue) + debtService;
           if (debt < 0) debt = 0;
@@ -837,17 +1024,15 @@
 
         statusText.textContent = 'Simulating...';
         runBtn.disabled = true;
+        runBtn.textContent = '⏳ Running...';
 
-        // We'll process in batches to keep UI responsive
         const batchSize = 100;
         let currentBatch = 0;
 
         function processBatch() {
           const end = Math.min(currentBatch + batchSize, totalPaths);
           for (let i = currentBatch; i < end; i++) {
-            // Conventional (4% fixed)
-            const conv = runPath(0, 0, 0, 10); // fixed coupon 4% effectively
-            // Actually manual conv calc: fixed 4%
+            // Conventional (fixed 4%)
             let debtC = 100,
               revC = 30,
               costC = 0,
@@ -878,14 +1063,13 @@
 
           if (completed < totalPaths) {
             currentBatch = end;
-            // Update metrics every few batches for smooth UI
             updateMetrics(completed);
             setTimeout(processBatch, 0);
           } else {
-            // Final update
             updateMetrics(totalPaths);
             statusText.textContent = '✅ Done!';
             runBtn.disabled = false;
+            runBtn.textContent = '▶ Run Simulation';
           }
         }
 
@@ -906,12 +1090,11 @@
           const distDiff = pDist - cDist;
           distressDiff.textContent = `Distress: ${distDiff > 0 ? '+' : ''}${distDiff.toFixed(1)}pp`;
 
-          // Update bars (normalize to max height 140px)
+          // Update bars (normalize)
           const maxCost = 0.55;
           const scale = 140 / maxCost;
           barConv.style.height = Math.max(10, cCost * scale) + 'px';
           barProd.style.height = Math.max(10, pCost * scale) + 'px';
-          // Static ILB, GDP, Hybrid from book results
           barIlb.style.height = Math.max(10, 0.489 * scale) + 'px';
           barGdp.style.height = Math.max(10, 0.511 * scale) + 'px';
           barHybrid.style.height = Math.max(10, 0.527 * scale) + 'px';
@@ -922,7 +1105,6 @@
           barGdpVal.textContent = '0.511';
           barHybridVal.textContent = '0.527';
 
-          // Color prod bar if better
           const prodBox = document.getElementById('cost-prod-box');
           if (pCost < cCost) {
             prodBox.className = 'metric-box better';
@@ -956,6 +1138,38 @@
       // Run on load with default params
       window.addEventListener('load', () => {
         setTimeout(runSimulation, 300);
+      });
+
+      // ---------- ADOPTION SCENARIOS PRESETS ----------
+      document.querySelectorAll('.btn-preset').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const card = this.closest('.scenario-card');
+          const theta = parseFloat(card.dataset.theta);
+          const alpha = parseFloat(card.dataset.alpha);
+          const cap = parseFloat(card.dataset.cap);
+
+          // Update sliders
+          thetaSlider.value = theta;
+          alphaSlider.value = alpha;
+          capSlider.value = cap;
+          updateLabels();
+
+          // Highlight active card
+          document.querySelectorAll('.scenario-card').forEach(c => c.classList.remove('active'));
+          card.classList.add('active');
+
+          // Run simulation
+          runSimulation();
+        });
+      });
+
+      // Toggle pathway on card click (optional)
+      document.querySelectorAll('.scenario-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+          if (e.target.classList.contains('btn-preset')) return;
+          this.classList.toggle('active');
+        });
       });
 
       // ---------- PRINT POLICY BRIEF (PDF Download) ----------
