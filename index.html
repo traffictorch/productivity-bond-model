@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Infinite Debt Problem – Live AI Simulation</title>
-  <meta name="description" content="Live Monte Carlo simulation of the Productivity Bond. Adjust AI capture rates and see real-time results." />
+  <title>The Infinite Debt Problem – Live Simulator + Data</title>
+  <meta name="description" content="Live Monte Carlo simulation, full results tables, and interactive sensitivity charts for the Productivity Bond." />
   <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="The Infinite Debt Problem – Live Simulator" />
-  <meta property="og:description" content="Interactive simulation of the AI-driven Productivity Bond." />
+  <meta property="og:title" content="The Infinite Debt Problem – Live Simulator + Data" />
+  <meta property="og:description" content="Interactive simulation, results tables, and sensitivity charts for the AI-driven Productivity Bond." />
   <meta property="og:type" content="website" />
 
-  <!-- Preconnect for Fonts -->
+  <!-- Preconnect for Fonts & Plotly -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://cdn.plot.ly" />
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -23,7 +24,7 @@
       "@context": "https://schema.org",
       "@type": "Article",
       "headline": "The Infinite Debt Problem – Productivity Bond Simulator",
-      "description": "A live Monte Carlo simulation demonstrating how AI-driven productivity gains can reshape sovereign debt.",
+      "description": "A live Monte Carlo simulation with full data tables and sensitivity charts.",
       "author": { "@type": "Person", "name": "Ylia Callan" }
     }
   </script>
@@ -59,7 +60,7 @@
     }
 
     /* ============================================================
-               ANIMATED NEURAL NETWORK BACKGROUND (Canvas)
+               ANIMATED BACKGROUND
                ============================================================ */
     #network-bg {
       position: fixed;
@@ -71,10 +72,6 @@
       pointer-events: none;
       opacity: 0.5;
     }
-
-    /* ============================================================
-               GLOWING ORBS (CSS)
-               ============================================================ */
     .orb {
       position: fixed;
       border-radius: 50%;
@@ -164,29 +161,6 @@
     }
 
     /* ============================================================
-               HERO
-               ============================================================ */
-    .hero {
-      min-height: 90vh;
-      display: flex;
-      align-items: center;
-      padding: 4rem 0;
-    }
-    .hero h1 {
-      font-size: clamp(3rem, 12vw, 6rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.05;
-    }
-    .hero .sub {
-      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-      font-weight: 300;
-      opacity: 0.7;
-      max-width: 640px;
-      margin: 1rem 0 2rem;
-    }
-
-    /* ============================================================
                BUTTONS
                ============================================================ */
     .btn-primary {
@@ -237,7 +211,7 @@
     }
 
     /* ============================================================
-               SIMULATOR DASHBOARD
+               SIMULATOR DASHBOARD (unchanged)
                ============================================================ */
     .sim-grid {
       display: grid;
@@ -249,7 +223,6 @@
         grid-template-columns: 1fr;
       }
     }
-
     .slider-group {
       margin-bottom: 1.8rem;
     }
@@ -346,7 +319,6 @@
       transition: width 0.1s linear;
     }
 
-    /* Pure CSS Bar Chart */
     .bar-chart-wrap {
       max-height: 180px;
       overflow: hidden;
@@ -399,7 +371,67 @@
     }
 
     /* ============================================================
-               ADOPTION SCENARIOS (Interactive)
+               TABLES
+               ============================================================ */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    table.data-table th {
+      text-align: left;
+      padding: 0.6rem 0.8rem;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+      color: #a5b4fc;
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    table.data-table td {
+      padding: 0.5rem 0.8rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    table.data-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    table.data-table .highlight-row td {
+      background: rgba(167, 139, 250, 0.08);
+      border-left: 3px solid #a78bfa;
+    }
+
+    /* ============================================================
+               PLOTLY CHARTS
+               ============================================================ */
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    @media (max-width: 800px) {
+      .chart-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .plot-container {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 1.5rem;
+      padding: 0.5rem;
+    }
+    .plot-container .plot-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.5rem 1rem 0;
+      opacity: 0.7;
+    }
+
+    /* ============================================================
+               ADOPTION SCENARIOS
                ============================================================ */
     .scenario-grid {
       display: grid;
@@ -474,7 +506,27 @@
     }
 
     /* ============================================================
-               POLICY BRIEF (Inline + Print)
+               CODE BLOCK
+               ============================================================ */
+    .code-block {
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 1rem;
+      padding: 1.2rem 1.5rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      border-left: 3px solid #818cf8;
+      margin: 1rem 0;
+    }
+    .code-block .prompt {
+      color: #34d399;
+    }
+    .code-block .cmd {
+      color: #eef2f8;
+    }
+
+    /* ============================================================
+               POLICY BRIEF
                ============================================================ */
     .policy-text {
       max-height: 600px;
@@ -512,7 +564,7 @@
     }
 
     /* ============================================================
-               PRINT STYLES (for PDF download)
+               PRINT STYLES
                ============================================================ */
     @media print {
       body {
@@ -556,6 +608,18 @@
       .btn-preset {
         display: none !important;
       }
+      table.data-table td,
+      table.data-table th {
+        border-color: #ccc !important;
+        color: #111 !important;
+      }
+      table.data-table .highlight-row td {
+        background: #f0f0f0 !important;
+      }
+      .plot-container {
+        background: #fff !important;
+        border: 1px solid #ddd !important;
+      }
     }
 
     /* ============================================================
@@ -581,24 +645,29 @@
       .scenario-grid {
         grid-template-columns: 1fr;
       }
+      .chart-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- ====== ANIMATED BACKGROUND (Canvas) ====== -->
+  <!-- ====== BACKGROUND ====== -->
   <canvas id="network-bg"></canvas>
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
 
   <!-- ====== HERO ====== -->
-  <section class="container hero">
+  <section class="container hero" style="min-height:90vh; display:flex; align-items:center; padding:4rem 0;">
     <div>
       <span class="badge-glow">🤖 AI-Powered Finance</span>
-      <h1 class="text-gradient">The Infinite<br />Debt Problem</h1>
-      <p class="sub">How to Replace Perpetual Growth with Productive Prosperity in the Age of AI.</p>
-      <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.5rem;">
+      <h1 class="text-gradient" style="font-size:clamp(3rem,12vw,6rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">The Infinite<br />Debt Problem</h1>
+      <p style="font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:300; opacity:0.7; max-width:640px; margin:1rem 0 2rem;">
+        How to Replace Perpetual Growth with Productive Prosperity in the Age of AI.
+      </p>
+      <div style="display:flex; flex-wrap:wrap; gap:1rem;">
         <a href="#simulator" class="btn-primary">🚀 Run Live Simulation</a>
         <a href="#policy-brief-section" class="btn-secondary">📄 Read Policy Brief</a>
       </div>
@@ -606,7 +675,7 @@
   </section>
 
   <!-- ====== AI PARADOX ====== -->
-  <section class="container" style="padding-bottom: 2rem;">
+  <section class="container" style="padding-bottom:2rem;">
     <div class="glass-card" style="text-align:center;">
       <span class="badge-glow" style="margin-bottom:0.5rem;">The AI Paradox</span>
       <h2 style="font-size:2rem; font-weight:700; max-width:700px; margin:0 auto 1rem;">
@@ -622,16 +691,14 @@
   </section>
 
   <!-- ====== LIVE SIMULATOR ====== -->
-  <section id="simulator" class="container" style="padding: 1rem 0 3rem;">
-    <div class="glass-card" style="border-color: rgba(99,102,241,0.2);">
+  <section id="simulator" class="container" style="padding:1rem 0 3rem;">
+    <div class="glass-card" style="border-color:rgba(99,102,241,0.2);">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:1.5rem;">
         <h2 style="font-size:1.8rem; font-weight:700;">⚡ Live Monte Carlo Simulator</h2>
         <span style="font-size:0.8rem; opacity:0.4;">10,000 paths · 10-year horizon</span>
       </div>
 
-      <!-- Controls Grid -->
       <div class="sim-grid">
-        <!-- Left: Sliders -->
         <div>
           <div class="slider-group">
             <label>
@@ -675,7 +742,6 @@
           </div>
         </div>
 
-        <!-- Right: Metrics -->
         <div>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem;">
             <div class="metric-box better">
@@ -703,7 +769,6 @@
         </div>
       </div>
 
-      <!-- Bar Chart -->
       <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.04);">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
           <span style="font-weight:600; font-size:0.9rem;">Expected Cost Comparison</span>
@@ -742,15 +807,73 @@
     </div>
   </section>
 
-  <!-- ====== ADOPTION SCENARIOS (UPGRADED) ====== -->
-  <section id="adoption" class="container" style="padding: 1rem 0 3rem;">
+  <!-- ====== RESULTS TABLES + CHARTS ====== -->
+  <section id="results-data" class="container" style="padding:1rem 0 3rem;">
+    <div class="glass-card">
+      <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">📊 Simulation Results & Sensitivity</h2>
+      <p style="opacity:0.7; margin-bottom:1.5rem;">Data from Appendix C – 10,000 paths, 10‑year horizon.</p>
+
+      <!-- Table 1: Bond Comparison -->
+      <h3 style="font-size:1.1rem; font-weight:600; margin:1.5rem 0 0.5rem;">Bond Type Comparison</h3>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Bond Type</th><th>Expected Cost</th><th>Distress Prob.</th><th>Welfare</th><th>Effective Yield</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Conventional</td><td>0.5154</td><td>11.05%</td><td>1.0687</td><td>4.00%</td></tr>
+            <tr><td>Inflation‑Linked</td><td>0.4896</td><td>70.22%</td><td>4.0044</td><td>3.55%</td></tr>
+            <tr><td>GDP‑Linked</td><td>0.5114</td><td>90.32%</td><td>5.0329</td><td>3.97%</td></tr>
+            <tr class="highlight-row"><td><strong>Productivity</strong></td><td><strong>0.4994</strong></td><td><strong>88.17%</strong></td><td><strong>4.9134</strong></td><td><strong>3.74%</strong></td></tr>
+            <tr><td>Hybrid</td><td>0.5272</td><td>94.63%</td><td>5.2647</td><td>4.25%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Table 2: Portfolio Optimisation -->
+      <h3 style="font-size:1.1rem; font-weight:600; margin:1.5rem 0 0.5rem;">Portfolio Optimisation (Productivity Share)</h3>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Share</th><th>Expected Cost</th><th>Distress Prob.</th><th>Welfare</th></tr></thead>
+          <tbody>
+            <tr><td>0% (Conv. only)</td><td>0.5154</td><td>11.05%</td><td>1.0687</td></tr>
+            <tr><td>10%</td><td>0.5139</td><td>19.20%</td><td>1.437</td></tr>
+            <tr><td>20%</td><td>0.5112</td><td>35.40%</td><td>2.320</td></tr>
+            <tr class="highlight-row"><td><strong>30%</strong></td><td><strong>0.5088</strong></td><td><strong>52.10%</strong></td><td><strong>3.451</strong></td></tr>
+            <tr><td>40%</td><td>0.5061</td><td>67.80%</td><td>4.501</td></tr>
+            <tr><td>50%</td><td>0.5035</td><td>76.50%</td><td>5.112</td></tr>
+            <tr><td>100%</td><td>0.4994</td><td>88.17%</td><td>4.9134</td></tr>
+          </tbody>
+        </table>
+        <div style="font-size:0.8rem; opacity:0.5; margin-top:0.3rem;">Optimal portfolio: <strong>30%</strong> Productivity Bonds</div>
+      </div>
+
+      <!-- Interactive Plotly Charts -->
+      <h3 style="font-size:1.1rem; font-weight:600; margin:1.5rem 0 0.5rem;">Sensitivity Analysis</h3>
+      <div class="chart-grid">
+        <div class="plot-container">
+          <div class="plot-title">Cost vs θ_AI (Gov. capture of AI gains)</div>
+          <div id="chart-cost-theta" style="height:280px;"></div>
+        </div>
+        <div class="plot-container">
+          <div class="plot-title">Distress vs α_N (Investor participation)</div>
+          <div id="chart-distress-alpha" style="height:280px;"></div>
+        </div>
+      </div>
+      <div style="font-size:0.8rem; opacity:0.4; text-align:center; margin-top:0.5rem;">
+        Hover for values · Data from Appendix C
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== ADOPTION SCENARIOS ====== -->
+  <section id="adoption" class="container" style="padding:1rem 0 3rem;">
     <div class="glass-card">
       <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">🌍 Adoption Scenarios</h2>
       <p style="opacity:0.7; margin-bottom:1.5rem;">
-        Click a preset to load optimal parameters for your country type and see the projected outcome.
+        Click a preset to load optimal parameters for your country type.
       </p>
       <div class="scenario-grid" id="scenario-grid">
-        <!-- Advanced -->
         <div class="scenario-card" data-theta="0.35" data-alpha="0.70" data-cap="0.04">
           <h3>🏛️ Advanced</h3>
           <div class="profile">High debt, ageing pop., strong institutions</div>
@@ -765,7 +888,6 @@
             <span style="opacity:0.6;">Enablers: deep capital markets, strong stats.</span>
           </div>
         </div>
-        <!-- Emerging -->
         <div class="scenario-card" data-theta="0.25" data-alpha="0.65" data-cap="0.05">
           <h3>🚀 Emerging</h3>
           <div class="profile">Growth potential, developing capacity</div>
@@ -780,7 +902,6 @@
             <span style="opacity:0.6;">Enablers: World Bank/IMF support, capacity building.</span>
           </div>
         </div>
-        <!-- Small Open -->
         <div class="scenario-card" data-theta="0.45" data-alpha="0.75" data-cap="0.035">
           <h3>🏝️ Small Open</h3>
           <div class="profile">Strong institutions, global hub</div>
@@ -796,15 +917,33 @@
           </div>
         </div>
       </div>
-      <div style="margin-top:1.5rem; text-align:center; font-size:0.85rem; opacity:0.5;">
-        Presets automatically update the simulator above and run a new simulation.
+    </div>
+  </section>
+
+  <!-- ====== HOW TO REPRODUCE ====== -->
+  <section id="reproduce" class="container" style="padding:1rem 0 3rem;">
+    <div class="glass-card">
+      <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">⚙️ How to Reproduce</h2>
+      <p style="opacity:0.7; margin-bottom:1rem;">
+        Run the full simulation locally using the Python engine from the book.
+      </p>
+      <div class="code-block">
+        <div><span class="prompt">$</span> <span class="cmd">git clone https://github.com/traffictorch/productivity-bond-model.git</span></div>
+        <div><span class="prompt">$</span> <span class="cmd">cd productivity-bond-model</span></div>
+        <div><span class="prompt">$</span> <span class="cmd">pip install -r requirements.txt</span></div>
+        <div><span class="prompt">$</span> <span class="cmd">python run_simulation.py --paths 10000 --years 10</span></div>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:1rem; margin-top:1rem;">
+        <a href="https://github.com/traffictorch/productivity-bond-model" target="_blank" class="btn-secondary" style="padding:0.4rem 1.5rem;">📁 Repository</a>
+        <a href="https://github.com/traffictorch/productivity-bond-model/blob/main/ROADMAP.md" target="_blank" class="btn-secondary" style="padding:0.4rem 1.5rem;">📖 ROADMAP.md</a>
+        <a href="https://github.com/traffictorch/productivity-bond-model/tree/main/results" target="_blank" class="btn-secondary" style="padding:0.4rem 1.5rem;">📊 results/</a>
       </div>
     </div>
   </section>
 
-  <!-- ====== POLICY BRIEF (Inline + Downloadable) ====== -->
-  <section id="policy-brief-section" class="container" style="padding: 1rem 0 3rem;">
-    <div class="glass-card" style="border-color: rgba(16,185,129,0.15);">
+  <!-- ====== POLICY BRIEF ====== -->
+  <section id="policy-brief-section" class="container" style="padding:1rem 0 3rem;">
+    <div class="glass-card" style="border-color:rgba(16,185,129,0.15);">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:1.5rem;">
         <h2 style="font-size:1.8rem; font-weight:700;">📄 Policy Brief</h2>
         <button id="print-policy-btn" class="btn-primary btn-success" style="padding:0.6rem 1.5rem;">
@@ -869,7 +1008,7 @@
   </footer>
 
   <!-- ============================================================
-  JAVASCRIPT — LIVE SIMULATOR + NETWORK BG + PRINT + PRESETS
+  JAVASCRIPT — SIMULATOR + TABLES + PLOTLY CHARTS + PRESETS
   ============================================================ -->
   <script>
     (function() {
@@ -879,14 +1018,9 @@
       const canvas = document.getElementById('network-bg');
       const ctx = canvas.getContext('2d');
       let w, h;
-
-      function resize() {
-        w = canvas.width = window.innerWidth;
-        h = canvas.height = window.innerHeight;
-      }
+      function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
       window.addEventListener('resize', resize);
       resize();
-
       const nodes = [];
       const NUM_NODES = 40;
       for (let i = 0; i < NUM_NODES; i++) {
@@ -898,7 +1032,6 @@
           r: 1.5 + Math.random() * 2
         });
       }
-
       function drawNetwork() {
         ctx.clearRect(0, 0, w, h);
         for (let n of nodes) {
@@ -939,7 +1072,6 @@
       const statusText = document.getElementById('status-text');
       const pathCounter = document.getElementById('path-counter');
 
-      // Outputs
       const costConv = document.getElementById('cost-conv');
       const costProd = document.getElementById('cost-prod');
       const distressConv = document.getElementById('distress-conv');
@@ -947,7 +1079,6 @@
       const costDiff = document.getElementById('cost-diff');
       const distressDiff = document.getElementById('distress-diff');
 
-      // Bar chart elements
       const barConv = document.getElementById('bar-conv');
       const barProd = document.getElementById('bar-prod');
       const barIlb = document.getElementById('bar-ilb');
@@ -959,7 +1090,6 @@
       const barGdpVal = document.getElementById('bar-gdp-val');
       const barHybridVal = document.getElementById('bar-hybrid-val');
 
-      // Update labels
       function updateLabels() {
         document.getElementById('theta-label').textContent = thetaSlider.value;
         document.getElementById('alpha-label').textContent = alphaSlider.value;
@@ -970,7 +1100,6 @@
       capSlider.addEventListener('input', updateLabels);
       updateLabels();
 
-      // Box-Muller normal random
       function normalRandom(mean = 0, std = 1) {
         let u = 0,
           v = 0;
@@ -979,30 +1108,23 @@
         return mean + std * Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
       }
 
-      // Run a single path
       function runPath(thetaAI, alpha, cap, years = 10) {
         let debt = 100;
         let revenue = 30;
         let cost = 0;
         let distress = false;
         let inflation = 0.02;
-
         for (let y = 0; y < years; y++) {
           const gdpGrowth = normalRandom(0.025, 0.02);
           const npiBase = normalRandom(0.02, 0.025);
           const aiBoost = Math.max(0, gdpGrowth) * thetaAI * 0.5;
           const npiGrowth = npiBase + aiBoost;
-
           const realReturn = Math.min(Math.max(alpha * npiGrowth, 0), cap);
           const coupon = (1 + inflation) * (1 + realReturn) - 1;
-
           const debtService = debt * coupon;
           cost += debtService / Math.pow(1 + 0.03, y);
-
           revenue = revenue * (1 + gdpGrowth * 0.7);
-
           if (debtService / revenue > 0.15) distress = true;
-
           const spending = 36 + (gdpGrowth > 0 ? -0.05 * debt : 0.05 * debt);
           debt = debt + (spending - revenue) + debtService;
           if (debt < 0) debt = 0;
@@ -1010,7 +1132,6 @@
         return { cost, distress };
       }
 
-      // Main simulation
       function runSimulation() {
         const thetaAI = parseFloat(thetaSlider.value);
         const alpha = parseFloat(alphaSlider.value);
@@ -1050,7 +1171,6 @@
             convCostSum += costC;
             if (distressC) convDistress++;
 
-            // Productivity Bond
             const prod = runPath(thetaAI, alpha, cap, 10);
             prodCostSum += prod.cost;
             if (prod.distress) prodDistress++;
@@ -1090,7 +1210,6 @@
           const distDiff = pDist - cDist;
           distressDiff.textContent = `Distress: ${distDiff > 0 ? '+' : ''}${distDiff.toFixed(1)}pp`;
 
-          // Update bars (normalize)
           const maxCost = 0.55;
           const scale = 140 / maxCost;
           barConv.style.height = Math.max(10, cCost * scale) + 'px';
@@ -1119,7 +1238,6 @@
           }
         }
 
-        // Reset and start
         convCostSum = 0;
         prodCostSum = 0;
         convDistress = 0;
@@ -1134,13 +1252,9 @@
       }
 
       runBtn.addEventListener('click', runSimulation);
+      window.addEventListener('load', () => { setTimeout(runSimulation, 300); });
 
-      // Run on load with default params
-      window.addEventListener('load', () => {
-        setTimeout(runSimulation, 300);
-      });
-
-      // ---------- ADOPTION SCENARIOS PRESETS ----------
+      // ---------- ADOPTION PRESETS ----------
       document.querySelectorAll('.btn-preset').forEach(btn => {
         btn.addEventListener('click', function(e) {
           e.stopPropagation();
@@ -1148,23 +1262,15 @@
           const theta = parseFloat(card.dataset.theta);
           const alpha = parseFloat(card.dataset.alpha);
           const cap = parseFloat(card.dataset.cap);
-
-          // Update sliders
           thetaSlider.value = theta;
           alphaSlider.value = alpha;
           capSlider.value = cap;
           updateLabels();
-
-          // Highlight active card
           document.querySelectorAll('.scenario-card').forEach(c => c.classList.remove('active'));
           card.classList.add('active');
-
-          // Run simulation
           runSimulation();
         });
       });
-
-      // Toggle pathway on card click (optional)
       document.querySelectorAll('.scenario-card').forEach(card => {
         card.addEventListener('click', function(e) {
           if (e.target.classList.contains('btn-preset')) return;
@@ -1172,30 +1278,91 @@
         });
       });
 
-      // ---------- PRINT POLICY BRIEF (PDF Download) ----------
+      // ---------- PRINT POLICY BRIEF ----------
       document.getElementById('print-policy-btn').addEventListener('click', function() {
         window.print();
       });
 
-      // Ensure policy brief is printed nicely
-      const style = document.createElement('style');
-      style.innerHTML = `
-                @media print {
-                    #policy-brief-section .glass-card {
-                        border: none !important;
-                        background: white !important;
-                        box-shadow: none !important;
-                    }
-                    #policy-brief-section .policy-text {
-                        max-height: none !important;
-                        overflow: visible !important;
-                    }
-                    #policy-brief-section .btn-primary {
-                        display: none !important;
-                    }
-                }
-            `;
-      document.head.appendChild(style);
+      // ---------- PLOTLY CHARTS (Lazy load) ----------
+      function loadPlotlyAndRender() {
+        // Hardcoded data from Appendix C sensitivity tables
+        // Cost vs θ_AI
+        const thetaValues = [0.10, 0.20, 0.30, 0.40, 0.50];
+        const costConv = [0.5154, 0.5154, 0.5154, 0.5154, 0.5154]; // fixed
+        const costProd = [0.5079, 0.5035, 0.4994, 0.4959, 0.4923];
+
+        // Distress vs α_N (for α_N values 0.3, 0.5, 0.7, 0.9, 1.0)
+        const alphaValues = [0.30, 0.50, 0.70, 0.90, 1.00];
+        const distressAlpha = [82.5, 85.8, 88.17, 89.6, 90.1];
+
+        // Use Plotly if loaded
+        if (typeof Plotly !== 'undefined') {
+          // Chart 1: Cost vs θ_AI
+          const trace1 = {
+            x: thetaValues,
+            y: costConv,
+            name: 'Conventional',
+            type: 'scatter',
+            mode: 'lines+markers',
+            line: { color: '#4b5563', width: 2 },
+            marker: { color: '#4b5563' }
+          };
+          const trace2 = {
+            x: thetaValues,
+            y: costProd,
+            name: 'Productivity Bond',
+            type: 'scatter',
+            mode: 'lines+markers',
+            line: { color: '#a78bfa', width: 3 },
+            marker: { color: '#a78bfa', size: 8 }
+          };
+          const layout1 = {
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#eef2f8', family: 'Inter' },
+            margin: { l: 40, r: 20, t: 20, b: 40 },
+            xaxis: { title: 'θ_AI', gridcolor: 'rgba(255,255,255,0.05)' },
+            yaxis: { title: 'Expected Cost', gridcolor: 'rgba(255,255,255,0.05)' },
+            legend: { orientation: 'h', x: 0, y: 1.05 }
+          };
+          Plotly.newPlot('chart-cost-theta', [trace1, trace2], layout1, { responsive: true });
+
+          // Chart 2: Distress vs α_N
+          const trace3 = {
+            x: alphaValues,
+            y: distressAlpha,
+            name: 'Distress Probability',
+            type: 'scatter',
+            mode: 'lines+markers',
+            line: { color: '#f87171', width: 3 },
+            marker: { color: '#f87171', size: 8 }
+          };
+          const layout2 = {
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#eef2f8', family: 'Inter' },
+            margin: { l: 40, r: 20, t: 20, b: 40 },
+            xaxis: { title: 'α_N (participation)', gridcolor: 'rgba(255,255,255,0.05)' },
+            yaxis: { title: 'Distress Probability (%)', gridcolor: 'rgba(255,255,255,0.05)' },
+            legend: { orientation: 'h', x: 0, y: 1.05 }
+          };
+          Plotly.newPlot('chart-distress-alpha', [trace3], layout2, { responsive: true });
+        } else {
+          // Fallback: if Plotly fails, show text
+          document.querySelector('.plot-container').innerHTML += '<p style="text-align:center;opacity:0.5;">Plotly not loaded. Please refresh or check network.</p>';
+        }
+      }
+
+      // Load Plotly CDN and then render
+      const script = document.createElement('script');
+      script.src = 'https://cdn.plot.ly/plotly-2.27.1.min.js';
+      script.onload = loadPlotlyAndRender;
+      script.onerror = function() {
+        // Fallback if CDN fails
+        document.querySelector('.plot-container').innerHTML +=
+          '<p style="text-align:center;opacity:0.5;">Plotly could not load. Please try again later.</p>';
+      };
+      document.head.appendChild(script);
 
     })();
   </script>
