@@ -26,9 +26,9 @@
   <link rel="manifest" href="/manifest.json">
 
   <!-- Static Favicon & App Icons  -->
-  <link rel="icon" href="/favicon.ico">
-<link rel="apple-touch-icon" href="/icon-512.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
+  <link rel="icon" href="/productivity-bond-model/favicon.ico">
+<link rel="apple-touch-icon" href="/productivity-bond-model/icon-512.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/productivity-bond-model/icon-512.png">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -2461,5 +2461,17 @@
     })();
   </script>
 
+<!-- Service Worker Registration -->
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/productivity-bond-model/sw.js')
+      .then(registration => {
+        console.log('Service Worker registered successfully:', registration);
+      })
+      .catch(error => {
+        console.log('Service Worker registration failed:', error);
+      });
+  }
+</script>
 </body>
 </html>

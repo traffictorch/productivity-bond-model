@@ -1,10 +1,10 @@
 // sw.js
 const CACHE_NAME = 'prod-bond-model-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icon-512.png'
+  '/productivity-bond-model/index.html',
+  '/productivity-bond-model/manifest.json',
+  '/productivity-bond-model/icon-512.png',
+  '/productivity-bond-model/favicon.ico'
 ];
 
 // Install event - Opens the cache and adds the core files
