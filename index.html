@@ -10,6 +10,7 @@
   <!-- Open Graph -->
   <meta property="og:title" content="The Productivity Bond Model">
   <meta property="og:description" content="A canonical sovereign debt model for a finite planet. Formal definition, variables, simulations, and implementation.">
+  <meta property="og:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.webp">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://traffictorch.github.io/productivity-bond-model/">
 
@@ -24,8 +25,8 @@
   <!-- PWA Manifest -->
   <link rel="manifest" href="/manifest.json">
 
-  <!-- Static Favicon & App Icons (Uploaded to your root folder) -->
-  <link rel="icon" href="/favicon.ico" sizes="any">
+  <!-- Static Favicon & App Icons  -->
+  <link rel="icon" href="/favicon.ico">
 <link rel="apple-touch-icon" href="/icon-512.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
 
@@ -39,7 +40,7 @@
       "author": {
         "@type": "Person",
         "name": "Ylia Callan",
-        "url": "https://github.com/traffictorch"
+        "url": "https://yliacallan.github.io/"
       }
     }
   </script>
@@ -956,6 +957,29 @@
       .sticky-nav a {
         padding: 0.1rem 0.3rem;
       }
+
+      /* ==========================================================
+         MOBILE LAYOUT FIXES (Forcing 1 column grids)
+         ========================================================== */
+      
+      /* Ensure Sticky Nav stays perfectly sticky on mobile */
+      .sticky-nav {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 100 !important;
+      }
+
+      /* Force "Quick Reference" grid to 1 column */
+      .glass-card.quick-ref .accordion-content.open > div[style*="grid-template-columns:"] {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Force "How to Implement", "Related Work", and "FAQ" grids to 1 column */
+      #implement .glass-card > div[style*="grid-template-columns:"],
+      #related .glass-card > div[style*="grid-template-columns:"],
+      #faq .glass-card > div[style*="grid-template-columns:"] {
+        grid-template-columns: 1fr !important;
+      }
     }
 
     /* ============================================================
@@ -1717,7 +1741,7 @@
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
               <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem;">
                 <div style="font-weight:600; color:#a5b4fc;">Thomas Piketty</div>
-                <p style="font-size:0.9rem; color:#c7d2fe;">r > g dynamics — capital returns outpace growth. The Productivity Bond flips this by capping returns and linking them to productivity.</p>
+                <p style="font-size:0.9rem; color:#c7d2fe;">r > g dynamics - capital returns outpace growth. The Productivity Bond flips this by capping returns and linking them to productivity.</p>
               </div>
               <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem;">
                 <div style="font-weight:600; color:#a5b4fc;">Rockström et al. (Planetary Boundaries)</div>
