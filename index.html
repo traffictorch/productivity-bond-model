@@ -24,8 +24,10 @@
   <!-- PWA Manifest -->
   <link rel="manifest" href="/manifest.json">
 
-  <!-- Fixed, Validated Base64 SVG Favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIlMjM2MzY2ZjEiLz48cGF0aCBkPSJNMjAgNzAgTDQwIDUwIEw2MCA2MCBMODAgMzAiIHN0cm9rZT0iJTIzZmZmZmZmIiBzdHJva2Utd2lkdGg9IjgiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg==">
+  <!-- Static Favicon & App Icons (Uploaded to your root folder) -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/icon-512.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -85,7 +87,7 @@
       background: #0f111a;
     }
     ::-webkit-scrollbar-thumb {
-      background: #6366f1;
+      background: #4f46e5;
       border-radius: 10px;
     }
     
@@ -124,7 +126,7 @@
       height: 40vw;
       top: -10vh;
       left: -10vw;
-      background: rgba(99, 102, 241, 0.15);
+      background: rgba(79, 70, 229, 0.15);
       animation: floatOrb 25s infinite alternate ease-in-out;
     }
     .orb-2 {
@@ -182,7 +184,7 @@
       text-decoration: underline;
     }
 
-    #abstract, #model-definition, #mechanism, #simulator, #wellbeing, #results-data, #sensitivity, #adoption, #implement, #related, #faq, #citation, #policy-brief-section {
+    #abstract, #model-definition, #mechanism, #simulator, #wellbeing, #results-data, #sensitivity, #adoption, #implement, #related, #faq, #citation, #policy-brief-section, #learn {
       scroll-margin-top: 110px;
     }
 
@@ -207,22 +209,22 @@
       transition: border-color 0.3s, box-shadow 0.3s;
     }
     .glass-card:hover {
-      border-color: rgba(99, 102, 241, 0.2);
-      box-shadow: 0 30px 60px -20px rgba(99, 102, 241, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      border-color: rgba(79, 70, 229, 0.2);
+      box-shadow: 0 30px 60px -20px rgba(79, 70, 229, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.06);
     }
 
     /* ============================================================
                TYPOGRAPHY & BADGES
                ============================================================ */
     .text-gradient {
-      background: linear-gradient(135deg, #818cf8 0%, #a78bfa 40%, #f472b6 100%);
+      background: linear-gradient(135deg, #4f46e5 0%, #a78bfa 40%, #f472b6 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
     .badge-glow {
       display: inline-block;
-      background: rgba(99, 102, 241, 0.15);
+      background: rgba(79, 70, 229, 0.15);
       color: #c7d2fe;
       font-size: 0.7rem;
       font-weight: 700;
@@ -230,7 +232,7 @@
       border-radius: 60px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      border: 1px solid rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(79, 70, 229, 0.15);
       backdrop-filter: blur(4px);
     }
     .badge-version {
@@ -240,11 +242,11 @@
     }
 
     /* ============================================================
-               BUTTONS
+               BUTTONS (Your Tweaked Design)
                ============================================================ */
     .btn-primary {
       display: inline-block;
-      background: #4f46e5;          /* was #6366f1 – now 6.29:1 */
+      background: #4f46e5;
       color: #fff;
       font-weight: 600;
       padding: 0.8rem 2.2rem;
@@ -257,7 +259,7 @@
       text-align: center;
     }
     .btn-primary:hover:not(:disabled) {
-      background: #4338ca;          /* was #818cf8 – now ~7.9:1 */
+      background: #4338ca;
       transform: scale(1.02);
     }
     .btn-primary:disabled {
@@ -282,11 +284,11 @@
       background: rgba(255, 255, 255, 0.12);
     }
     .btn-success {
-      background: #047857;          /* was #059669 – now ~5.3:1 */
+      background: #047857;
       box-shadow: 0 4px 20px rgba(4, 120, 87, 0.3);
     }
     .btn-success:hover:not(:disabled) {
-      background: #065f46;          /* was #10b981 */
+      background: #065f46;
     }
     .share-btn {
       background: rgba(255, 255, 255, 0.08);
@@ -324,7 +326,7 @@
       background: rgba(0, 0, 0, 0.25);
       border-radius: 1rem;
       padding: 1rem 1.2rem;
-      border-left: 3px solid #818cf8;
+      border-left: 3px solid #4f46e5;
     }
     .var-item .symbol {
       font-family: 'Courier New', monospace;
@@ -382,11 +384,11 @@
       margin: 0.5rem 0;
     }
     .pill-list li {
-      background: rgba(99, 102, 241, 0.1);
+      background: rgba(79, 70, 229, 0.1);
       padding: 0.2rem 1rem;
       border-radius: 40px;
       font-size: 0.8rem;
-      border: 1px solid rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(79, 70, 229, 0.1);
     }
 
     .citation-block {
@@ -469,9 +471,9 @@
       width: 18px;
       height: 18px;
       border-radius: 50%;
-      background: #818cf8;
+      background: #4f46e5;
       cursor: pointer;
-      box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+      box-shadow: 0 0 20px rgba(79, 70, 229, 0.5);
       border: 2px solid rgba(255, 255, 255, 0.2);
       transition: 0.1s;
     }
@@ -483,7 +485,7 @@
       width: 18px;
       height: 18px;
       border-radius: 50%;
-      background: #818cf8;
+      background: #4f46e5;
       cursor: pointer;
       border: none;
     }
@@ -526,7 +528,7 @@
     .progress-bar {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, #818cf8, #a78bfa);
+      background: linear-gradient(90deg, #4f46e5, #a78bfa);
       border-radius: 4px;
       transition: width 0.1s linear;
     }
@@ -690,9 +692,9 @@
       cursor: default;
     }
     .scenario-card:hover {
-      border-color: rgba(99, 102, 241, 0.3);
+      border-color: rgba(79, 70, 229, 0.3);
       transform: translateY(-4px);
-      box-shadow: 0 20px 40px -16px rgba(99, 102, 241, 0.15);
+      box-shadow: 0 20px 40px -16px rgba(79, 70, 229, 0.15);
     }
     .scenario-card h3 {
       font-size: 1.2rem;
@@ -719,19 +721,19 @@
     }
     .scenario-card .btn-preset {
       display: inline-block;
-      background: rgba(99, 102, 241, 0.15);
+      background: rgba(79, 70, 229, 0.15);
       color: #c7d2fe;
       padding: 0.4rem 1.2rem;
       border-radius: 40px;
       font-size: 0.8rem;
       font-weight: 600;
-      border: 1px solid rgba(99, 102, 241, 0.2);
+      border: 1px solid rgba(79, 70, 229, 0.2);
       cursor: pointer;
       transition: 0.2s;
     }
     .scenario-card .btn-preset:hover {
-      background: rgba(99, 102, 241, 0.25);
-      border-color: rgba(99, 102, 241, 0.4);
+      background: rgba(79, 70, 229, 0.25);
+      border-color: rgba(79, 70, 229, 0.4);
     }
     .scenario-pathway {
       margin-top: 0.8rem;
@@ -778,7 +780,7 @@
       font-family: 'Courier New', monospace;
       font-size: 0.85rem;
       overflow-x: auto;
-      border-left: 3px solid #818cf8;
+      border-left: 3px solid #4f46e5;
       margin: 1rem 0;
     }
     .code-block .prompt {
@@ -799,7 +801,7 @@
       width: 4px;
     }
     .policy-text::-webkit-scrollbar-thumb {
-      background: #6366f1;
+      background: #4f46e5;
       border-radius: 10px;
     }
     .policy-text h3 {
@@ -820,7 +822,7 @@
       font-size: 0.85rem;
       margin: 0.5rem 0;
       overflow-x: auto;
-      border-left: 3px solid #818cf8;
+      border-left: 3px solid #4f46e5;
     }
 
     .tooltip-trigger {
@@ -861,7 +863,7 @@
       color: #a5b4fc;
     }
     .footer a {
-      color: #818cf8;
+      color: #4f46e5;
     }
 
     @media print {
@@ -1039,7 +1041,7 @@
     .pwa-ios-modal .close-btn {
       margin-top: 16px;
       padding: 10px 32px;
-      background: #6366f1;
+      background: #4f46e5;
       color: white;
       border: none;
       border-radius: 40px;
@@ -1049,7 +1051,7 @@
       transition: 0.2s;
     }
     .pwa-ios-modal .close-btn:hover {
-      background: #818cf8;
+      background: #4338ca;
       transform: scale(1.02);
     }
 
@@ -1143,6 +1145,7 @@
     <a href="#related">Related</a>
     <a href="#faq">FAQ</a>
     <a href="#citation">Cite</a>
+    <a href="#learn">Learn</a>
   </nav>
 
   <!-- ====== MAIN LANDMARK ====== -->
@@ -1192,9 +1195,9 @@
               <span class="arrow">▼</span>
             </div>
             <div class="accordion-content open">
-              <!-- Citizen's Explainer for the equations -->
+              <!-- Citizen's Explainer -->
               <div style="margin-bottom:1rem; padding-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.06); color:#c7d2fe; font-size:0.95rem;">
-                <p>Think of the economy like a machine. 
+                <p><strong>Think of the economy like a machine.</strong> 
                 <span class="sym" style="color:#a5b4fc; font-family:monospace;">θ_AI</span> measures what % of AI efficiency gains the government collects to fund public services.
                 <span class="sym" style="color:#a5b4fc; font-family:monospace;">α_N</span> is the % of those gains paid out to bondholders.
                 <span class="sym" style="color:#a5b4fc; font-family:monospace;">C</span> sets a hard cap to prevent the government from overpaying in a boom, while <span class="sym" style="color:#a5b4fc; font-family:monospace;">F</span> acts as a safety net ensuring investors get 0% real return in bad years.</p>
@@ -1287,14 +1290,14 @@
               <svg viewBox="0 0 800 180" preserveAspectRatio="xMidYMid meet" style="max-width:100%; height:auto;">
                 <defs>
                   <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                    <path d="M0,0 L10,5 L0,10 Z" fill="#818cf8" />
+                    <path d="M0,0 L10,5 L0,10 Z" fill="#4f46e5" />
                   </marker>
                   <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#818cf8" stop-opacity="0.6"/>
+                    <stop offset="0%" stop-color="#4f46e5" stop-opacity="0.6"/>
                     <stop offset="100%" stop-color="#a78bfa" stop-opacity="0.6"/>
                   </linearGradient>
                 </defs>
-                <rect x="20" y="40" width="140" height="60" rx="12" fill="rgba(99,102,241,0.12)" stroke="#818cf8" stroke-width="1.5"/>
+                <rect x="20" y="40" width="140" height="60" rx="12" fill="rgba(79, 70, 229, 0.12)" stroke="#4f46e5" stroke-width="1.5"/>
                 <text x="90" y="65" fill="#eef2f8" font-size="12" font-weight="600" text-anchor="middle">Government</text>
                 <text x="90" y="82" fill="#a5b4fc" font-size="9" text-anchor="middle">Issuer</text>
 
@@ -1310,14 +1313,14 @@
                 <text x="715" y="65" fill="#eef2f8" font-size="12" font-weight="600" text-anchor="middle">Productivity</text>
                 <text x="715" y="82" fill="#a5b4fc" font-size="9" text-anchor="middle">Dividend</text>
 
-                <line x1="160" y1="70" x2="225" y2="70" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow)"/>
-                <line x1="380" y1="70" x2="445" y2="70" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow)"/>
-                <line x1="590" y1="70" x2="645" y2="70" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow)"/>
+                <line x1="160" y1="70" x2="225" y2="70" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow)"/>
+                <line x1="380" y1="70" x2="445" y2="70" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow)"/>
+                <line x1="590" y1="70" x2="645" y2="70" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow)"/>
 
                 <path d="M520,100 C520,150 305,150 305,100" fill="none" stroke="rgba(167,139,250,0.3)" stroke-width="1.5" stroke-dasharray="4 4"/>
                 <text x="410" y="145" fill="#a5b4fc" font-size="9" text-anchor="middle" opacity="0.6">Feedback Loop → Principal Adjustment</text>
 
-                <text x="192" y="60" fill="#818cf8" font-size="8" text-anchor="middle">Issuance</text>
+                <text x="192" y="60" fill="#4f46e5" font-size="8" text-anchor="middle">Issuance</text>
                 <text x="412" y="60" fill="#a78bfa" font-size="8" text-anchor="middle">Coupon (capped)</text>
                 <text x="617" y="60" fill="#34d399" font-size="8" text-anchor="middle">Funds</text>
               </svg>
@@ -1331,7 +1334,7 @@
                     <path d="M0,0 L10,5 L0,10 Z" fill="#a78bfa" />
                   </marker>
                 </defs>
-                <rect x="20" y="30" width="160" height="60" rx="12" fill="rgba(99,102,241,0.10)" stroke="#818cf8" stroke-width="1.5"/>
+                <rect x="20" y="30" width="160" height="60" rx="12" fill="rgba(79, 70, 229, 0.10)" stroke="#4f46e5" stroke-width="1.5"/>
                 <text x="100" y="58" fill="#eef2f8" font-size="13" font-weight="600" text-anchor="middle">Investors</text>
                 <text x="100" y="76" fill="#a5b4fc" font-size="9" text-anchor="middle">Capital</text>
 
@@ -1343,10 +1346,10 @@
                 <text x="700" y="58" fill="#eef2f8" font-size="13" font-weight="600" text-anchor="middle">Citizens</text>
                 <text x="700" y="76" fill="#a5b4fc" font-size="9" text-anchor="middle">Dividend / Circular Flow</text>
 
-                <line x1="180" y1="60" x2="315" y2="60" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow2)"/>
+                <line x1="180" y1="60" x2="315" y2="60" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow2)"/>
                 <line x1="480" y1="60" x2="615" y2="60" stroke="#34d399" stroke-width="2" marker-end="url(#arrow2)"/>
 
-                <text x="248" y="50" fill="#818cf8" font-size="9" text-anchor="middle">Bond Proceeds</text>
+                <text x="248" y="50" fill="#4f46e5" font-size="9" text-anchor="middle">Bond Proceeds</text>
                 <text x="548" y="50" fill="#34d399" font-size="9" text-anchor="middle">Productivity Dividend</text>
               </svg>
               <div style="font-size:0.8rem; color:#c7d2fe; margin-top:0.5rem;">Stakeholder flow: Capital from investors → Government issues bonds → Citizens receive dividends</div>
@@ -1356,7 +1359,7 @@
 
         <!-- ====== LIVE SIMULATOR ====== -->
         <section id="simulator" class="container section-spacing" style="padding-top:0;">
-          <div class="glass-card" style="border-color:rgba(99,102,241,0.2);">
+          <div class="glass-card" style="border-color:rgba(79, 70, 229, 0.2);">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:1.5rem;">
               <h2 style="font-size:1.8rem; font-weight:700;">⚡ Live Monte Carlo Simulator</h2>
               <span style="font-size:0.8rem; color:#a5b4fc;">10,000 paths · 10-year horizon</span>
@@ -1689,7 +1692,7 @@
               <div>
                 <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:0.5rem;">Key Files</h3>
                 <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:0.5rem;">
-                  <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #818cf8;"><strong>ROADMAP.md</strong> – Full mathematical specification</li>
+                  <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #4f46e5;"><strong>ROADMAP.md</strong> – Full mathematical specification</li>
                   <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #a78bfa;"><strong>run_simulation.py</strong> – Main simulation engine</li>
                   <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #34d399;"><strong>results/</strong> – All CSV outputs from Appendix C</li>
                   <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #fbbf24;"><strong>CONTRIBUTING.md</strong> – How to help improve the model</li>
@@ -1845,6 +1848,26 @@
           </div>
         </section>
 
+        <!-- ====== NEW: LEARN CTA SECTION ====== -->
+        <section id="learn" class="container section-spacing" style="padding-top:0;">
+          <div class="glass-card" style="border-color:rgba(251, 191, 36, 0.2);">
+            <span class="badge-glow" style="background:rgba(251, 191, 36, 0.15); color:#fbbf24; border-color:rgba(251, 191, 36, 0.15); margin-bottom:0.8rem;">📖 Learn</span>
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">Read the Book</h2>
+            <p style="color:#c7d2fe; margin-bottom:1.5rem; max-width:800px;">
+              The concepts and models on this page are the foundation of a larger, comprehensive book exploring the infinite debt problem, the productivity bond solution, and a complete roadmap for citizens, bankers, and policymakers. To truly understand the depth of this philosophy, reading the book is essential.
+            </p>
+
+            <div style="display:flex; flex-wrap:wrap; gap:1rem; margin-top:1rem;">
+              <a href="#" class="btn-primary btn-success" style="box-shadow: 0 4px 20px rgba(4, 120, 87, 0.3);" title="Download PDF">⬇ Download PDF</a>
+              
+              <button class="btn-secondary" disabled title="Coming soon">📚 Google Books ePub (Coming Soon)</button>
+              <button class="btn-secondary" disabled title="Coming soon">🍏 iOS ePub (Coming Soon)</button>
+              <button class="btn-secondary" disabled title="Coming soon">🎧 Google Audiobook (Coming Soon)</button>
+              <button class="btn-secondary" disabled title="Coming soon">🍏 iOS Audiobook (Coming Soon)</button>
+            </div>
+          </div>
+        </section>
+
       </div>
     </div>
   </main>
@@ -1877,7 +1900,7 @@
   <!-- ====== FOOTER ====== -->
   <footer class="footer">
     <div class="container">
-      <p>© 2026 Ylia Callan · <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> · Version 1.0.0 · <button class="share-btn" style="background:transparent; border:none; color:#818cf8; padding:0; font-size:0.85rem; cursor:pointer;">📤 Share</button></p>
+      <p>© 2026 Ylia Callan · <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> · Version 1.0.0 · <button class="share-btn" style="background:transparent; border:none; color:#4f46e5; padding:0; font-size:0.85rem; cursor:pointer;">📤 Share</button></p>
       <p style="font-size:0.7rem; margin-top:0.3rem;">Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI · <span id="last-updated"></span></p>
     </div>
   </footer>
@@ -1914,7 +1937,7 @@
           if (n.y < 0 || n.y > h) n.vy *= -1;
           ctx.beginPath();
           ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(99,102,241,0.4)';
+          ctx.fillStyle = 'rgba(79, 70, 229, 0.4)';
           ctx.fill();
         }
         for (let i = 0; i < nodes.length; i++) {
@@ -1926,7 +1949,7 @@
               ctx.beginPath();
               ctx.moveTo(nodes[i].x, nodes[i].y);
               ctx.lineTo(nodes[j].x, nodes[j].y);
-              ctx.strokeStyle = `rgba(99,102,241,${0.08 * (1 - dist / 150)})`;
+              ctx.strokeStyle = `rgba(79, 70, 229, ${0.08 * (1 - dist / 150)})`;
               ctx.lineWidth = 0.6;
               ctx.stroke();
             }
@@ -2167,7 +2190,7 @@
         window.print();
       });
 
-      // ---------- PLOTLY CHARTS (displayModeBar disabled for SEO/Accessibility) ----------
+      // ---------- PLOTLY CHARTS ----------
       function loadPlotlyAndRender() {
         const thetaValues = [0.10, 0.20, 0.30, 0.40, 0.50];
         const costConv = [0.5154, 0.5154, 0.5154, 0.5154, 0.5154];
@@ -2202,7 +2225,7 @@
             xaxis: { title: 'θ_AI', gridcolor: 'rgba(255,255,255,0.05)' },
             yaxis: { title: 'Expected Cost', gridcolor: 'rgba(255,255,255,0.05)' },
             legend: { orientation: 'h', x: 0, y: 1.05 },
-            displayModeBar: false // Removes uncrawlable links
+            displayModeBar: false
           };
           Plotly.newPlot('chart-cost-theta', [trace1, trace2], layout1, { responsive: true });
 
