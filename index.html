@@ -13,10 +13,12 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://traffictorch.github.io/productivity-bond-model/" />
 
-  <!-- Preconnect -->
+  <!-- Preconnect & Preload (Fix for Render-Blocking) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&display=swap" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&display=swap" rel="stylesheet" />
+  
   <link rel="preconnect" href="https://cdn.plot.ly" />
 
   <!-- PWA Manifest -->
@@ -26,7 +28,7 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%236366f1'/%3E%3Cpath d='M20 70 L40 50 L60 60 L80 30' stroke='%23ffffff' stroke-width='8' fill='none' stroke-linecap='round' stroke-linejoin='round' /%3E%3C/svg%3E" />
 
   <!-- ============================================================
-  SCHEMA.ORG — Full Structured Data
+  SCHEMA.ORG — Full Structured Data (CreativeWork + HowTo)
   ============================================================ -->
   <script type="application/ld+json">
     {
@@ -104,6 +106,23 @@
     }
   </script>
 
+  <!-- Additional Schema for Rich Results (Web Application) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "The Productivity Bond Model Simulator",
+      "description": "Live Monte Carlo simulator for productivity-linked sovereign bonds.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript",
+      "author": {
+        "@type": "Person",
+        "name": "Ylia Callan"
+      }
+    }
+  </script>
+
   <style>
     /* ============================================================
                RESET & BASE
@@ -132,6 +151,17 @@
     ::-webkit-scrollbar-thumb {
       background: #6366f1;
       border-radius: 10px;
+    }
+    
+    /* Accessibility: Distinguishable Links */
+    a {
+      color: #a5b4fc;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.2s;
+    }
+    a:hover {
+      color: #eef2f8;
     }
 
     /* ============================================================
@@ -207,13 +237,14 @@
       font-weight: 500;
     }
     .sticky-nav a {
-      color: #a5b4fc;
+      color: #c7d2fe;
       text-decoration: none;
       letter-spacing: 0.03em;
       transition: color 0.2s;
     }
     .sticky-nav a:hover {
       color: #eef2f8;
+      text-decoration: underline;
     }
 
     /* Fix nav clicks on mobile/desktop - prevents header from hiding content */
@@ -258,7 +289,7 @@
     .badge-glow {
       display: inline-block;
       background: rgba(99, 102, 241, 0.15);
-      color: #a5b4fc;
+      color: #c7d2fe;
       font-size: 0.7rem;
       font-weight: 700;
       padding: 0.3rem 1rem;
@@ -372,14 +403,16 @@
     }
     .var-item .desc {
       font-size: 0.85rem;
-      opacity: 0.7;
+      opacity: 0.9;
       margin-top: 0.2rem;
+      color: #c7d2fe;
     }
     .var-item .default {
       font-size: 0.75rem;
-      opacity: 0.4;
+      opacity: 0.8;
       margin-top: 0.2rem;
       font-family: monospace;
+      color: #a5b4fc;
     }
     @media (max-width: 640px) {
       .variables-grid {
@@ -455,7 +488,7 @@
     }
 
     /* ============================================================
-               QUICK REFERENCE ACCORDION (Mobile friendly replacement for sidebar)
+               QUICK REFERENCE ACCORDION
                ============================================================ */
     .param-row {
       display: flex;
@@ -469,7 +502,7 @@
       color: #a5b4fc;
     }
     .param-row .val {
-      opacity: 0.6;
+      color: #c7d2fe;
     }
 
     /* ============================================================
@@ -502,7 +535,7 @@
       border-radius: 40px;
       font-size: 0.8rem;
       font-weight: 700;
-      color: #a5b4fc;
+      color: #c7d2fe;
     }
     input[type="range"] {
       -webkit-appearance: none;
@@ -550,12 +583,13 @@
       font-size: 2.2rem;
       font-weight: 700;
       font-variant-numeric: tabular-nums;
+      color: #eef2f8;
     }
     .metric-box .label {
       font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      opacity: 0.5;
+      color: #a5b4fc;
       margin-top: 0.2rem;
     }
     .metric-box.better .number {
@@ -612,7 +646,7 @@
       font-size: 0.6rem;
       font-weight: 600;
       margin-top: 0.4rem;
-      opacity: 0.6;
+      color: #c7d2fe;
       text-align: center;
       white-space: nowrap;
     }
@@ -620,14 +654,13 @@
       font-size: 0.65rem;
       font-weight: 700;
       margin-bottom: 0.2rem;
-      opacity: 0.8;
+      color: #eef2f8;
     }
     .highlight .bar {
       background: #a78bfa !important;
       box-shadow: 0 0 30px rgba(167, 139, 250, 0.4);
     }
     .highlight .bar-label {
-      opacity: 1;
       color: #a78bfa;
       font-weight: 700;
     }
@@ -652,7 +685,7 @@
     }
     .headline-metrics .metric-card .desc {
       font-size: 0.8rem;
-      opacity: 0.6;
+      color: #c7d2fe;
       margin-top: 0.1rem;
     }
     .headline-metrics .metric-card .tooltip-trigger {
@@ -683,6 +716,7 @@
       padding: 0.5rem 0.8rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       text-align: right;
+      color: #eef2f8;
     }
     table.data-table td:first-child {
       text-align: left;
@@ -751,7 +785,7 @@
     }
     .scenario-card .profile {
       font-size: 0.85rem;
-      opacity: 0.6;
+      color: #c7d2fe;
       margin-bottom: 1rem;
     }
     .scenario-card .preset-info {
@@ -761,6 +795,7 @@
       border-radius: 0.8rem;
       margin-bottom: 1rem;
       font-family: monospace;
+      color: #c7d2fe;
     }
     .scenario-card .preset-info span {
       display: inline-block;
@@ -769,7 +804,7 @@
     .scenario-card .btn-preset {
       display: inline-block;
       background: rgba(99, 102, 241, 0.15);
-      color: #a5b4fc;
+      color: #c7d2fe;
       padding: 0.4rem 1.2rem;
       border-radius: 40px;
       font-size: 0.8rem;
@@ -785,7 +820,7 @@
     .scenario-pathway {
       margin-top: 0.8rem;
       font-size: 0.85rem;
-      opacity: 0.7;
+      color: #c7d2fe;
       border-top: 1px solid rgba(255, 255, 255, 0.04);
       padding-top: 0.8rem;
       max-height: 0;
@@ -817,7 +852,7 @@
       font-size: 0.9rem;
       font-weight: 600;
       padding: 0.5rem 1rem 0;
-      opacity: 0.7;
+      color: #c7d2fe;
     }
 
     .code-block {
@@ -842,7 +877,7 @@
       overflow-y: auto;
       padding-right: 0.5rem;
       font-size: 0.95rem;
-      opacity: 0.85;
+      color: #c7d2fe;
     }
     .policy-text::-webkit-scrollbar {
       width: 4px;
@@ -907,14 +942,10 @@
       padding: 2rem 0;
       text-align: center;
       font-size: 0.85rem;
-      opacity: 0.5;
+      color: #a5b4fc;
     }
     .footer a {
       color: #818cf8;
-      text-decoration: none;
-    }
-    .footer a:hover {
-      text-decoration: underline;
     }
 
     @media print {
@@ -1017,7 +1048,7 @@
       bottom: 2rem;
       right: 2rem;
       z-index: 9999;
-      display: none; /* Hidden initially, appears after 5s delay */
+      display: none;
       align-items: center;
       gap: 12px;
       padding: 14px 28px;
@@ -1026,7 +1057,7 @@
       -webkit-backdrop-filter: blur(8px);
       border: 2px solid rgba(230, 176, 137, 0.8);
       border-radius: 999px;
-      color: #ffffff; /* WHITE TEXT */
+      color: #ffffff;
       font-weight: 600;
       font-size: 20px;
       letter-spacing: -0.5px;
@@ -1120,7 +1151,7 @@
     }
 
     /* ============================================================
-               NEW: Bond Strength Gauge (CSS Arc)
+               BOND STRENGTH GAUGE (Fixed Path Arc)
                ============================================================ */
     .gauge-container {
       width: 100%;
@@ -1144,21 +1175,19 @@
       stroke: #34d399;
       stroke-width: 16;
       stroke-linecap: round;
-      transition: stroke-dasharray 0.2s ease, stroke 0.2s ease;
-      transform: rotate(-90deg);
+      transition: stroke-dashoffset 0.2s ease, stroke 0.2s ease;
       transform-origin: center;
     }
     .gauge-text {
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: 800;
       fill: #eef2f8;
       text-anchor: middle;
     }
     .gauge-subtext {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       fill: #a5b4fc;
       text-anchor: middle;
-      opacity: 0.6;
     }
   </style>
 </head>
@@ -1186,708 +1215,713 @@
     <a href="#citation">Cite</a>
   </nav>
 
-  <!-- ====== PAGE WRAPPER ====== -->
-  <div class="page-wrapper">
-    <div class="main-content">
+  <!-- ====== MAIN LANDMARK (Accessibility Fix) ====== -->
+  <main id="main-content" role="main">
+    
+    <!-- ====== PAGE WRAPPER ====== -->
+    <div class="page-wrapper">
+      <div class="main-content">
 
-      <!-- ====== HERO ====== -->
-      <section class="container hero" style="min-height:80vh; display:flex; align-items:center; padding:4rem 0 2rem;">
-        <div>
-          <span class="badge-glow">📘 Canonical Reference</span>
-          <span class="badge-glow badge-version" style="margin-left:0.5rem;">v1.0.0</span>
-          <h1 class="text-gradient" style="font-size:clamp(3rem,12vw,6rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">The Productivity<br />Bond Model</h1>
-          <p style="font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:300; opacity:0.7; max-width:640px; margin:1rem 0 2rem;">
-            A sovereign debt instrument for a finite planet — formal definition, variables, and live simulation.
-          </p>
-          <div style="display:flex; flex-wrap:wrap; gap:1rem; align-items:center;">
-            <a href="#simulator" class="btn-primary">🚀 Run Live Simulation</a>
-            <a href="#citation" class="btn-secondary">📖 Cite This Model</a>
-            <button class="share-btn" style="margin-left: 0.5rem;">📤 Share</button>
+        <!-- ====== HERO ====== -->
+        <section class="container hero" style="min-height:80vh; display:flex; align-items:center; padding:4rem 0 2rem;">
+          <div>
+            <span class="badge-glow">📘 Canonical Reference</span>
+            <span class="badge-glow badge-version" style="margin-left:0.5rem;">v1.0.0</span>
+            <h1 class="text-gradient" style="font-size:clamp(3rem,12vw,6rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">The Productivity<br />Bond Model</h1>
+            <p style="font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:300; opacity:0.7; max-width:640px; margin:1rem 0 2rem;">
+              A sovereign debt instrument for a finite planet — formal definition, variables, and live simulation.
+            </p>
+            <div style="display:flex; flex-wrap:wrap; gap:1rem; align-items:center;">
+              <a href="#simulator" class="btn-primary">🚀 Run Live Simulation</a>
+              <a href="#citation" class="btn-secondary">📖 Cite This Model</a>
+              <button class="share-btn" style="margin-left: 0.5rem;">📤 Share</button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- ====== ABSTRACT ====== -->
-      <section id="abstract" class="container section-spacing-sm" style="padding-top:0;">
-        <div class="glass-card">
-          <span class="badge-glow" style="margin-bottom:0.8rem;">Abstract</span>
-          <p style="font-size:1.05rem; line-height:1.7; max-width:900px;">
-            The <strong>Productivity Bond Model</strong> proposes a sovereign debt instrument whose return is linked to measurable productivity gains (NPI) rather than fixed compounding. It addresses the fundamental contradiction between unlimited financial promises and a finite planet. The model is parameterised by <strong>θ_AI</strong> (government capture of AI gains), <strong>α_N</strong> (investor participation), and a cap/floor structure. Monte Carlo simulations (10,000 paths, 10‑year horizon) show a <strong>3.1% cost reduction</strong> vs conventional bonds, with a feedback loop that can be mitigated via principal adjustment. The model is designed for implementation by sovereign governments and includes a <strong>Productivity Dividend</strong> to share gains with citizens. This page is the canonical reference for the model, including formal definition, variable specification, simulation results, and implementation guide.
-          </p>
-          <div style="display:flex; flex-wrap:wrap; gap:0.5rem 1.5rem; margin-top:1rem; font-size:0.85rem; opacity:0.6;">
-            <span>📅 Published: 2026-08-13</span>
-            <span>📌 Version: 1.0.0</span>
-            <span>🔗 <a href="#citation" style="color:#818cf8;">Cite this work</a></span>
+        <!-- ====== ABSTRACT ====== -->
+        <section id="abstract" class="container section-spacing-sm" style="padding-top:0;">
+          <div class="glass-card">
+            <span class="badge-glow" style="margin-bottom:0.8rem;">Abstract</span>
+            <p style="font-size:1.05rem; line-height:1.7; max-width:900px;">
+              The <strong>Productivity Bond Model</strong> proposes a sovereign debt instrument whose return is linked to measurable productivity gains (NPI) rather than fixed compounding. It addresses the fundamental contradiction between unlimited financial promises and a finite planet. The model is parameterised by <strong>θ_AI</strong> (government capture of AI gains), <strong>α_N</strong> (investor participation), and a cap/floor structure. Monte Carlo simulations (10,000 paths, 10‑year horizon) show a <strong>3.1% cost reduction</strong> vs conventional bonds, with a feedback loop that can be mitigated via principal adjustment. The model is designed for implementation by sovereign governments and includes a <strong>Productivity Dividend</strong> to share gains with citizens. This page is the canonical reference for the model, including formal definition, variable specification, simulation results, and implementation guide.
+            </p>
+            <div style="display:flex; flex-wrap:wrap; gap:0.5rem 1.5rem; margin-top:1rem; font-size:0.85rem; color:#a5b4fc;">
+              <span>📅 Published: 2026-08-13</span>
+              <span>📌 Version: 1.0.0</span>
+              <span>🔗 <a href="#citation">Cite this work</a></span>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- ====== MOBILE-FRIENDLY QUICK REFERENCE ACCORDION ====== -->
-      <section class="container section-spacing-sm" style="padding-top:0;">
-        <div class="glass-card quick-ref">
-          <div class="accordion-toggle open" onclick="toggleAccordion(this)">
-            <span style="font-weight:700; font-size:1.1rem;">📖 Quick Reference</span>
-            <span class="arrow">▼</span>
+        <!-- ====== MOBILE-FRIENDLY QUICK REFERENCE ACCORDION ====== -->
+        <section class="container section-spacing-sm" style="padding-top:0;">
+          <div class="glass-card quick-ref">
+            <div class="accordion-toggle open" onclick="toggleAccordion(this)">
+              <h2 style="font-weight:700; font-size:1.1rem; margin:0; padding:0; border:none;">📖 Quick Reference</h2>
+              <span class="arrow">▼</span>
+            </div>
+            <div class="accordion-content open">
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem;">
+                <div>
+                  <h3 style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; color:#c7d2fe; margin-bottom:0.5rem;">Model Parameters</h3>
+                  <div class="param-row"><span class="sym">θ_AI</span><span class="val">0.05–0.55</span></div>
+                  <div class="param-row"><span class="sym">α_N</span><span class="val">0.30–0.90</span></div>
+                  <div class="param-row"><span class="sym">C</span><span class="val">2–6%</span></div>
+                  <div class="param-row"><span class="sym">F</span><span class="val">0%</span></div>
+                </div>
+                <div>
+                  <h3 style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; color:#c7d2fe; margin-bottom:0.5rem;">Key Equations</h3>
+                  <div style="font-family:monospace; font-size:0.7rem; color:#c7d2fe; line-height:1.4;">
+                    c = (1+π)(1+min[max(αg_NPI,0%),C])−1
+                  </div>
+                  <div style="font-family:monospace; font-size:0.65rem; color:#a5b4fc; margin-top:0.3rem;">
+                    NPI = GDP / (H^0.40 E^0.25 M^0.20 K^0.15)
+                  </div>
+                  <h3 style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; color:#c7d2fe; margin-top:1rem;">Results</h3>
+                  <div class="param-row"><span class="sym">Cost saving</span><span class="val" style="color:#34d399;">−3.1%</span></div>
+                  <div class="param-row"><span class="sym">Distress</span><span class="val" style="color:#f87171;">+77.2pp</span></div>
+                  <div class="param-row"><span class="sym">Optimal share</span><span class="val">30%</span></div>
+                  <div class="param-row"><span class="sym">Version</span><span class="val">v1.0.0</span></div>
+                </div>
+              </div>
+              <div style="margin-top:0.5rem; padding-top:0.5rem; border-top:1px solid rgba(255,255,255,0.04);">
+                <a href="#citation">📖 Cite this model</a>
+              </div>
+            </div>
           </div>
-          <div class="accordion-content open">
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem;">
+        </section>
+
+        <!-- ====== MODEL DEFINITION ====== -->
+        <section id="model-definition" class="container section-spacing-sm" style="padding-top:0;">
+          <div class="glass-card">
+            <span class="badge-glow" style="margin-bottom:0.8rem;">Model Definition</span>
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">Formal Specification</h2>
+            <p style="color:#c7d2fe; margin-bottom:1.5rem;">Scope, assumptions, and variables that define the Productivity Bond Model.</p>
+
+            <!-- Fixed responsive grid for mobile collapse -->
+            <div class="grid-2col">
+              <div style="background:rgba(0,0,0,0.2); border-radius:1.2rem; padding:1.2rem;">
+                <div style="font-weight:600; color:#a5b4fc; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">Purpose</div>
+                <p style="font-size:0.95rem; margin-top:0.3rem; color:#c7d2fe;">Replace perpetual‑growth‑dependent sovereign debt with productivity‑linked financing that shares risks and rewards.</p>
+              </div>
+              <div style="background:rgba(0,0,0,0.2); border-radius:1.2rem; padding:1.2rem;">
+                <div style="font-weight:600; color:#a5b4fc; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">Scope</div>
+                <p style="font-size:0.95rem; margin-top:0.3rem; color:#c7d2fe;">Sovereign debt issuance, fiscal policy, AI‑driven productivity, and public goods funding.</p>
+              </div>
+              <div style="background:rgba(0,0,0,0.2); border-radius:1.2rem; padding:1.2rem;">
+                <div style="font-weight:600; color:#a5b4fc; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">Assumptions</div>
+                <ul style="font-size:0.9rem; margin-top:0.3rem; padding-left:1.2rem; color:#c7d2fe;">
+                  <li>Planet is finite (resources, ecological capacity).</li>
+                  <li>Compound interest is the core problem of debt.</li>
+                  <li>AI productivity gains are capturable by government.</li>
+                  <li>NPI can be measured transparently and independently.</li>
+                </ul>
+              </div>
+              <div style="background:rgba(0,0,0,0.2); border-radius:1.2rem; padding:1.2rem;">
+                <div style="font-weight:600; color:#a5b4fc; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">Key Equations</div>
+                <div style="font-family:monospace; font-size:0.8rem; margin-top:0.3rem; color:#c7d2fe;">
+                  c(t) = (1+π) × (1 + min[max(α_N × g_NPI, 0%), C]) – 1<br />
+                  NPI = GDP / (H^0.40 × E^0.25 × M^0.20 × K^0.15)
+                </div>
+              </div>
+            </div>
+
+            <h3 style="font-size:1.1rem; font-weight:600; margin:1.5rem 0 0.5rem;">Variables & Components</h3>
+            <div class="variables-grid">
+              <div class="var-item"><span class="symbol">θ_AI</span><div class="desc">Government capture of AI‑driven productivity gains</div><div class="default">Default: 0.30 · Range: 0.05 – 0.55</div></div>
+              <div class="var-item"><span class="symbol">α_N</span><div class="desc">Investor participation in NPI growth</div><div class="default">Default: 0.70 · Range: 0.30 – 0.90</div></div>
+              <div class="var-item"><span class="symbol">C</span><div class="desc">Real return cap (protects government)</div><div class="default">Default: 4.0% · Range: 2.0% – 6.0%</div></div>
+              <div class="var-item"><span class="symbol">F</span><div class="desc">Real return floor (protects investors)</div><div class="default">Default: 0% (fixed)</div></div>
+              <div class="var-item"><span class="symbol">NPI</span><div class="desc">National Productivity Index (weighted geometric average)</div><div class="default">Weights: Labour 40%, Energy 25%, Materials 20%, Capital 15%</div></div>
+              <div class="var-item"><span class="symbol">τ</span><div class="desc">Dividend share (productivity‑linked revenue → citizens)</div><div class="default">Default: 50%</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====== MECHANISM FLOW (SVG Diagram) ====== -->
+        <section id="mechanism" class="container section-spacing-sm" style="padding-top:0;">
+          <div class="glass-card">
+            <span class="badge-glow" style="margin-bottom:0.8rem;">Mechanism</span>
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">How It Works</h2>
+            <p style="color:#c7d2fe; margin-bottom:1.5rem;">The bond mechanism, stakeholder flows, and the productivity loop.</p>
+
+            <!-- Diagram 1: Bond Mechanism -->
+            <div class="diagram-container">
+              <svg viewBox="0 0 800 180" preserveAspectRatio="xMidYMid meet" style="max-width:100%; height:auto;">
+                <defs>
+                  <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                    <path d="M0,0 L10,5 L0,10 Z" fill="#818cf8" />
+                  </marker>
+                  <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#818cf8" stop-opacity="0.6"/>
+                    <stop offset="100%" stop-color="#a78bfa" stop-opacity="0.6"/>
+                  </linearGradient>
+                </defs>
+                <!-- Boxes -->
+                <rect x="20" y="40" width="140" height="60" rx="12" fill="rgba(99,102,241,0.12)" stroke="#818cf8" stroke-width="1.5"/>
+                <text x="90" y="65" fill="#eef2f8" font-size="12" font-weight="600" text-anchor="middle">Government</text>
+                <text x="90" y="82" fill="#a5b4fc" font-size="9" text-anchor="middle">Issuer</text>
+
+                <rect x="230" y="40" width="150" height="60" rx="12" fill="rgba(167,139,250,0.10)" stroke="#a78bfa" stroke-width="1.5"/>
+                <text x="305" y="65" fill="#eef2f8" font-size="12" font-weight="600" text-anchor="middle">NPI Growth</text>
+                <text x="305" y="82" fill="#a5b4fc" font-size="9" text-anchor="middle">Weighted Productivity</text>
+
+                <rect x="450" y="40" width="140" height="60" rx="12" fill="rgba(52,211,153,0.10)" stroke="#34d399" stroke-width="1.5"/>
+                <text x="520" y="65" fill="#eef2f8" font-size="12" font-weight="600" text-anchor="middle">Investor</text>
+                <text x="520" y="82" fill="#a5b4fc" font-size="9" text-anchor="middle">Return (Capped)</text>
+
+                <rect x="650" y="40" width="130" height="60" rx="12" fill="rgba(251,191,36,0.10)" stroke="#fbbf24" stroke-width="1.5"/>
+                <text x="715" y="65" fill="#eef2f8" font-size="12" font-weight="600" text-anchor="middle">Productivity</text>
+                <text x="715" y="82" fill="#a5b4fc" font-size="9" text-anchor="middle">Dividend</text>
+
+                <!-- Arrows -->
+                <line x1="160" y1="70" x2="225" y2="70" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow)"/>
+                <line x1="380" y1="70" x2="445" y2="70" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow)"/>
+                <line x1="590" y1="70" x2="645" y2="70" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+                <!-- Bottom loop: Productivity → Reinvestment -->
+                <path d="M520,100 C520,150 305,150 305,100" fill="none" stroke="rgba(167,139,250,0.3)" stroke-width="1.5" stroke-dasharray="4 4"/>
+                <text x="410" y="145" fill="#a5b4fc" font-size="9" text-anchor="middle" opacity="0.6">Feedback Loop → Principal Adjustment</text>
+
+                <!-- Labels on arrows -->
+                <text x="192" y="60" fill="#818cf8" font-size="8" text-anchor="middle">Issuance</text>
+                <text x="412" y="60" fill="#a78bfa" font-size="8" text-anchor="middle">Coupon (capped)</text>
+                <text x="617" y="60" fill="#34d399" font-size="8" text-anchor="middle">Funds</text>
+              </svg>
+              <div style="font-size:0.8rem; color:#c7d2fe; margin-top:0.5rem;">Bond mechanism: Government issues → NPI determines coupon → Investor receives capped return → Productivity Dividend funds citizens</div>
+            </div>
+
+            <!-- Diagram 2: Stakeholder Flow -->
+            <div class="diagram-container">
+              <svg viewBox="0 0 800 140" preserveAspectRatio="xMidYMid meet" style="max-width:100%; height:auto;">
+                <defs>
+                  <marker id="arrow2" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                    <path d="M0,0 L10,5 L0,10 Z" fill="#a78bfa" />
+                  </marker>
+                </defs>
+                <rect x="20" y="30" width="160" height="60" rx="12" fill="rgba(99,102,241,0.10)" stroke="#818cf8" stroke-width="1.5"/>
+                <text x="100" y="58" fill="#eef2f8" font-size="13" font-weight="600" text-anchor="middle">Investors</text>
+                <text x="100" y="76" fill="#a5b4fc" font-size="9" text-anchor="middle">Capital</text>
+
+                <rect x="320" y="30" width="160" height="60" rx="12" fill="rgba(167,139,250,0.10)" stroke="#a78bfa" stroke-width="1.5"/>
+                <text x="400" y="58" fill="#eef2f8" font-size="13" font-weight="600" text-anchor="middle">Government</text>
+                <text x="400" y="76" fill="#a5b4fc" font-size="9" text-anchor="middle">Issuer / Fiscal Policy</text>
+
+                <rect x="620" y="30" width="160" height="60" rx="12" fill="rgba(52,211,153,0.10)" stroke="#34d399" stroke-width="1.5"/>
+                <text x="700" y="58" fill="#eef2f8" font-size="13" font-weight="600" text-anchor="middle">Citizens</text>
+                <text x="700" y="76" fill="#a5b4fc" font-size="9" text-anchor="middle">Dividend / Circular Flow</text>
+
+                <line x1="180" y1="60" x2="315" y2="60" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow2)"/>
+                <line x1="480" y1="60" x2="615" y2="60" stroke="#34d399" stroke-width="2" marker-end="url(#arrow2)"/>
+
+                <text x="248" y="50" fill="#818cf8" font-size="9" text-anchor="middle">Bond Proceeds</text>
+                <text x="548" y="50" fill="#34d399" font-size="9" text-anchor="middle">Productivity Dividend</text>
+              </svg>
+              <div style="font-size:0.8rem; color:#c7d2fe; margin-top:0.5rem;">Stakeholder flow: Capital from investors → Government issues bonds → Citizens receive dividends</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====== LIVE SIMULATOR ====== -->
+        <section id="simulator" class="container section-spacing" style="padding-top:0;">
+          <div class="glass-card" style="border-color:rgba(99,102,241,0.2);">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:1.5rem;">
+              <h2 style="font-size:1.8rem; font-weight:700;">⚡ Live Monte Carlo Simulator</h2>
+              <span style="font-size:0.8rem; color:#a5b4fc;">10,000 paths · 10-year horizon</span>
+            </div>
+
+            <div class="sim-grid">
               <div>
-                <h4 style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; opacity:0.4; margin-bottom:0.5rem;">Model Parameters</h4>
-                <div class="param-row"><span class="sym">θ_AI</span><span class="val">0.05–0.55</span></div>
-                <div class="param-row"><span class="sym">α_N</span><span class="val">0.30–0.90</span></div>
-                <div class="param-row"><span class="sym">C</span><span class="val">2–6%</span></div>
-                <div class="param-row"><span class="sym">F</span><span class="val">0%</span></div>
+                <div class="slider-group">
+                  <label>
+                    <span>🤖 θ_AI <span style="font-weight:400; color:#c7d2fe;">(Gov. capture of AI gains)</span></span>
+                    <span class="value-badge" id="theta-label">0.30</span>
+                  </label>
+                  <input type="range" id="theta-slider" min="0.05" max="0.55" step="0.01" value="0.30" aria-label="Government capture of AI gains (theta AI)" />
+                  <div style="display:flex; justify-content:space-between; font-size:0.65rem; color:#a5b4fc; padding:0 0.2rem;">
+                    <span>Low (5%)</span>
+                    <span>Critical Threshold (30%)</span>
+                    <span>High (55%)</span>
+                  </div>
+                </div>
+
+                <div class="slider-group">
+                  <label>
+                    <span>📊 α_N <span style="font-weight:400; color:#c7d2fe;">(Investor participation)</span></span>
+                    <span class="value-badge" id="alpha-label">0.70</span>
+                  </label>
+                  <input type="range" id="alpha-slider" min="0.30" max="0.90" step="0.01" value="0.70" aria-label="Investor participation (alpha N)" />
+                </div>
+
+                <div class="slider-group">
+                  <label>
+                    <span>📈 Cap <span style="font-weight:400; color:#c7d2fe;">(Max real return)</span></span>
+                    <span class="value-badge" id="cap-label">4.0%</span>
+                  </label>
+                  <input type="range" id="cap-slider" min="0.02" max="0.06" step="0.005" value="0.04" aria-label="Real return cap" />
+                </div>
+
+                <button id="run-btn" class="btn-primary" style="width:100%; padding:1rem; font-size:1.1rem; margin-top:0.5rem;">
+                  ▶ Run Simulation
+                </button>
+
+                <div class="progress-wrap" style="margin-top:1rem;">
+                  <div class="progress-bar" id="progress-bar" style="width:0%;"></div>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:#a5b4fc;">
+                  <span id="status-text">Ready</span>
+                  <span id="path-counter">0 / 10000</span>
+                </div>
               </div>
+
               <div>
-                <h4 style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; opacity:0.4; margin-bottom:0.5rem;">Key Equations</h4>
-                <div style="font-family:monospace; font-size:0.7rem; opacity:0.7; line-height:1.4;">
-                  c = (1+π)(1+min[max(αg_NPI,0%),C])−1
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem;">
+                  <div class="metric-box better">
+                    <div class="number" id="cost-conv">0.515</div>
+                    <div class="label">Conv. Cost</div>
+                  </div>
+                  <div class="metric-box" id="cost-prod-box">
+                    <div class="number" id="cost-prod">0.499</div>
+                    <div class="label">Productivity Cost</div>
+                  </div>
+                  <div class="metric-box worse">
+                    <div class="number" id="distress-conv">11.0%</div>
+                    <div class="label">Conv. Distress</div>
+                  </div>
+                  <div class="metric-box" id="distress-prod-box">
+                    <div class="number" id="distress-prod">88.2%</div>
+                    <div class="label">Productivity Distress</div>
+                  </div>
                 </div>
-                <div style="font-family:monospace; font-size:0.65rem; opacity:0.5; margin-top:0.3rem;">
-                  NPI = GDP / (H^0.40 E^0.25 M^0.20 K^0.15)
-                </div>
-                <h4 style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; opacity:0.4; margin-top:1rem;">Results</h4>
-                <div class="param-row"><span class="sym">Cost saving</span><span class="val" style="color:#34d399;">−3.1%</span></div>
-                <div class="param-row"><span class="sym">Distress</span><span class="val" style="color:#f87171;">+77.2pp</span></div>
-                <div class="param-row"><span class="sym">Optimal share</span><span class="val">30%</span></div>
-                <div class="param-row"><span class="sym">Version</span><span class="val">v1.0.0</span></div>
-              </div>
-            </div>
-            <div style="margin-top:0.5rem; padding-top:0.5rem; border-top:1px solid rgba(255,255,255,0.04);">
-              <a href="#citation" style="color:#818cf8; text-decoration:none; font-size:0.8rem;">📖 Cite this model</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====== MODEL DEFINITION ====== -->
-      <section id="model-definition" class="container section-spacing-sm" style="padding-top:0;">
-        <div class="glass-card">
-          <span class="badge-glow" style="margin-bottom:0.8rem;">Model Definition</span>
-          <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">Formal Specification</h2>
-          <p style="opacity:0.7; margin-bottom:1.5rem;">Scope, assumptions, and variables that define the Productivity Bond Model.</p>
-
-          <!-- Fixed responsive grid for mobile collapse -->
-          <div class="grid-2col">
-            <div style="background:rgba(0,0,0,0.2); border-radius:1.2rem; padding:1.2rem;">
-              <div style="font-weight:600; color:#a5b4fc; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">Purpose</div>
-              <p style="font-size:0.95rem; margin-top:0.3rem;">Replace perpetual‑growth‑dependent sovereign debt with productivity‑linked financing that shares risks and rewards.</p>
-            </div>
-            <div style="background:rgba(0,0,0,0.2); border-radius:1.2rem; padding:1.2rem;">
-              <div style="font-weight:600; color:#a5b4fc; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">Scope</div>
-              <p style="font-size:0.95rem; margin-top:0.3rem;">Sovereign debt issuance, fiscal policy, AI‑driven productivity, and public goods funding.</p>
-            </div>
-            <div style="background:rgba(0,0,0,0.2); border-radius:1.2rem; padding:1.2rem;">
-              <div style="font-weight:600; color:#a5b4fc; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">Assumptions</div>
-              <ul style="font-size:0.9rem; margin-top:0.3rem; padding-left:1.2rem; opacity:0.8;">
-                <li>Planet is finite (resources, ecological capacity).</li>
-                <li>Compound interest is the core problem of debt.</li>
-                <li>AI productivity gains are capturable by government.</li>
-                <li>NPI can be measured transparently and independently.</li>
-              </ul>
-            </div>
-            <div style="background:rgba(0,0,0,0.2); border-radius:1.2rem; padding:1.2rem;">
-              <div style="font-weight:600; color:#a5b4fc; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">Key Equations</div>
-              <div style="font-family:monospace; font-size:0.8rem; margin-top:0.3rem;">
-                c(t) = (1+π) × (1 + min[max(α_N × g_NPI, 0%), C]) – 1<br />
-                NPI = GDP / (H^0.40 × E^0.25 × M^0.20 × K^0.15)
-              </div>
-            </div>
-          </div>
-
-          <h3 style="font-size:1.1rem; font-weight:600; margin:1.5rem 0 0.5rem;">Variables & Components</h3>
-          <div class="variables-grid">
-            <div class="var-item"><span class="symbol">θ_AI</span><div class="desc">Government capture of AI‑driven productivity gains</div><div class="default">Default: 0.30 · Range: 0.05 – 0.55</div></div>
-            <div class="var-item"><span class="symbol">α_N</span><div class="desc">Investor participation in NPI growth</div><div class="default">Default: 0.70 · Range: 0.30 – 0.90</div></div>
-            <div class="var-item"><span class="symbol">C</span><div class="desc">Real return cap (protects government)</div><div class="default">Default: 4.0% · Range: 2.0% – 6.0%</div></div>
-            <div class="var-item"><span class="symbol">F</span><div class="desc">Real return floor (protects investors)</div><div class="default">Default: 0% (fixed)</div></div>
-            <div class="var-item"><span class="symbol">NPI</span><div class="desc">National Productivity Index (weighted geometric average)</div><div class="default">Weights: Labour 40%, Energy 25%, Materials 20%, Capital 15%</div></div>
-            <div class="var-item"><span class="symbol">τ</span><div class="desc">Dividend share (productivity‑linked revenue → citizens)</div><div class="default">Default: 50%</div></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====== MECHANISM FLOW (SVG Diagram) ====== -->
-      <section id="mechanism" class="container section-spacing-sm" style="padding-top:0;">
-        <div class="glass-card">
-          <span class="badge-glow" style="margin-bottom:0.8rem;">Mechanism</span>
-          <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">How It Works</h2>
-          <p style="opacity:0.7; margin-bottom:1.5rem;">The bond mechanism, stakeholder flows, and the productivity loop.</p>
-
-          <!-- Diagram 1: Bond Mechanism -->
-          <div class="diagram-container">
-            <svg viewBox="0 0 800 180" preserveAspectRatio="xMidYMid meet" style="max-width:100%; height:auto;">
-              <defs>
-                <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                  <path d="M0,0 L10,5 L0,10 Z" fill="#818cf8" />
-                </marker>
-                <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#818cf8" stop-opacity="0.6"/>
-                  <stop offset="100%" stop-color="#a78bfa" stop-opacity="0.6"/>
-                </linearGradient>
-              </defs>
-              <!-- Boxes -->
-              <rect x="20" y="40" width="140" height="60" rx="12" fill="rgba(99,102,241,0.12)" stroke="#818cf8" stroke-width="1.5"/>
-              <text x="90" y="65" fill="#eef2f8" font-size="12" font-weight="600" text-anchor="middle">Government</text>
-              <text x="90" y="82" fill="#a5b4fc" font-size="9" text-anchor="middle">Issuer</text>
-
-              <rect x="230" y="40" width="150" height="60" rx="12" fill="rgba(167,139,250,0.10)" stroke="#a78bfa" stroke-width="1.5"/>
-              <text x="305" y="65" fill="#eef2f8" font-size="12" font-weight="600" text-anchor="middle">NPI Growth</text>
-              <text x="305" y="82" fill="#a5b4fc" font-size="9" text-anchor="middle">Weighted Productivity</text>
-
-              <rect x="450" y="40" width="140" height="60" rx="12" fill="rgba(52,211,153,0.10)" stroke="#34d399" stroke-width="1.5"/>
-              <text x="520" y="65" fill="#eef2f8" font-size="12" font-weight="600" text-anchor="middle">Investor</text>
-              <text x="520" y="82" fill="#a5b4fc" font-size="9" text-anchor="middle">Return (Capped)</text>
-
-              <rect x="650" y="40" width="130" height="60" rx="12" fill="rgba(251,191,36,0.10)" stroke="#fbbf24" stroke-width="1.5"/>
-              <text x="715" y="65" fill="#eef2f8" font-size="12" font-weight="600" text-anchor="middle">Productivity</text>
-              <text x="715" y="82" fill="#a5b4fc" font-size="9" text-anchor="middle">Dividend</text>
-
-              <!-- Arrows -->
-              <line x1="160" y1="70" x2="225" y2="70" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow)"/>
-              <line x1="380" y1="70" x2="445" y2="70" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow)"/>
-              <line x1="590" y1="70" x2="645" y2="70" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow)"/>
-
-              <!-- Bottom loop: Productivity → Reinvestment -->
-              <path d="M520,100 C520,150 305,150 305,100" fill="none" stroke="rgba(167,139,250,0.3)" stroke-width="1.5" stroke-dasharray="4 4"/>
-              <text x="410" y="145" fill="#a5b4fc" font-size="9" text-anchor="middle" opacity="0.6">Feedback Loop → Principal Adjustment</text>
-
-              <!-- Labels on arrows -->
-              <text x="192" y="60" fill="#818cf8" font-size="8" text-anchor="middle">Issuance</text>
-              <text x="412" y="60" fill="#a78bfa" font-size="8" text-anchor="middle">Coupon (capped)</text>
-              <text x="617" y="60" fill="#34d399" font-size="8" text-anchor="middle">Funds</text>
-            </svg>
-            <div style="font-size:0.8rem; opacity:0.5; margin-top:0.5rem;">Bond mechanism: Government issues → NPI determines coupon → Investor receives capped return → Productivity Dividend funds citizens</div>
-          </div>
-
-          <!-- Diagram 2: Stakeholder Flow -->
-          <div class="diagram-container">
-            <svg viewBox="0 0 800 140" preserveAspectRatio="xMidYMid meet" style="max-width:100%; height:auto;">
-              <defs>
-                <marker id="arrow2" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                  <path d="M0,0 L10,5 L0,10 Z" fill="#a78bfa" />
-                </marker>
-              </defs>
-              <rect x="20" y="30" width="160" height="60" rx="12" fill="rgba(99,102,241,0.10)" stroke="#818cf8" stroke-width="1.5"/>
-              <text x="100" y="58" fill="#eef2f8" font-size="13" font-weight="600" text-anchor="middle">Investors</text>
-              <text x="100" y="76" fill="#a5b4fc" font-size="9" text-anchor="middle">Capital</text>
-
-              <rect x="320" y="30" width="160" height="60" rx="12" fill="rgba(167,139,250,0.10)" stroke="#a78bfa" stroke-width="1.5"/>
-              <text x="400" y="58" fill="#eef2f8" font-size="13" font-weight="600" text-anchor="middle">Government</text>
-              <text x="400" y="76" fill="#a5b4fc" font-size="9" text-anchor="middle">Issuer / Fiscal Policy</text>
-
-              <rect x="620" y="30" width="160" height="60" rx="12" fill="rgba(52,211,153,0.10)" stroke="#34d399" stroke-width="1.5"/>
-              <text x="700" y="58" fill="#eef2f8" font-size="13" font-weight="600" text-anchor="middle">Citizens</text>
-              <text x="700" y="76" fill="#a5b4fc" font-size="9" text-anchor="middle">Dividend / Circular Flow</text>
-
-              <line x1="180" y1="60" x2="315" y2="60" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow2)"/>
-              <line x1="480" y1="60" x2="615" y2="60" stroke="#34d399" stroke-width="2" marker-end="url(#arrow2)"/>
-
-              <text x="248" y="50" fill="#818cf8" font-size="9" text-anchor="middle">Bond Proceeds</text>
-              <text x="548" y="50" fill="#34d399" font-size="9" text-anchor="middle">Productivity Dividend</text>
-            </svg>
-            <div style="font-size:0.8rem; opacity:0.5; margin-top:0.5rem;">Stakeholder flow: Capital from investors → Government issues bonds → Citizens receive dividends</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====== LIVE SIMULATOR ====== -->
-      <section id="simulator" class="container section-spacing" style="padding-top:0;">
-        <div class="glass-card" style="border-color:rgba(99,102,241,0.2);">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:1.5rem;">
-            <h2 style="font-size:1.8rem; font-weight:700;">⚡ Live Monte Carlo Simulator</h2>
-            <span style="font-size:0.8rem; opacity:0.4;">10,000 paths · 10-year horizon</span>
-          </div>
-
-          <div class="sim-grid">
-            <div>
-              <div class="slider-group">
-                <label>
-                  <span>🤖 θ_AI <span style="font-weight:400; opacity:0.5;">(Gov. capture of AI gains)</span></span>
-                  <span class="value-badge" id="theta-label">0.30</span>
-                </label>
-                <input type="range" id="theta-slider" min="0.05" max="0.55" step="0.01" value="0.30" />
-                <div style="display:flex; justify-content:space-between; font-size:0.65rem; opacity:0.3; padding:0 0.2rem;">
-                  <span>Low (5%)</span>
-                  <span>Critical Threshold (30%)</span>
-                  <span>High (55%)</span>
-                </div>
-              </div>
-
-              <div class="slider-group">
-                <label>
-                  <span>📊 α_N <span style="font-weight:400; opacity:0.5;">(Investor participation)</span></span>
-                  <span class="value-badge" id="alpha-label">0.70</span>
-                </label>
-                <input type="range" id="alpha-slider" min="0.30" max="0.90" step="0.01" value="0.70" />
-              </div>
-
-              <div class="slider-group">
-                <label>
-                  <span>📈 Cap <span style="font-weight:400; opacity:0.5;">(Max real return)</span></span>
-                  <span class="value-badge" id="cap-label">4.0%</span>
-                </label>
-                <input type="range" id="cap-slider" min="0.02" max="0.06" step="0.005" value="0.04" />
-              </div>
-
-              <button id="run-btn" class="btn-primary" style="width:100%; padding:1rem; font-size:1.1rem; margin-top:0.5rem;">
-                ▶ Run Simulation
-              </button>
-
-              <div class="progress-wrap" style="margin-top:1rem;">
-                <div class="progress-bar" id="progress-bar" style="width:0%;"></div>
-              </div>
-              <div style="display:flex; justify-content:space-between; font-size:0.7rem; opacity:0.4;">
-                <span id="status-text">Ready</span>
-                <span id="path-counter">0 / 10000</span>
-              </div>
-            </div>
-
-            <div>
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem;">
-                <div class="metric-box better">
-                  <div class="number" id="cost-conv">0.515</div>
-                  <div class="label">Conv. Cost</div>
-                </div>
-                <div class="metric-box" id="cost-prod-box">
-                  <div class="number" id="cost-prod">0.499</div>
-                  <div class="label">Productivity Cost</div>
-                </div>
-                <div class="metric-box worse">
-                  <div class="number" id="distress-conv">11.0%</div>
-                  <div class="label">Conv. Distress</div>
-                </div>
-                <div class="metric-box" id="distress-prod-box">
-                  <div class="number" id="distress-prod">88.2%</div>
-                  <div class="label">Productivity Distress</div>
-                </div>
-              </div>
-              <div class="headline-metrics">
-                <div class="metric-card">
-                  <div class="big-number" style="color:#34d399;" id="headline-cost">−3.1%</div>
-                  <div class="desc">Expected cost vs conventional</div>
-                </div>
-                <div class="metric-card">
-                  <div class="big-number" style="color:#f87171;" id="headline-distress">+77.2pp</div>
-                  <div class="desc">
-                    <span class="tooltip-trigger">
-                      Distress increase (current calibration)
-                      <span class="tooltip-text">
-                        The feedback loop: higher coupons in good years increase debt service → more borrowing → larger debt stock → higher future debt service. Mitigated by principal‑adjustment mechanism.
+                <div class="headline-metrics">
+                  <div class="metric-card">
+                    <div class="big-number" style="color:#34d399;" id="headline-cost">−3.1%</div>
+                    <div class="desc">Expected cost vs conventional</div>
+                  </div>
+                  <div class="metric-card">
+                    <div class="big-number" style="color:#f87171;" id="headline-distress">+77.2pp</div>
+                    <div class="desc">
+                      <span class="tooltip-trigger">
+                        Distress increase (current calibration)
+                        <span class="tooltip-text">
+                          The feedback loop: higher coupons in good years increase debt service → more borrowing → larger debt stock → higher future debt service. Mitigated by principal‑adjustment mechanism.
+                        </span>
                       </span>
-                    </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+
+            <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.04);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                <span style="font-weight:600; font-size:0.9rem;">Expected Cost Comparison</span>
+                <span style="font-size:0.7rem; color:#a5b4fc;">Lower is better</span>
+              </div>
+              <div class="bar-chart-wrap">
+                <div class="bar-chart" id="bar-chart">
+                  <div class="bar-item">
+                    <div class="bar-val" id="bar-conv-val">0.515</div>
+                    <div class="bar" id="bar-conv" style="height:90px;"></div>
+                    <div class="bar-label">Conv.</div>
+                  </div>
+                  <div class="bar-item">
+                    <div class="bar-val" id="bar-ilb-val">0.489</div>
+                    <div class="bar" id="bar-ilb" style="height:85px; background:#3b82f6;"></div>
+                    <div class="bar-label">ILB</div>
+                  </div>
+                  <div class="bar-item">
+                    <div class="bar-val" id="bar-gdp-val">0.511</div>
+                    <div class="bar" id="bar-gdp" style="height:89px; background:#8b5cf6;"></div>
+                    <div class="bar-label">GDP</div>
+                  </div>
+                  <div class="bar-item highlight">
+                    <div class="bar-val" id="bar-prod-val">0.499</div>
+                    <div class="bar" id="bar-prod" style="height:87px; background:#a78bfa;"></div>
+                    <div class="bar-label">Productivity</div>
+                  </div>
+                  <div class="bar-item">
+                    <div class="bar-val" id="bar-hybrid-val">0.527</div>
+                    <div class="bar" id="bar-hybrid" style="height:92px; background:#f59e0b;"></div>
+                    <div class="bar-label">Hybrid</div>
+                  </div>
+                </div>
+              </div>
+              <div style="font-size:0.8rem; color:#a5b4fc; margin-top:0.3rem; text-align:center;">
+                10,000 Monte Carlo paths · 10-year horizon · seed 42 · <a href="#implement">full code & data</a>
+              </div>
+            </div>
           </div>
+        </section>
 
-          <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.04);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
-              <span style="font-weight:600; font-size:0.9rem;">Expected Cost Comparison</span>
-              <span style="font-size:0.7rem; opacity:0.4;">Lower is better</span>
-            </div>
-            <div class="bar-chart-wrap">
-              <div class="bar-chart" id="bar-chart">
-                <div class="bar-item">
-                  <div class="bar-val" id="bar-conv-val">0.515</div>
-                  <div class="bar" id="bar-conv" style="height:90px;"></div>
-                  <div class="bar-label">Conv.</div>
-                </div>
-                <div class="bar-item">
-                  <div class="bar-val" id="bar-ilb-val">0.489</div>
-                  <div class="bar" id="bar-ilb" style="height:85px; background:#3b82f6;"></div>
-                  <div class="bar-label">ILB</div>
-                </div>
-                <div class="bar-item">
-                  <div class="bar-val" id="bar-gdp-val">0.511</div>
-                  <div class="bar" id="bar-gdp" style="height:89px; background:#8b5cf6;"></div>
-                  <div class="bar-label">GDP</div>
-                </div>
-                <div class="bar-item highlight">
-                  <div class="bar-val" id="bar-prod-val">0.499</div>
-                  <div class="bar" id="bar-prod" style="height:87px; background:#a78bfa;"></div>
-                  <div class="bar-label">Productivity</div>
-                </div>
-                <div class="bar-item">
-                  <div class="bar-val" id="bar-hybrid-val">0.527</div>
-                  <div class="bar" id="bar-hybrid" style="height:92px; background:#f59e0b;"></div>
-                  <div class="bar-label">Hybrid</div>
-                </div>
-              </div>
-            </div>
-            <div style="font-size:0.8rem; opacity:0.4; margin-top:0.3rem; text-align:center;">
-              10,000 Monte Carlo paths · 10-year horizon · seed 42 · <a href="#implement" style="color:#818cf8; text-decoration:none;">full code & data</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====== NEW SECTION: WELLBEING & BOND STRENGTH ====== -->
-      <section id="wellbeing" class="container section-spacing" style="padding-top:0;">
-        <div class="glass-card">
-          <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">😌 Happiness Curve & Bond Strength</h2>
-          <p style="opacity:0.7; margin-bottom:1.5rem;">Adjust productivity growth (<i>g_NPI</i>) below to see the resulting societal happiness and the strength of the bond.</p>
-          
-          <div class="sim-grid">
-            <!-- Controls -->
-            <div>
-              <div class="slider-group">
-                <label>
-                  <span>📈 Productivity Growth (<i>g_NPI</i>)</span>
-                  <span class="value-badge" id="happiness-label">3.0%</span>
-                </label>
-                <input type="range" id="happiness-slider" min="0.0" max="0.06" step="0.001" value="0.03" />
-              </div>
-
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem;">
-                <div class="metric-box better">
-                  <div class="number" id="happiness-val">50.0%</div>
-                  <div class="label">Citizen Happiness</div>
-                </div>
-                <div class="metric-box" id="bond-strength-box">
-                  <div class="number" id="bond-strength-val">75.0%</div>
-                  <div class="label">Bond Strength</div>
-                </div>
-              </div>
-            </div>
+        <!-- ====== NEW SECTION: WELLBEING & BOND STRENGTH ====== -->
+        <section id="wellbeing" class="container section-spacing" style="padding-top:0;">
+          <div class="glass-card">
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">😌 Happiness Curve & Bond Strength</h2>
+            <p style="color:#c7d2fe; margin-bottom:1.5rem;">Adjust productivity growth (<i>g_NPI</i>) below to see the resulting societal happiness and the strength of the bond.</p>
             
-            <!-- Live Bond Gauge (SVG) -->
-            <div style="display:flex; align-items:center; justify-content:center; flex-direction:column;">
-              <div class="gauge-container">
-                <svg class="gauge-svg" viewBox="0 0 220 130">
-                  <circle class="gauge-bg" cx="110" cy="110" r="90" stroke-dasharray="282.7" stroke-dashoffset="113.08" />
-                  <circle class="gauge-fg" id="gauge-progress" cx="110" cy="110" r="90" stroke-dasharray="0 282.7" stroke-dashoffset="113.08" />
-                  <text class="gauge-text" id="gauge-percent" x="110" y="105">75%</text>
-                  <text class="gauge-subtext" x="110" y="125">Bond Strength</text>
-                </svg>
+            <div class="sim-grid">
+              <!-- Controls -->
+              <div>
+                <div class="slider-group">
+                  <label>
+                    <span>📈 Productivity Growth (<i>g_NPI</i>)</span>
+                    <span class="value-badge" id="happiness-label">3.0%</span>
+                  </label>
+                  <input type="range" id="happiness-slider" min="0.0" max="0.06" step="0.001" value="0.03" aria-label="Productivity Growth slider for Happiness" />
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem;">
+                  <div class="metric-box better">
+                    <div class="number" id="happiness-val">50.0%</div>
+                    <div class="label">Citizen Happiness</div>
+                  </div>
+                  <div class="metric-box" id="bond-strength-box">
+                    <div class="number" id="bond-strength-val">75.0%</div>
+                    <div class="label">Bond Strength</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Fixed Live Bond Gauge (SVG Path) -->
+              <div style="display:flex; align-items:center; justify-content:center; flex-direction:column;">
+                <div class="gauge-container">
+                  <svg class="gauge-svg" viewBox="0 0 220 130">
+                    <!-- 270 degree path arc, center (110,110), radius 90 -->
+                    <path class="gauge-bg" d="M 46.36 173.64 A 90 90 0 1 1 173.64 46.36" />
+                    <path class="gauge-fg" id="gauge-progress" d="M 46.36 173.64 A 90 90 0 1 1 173.64 46.36" stroke-dasharray="424.12 424.12" stroke-dashoffset="424.12" />
+                    <text class="gauge-text" id="gauge-percent" x="110" y="105">75%</text>
+                    <text class="gauge-subtext" x="110" y="125">Bond Strength</text>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Happiness Chart -->
+            <div class="plot-container" style="margin-top:1.5rem;">
+              <div class="plot-title">Happiness vs Productivity Growth</div>
+              <div id="chart-happiness" style="height:280px;"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====== RESULTS TABLES ====== -->
+        <section id="results-data" class="container section-spacing" style="padding-top:0;">
+          <div class="glass-card">
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">📊 Simulation Results</h2>
+            <p style="color:#c7d2fe; margin-bottom:1.5rem;">Data from Appendix C – 10,000 paths, 10‑year horizon.</p>
+
+            <h3 style="font-size:1.1rem; font-weight:600; margin:1.5rem 0 0.5rem;">Bond Type Comparison</h3>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Bond Type</th><th>Expected Cost</th><th>Distress Prob.</th><th>Welfare</th><th>Effective Yield</th></tr></thead>
+                <tbody>
+                  <tr><td>Conventional</td><td>0.5154</td><td>11.05%</td><td>1.0687</td><td>4.00%</td></tr>
+                  <tr><td>Inflation‑Linked</td><td>0.4896</td><td>70.22%</td><td>4.0044</td><td>3.55%</td></tr>
+                  <tr><td>GDP‑Linked</td><td>0.5114</td><td>90.32%</td><td>5.0329</td><td>3.97%</td></tr>
+                  <tr class="highlight-row"><td><strong>Productivity</strong></td><td><strong>0.4994</strong></td><td><strong>88.17%</strong></td><td><strong>4.9134</strong></td><td><strong>3.74%</strong></td></tr>
+                  <tr><td>Hybrid</td><td>0.5272</td><td>94.63%</td><td>5.2647</td><td>4.25%</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div style="margin-top:2rem;">
+              <div class="accordion-toggle" onclick="toggleAccordion(this)">
+                <span style="font-weight:600; font-size:1rem;">📈 Portfolio Optimisation</span>
+                <span class="arrow">▼</span>
+              </div>
+              <div class="accordion-content">
+                <div class="table-wrap">
+                  <table class="data-table">
+                    <thead><tr><th>Share</th><th>Expected Cost</th><th>Distress Prob.</th><th>Welfare</th></tr></thead>
+                    <tbody>
+                      <tr><td>0% (Conv. only)</td><td>0.5154</td><td>11.05%</td><td>1.0687</td></tr>
+                      <tr><td>10%</td><td>0.5139</td><td>19.20%</td><td>1.437</td></tr>
+                      <tr><td>20%</td><td>0.5112</td><td>35.40%</td><td>2.320</td></tr>
+                      <tr class="highlight-row"><td><strong>30%</strong></td><td><strong>0.5088</strong></td><td><strong>52.10%</strong></td><td><strong>3.451</strong></td></tr>
+                      <tr><td>40%</td><td>0.5061</td><td>67.80%</td><td>4.501</td></tr>
+                      <tr><td>50%</td><td>0.5035</td><td>76.50%</td><td>5.112</td></tr>
+                      <tr><td>100%</td><td>0.4994</td><td>88.17%</td><td>4.9134</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div style="font-size:0.8rem; color:#a5b4fc; margin-top:0.3rem;">Optimal portfolio: <strong>30%</strong> Productivity Bonds</div>
               </div>
             </div>
           </div>
+        </section>
 
-          <!-- Live Happiness Chart -->
-          <div class="plot-container" style="margin-top:1.5rem;">
-            <div class="plot-title">Happiness vs Productivity Growth</div>
-            <div id="chart-happiness" style="height:280px;"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====== RESULTS TABLES ====== -->
-      <section id="results-data" class="container section-spacing" style="padding-top:0;">
-        <div class="glass-card">
-          <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">📊 Simulation Results</h2>
-          <p style="opacity:0.7; margin-bottom:1.5rem;">Data from Appendix C – 10,000 paths, 10‑year horizon.</p>
-
-          <h3 style="font-size:1.1rem; font-weight:600; margin:1.5rem 0 0.5rem;">Bond Type Comparison</h3>
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>Bond Type</th><th>Expected Cost</th><th>Distress Prob.</th><th>Welfare</th><th>Effective Yield</th></tr></thead>
-              <tbody>
-                <tr><td>Conventional</td><td>0.5154</td><td>11.05%</td><td>1.0687</td><td>4.00%</td></tr>
-                <tr><td>Inflation‑Linked</td><td>0.4896</td><td>70.22%</td><td>4.0044</td><td>3.55%</td></tr>
-                <tr><td>GDP‑Linked</td><td>0.5114</td><td>90.32%</td><td>5.0329</td><td>3.97%</td></tr>
-                <tr class="highlight-row"><td><strong>Productivity</strong></td><td><strong>0.4994</strong></td><td><strong>88.17%</strong></td><td><strong>4.9134</strong></td><td><strong>3.74%</strong></td></tr>
-                <tr><td>Hybrid</td><td>0.5272</td><td>94.63%</td><td>5.2647</td><td>4.25%</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div style="margin-top:2rem;">
-            <div class="accordion-toggle" onclick="toggleAccordion(this)">
-              <span style="font-weight:600; font-size:1rem;">📈 Portfolio Optimisation</span>
-              <span class="arrow">▼</span>
-            </div>
-            <div class="accordion-content">
-              <div class="table-wrap">
-                <table class="data-table">
-                  <thead><tr><th>Share</th><th>Expected Cost</th><th>Distress Prob.</th><th>Welfare</th></tr></thead>
-                  <tbody>
-                    <tr><td>0% (Conv. only)</td><td>0.5154</td><td>11.05%</td><td>1.0687</td></tr>
-                    <tr><td>10%</td><td>0.5139</td><td>19.20%</td><td>1.437</td></tr>
-                    <tr><td>20%</td><td>0.5112</td><td>35.40%</td><td>2.320</td></tr>
-                    <tr class="highlight-row"><td><strong>30%</strong></td><td><strong>0.5088</strong></td><td><strong>52.10%</strong></td><td><strong>3.451</strong></td></tr>
-                    <tr><td>40%</td><td>0.5061</td><td>67.80%</td><td>4.501</td></tr>
-                    <tr><td>50%</td><td>0.5035</td><td>76.50%</td><td>5.112</td></tr>
-                    <tr><td>100%</td><td>0.4994</td><td>88.17%</td><td>4.9134</td></tr>
-                  </tbody>
-                </table>
+        <!-- ====== SENSITIVITY CHARTS ====== -->
+        <section id="sensitivity" class="container section-spacing" style="padding-top:0;">
+          <div class="glass-card">
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">🎯 Sensitivity Analysis</h2>
+            <p style="color:#c7d2fe; margin-bottom:1.5rem;">How key parameters affect outcomes.</p>
+            <div class="chart-grid">
+              <div class="plot-container">
+                <div class="plot-title">Cost vs θ_AI (Gov. capture of AI gains)</div>
+                <div id="chart-cost-theta" style="height:280px;"></div>
               </div>
-              <div style="font-size:0.8rem; opacity:0.5; margin-top:0.3rem;">Optimal portfolio: <strong>30%</strong> Productivity Bonds</div>
+              <div class="plot-container">
+                <div class="plot-title">Distress vs α_N (Investor participation)</div>
+                <div id="chart-distress-alpha" style="height:280px;"></div>
+              </div>
+            </div>
+            <div style="font-size:0.8rem; color:#a5b4fc; text-align:center; margin-top:0.5rem;">
+              Hover for values · Data from Appendix C
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- ====== SENSITIVITY CHARTS ====== -->
-      <section id="sensitivity" class="container section-spacing" style="padding-top:0;">
-        <div class="glass-card">
-          <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">🎯 Sensitivity Analysis</h2>
-          <p style="opacity:0.7; margin-bottom:1.5rem;">How key parameters affect outcomes.</p>
-          <div class="chart-grid">
-            <div class="plot-container">
-              <div class="plot-title">Cost vs θ_AI (Gov. capture of AI gains)</div>
-              <div id="chart-cost-theta" style="height:280px;"></div>
-            </div>
-            <div class="plot-container">
-              <div class="plot-title">Distress vs α_N (Investor participation)</div>
-              <div id="chart-distress-alpha" style="height:280px;"></div>
-            </div>
-          </div>
-          <div style="font-size:0.8rem; opacity:0.4; text-align:center; margin-top:0.5rem;">
-            Hover for values · Data from Appendix C
-          </div>
-        </div>
-      </section>
-
-      <!-- ====== ADOPTION SCENARIOS ====== -->
-      <section id="adoption" class="container section-spacing" style="padding-top:0;">
-        <div class="glass-card">
-          <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">🌍 Adoption Scenarios</h2>
-          <p style="opacity:0.7; margin-bottom:1.5rem;">
-            Click a preset to load optimal parameters for your country type.
-          </p>
-          <div class="scenario-grid" id="scenario-grid">
-            <div class="scenario-card" data-theta="0.35" data-alpha="0.70" data-cap="0.04">
-              <h3>🏛️ Advanced</h3>
-              <div class="profile">High debt, ageing pop., strong institutions</div>
-              <div class="preset-info">
-                <span>θ_AI: <strong>0.35</strong></span>
-                <span>α_N: <strong>0.70</strong></span>
-                <span>Cap: <strong>4.0%</strong></span>
+        <!-- ====== ADOPTION SCENARIOS ====== -->
+        <section id="adoption" class="container section-spacing" style="padding-top:0;">
+          <div class="glass-card">
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">🌍 Adoption Scenarios</h2>
+            <p style="color:#c7d2fe; margin-bottom:1.5rem;">
+              Click a preset to load optimal parameters for your country type.
+            </p>
+            <div class="scenario-grid" id="scenario-grid">
+              <div class="scenario-card" data-theta="0.35" data-alpha="0.70" data-cap="0.04">
+                <h3>🏛️ Advanced</h3>
+                <div class="profile">High debt, ageing pop., strong institutions</div>
+                <div class="preset-info">
+                  <span>θ_AI: <strong>0.35</strong></span>
+                  <span>α_N: <strong>0.70</strong></span>
+                  <span>Cap: <strong>4.0%</strong></span>
+                </div>
+                <button class="btn-preset" data-preset="advanced">Load Preset</button>
+                <div class="scenario-pathway">
+                  <strong>Pathway:</strong> Pilot $1‑5B → 10‑15% issuance → 30% portfolio.<br />
+                  <span style="color:#a5b4fc;">Enablers: deep capital markets, strong stats.</span>
+                </div>
               </div>
-              <button class="btn-preset" data-preset="advanced">Load Preset</button>
-              <div class="scenario-pathway">
-                <strong>Pathway:</strong> Pilot $1‑5B → 10‑15% issuance → 30% portfolio.<br />
-                <span style="opacity:0.6;">Enablers: deep capital markets, strong stats.</span>
+              <div class="scenario-card" data-theta="0.25" data-alpha="0.65" data-cap="0.05">
+                <h3>🚀 Emerging</h3>
+                <div class="profile">Growth potential, developing capacity</div>
+                <div class="preset-info">
+                  <span>θ_AI: <strong>0.25</strong></span>
+                  <span>α_N: <strong>0.65</strong></span>
+                  <span>Cap: <strong>5.0%</strong></span>
+                </div>
+                <button class="btn-preset" data-preset="emerging">Load Preset</button>
+                <div class="scenario-pathway">
+                  <strong>Pathway:</strong> Multilateral guarantee → 5‑10Y bonds → 20% portfolio.<br />
+                  <span style="color:#a5b4fc;">Enablers: World Bank/IMF support, capacity building.</span>
+                </div>
               </div>
-            </div>
-            <div class="scenario-card" data-theta="0.25" data-alpha="0.65" data-cap="0.05">
-              <h3>🚀 Emerging</h3>
-              <div class="profile">Growth potential, developing capacity</div>
-              <div class="preset-info">
-                <span>θ_AI: <strong>0.25</strong></span>
-                <span>α_N: <strong>0.65</strong></span>
-                <span>Cap: <strong>5.0%</strong></span>
-              </div>
-              <button class="btn-preset" data-preset="emerging">Load Preset</button>
-              <div class="scenario-pathway">
-                <strong>Pathway:</strong> Multilateral guarantee → 5‑10Y bonds → 20% portfolio.<br />
-                <span style="opacity:0.6;">Enablers: World Bank/IMF support, capacity building.</span>
-              </div>
-            </div>
-            <div class="scenario-card" data-theta="0.45" data-alpha="0.75" data-cap="0.035">
-              <h3>🏝️ Small Open</h3>
-              <div class="profile">Strong institutions, global hub</div>
-              <div class="preset-info">
-                <span>θ_AI: <strong>0.45</strong></span>
-                <span>α_N: <strong>0.75</strong></span>
-                <span>Cap: <strong>3.5%</strong></span>
-              </div>
-              <button class="btn-preset" data-preset="smallopen">Load Preset</button>
-              <div class="scenario-pathway">
-                <strong>Pathway:</strong> Demonstration project → 20% portfolio → regional export.<br />
-                <span style="opacity:0.6;">Enablers: trusted stats, first‑mover advantage.</span>
+              <div class="scenario-card" data-theta="0.45" data-alpha="0.75" data-cap="0.035">
+                <h3>🏝️ Small Open</h3>
+                <div class="profile">Strong institutions, global hub</div>
+                <div class="preset-info">
+                  <span>θ_AI: <strong>0.45</strong></span>
+                  <span>α_N: <strong>0.75</strong></span>
+                  <span>Cap: <strong>3.5%</strong></span>
+                </div>
+                <button class="btn-preset" data-preset="smallopen">Load Preset</button>
+                <div class="scenario-pathway">
+                  <strong>Pathway:</strong> Demonstration project → 20% portfolio → regional export.<br />
+                  <span style="color:#a5b4fc;">Enablers: trusted stats, first‑mover advantage.</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- ====== IMPLEMENTATION GUIDE ====== -->
-      <section id="implement" class="container section-spacing" style="padding-top:0;">
-        <div class="glass-card">
-          <span class="badge-glow" style="margin-bottom:0.8rem;">Implementation</span>
-          <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">🧪 How to Implement the Model</h2>
-          <p style="opacity:0.7; margin-bottom:1.5rem;">Step‑by‑step guide to running the full simulation locally.</p>
+        <!-- ====== IMPLEMENTATION GUIDE ====== -->
+        <section id="implement" class="container section-spacing" style="padding-top:0;">
+          <div class="glass-card">
+            <span class="badge-glow" style="margin-bottom:0.8rem;">Implementation</span>
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">🧪 How to Implement the Model</h2>
+            <p style="color:#c7d2fe; margin-bottom:1.5rem;">Step‑by‑step guide to running the full simulation locally.</p>
 
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
-            <div>
-              <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:0.5rem;">1. Clone the Repository</h3>
-              <div class="code-block" style="margin-top:0;">
-                <div><span class="prompt">$</span> <span class="cmd">git clone https://github.com/traffictorch/productivity-bond-model.git</span></div>
-                <div><span class="prompt">$</span> <span class="cmd">cd productivity-bond-model</span></div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+              <div>
+                <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:0.5rem;">1. Clone the Repository</h3>
+                <div class="code-block" style="margin-top:0;">
+                  <div><span class="prompt">$</span> <span class="cmd">git clone https://github.com/traffictorch/productivity-bond-model.git</span></div>
+                  <div><span class="prompt">$</span> <span class="cmd">cd productivity-bond-model</span></div>
+                </div>
+
+                <h3 style="font-size:1.1rem; font-weight:600; margin:1rem 0 0.5rem;">2. Install Dependencies</h3>
+                <div class="code-block" style="margin-top:0;">
+                  <div><span class="prompt">$</span> <span class="cmd">pip install -r requirements.txt</span></div>
+                </div>
+
+                <h3 style="font-size:1.1rem; font-weight:600; margin:1rem 0 0.5rem;">3. Run the Simulation</h3>
+                <div class="code-block" style="margin-top:0;">
+                  <div><span class="prompt">$</span> <span class="cmd">python run_simulation.py --paths 10000 --years 10</span></div>
+                </div>
+
+                <h3 style="font-size:1.1rem; font-weight:600; margin:1rem 0 0.5rem;">4. View Results</h3>
+                <div class="code-block" style="margin-top:0;">
+                  <div><span class="cmd">cat results/bond_comparison.csv</span></div>
+                  <div><span class="cmd">cat results/portfolio_results.csv</span></div>
+                </div>
               </div>
-
-              <h3 style="font-size:1.1rem; font-weight:600; margin:1rem 0 0.5rem;">2. Install Dependencies</h3>
-              <div class="code-block" style="margin-top:0;">
-                <div><span class="prompt">$</span> <span class="cmd">pip install -r requirements.txt</span></div>
-              </div>
-
-              <h3 style="font-size:1.1rem; font-weight:600; margin:1rem 0 0.5rem;">3. Run the Simulation</h3>
-              <div class="code-block" style="margin-top:0;">
-                <div><span class="prompt">$</span> <span class="cmd">python run_simulation.py --paths 10000 --years 10</span></div>
-              </div>
-
-              <h3 style="font-size:1.1rem; font-weight:600; margin:1rem 0 0.5rem;">4. View Results</h3>
-              <div class="code-block" style="margin-top:0;">
-                <div><span class="cmd">cat results/bond_comparison.csv</span></div>
-                <div><span class="cmd">cat results/portfolio_results.csv</span></div>
+              <div>
+                <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:0.5rem;">Key Files</h3>
+                <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:0.5rem;">
+                  <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #818cf8;"><strong>ROADMAP.md</strong> – Full mathematical specification</li>
+                  <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #a78bfa;"><strong>run_simulation.py</strong> – Main simulation engine</li>
+                  <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #34d399;"><strong>results/</strong> – All CSV outputs from Appendix C</li>
+                  <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #fbbf24;"><strong>CONTRIBUTING.md</strong> – How to help improve the model</li>
+                </ul>
+                <div style="margin-top:1rem; display:flex; gap:0.8rem; flex-wrap:wrap;">
+                  <a href="https://github.com/traffictorch/productivity-bond-model" target="_blank" class="btn-secondary" style="padding:0.4rem 1.5rem;">📁 Repository</a>
+                  <a href="https://github.com/traffictorch/productivity-bond-model/blob/main/ROADMAP.md" target="_blank" class="btn-secondary" style="padding:0.4rem 1.5rem;">📖 ROADMAP</a>
+                  <a href="https://github.com/traffictorch/productivity-bond-model/tree/main/results" target="_blank" class="btn-secondary" style="padding:0.4rem 1.5rem;">📊 results/</a>
+                </div>
               </div>
             </div>
-            <div>
-              <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:0.5rem;">Key Files</h3>
-              <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:0.5rem;">
-                <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #818cf8;"><strong>ROADMAP.md</strong> – Full mathematical specification</li>
-                <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #a78bfa;"><strong>run_simulation.py</strong> – Main simulation engine</li>
-                <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #34d399;"><strong>results/</strong> – All CSV outputs from Appendix C</li>
-                <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #fbbf24;"><strong>CONTRIBUTING.md</strong> – How to help improve the model</li>
+          </div>
+        </section>
+
+        <!-- ====== RELATED WORK ====== -->
+        <section id="related" class="container section-spacing" style="padding-top:0;">
+          <div class="glass-card">
+            <span class="badge-glow" style="margin-bottom:0.8rem;">Scholarship</span>
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">📚 Related Work</h2>
+            <p style="color:#c7d2fe; margin-bottom:1.5rem;">The Productivity Bond Model builds on and extends several intellectual traditions.</p>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+              <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem;">
+                <div style="font-weight:600; color:#a5b4fc;">Thomas Piketty</div>
+                <p style="font-size:0.9rem; color:#c7d2fe;">r > g dynamics — capital returns outpace growth. The Productivity Bond flips this by capping returns and linking them to productivity.</p>
+              </div>
+              <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem;">
+                <div style="font-weight:600; color:#a5b4fc;">Rockström et al. (Planetary Boundaries)</div>
+                <p style="font-size:0.9rem; color:#c7d2fe;">Finite planet constraints. The model is designed to operate within ecological limits, not demand perpetual growth.</p>
+              </div>
+              <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem;">
+                <div style="font-weight:600; color:#a5b4fc;">IMF / World Bank</div>
+                <p style="font-size:0.9rem; color:#c7d2fe;">State‑contingent debt instruments. The Productivity Bond extends GDP‑linked bonds to productivity, with a governance lock to avoid past failures.</p>
+              </div>
+              <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem;">
+                <div style="font-weight:600; color:#a5b4fc;">Elinor Ostrom</div>
+                <p style="font-size:0.9rem; color:#c7d2fe;">Common‑pool resource governance. The Productivity Dividend treats productivity gains as a shared resource, distributed via universal dividend.</p>
+              </div>
+              <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem;">
+                <div style="font-weight:600; color:#a5b4fc;">Nassim Nicholas Taleb</div>
+                <p style="font-size:0.9rem; color:#c7d2fe;">Anti‑fragile systems. The cap/floor structure and countercyclical coupons make the bond resilient to shocks, not brittle.</p>
+              </div>
+              <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem;">
+                <div style="font-weight:600; color:#a5b4fc;">Traffic Torch Research Lineage</div>
+                <p style="font-size:0.9rem; color:#c7d2fe;">Incentive design, public goods funding, and system‑level coordination. This model is part of a broader research programme.</p>
+              </div>
+            </div>
+            <div style="margin-top:1.5rem; font-size:0.9rem; border-top:1px solid rgba(255,255,255,0.04); padding-top:1rem; color:#a5b4fc;">
+              Part of the <a href="https://traffictorch.net">Traffic Torch</a> research lineage on incentive design and public goods funding.
+            </div>
+          </div>
+        </section>
+
+        <!-- ====== FAQ ====== -->
+        <section id="faq" class="container section-spacing" style="padding-top:0;">
+          <div class="glass-card">
+            <span class="badge-glow" style="margin-bottom:0.8rem;">Questions</span>
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">❓ Frequently Asked Questions</h2>
+            <p style="color:#c7d2fe; margin-bottom:1.5rem;">Common questions and objections.</p>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+              <div style="background:rgba(0,0,0,0.15); border-radius:1rem; padding:1rem;">
+                <div style="font-weight:700; font-size:0.95rem;">“Isn’t this just Universal Basic Income?”</div>
+                <p style="font-size:0.9rem; color:#c7d2fe; margin-top:0.3rem;">No. The Productivity Dividend is funded from productivity gains, not general taxation. It’s a recognition of contribution, not a transfer payment.</p>
+              </div>
+              <div style="background:rgba(0,0,0,0.15); border-radius:1rem; padding:1rem;">
+                <div style="font-weight:700; font-size:0.95rem;">“What about inflation?”</div>
+                <p style="font-size:0.9rem; color:#c7d2fe; margin-top:0.3rem;">The coupon is CPI‑linked, so purchasing power is fully protected. The real return is floored at 0%.</p>
+              </div>
+              <div style="background:rgba(0,0,0,0.15); border-radius:1rem; padding:1rem;">
+                <div style="font-weight:700; font-size:0.95rem;">“Can the government manipulate the NPI?”</div>
+                <p style="font-size:0.9rem; color:#c7d2fe; margin-top:0.3rem;">No – the NPI methodology is legally locked in the bond’s trust indenture. The statistical agency is independent, and revisions don’t affect past coupons.</p>
+              </div>
+              <div style="background:rgba(0,0,0,0.15); border-radius:1rem; padding:1rem;">
+                <div style="font-weight:700; font-size:0.95rem;">“What about default?”</div>
+                <p style="font-size:0.9rem; color:#c7d2fe; margin-top:0.3rem;">The floor/cap structure prevents default. In bad years, the coupon drops to inflation (0% real). The principal‑adjustment mechanism can also reduce debt stock.</p>
+              </div>
+              <div style="background:rgba(0,0,0,0.15); border-radius:1rem; padding:1rem;">
+                <div style="font-weight:700; font-size:0.95rem;">“What’s the catch?”</div>
+                <p style="font-size:0.9rem; color:#c7d2fe; margin-top:0.3rem;">The feedback loop. In good years, higher coupons can increase debt service and enlarge the debt stock. This is fixed with a principal‑adjustment mechanism, which is under active research.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====== CANONICAL CITATION ====== -->
+        <section id="citation" class="container section-spacing" style="padding-top:0;">
+          <div class="glass-card" style="border-color:rgba(16,185,129,0.2);">
+            <span class="badge-glow" style="margin-bottom:0.8rem;">Cite This Work</span>
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">🔗 Canonical Reference</h2>
+            <p style="color:#c7d2fe; margin-bottom:1.5rem;">How to cite the Productivity Bond Model in academic work.</p>
+
+            <div class="citation-block">
+              <div class="label">APA 7th</div>
+              Callan, Y. (2026). <em>The Productivity Bond Model</em> (Version 1.0.0). Traffic Torch. https://traffictorch.github.io/productivity-bond-model/
+            </div>
+
+            <div class="citation-block">
+              <div class="label">BibTeX</div>
+              <pre style="margin:0; white-space:pre-wrap; color:#eef2f8; font-family:'Courier New',monospace; font-size:0.8rem;">
+              @misc{callan2026productivitybond,
+                author = {Ylia Callan},
+                title = {The Productivity Bond Model},
+                year = {2026},
+                publisher = {Traffic Torch},
+                url = {https://traffictorch.github.io/productivity-bond-model/},
+                version = {1.0.0},
+                note = {Canonical reference for the Productivity Bond Model}
+              }
+              </pre>
+            </div>
+
+            <div style="display:flex; flex-wrap:wrap; gap:1rem; margin-top:1rem;">
+              <a href="#" onclick="navigator.clipboard.writeText('Callan, Y. (2026). The Productivity Bond Model (Version 1.0.0). Traffic Torch. https://traffictorch.github.io/productivity-bond-model/'); alert('Copied APA citation!'); return false;" class="btn-secondary" style="padding:0.4rem 1.5rem;">📋 Copy APA</a>
+              <a href="#" onclick="navigator.clipboard.writeText('@misc{callan2026productivitybond,\n  author = {Ylia Callan},\n  title = {The Productivity Bond Model},\n  year = {2026},\n  publisher = {Traffic Torch},\n  url = {https://traffictorch.github.io/productivity-bond-model/},\n  version = {1.0.0}\n}'); alert('Copied BibTeX!'); return false;" class="btn-secondary" style="padding:0.4rem 1.5rem;">📋 Copy BibTeX</a>
+              <a href="https://github.com/traffictorch/productivity-bond-model" target="_blank" class="btn-secondary" style="padding:0.4rem 1.5rem;">📁 Repository</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====== POLICY BRIEF (condensed) ====== -->
+        <section id="policy-brief-section" class="container section-spacing" style="padding-top:0;">
+          <div class="glass-card" style="border-color:rgba(16,185,129,0.15);">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:1.5rem;">
+              <h2 style="font-size:1.8rem; font-weight:700;">📄 Policy Brief</h2>
+              <button id="print-policy-btn" class="btn-primary btn-success" style="padding:0.6rem 1.5rem;">
+                ⬇ Download PDF
+              </button>
+            </div>
+            <div class="policy-text" id="policy-text-content">
+              <h3>The Problem in One Sentence</h3>
+              <p>We have built a financial system that assumes unlimited growth on a planet with limits.</p>
+
+              <h3>The Contradiction</h3>
+              <p><strong>Global debt</strong> has grown from ~$50 trillion in 1980 to over <strong>$300 trillion</strong> today – an almost perfect exponential curve. <strong>Global resource extraction</strong> is flattening or declining in per‑capita terms. The gap between these two curves is <strong>the infinite debt problem</strong>.</p>
+
+              <h3>The Solution: Productivity Bonds</h3>
+              <div class="formula">c(t) = (1 + π) × (1 + min[max(α_N × g_NPI, 0%), C]) – 1</div>
+              <ul>
+                <li><strong>Inflation protection</strong> – CPI‑linked</li>
+                <li><strong>Productivity participation</strong> – α_N × NPI growth</li>
+                <li><strong>Downside protection</strong> – 0% real floor</li>
+                <li><strong>Upside limit</strong> – C (cap)</li>
               </ul>
-              <div style="margin-top:1rem; display:flex; gap:0.8rem; flex-wrap:wrap;">
-                <a href="https://github.com/traffictorch/productivity-bond-model" target="_blank" class="btn-secondary" style="padding:0.4rem 1.5rem;">📁 Repository</a>
-                <a href="https://github.com/traffictorch/productivity-bond-model/blob/main/ROADMAP.md" target="_blank" class="btn-secondary" style="padding:0.4rem 1.5rem;">📖 ROADMAP</a>
-                <a href="https://github.com/traffictorch/productivity-bond-model/tree/main/results" target="_blank" class="btn-secondary" style="padding:0.4rem 1.5rem;">📊 results/</a>
-              </div>
+
+              <h3>Key Results</h3>
+              <ul>
+                <li><strong>Cost Saving:</strong> −3.1% vs conventional debt</li>
+                <li><strong>Optimal Portfolio:</strong> 30% Productivity Bonds</li>
+                <li><strong>Critical Variable:</strong> θ_AI > 0.30</li>
+              </ul>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- ====== RELATED WORK ====== -->
-      <section id="related" class="container section-spacing" style="padding-top:0;">
-        <div class="glass-card">
-          <span class="badge-glow" style="margin-bottom:0.8rem;">Scholarship</span>
-          <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">📚 Related Work</h2>
-          <p style="opacity:0.7; margin-bottom:1.5rem;">The Productivity Bond Model builds on and extends several intellectual traditions.</p>
-
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-            <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem;">
-              <div style="font-weight:600; color:#a5b4fc;">Thomas Piketty</div>
-              <p style="font-size:0.9rem; opacity:0.7;">r > g dynamics — capital returns outpace growth. The Productivity Bond flips this by capping returns and linking them to productivity.</p>
-            </div>
-            <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem;">
-              <div style="font-weight:600; color:#a5b4fc;">Rockström et al. (Planetary Boundaries)</div>
-              <p style="font-size:0.9rem; opacity:0.7;">Finite planet constraints. The model is designed to operate within ecological limits, not demand perpetual growth.</p>
-            </div>
-            <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem;">
-              <div style="font-weight:600; color:#a5b4fc;">IMF / World Bank</div>
-              <p style="font-size:0.9rem; opacity:0.7;">State‑contingent debt instruments. The Productivity Bond extends GDP‑linked bonds to productivity, with a governance lock to avoid past failures.</p>
-            </div>
-            <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem;">
-              <div style="font-weight:600; color:#a5b4fc;">Elinor Ostrom</div>
-              <p style="font-size:0.9rem; opacity:0.7;">Common‑pool resource governance. The Productivity Dividend treats productivity gains as a shared resource, distributed via universal dividend.</p>
-            </div>
-            <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem;">
-              <div style="font-weight:600; color:#a5b4fc;">Nassim Nicholas Taleb</div>
-              <p style="font-size:0.9rem; opacity:0.7;">Anti‑fragile systems. The cap/floor structure and countercyclical coupons make the bond resilient to shocks, not brittle.</p>
-            </div>
-            <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem;">
-              <div style="font-weight:600; color:#a5b4fc;">Traffic Torch Research Lineage</div>
-              <p style="font-size:0.9rem; opacity:0.7;">Incentive design, public goods funding, and system‑level coordination. This model is part of a broader research programme.</p>
-            </div>
-          </div>
-          <div style="margin-top:1.5rem; font-size:0.9rem; opacity:0.6; border-top:1px solid rgba(255,255,255,0.04); padding-top:1rem;">
-            Part of the <a href="https://traffictorch.net" style="color:#818cf8; text-decoration:none;">Traffic Torch</a> research lineage on incentive design and public goods funding.
-          </div>
-        </div>
-      </section>
-
-      <!-- ====== FAQ ====== -->
-      <section id="faq" class="container section-spacing" style="padding-top:0;">
-        <div class="glass-card">
-          <span class="badge-glow" style="margin-bottom:0.8rem;">Questions</span>
-          <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">❓ Frequently Asked Questions</h2>
-          <p style="opacity:0.7; margin-bottom:1.5rem;">Common questions and objections.</p>
-
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
-            <div style="background:rgba(0,0,0,0.15); border-radius:1rem; padding:1rem;">
-              <div style="font-weight:700; font-size:0.95rem;">“Isn’t this just Universal Basic Income?”</div>
-              <p style="font-size:0.9rem; opacity:0.7; margin-top:0.3rem;">No. The Productivity Dividend is funded from productivity gains, not general taxation. It’s a recognition of contribution, not a transfer payment.</p>
-            </div>
-            <div style="background:rgba(0,0,0,0.15); border-radius:1rem; padding:1rem;">
-              <div style="font-weight:700; font-size:0.95rem;">“What about inflation?”</div>
-              <p style="font-size:0.9rem; opacity:0.7; margin-top:0.3rem;">The coupon is CPI‑linked, so purchasing power is fully protected. The real return is floored at 0%.</p>
-            </div>
-            <div style="background:rgba(0,0,0,0.15); border-radius:1rem; padding:1rem;">
-              <div style="font-weight:700; font-size:0.95rem;">“Can the government manipulate the NPI?”</div>
-              <p style="font-size:0.9rem; opacity:0.7; margin-top:0.3rem;">No – the NPI methodology is legally locked in the bond’s trust indenture. The statistical agency is independent, and revisions don’t affect past coupons.</p>
-            </div>
-            <div style="background:rgba(0,0,0,0.15); border-radius:1rem; padding:1rem;">
-              <div style="font-weight:700; font-size:0.95rem;">“What about default?”</div>
-              <p style="font-size:0.9rem; opacity:0.7; margin-top:0.3rem;">The floor/cap structure prevents default. In bad years, the coupon drops to inflation (0% real). The principal‑adjustment mechanism can also reduce debt stock.</p>
-            </div>
-            <div style="background:rgba(0,0,0,0.15); border-radius:1rem; padding:1rem;">
-              <div style="font-weight:700; font-size:0.95rem;">“What’s the catch?”</div>
-              <p style="font-size:0.9rem; opacity:0.7; margin-top:0.3rem;">The feedback loop. In good years, higher coupons can increase debt service and enlarge the debt stock. This is fixed with a principal‑adjustment mechanism, which is under active research.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====== CANONICAL CITATION ====== -->
-      <section id="citation" class="container section-spacing" style="padding-top:0;">
-        <div class="glass-card" style="border-color:rgba(16,185,129,0.2);">
-          <span class="badge-glow" style="margin-bottom:0.8rem;">Cite This Work</span>
-          <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">🔗 Canonical Reference</h2>
-          <p style="opacity:0.7; margin-bottom:1.5rem;">How to cite the Productivity Bond Model in academic work.</p>
-
-          <div class="citation-block">
-            <div class="label">APA 7th</div>
-            Callan, Y. (2026). <em>The Productivity Bond Model</em> (Version 1.0.0). Traffic Torch. https://traffictorch.github.io/productivity-bond-model/
-          </div>
-
-          <div class="citation-block">
-            <div class="label">BibTeX</div>
-            <pre style="margin:0; white-space:pre-wrap; color:#eef2f8; font-family:'Courier New',monospace; font-size:0.8rem;">
-            @misc{callan2026productivitybond,
-              author = {Ylia Callan},
-              title = {The Productivity Bond Model},
-              year = {2026},
-              publisher = {Traffic Torch},
-              url = {https://traffictorch.github.io/productivity-bond-model/},
-              version = {1.0.0},
-              note = {Canonical reference for the Productivity Bond Model}
-            }
-            </pre>
-          </div>
-
-          <div style="display:flex; flex-wrap:wrap; gap:1rem; margin-top:1rem;">
-            <a href="#" onclick="navigator.clipboard.writeText('Callan, Y. (2026). The Productivity Bond Model (Version 1.0.0). Traffic Torch. https://traffictorch.github.io/productivity-bond-model/'); alert('Copied APA citation!'); return false;" class="btn-secondary" style="padding:0.4rem 1.5rem;">📋 Copy APA</a>
-            <a href="#" onclick="navigator.clipboard.writeText('@misc{callan2026productivitybond,\n  author = {Ylia Callan},\n  title = {The Productivity Bond Model},\n  year = {2026},\n  publisher = {Traffic Torch},\n  url = {https://traffictorch.github.io/productivity-bond-model/},\n  version = {1.0.0}\n}'); alert('Copied BibTeX!'); return false;" class="btn-secondary" style="padding:0.4rem 1.5rem;">📋 Copy BibTeX</a>
-            <a href="https://github.com/traffictorch/productivity-bond-model" target="_blank" class="btn-secondary" style="padding:0.4rem 1.5rem;">📁 Repository</a>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====== POLICY BRIEF (condensed) ====== -->
-      <section id="policy-brief-section" class="container section-spacing" style="padding-top:0;">
-        <div class="glass-card" style="border-color:rgba(16,185,129,0.15);">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:1.5rem;">
-            <h2 style="font-size:1.8rem; font-weight:700;">📄 Policy Brief</h2>
-            <button id="print-policy-btn" class="btn-primary btn-success" style="padding:0.6rem 1.5rem;">
-              ⬇ Download PDF
-            </button>
-          </div>
-          <div class="policy-text" id="policy-text-content">
-            <h3>The Problem in One Sentence</h3>
-            <p>We have built a financial system that assumes unlimited growth on a planet with limits.</p>
-
-            <h3>The Contradiction</h3>
-            <p><strong>Global debt</strong> has grown from ~$50 trillion in 1980 to over <strong>$300 trillion</strong> today – an almost perfect exponential curve. <strong>Global resource extraction</strong> is flattening or declining in per‑capita terms. The gap between these two curves is <strong>the infinite debt problem</strong>.</p>
-
-            <h3>The Solution: Productivity Bonds</h3>
-            <div class="formula">c(t) = (1 + π) × (1 + min[max(α_N × g_NPI, 0%), C]) – 1</div>
-            <ul>
-              <li><strong>Inflation protection</strong> – CPI‑linked</li>
-              <li><strong>Productivity participation</strong> – α_N × NPI growth</li>
-              <li><strong>Downside protection</strong> – 0% real floor</li>
-              <li><strong>Upside limit</strong> – C (cap)</li>
-            </ul>
-
-            <h3>Key Results</h3>
-            <ul>
-              <li><strong>Cost Saving:</strong> −3.1% vs conventional debt</li>
-              <li><strong>Optimal Portfolio:</strong> 30% Productivity Bonds</li>
-              <li><strong>Critical Variable:</strong> θ_AI > 0.30</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
+      </div>
+      <!-- end main-content -->
     </div>
-    <!-- end main-content -->
-  </div>
-  <!-- end page-wrapper -->
+    <!-- end page-wrapper -->
+  </main>
 
   <!-- ====== PWA INSTALL BUTTON & IOS MODAL ====== -->
   <button id="pwaInstallBtn" class="pwa-install-btn">
@@ -2280,7 +2314,7 @@
               name: 'Happiness Curve'
             };
             const layoutH = {
-              paper_bgcolor: 'rgba(0,0,0,0)',
+              paper_bgcolor: 'rgba(0,0,0,
               plot_bgcolor: 'rgba(0,0,0,0)',
               font: { color: '#eef2f8', family: 'Inter' },
               margin: { l: 40, r: 20, t: 20, b: 40 },
@@ -2421,13 +2455,11 @@
         happinessVal.textContent = (happiness * 100).toFixed(1) + '%';
         bondStrengthVal.textContent = (bondStrength * 100).toFixed(1) + '%';
 
-        // Update SVG Gauge (Circle uses circumference 2*pi*r, r=90 -> ~565.48)
-        // Arc covers 270 deg (3/4 circle) -> dasharray 424.11 (3/4 of 565.48)
-        const circumference = 2 * Math.PI * 90; // ~565.48
-        const dashLength = circumference * 0.75; // ~424.11
-        const offset = dashLength * (1 - bondStrength);
-        gaugeProgress.style.strokeDasharray = `${dashLength} ${circumference}`;
-        gaugeProgress.style.strokeDashoffset = (113.08 + offset); // 113.08 is half arc offset to start at left
+        // Update SVG Gauge (Path Arc)
+        const dashArray = 424.12; // 3/4 of circumference
+        const offset = dashArray * (1 - bondStrength);
+        gaugeProgress.style.strokeDasharray = `${dashArray} 424.12`;
+        gaugeProgress.style.strokeDashoffset = offset;
         gaugeProgress.style.stroke = bondStrength > 0.6 ? '#34d399' : bondStrength > 0.3 ? '#fbbf24' : '#f87171';
         gaugePercent.textContent = (bondStrength * 100).toFixed(0) + '%';
 
