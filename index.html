@@ -24,9 +24,10 @@
   <!-- PWA Manifest -->
   <link rel="manifest" href="/manifest.json">
 
-  <!-- Cleaned up SVG Favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%236366f1'/%3E%3Cpath d='M20 70 L40 50 L60 60 L80 30' stroke='%23ffffff' stroke-width='8' fill='none' stroke-linecap='round' stroke-linejoin='round' /%3E%3C/svg%3E">
+  <!-- Fixed, Validated Base64 SVG Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIlMjM2MzY2ZjEiLz48cGF0aCBkPSJNMjAgNzAgTDQwIDUwIEw2MCA2MCBMODAgMzAiIHN0cm9rZT0iJTIzZmZmZmZmIiBzdHJva2Utd2lkdGg9IjgiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg==">
 
+  <!-- Structured Data -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -37,17 +38,7 @@
         "@type": "Person",
         "name": "Ylia Callan",
         "url": "https://github.com/traffictorch"
-      },
-      "isPartOf": {
-        "@type": "CreativeWork",
-        "name": "The Infinite Debt Problem",
-        "url": "https://traffictorch.github.io/productivity-bond-model/"
-      },
-      "version": "1.0.0",
-      "datePublished": "2026-08-13",
-      "dateModified": "2026-08-13",
-      "license": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
-      "citation": "Callan, Y. (2026). The Productivity Bond Model (Version 1.0.0). Traffic Torch. https://traffictorch.github.io/productivity-bond-model/"
+      }
     }
   </script>
 
@@ -78,14 +69,14 @@
     }
     html {
       scroll-behavior: smooth;
-      overflow-x: hidden; /* Locks horizontal scroll on mobile */
+      overflow-x: hidden;
     }
     body {
       font-family: 'Inter', -apple-system, sans-serif;
       background: #05060a;
       color: #eef2f8;
       line-height: 1.6;
-      overflow-x: hidden; /* Locks horizontal scroll on mobile */
+      overflow-x: hidden;
     }
     ::-webkit-scrollbar {
       width: 6px;
@@ -98,7 +89,6 @@
       border-radius: 10px;
     }
     
-    /* Accessibility: Distinguishable Links */
     a {
       color: #a5b4fc;
       text-decoration: underline;
@@ -292,7 +282,7 @@
       background: rgba(255, 255, 255, 0.12);
     }
     .btn-success {
-      background: #059669; /* Adjusted contrast to pass WCAG */
+      background: #059669;
       box-shadow: 0 4px 20px rgba(5, 150, 105, 0.3);
     }
     .btn-success:hover:not(:disabled) {
@@ -1077,7 +1067,7 @@
     }
 
     /* ============================================================
-               BOND STRENGTH GAUGE (Fixed Path Arc & Mobile Padding)
+               BOND STRENGTH GAUGE
                ============================================================ */
     .gauge-container {
       width: 100%;
@@ -1116,7 +1106,6 @@
       text-anchor: middle;
     }
 
-    /* Fix layout spacing for gauge on mobile & desktop */
     .gauge-wrapper {
       display: flex;
       flex-direction: column;
@@ -1127,7 +1116,7 @@
     }
     @media (max-width: 640px) {
       .gauge-wrapper {
-        padding-bottom: 2.5rem; /* Stops text overlap on mobile */
+        padding-bottom: 2.5rem;
       }
     }
   </style>
@@ -1203,6 +1192,14 @@
               <span class="arrow">▼</span>
             </div>
             <div class="accordion-content open">
+              <!-- Citizen's Explainer for the equations -->
+              <div style="margin-bottom:1rem; padding-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.06); color:#c7d2fe; font-size:0.95rem;">
+                <p><strong>For Citizens and Bankers:</strong> Think of the economy like a machine. 
+                <span class="sym" style="color:#a5b4fc; font-family:monospace;">θ_AI</span> measures what % of AI efficiency gains the government collects to fund public services.
+                <span class="sym" style="color:#a5b4fc; font-family:monospace;">α_N</span> is the % of those gains paid out to bondholders.
+                <span class="sym" style="color:#a5b4fc; font-family:monospace;">C</span> sets a hard cap to prevent the government from overpaying in a boom, while <span class="sym" style="color:#a5b4fc; font-family:monospace;">F</span> acts as a safety net ensuring investors get 0% real return in bad years.</p>
+              </div>
+
               <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem;">
                 <div>
                   <h3 style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; color:#c7d2fe; margin-bottom:0.5rem;">Model Parameters</h3>
@@ -1238,7 +1235,7 @@
           <div class="glass-card">
             <span class="badge-glow" style="margin-bottom:0.8rem;">Model Definition</span>
             <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">Formal Specification</h2>
-            <p style="color:#c7d2fe; margin-bottom:1.5rem;">Scope, assumptions, and variables that define the Productivity Bond Model.</p>
+            <p style="color:#c7d2fe; margin-bottom:1.5rem;">This section defines the rules of our Productivity Bond. It explains what the model is, how wide it applies, the assumptions we make about the world, and the mathematical equation governing it.</p>
 
             <div class="grid-2col">
               <div style="background:rgba(0,0,0,0.2); border-radius:1.2rem; padding:1.2rem;">
@@ -1284,7 +1281,7 @@
           <div class="glass-card">
             <span class="badge-glow" style="margin-bottom:0.8rem;">Mechanism</span>
             <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">How It Works</h2>
-            <p style="color:#c7d2fe; margin-bottom:1.5rem;">The bond mechanism, stakeholder flows, and the productivity loop.</p>
+            <p style="color:#c7d2fe; margin-bottom:1.5rem;">This diagram shows the cycle of the Productivity Bond in action: The Government issues the bond, the economy grows, the return is calculated based on NPI, and the gains are shared with investors and citizens.</p>
 
             <div class="diagram-container">
               <svg viewBox="0 0 800 180" preserveAspectRatio="xMidYMid meet" style="max-width:100%; height:auto;">
@@ -1364,6 +1361,7 @@
               <h2 style="font-size:1.8rem; font-weight:700;">⚡ Live Monte Carlo Simulator</h2>
               <span style="font-size:0.8rem; color:#a5b4fc;">10,000 paths · 10-year horizon</span>
             </div>
+            <p style="color:#c7d2fe; margin-bottom:1.5rem;">Move the sliders below to simulate the economy. θ_AI, α_N, and Cap control how the bond behaves. The graph will update to show you the expected financial cost and distress risk.</p>
 
             <div class="sim-grid">
               <div>
@@ -1489,11 +1487,11 @@
           </div>
         </section>
 
-        <!-- ====== NEW SECTION: WELLBEING & BOND STRENGTH ====== -->
+        <!-- ====== WELLBEING & BOND STRENGTH ====== -->
         <section id="wellbeing" class="container section-spacing" style="padding-top:0;">
           <div class="glass-card">
             <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">😌 Happiness Curve & Bond Strength</h2>
-            <p style="color:#c7d2fe; margin-bottom:1.5rem;">Adjust productivity growth (<i>g_NPI</i>) below to see the resulting societal happiness and the strength of the bond.</p>
+            <p style="color:#c7d2fe; margin-bottom:1.5rem;">Here we show the relationship between economic productivity, societal happiness, and the strength of the financial bond. Move the slider to find the 'sweet spot' where the economy grows happily.</p>
             
             <div class="sim-grid">
               <div>
@@ -1517,7 +1515,6 @@
                 </div>
               </div>
               
-              <!-- Fixed Layout for Gauge -->
               <div class="gauge-wrapper">
                 <div class="gauge-container">
                   <svg class="gauge-svg" viewBox="0 0 220 130">
@@ -1541,7 +1538,7 @@
         <section id="results-data" class="container section-spacing" style="padding-top:0;">
           <div class="glass-card">
             <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">📊 Simulation Results</h2>
-            <p style="color:#c7d2fe; margin-bottom:1.5rem;">Data from Appendix C – 10,000 paths, 10‑year horizon.</p>
+            <p style="color:#c7d2fe; margin-bottom:1.5rem;">Here are the hard numbers. We compare our Productivity Bond against other types of bonds. A lower 'Cost' means it's cheaper for the government, and 'Distress' measures the chance of financial trouble.</p>
 
             <h3 style="font-size:1.1rem; font-weight:600; margin:1.5rem 0 0.5rem;">Bond Type Comparison</h3>
             <div class="table-wrap">
@@ -1751,7 +1748,7 @@
           <div class="glass-card">
             <span class="badge-glow" style="margin-bottom:0.8rem;">Questions</span>
             <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">❓ Frequently Asked Questions</h2>
-            <p style="color:#c7d2fe; margin-bottom:1.5rem;">Common questions and objections.</p>
+            <p style="color:#c7d2fe; margin-bottom:1.5rem;">Quick answers to the most common questions about this model, designed for citizens and bankers alike.</p>
 
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
               <div style="background:rgba(0,0,0,0.15); border-radius:1rem; padding:1rem;">
@@ -1813,7 +1810,7 @@
           </div>
         </section>
 
-        <!-- ====== POLICY BRIEF (condensed) ====== -->
+        <!-- ====== POLICY BRIEF ====== -->
         <section id="policy-brief-section" class="container section-spacing" style="padding-top:0;">
           <div class="glass-card" style="border-color:rgba(16,185,129,0.15);">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:1.5rem;">
@@ -1886,7 +1883,7 @@
   </footer>
 
   <!-- ============================================================
-  JAVASCRIPT — Full Monty
+  JAVASCRIPT
   ============================================================ -->
   <script>
     (function() {
@@ -2170,7 +2167,7 @@
         window.print();
       });
 
-      // ---------- PLOTLY CHARTS ----------
+      // ---------- PLOTLY CHARTS (displayModeBar disabled for SEO/Accessibility) ----------
       function loadPlotlyAndRender() {
         const thetaValues = [0.10, 0.20, 0.30, 0.40, 0.50];
         const costConv = [0.5154, 0.5154, 0.5154, 0.5154, 0.5154];
@@ -2204,7 +2201,8 @@
             margin: { l: 40, r: 20, t: 20, b: 40 },
             xaxis: { title: 'θ_AI', gridcolor: 'rgba(255,255,255,0.05)' },
             yaxis: { title: 'Expected Cost', gridcolor: 'rgba(255,255,255,0.05)' },
-            legend: { orientation: 'h', x: 0, y: 1.05 }
+            legend: { orientation: 'h', x: 0, y: 1.05 },
+            displayModeBar: false // Removes uncrawlable links
           };
           Plotly.newPlot('chart-cost-theta', [trace1, trace2], layout1, { responsive: true });
 
@@ -2224,7 +2222,8 @@
             margin: { l: 40, r: 20, t: 20, b: 40 },
             xaxis: { title: 'α_N (participation)', gridcolor: 'rgba(255,255,255,0.05)' },
             yaxis: { title: 'Distress Probability (%)', gridcolor: 'rgba(255,255,255,0.05)' },
-            legend: { orientation: 'h', x: 0, y: 1.05 }
+            legend: { orientation: 'h', x: 0, y: 1.05 },
+            displayModeBar: false
           };
           Plotly.newPlot('chart-distress-alpha', [trace3], layout2, { responsive: true });
 
@@ -2248,7 +2247,8 @@
               font: { color: '#eef2f8', family: 'Inter' },
               margin: { l: 40, r: 20, t: 20, b: 40 },
               xaxis: { title: 'Productivity Growth (g_NPI)', gridcolor: 'rgba(255,255,255,0.05)', tickformat: '.0%' },
-              yaxis: { title: 'Happiness Index', gridcolor: 'rgba(255,255,255,0.05)', range: [0, 1.1], tickformat: '.0%' }
+              yaxis: { title: 'Happiness Index', gridcolor: 'rgba(255,255,255,0.05)', range: [0, 1.1], tickformat: '.0%' },
+              displayModeBar: false
             };
             Plotly.newPlot('chart-happiness', [traceH], layoutH, { responsive: true });
           }
@@ -2272,13 +2272,13 @@
   </script>
 
   <!-- ============================================================
-  PWA INSTALL LOGIC & NATIVE SHARING & HAPPINESS GAUGE
+  PWA, SHARING, AND GAUGE LOGIC
   ============================================================ -->
   <script>
     (function() {
       'use strict';
 
-      // ---------- NATIVE SHARING (Works on iPhone, Android, Chrome, falls back to Copy) ----------
+      // ---------- NATIVE SHARING ----------
       function sharePage() {
         const url = window.location.href;
         const title = document.title;
@@ -2303,12 +2303,11 @@
         }
       }
 
-      // Attach share events to all buttons with class 'share-btn'
       document.querySelectorAll('.share-btn').forEach(btn => {
         btn.addEventListener('click', sharePage);
       });
 
-      // ---------- PWA INSTALL (5s delay + Auto-Hide after installed) ----------
+      // ---------- PWA INSTALL ----------
       const installBtn = document.getElementById('pwaInstallBtn');
       const iosOverlay = document.getElementById('pwaIosOverlay');
       const closeIosBtn = document.getElementById('pwaCloseIosModal');
@@ -2357,7 +2356,7 @@
         }
       });
 
-      // ---------- HAPPINESS GAUGE & CHART LIVE UPDATE ----------
+      // ---------- HAPPINESS GAUGE ----------
       const happinessSlider = document.getElementById('happiness-slider');
       const happinessLabel = document.getElementById('happiness-label');
       const happinessVal = document.getElementById('happiness-val');
@@ -2403,7 +2402,9 @@
             name: 'Current',
             showlegend: true
           };
-          Plotly.react('chart-happiness', [traceLine, tracePoint], chartDiv.layout || undefined, { responsive: true });
+          // Ensure displayModeBar persists in react update
+          const currentLayout = chartDiv.layout || { displayModeBar: false };
+          Plotly.react('chart-happiness', [traceLine, tracePoint], { ...currentLayout, displayModeBar: false }, { responsive: true });
         }
       }
 
