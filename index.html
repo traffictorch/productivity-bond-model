@@ -216,6 +216,11 @@
       color: #eef2f8;
     }
 
+    /* Fix nav clicks on mobile/desktop - prevents header from hiding content */
+    #abstract, #model-definition, #mechanism, #simulator, #wellbeing, #results-data, #sensitivity, #adoption, #implement, #related, #faq, #citation, #policy-brief-section {
+      scroll-margin-top: 110px;
+    }
+
     /* ============================================================
                CONTAINER & CARDS
                ============================================================ */
@@ -1113,6 +1118,48 @@
         font-size: 20px;
       }
     }
+
+    /* ============================================================
+               NEW: Bond Strength Gauge (CSS Arc)
+               ============================================================ */
+    .gauge-container {
+      width: 100%;
+      max-width: 280px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .gauge-svg {
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+    .gauge-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.08);
+      stroke-width: 16;
+      stroke-linecap: round;
+    }
+    .gauge-fg {
+      fill: none;
+      stroke: #34d399;
+      stroke-width: 16;
+      stroke-linecap: round;
+      transition: stroke-dasharray 0.2s ease, stroke 0.2s ease;
+      transform: rotate(-90deg);
+      transform-origin: center;
+    }
+    .gauge-text {
+      font-size: 2rem;
+      font-weight: 800;
+      fill: #eef2f8;
+      text-anchor: middle;
+    }
+    .gauge-subtext {
+      font-size: 0.8rem;
+      fill: #a5b4fc;
+      text-anchor: middle;
+      opacity: 0.6;
+    }
   </style>
 </head>
 <body>
@@ -1129,6 +1176,7 @@
     <a href="#model-definition">Model</a>
     <a href="#mechanism">Mechanism</a>
     <a href="#simulator">Simulator</a>
+    <a href="#wellbeing">Wellbeing</a>
     <a href="#results-data">Results</a>
     <a href="#sensitivity">Sensitivity</a>
     <a href="#adoption">Scenarios</a>
@@ -1155,6 +1203,21 @@
             <a href="#simulator" class="btn-primary">🚀 Run Live Simulation</a>
             <a href="#citation" class="btn-secondary">📖 Cite This Model</a>
             <button class="share-btn" style="margin-left: 0.5rem;">📤 Share</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== ABSTRACT ====== -->
+      <section id="abstract" class="container section-spacing-sm" style="padding-top:0;">
+        <div class="glass-card">
+          <span class="badge-glow" style="margin-bottom:0.8rem;">Abstract</span>
+          <p style="font-size:1.05rem; line-height:1.7; max-width:900px;">
+            The <strong>Productivity Bond Model</strong> proposes a sovereign debt instrument whose return is linked to measurable productivity gains (NPI) rather than fixed compounding. It addresses the fundamental contradiction between unlimited financial promises and a finite planet. The model is parameterised by <strong>θ_AI</strong> (government capture of AI gains), <strong>α_N</strong> (investor participation), and a cap/floor structure. Monte Carlo simulations (10,000 paths, 10‑year horizon) show a <strong>3.1% cost reduction</strong> vs conventional bonds, with a feedback loop that can be mitigated via principal adjustment. The model is designed for implementation by sovereign governments and includes a <strong>Productivity Dividend</strong> to share gains with citizens. This page is the canonical reference for the model, including formal definition, variable specification, simulation results, and implementation guide.
+          </p>
+          <div style="display:flex; flex-wrap:wrap; gap:0.5rem 1.5rem; margin-top:1rem; font-size:0.85rem; opacity:0.6;">
+            <span>📅 Published: 2026-08-13</span>
+            <span>📌 Version: 1.0.0</span>
+            <span>🔗 <a href="#citation" style="color:#818cf8;">Cite this work</a></span>
           </div>
         </div>
       </section>
@@ -1197,21 +1260,6 @@
         </div>
       </section>
 
-      <!-- ====== ABSTRACT ====== -->
-      <section id="abstract" class="container section-spacing-sm" style="padding-top:0;">
-        <div class="glass-card">
-          <span class="badge-glow" style="margin-bottom:0.8rem;">Abstract</span>
-          <p style="font-size:1.05rem; line-height:1.7; max-width:900px;">
-            The <strong>Productivity Bond Model</strong> proposes a sovereign debt instrument whose return is linked to measurable productivity gains (NPI) rather than fixed compounding. It addresses the fundamental contradiction between unlimited financial promises and a finite planet. The model is parameterised by <strong>θ_AI</strong> (government capture of AI gains), <strong>α_N</strong> (investor participation), and a cap/floor structure. Monte Carlo simulations (10,000 paths, 10‑year horizon) show a <strong>3.1% cost reduction</strong> vs conventional bonds, with a feedback loop that can be mitigated via principal adjustment. The model is designed for implementation by sovereign governments and includes a <strong>Productivity Dividend</strong> to share gains with citizens. This page is the canonical reference for the model, including formal definition, variable specification, simulation results, and implementation guide.
-          </p>
-          <div style="display:flex; flex-wrap:wrap; gap:0.5rem 1.5rem; margin-top:1rem; font-size:0.85rem; opacity:0.6;">
-            <span>📅 Published: 2026-08-13</span>
-            <span>📌 Version: 1.0.0</span>
-            <span>🔗 <a href="#citation" style="color:#818cf8;">Cite this work</a></span>
-          </div>
-        </div>
-      </section>
-
       <!-- ====== MODEL DEFINITION ====== -->
       <section id="model-definition" class="container section-spacing-sm" style="padding-top:0;">
         <div class="glass-card">
@@ -1219,7 +1267,8 @@
           <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">Formal Specification</h2>
           <p style="opacity:0.7; margin-bottom:1.5rem;">Scope, assumptions, and variables that define the Productivity Bond Model.</p>
 
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:1.5rem;">
+          <!-- Fixed responsive grid for mobile collapse -->
+          <div class="grid-2col">
             <div style="background:rgba(0,0,0,0.2); border-radius:1.2rem; padding:1.2rem;">
               <div style="font-weight:600; color:#a5b4fc; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">Purpose</div>
               <p style="font-size:0.95rem; margin-top:0.3rem;">Replace perpetual‑growth‑dependent sovereign debt with productivity‑linked financing that shares risks and rewards.</p>
@@ -1338,34 +1387,6 @@
               <text x="548" y="50" fill="#34d399" font-size="9" text-anchor="middle">Productivity Dividend</text>
             </svg>
             <div style="font-size:0.8rem; opacity:0.5; margin-top:0.5rem;">Stakeholder flow: Capital from investors → Government issues bonds → Citizens receive dividends</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====== USE CASES & LIMITATIONS ====== -->
-      <section id="use-cases" class="container section-spacing-sm" style="padding-top:0;">
-        <div class="glass-card">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
-            <div>
-              <span class="badge-glow" style="margin-bottom:0.5rem;">Applications</span>
-              <h3 style="font-size:1.2rem; font-weight:600; margin-bottom:0.5rem;">Use Cases</h3>
-              <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:0.5rem;">
-                <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #34d399;">🏛️ <strong>Sovereign debt restructuring</strong> – Replace fixed-rate debt with productivity-linked instruments.</li>
-                <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #818cf8;">🤖 <strong>AI productivity capture</strong> – Ensure AI gains are shared broadly via the Productivity Dividend.</li>
-                <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #a78bfa;">🔄 <strong>Countercyclical fiscal policy</strong> – Coupon decreases in recessions, increasing fiscal space.</li>
-                <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #fbbf24;">🌍 <strong>Global reserve assets</strong> – Productivity-linked SDRs for international finance.</li>
-              </ul>
-            </div>
-            <div>
-              <span class="badge-glow" style="margin-bottom:0.5rem;">Scope</span>
-              <h3 style="font-size:1.2rem; font-weight:600; margin-bottom:0.5rem;">Limitations</h3>
-              <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:0.5rem;">
-                <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #f87171;">📊 <strong>Statistical infrastructure</strong> – Requires high‑quality NPI measurement; weaker in emerging economies.</li>
-                <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #f87171;">⚖️ <strong>Political risk</strong> – NPI manipulation mitigated via governance lock, but not zero.</li>
-                <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #f87171;">🔄 <strong>Feedback loop</strong> – Higher coupons in good years can increase distress; requires principal adjustment.</li>
-                <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #f87171;">⏳ <strong>Limited backtesting</strong> – No historical precedence; simulation‑based validation only.</li>
-              </ul>
-            </div>
           </div>
         </div>
       </section>
@@ -1498,6 +1519,56 @@
             <div style="font-size:0.8rem; opacity:0.4; margin-top:0.3rem; text-align:center;">
               10,000 Monte Carlo paths · 10-year horizon · seed 42 · <a href="#implement" style="color:#818cf8; text-decoration:none;">full code & data</a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== NEW SECTION: WELLBEING & BOND STRENGTH ====== -->
+      <section id="wellbeing" class="container section-spacing" style="padding-top:0;">
+        <div class="glass-card">
+          <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">😌 Happiness Curve & Bond Strength</h2>
+          <p style="opacity:0.7; margin-bottom:1.5rem;">Adjust productivity growth (<i>g_NPI</i>) below to see the resulting societal happiness and the strength of the bond.</p>
+          
+          <div class="sim-grid">
+            <!-- Controls -->
+            <div>
+              <div class="slider-group">
+                <label>
+                  <span>📈 Productivity Growth (<i>g_NPI</i>)</span>
+                  <span class="value-badge" id="happiness-label">3.0%</span>
+                </label>
+                <input type="range" id="happiness-slider" min="0.0" max="0.06" step="0.001" value="0.03" />
+              </div>
+
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem;">
+                <div class="metric-box better">
+                  <div class="number" id="happiness-val">50.0%</div>
+                  <div class="label">Citizen Happiness</div>
+                </div>
+                <div class="metric-box" id="bond-strength-box">
+                  <div class="number" id="bond-strength-val">75.0%</div>
+                  <div class="label">Bond Strength</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Live Bond Gauge (SVG) -->
+            <div style="display:flex; align-items:center; justify-content:center; flex-direction:column;">
+              <div class="gauge-container">
+                <svg class="gauge-svg" viewBox="0 0 220 130">
+                  <circle class="gauge-bg" cx="110" cy="110" r="90" stroke-dasharray="282.7" stroke-dashoffset="113.08" />
+                  <circle class="gauge-fg" id="gauge-progress" cx="110" cy="110" r="90" stroke-dasharray="0 282.7" stroke-dashoffset="113.08" />
+                  <text class="gauge-text" id="gauge-percent" x="110" y="105">75%</text>
+                  <text class="gauge-subtext" x="110" y="125">Bond Strength</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Happiness Chart -->
+          <div class="plot-container" style="margin-top:1.5rem;">
+            <div class="plot-title">Happiness vs Productivity Growth</div>
+            <div id="chart-happiness" style="height:280px;"></div>
           </div>
         </div>
       </section>
@@ -1706,7 +1777,7 @@
             </div>
           </div>
           <div style="margin-top:1.5rem; font-size:0.9rem; opacity:0.6; border-top:1px solid rgba(255,255,255,0.04); padding-top:1rem;">
-            Part of the <a href="https://traffictorch.io" style="color:#818cf8; text-decoration:none;">Traffic Torch</a> research lineage on incentive design and public goods funding.
+            Part of the <a href="https://traffictorch.net" style="color:#818cf8; text-decoration:none;">Traffic Torch</a> research lineage on incentive design and public goods funding.
           </div>
         </div>
       </section>
@@ -1734,10 +1805,6 @@
             <div style="background:rgba(0,0,0,0.15); border-radius:1rem; padding:1rem;">
               <div style="font-weight:700; font-size:0.95rem;">“What about default?”</div>
               <p style="font-size:0.9rem; opacity:0.7; margin-top:0.3rem;">The floor/cap structure prevents default. In bad years, the coupon drops to inflation (0% real). The principal‑adjustment mechanism can also reduce debt stock.</p>
-            </div>
-            <div style="background:rgba(0,0,0,0.15); border-radius:1rem; padding:1rem;">
-              <div style="font-weight:700; font-size:0.95rem;">“Is this communism?”</div>
-              <p style="font-size:0.9rem; opacity:0.7; margin-top:0.3rem;">No. It’s a market‑based instrument. Investors still earn returns; the government still issues debt. The difference is that the return is linked to productivity, not fixed compounding.</p>
             </div>
             <div style="background:rgba(0,0,0,0.15); border-radius:1rem; padding:1rem;">
               <div style="font-weight:700; font-size:0.95rem;">“What’s the catch?”</div>
@@ -2197,6 +2264,31 @@
             legend: { orientation: 'h', x: 0, y: 1.05 }
           };
           Plotly.newPlot('chart-distress-alpha', [trace3], layout2, { responsive: true });
+
+          // ---------- HAPPINESS PLOTLY CHART ----------
+          const happinessDiv = document.getElementById('chart-happiness');
+          if (happinessDiv) {
+            const gNpiValues = Array.from({ length: 61 }, (_, i) => i * 0.001); // 0.0 to 0.06
+            const happinessValues = gNpiValues.map(g => 1 / (1 + Math.exp(-80 * (g - 0.03)))); // Sigmoid centered at 3%
+
+            const traceH = {
+              x: gNpiValues,
+              y: happinessValues,
+              type: 'scatter',
+              mode: 'lines',
+              line: { color: '#f472b6', width: 3 },
+              name: 'Happiness Curve'
+            };
+            const layoutH = {
+              paper_bgcolor: 'rgba(0,0,0,0)',
+              plot_bgcolor: 'rgba(0,0,0,0)',
+              font: { color: '#eef2f8', family: 'Inter' },
+              margin: { l: 40, r: 20, t: 20, b: 40 },
+              xaxis: { title: 'Productivity Growth (g_NPI)', gridcolor: 'rgba(255,255,255,0.05)', tickformat: '.0%' },
+              yaxis: { title: 'Happiness Index', gridcolor: 'rgba(255,255,255,0.05)', range: [0, 1.1], tickformat: '.0%' }
+            };
+            Plotly.newPlot('chart-happiness', [traceH], layoutH, { responsive: true });
+          }
         }
       }
 
@@ -2204,8 +2296,9 @@
       script.src = 'https://cdn.plot.ly/plotly-2.27.1.min.js';
       script.onload = loadPlotlyAndRender;
       script.onerror = function() {
-        document.querySelector('.plot-container').innerHTML +=
-          '<p style="text-align:center;opacity:0.5;">Plotly could not load. Please try again later.</p>';
+        document.querySelectorAll('.plot-container').forEach(el => {
+          el.innerHTML += '<p style="text-align:center;opacity:0.5;">Plotly could not load. Please try again later.</p>';
+        });
       };
       document.head.appendChild(script);
 
@@ -2216,7 +2309,7 @@
   </script>
 
   <!-- ============================================================
-  PWA INSTALL LOGIC & NATIVE SHARING
+  PWA INSTALL LOGIC & NATIVE SHARING & HAPPINESS GAUGE
   ============================================================ -->
   <script>
     (function() {
@@ -2226,7 +2319,7 @@
       function sharePage() {
         const url = window.location.href;
         const title = document.title;
-        const text = 'Check out The Productivity Bond Model';
+        const text = 'Check out the ' + title + ' model:';
 
         if (navigator.share) {
           navigator.share({
@@ -2252,25 +2345,37 @@
         btn.addEventListener('click', sharePage);
       });
 
-      // ---------- PWA INSTALL (5s delay + White text) ----------
+      // ---------- PWA INSTALL (5s delay + Auto-Hide after installed) ----------
       const installBtn = document.getElementById('pwaInstallBtn');
       const iosOverlay = document.getElementById('pwaIosOverlay');
       const closeIosBtn = document.getElementById('pwaCloseIosModal');
       let deferredPrompt = null;
 
+      // Check if already installed
+      if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+        installBtn.style.display = 'none';
+      }
+
       // 1. Catch the browser's native PWA install prompt
       window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
-        // Triggered after 5s below, just store the event.
       });
 
-      // 2. Show button after 5 seconds
+      // 2. Hide button immediately if app gets installed
+      window.addEventListener('appinstalled', () => {
+        installBtn.style.display = 'none';
+        console.log('PWA installed successfully.');
+      });
+
+      // 3. Show button after 5 seconds (if not already hidden)
       setTimeout(() => {
-        installBtn.style.display = 'flex';
+        if (installBtn.style.display !== 'none') {
+          installBtn.style.display = 'flex';
+        }
       }, 5000);
 
-      // 3. Button Click Handler
+      // 4. Button Click Handler
       installBtn.addEventListener('click', async () => {
         if (deferredPrompt) {
           deferredPrompt.prompt();
@@ -2284,7 +2389,7 @@
         }
       });
 
-      // 4. Close iOS Modal
+      // 5. Close iOS Modal
       closeIosBtn.addEventListener('click', () => {
         iosOverlay.style.display = 'none';
       });
@@ -2294,6 +2399,71 @@
           iosOverlay.style.display = 'none';
         }
       });
+
+      // ---------- HAPPINESS GAUGE & CHART LIVE UPDATE ----------
+      const happinessSlider = document.getElementById('happiness-slider');
+      const happinessLabel = document.getElementById('happiness-label');
+      const happinessVal = document.getElementById('happiness-val');
+      const bondStrengthVal = document.getElementById('bond-strength-val');
+      const gaugeProgress = document.getElementById('gauge-progress');
+      const gaugePercent = document.getElementById('gauge-percent');
+
+      function updateHappinessMetrics() {
+        const gNPI = parseFloat(happinessSlider.value);
+        // Calculate Happiness (Sigmoid)
+        const happiness = 1 / (1 + Math.exp(-80 * (gNPI - 0.03)));
+
+        // Calculate Bond Strength (simplified) - safe zone is between 2% and 4%
+        const bondStrength = Math.min(1, Math.max(0, (gNPI - 0.01) / 0.04));
+
+        // Update labels
+        happinessLabel.textContent = (gNPI * 100).toFixed(1) + '%';
+        happinessVal.textContent = (happiness * 100).toFixed(1) + '%';
+        bondStrengthVal.textContent = (bondStrength * 100).toFixed(1) + '%';
+
+        // Update SVG Gauge (Circle uses circumference 2*pi*r, r=90 -> ~565.48)
+        // Arc covers 270 deg (3/4 circle) -> dasharray 424.11 (3/4 of 565.48)
+        const circumference = 2 * Math.PI * 90; // ~565.48
+        const dashLength = circumference * 0.75; // ~424.11
+        const offset = dashLength * (1 - bondStrength);
+        gaugeProgress.style.strokeDasharray = `${dashLength} ${circumference}`;
+        gaugeProgress.style.strokeDashoffset = (113.08 + offset); // 113.08 is half arc offset to start at left
+        gaugeProgress.style.stroke = bondStrength > 0.6 ? '#34d399' : bondStrength > 0.3 ? '#fbbf24' : '#f87171';
+        gaugePercent.textContent = (bondStrength * 100).toFixed(0) + '%';
+
+        // Update Plotly Chart Live
+        const chartDiv = document.getElementById('chart-happiness');
+        if (chartDiv && typeof Plotly !== 'undefined') {
+          // Calculate curve
+          const xRange = Array.from({ length: 61 }, (_, i) => i * 0.001);
+          const yRange = xRange.map(g => 1 / (1 + Math.exp(-80 * (g - 0.03))));
+          // Add current point
+          const traceLine = {
+            x: xRange,
+            y: yRange,
+            type: 'scatter',
+            mode: 'lines',
+            line: { color: '#f472b6', width: 3 },
+            name: 'Happiness Curve',
+            showlegend: true
+          };
+          const tracePoint = {
+            x: [gNPI],
+            y: [happiness],
+            type: 'scatter',
+            mode: 'markers',
+            marker: { color: '#ffffff', size: 12, line: { color: '#f472b6', width: 3 } },
+            name: 'Current',
+            showlegend: true
+          };
+          Plotly.react('chart-happiness', [traceLine, tracePoint], chartDiv.layout || undefined, { responsive: true });
+        }
+      }
+
+      happinessSlider.addEventListener('input', updateHappinessMetrics);
+
+      // Initialize the gauge and chart when page loads
+      setTimeout(updateHappinessMetrics, 500);
 
     })();
   </script>
