@@ -14,20 +14,20 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://traffictorch.github.io/productivity-bond-model/">
 
-  <!-- Preconnect & Preload (Non-blocking Fonts) -->
+  <!-- ===== FIXED FONT LOADING (no more 404s) ===== -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&display=swap" onload="this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&display=swap"></noscript>
-  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" crossorigin="anonymous">
+
   <link rel="preconnect" href="https://cdn.plot.ly">
 
   <!-- PWA Manifest -->
   <link rel="manifest" href="/productivity-bond-model/manifest.json">
+  <!-- IMPORTANT: Change "display" in manifest.json from "standalone" to "browser" to show browser controls -->
 
   <!-- Static Favicon & App Icons  -->
   <link rel="icon" href="/productivity-bond-model/favicon.ico">
-<link rel="apple-touch-icon" href="/productivity-bond-model/icon-512.png">
+  <link rel="apple-touch-icon" href="/productivity-bond-model/icon-512.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/productivity-bond-model/icon-512.png">
 
   <!-- Structured Data -->
@@ -156,7 +156,7 @@
     }
 
     /* ============================================================
-               STICKY NAV
+               STICKY NAV (hidden initially, slides in)
                ============================================================ */
     .sticky-nav {
       position: sticky;
@@ -173,6 +173,14 @@
       flex-wrap: wrap;
       font-size: 0.75rem;
       font-weight: 500;
+      /* ---- NEW: slide in effect ---- */
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    .sticky-nav.visible {
+      transform: translateY(0);
+      opacity: 1;
     }
     .sticky-nav a {
       color: #c7d2fe;
@@ -1993,6 +2001,25 @@
           if (arrow) arrow.classList.toggle('open');
         }
       };
+
+      // ---------- STICKY NAV: HIDE UNTIL SCROLL PAST HERO ----------
+      const stickyNav = document.querySelector('.sticky-nav');
+      const heroSection = document.querySelector('.hero');
+      if (stickyNav && heroSection) {
+        let heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+        function checkNavVisibility() {
+          if (window.scrollY > heroBottom - 100) {
+            stickyNav.classList.add('visible');
+          } else {
+            stickyNav.classList.remove('visible');
+          }
+        }
+        window.addEventListener('scroll', checkNavVisibility);
+        window.addEventListener('resize', () => {
+          heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+        });
+        checkNavVisibility(); // initial check
+      }
 
       // ---------- SIMULATOR ENGINE ----------
       const thetaSlider = document.getElementById('theta-slider');

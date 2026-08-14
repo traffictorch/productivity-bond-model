@@ -3,7 +3,7 @@
   "short_name": "Prod Bond Model",
   "description": "A canonical sovereign debt instrument for a finite planet.",
   "start_url": "/productivity-bond-model/",
-  "display": "browser",
+  "display": "minimal-ui"
   "background_color": "#05060a",
   "theme_color": "#4f46e5",
   "icons": [
