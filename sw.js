@@ -7,7 +7,7 @@ const urlsToCache = [
   '/productivity-bond-model/favicon.ico'
 ];
 
-// Install event - Opens the cache and adds the core files
+// Install
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -18,7 +18,7 @@ self.addEventListener('install', event => {
   );
 });
 
-// Activate event - Cleans up old versions of the cache
+// Activate
 self.addEventListener('activate', event => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
@@ -34,38 +34,35 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Fetch event - Serves from cache, if not found, fetches from network and caches it
+// Fetch
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        // Cache hit - return response
+        // Cache hit
         if (response) {
           return response;
         }
 
-        // Clone the request because it's a stream that can only be consumed once
+        // Clone the request (streams can only be consumed once)
         const fetchRequest = event.request.clone();
 
-        return fetch(fetchRequest).then(
-          response => {
-            // Check if we received a valid response
-            if(!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-
-            // Clone the response because it's a stream
-            const responseToCache = response.clone();
-
-            caches.open(CACHE_NAME)
-              .then(cache => {
-                cache.put(event.request, responseToCache);
-              });
-
+        return fetch(fetchRequest).then(response => {
+          // Only cache valid basic responses
+          if (!response || response.status !== 200 || response.type !== 'basic') {
             return response;
           }
-        );
+
+          // Clone the response (streams can only be consumed once)
+          const responseToCache = response.clone();
+
+          caches.open(CACHE_NAME)
+            .then(cache => {
+              cache.put(event.request, responseToCache);
+            });
+
+          return response;
+        });
       })
-    )
   );
 });
