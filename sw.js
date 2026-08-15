@@ -3,7 +3,6 @@ const CACHE_NAME = 'prod-bond-model-v1';
 const urlsToCache = [
   '/productivity-bond-model/index.html',
   '/productivity-bond-model/manifest.json',
-  '/productivity-bond-model/icon-512.png',
   '/productivity-bond-model/favicon.ico'
 ];
 
