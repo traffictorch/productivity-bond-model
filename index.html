@@ -173,28 +173,17 @@
       flex-wrap: wrap;
       font-size: 0.75rem;
       font-weight: 500;
-      /* ---- NEW: slide in effect ---- */
+      /* ---- slide in effect ---- */
       transition: transform 0.3s ease, opacity 0.3s ease;
       transform: translateY(-100%);
       opacity: 0;
+      /* hide from accessibility when hidden */
+      visibility: hidden;
     }
     .sticky-nav.visible {
       transform: translateY(0);
       opacity: 1;
-    }
-    .sticky-nav a {
-      color: #c7d2fe;
-      text-decoration: none;
-      letter-spacing: 0.03em;
-      transition: color 0.2s;
-    }
-    .sticky-nav a:hover {
-      color: #eef2f8;
-      text-decoration: underline;
-    }
-
-    #abstract, #model-definition, #mechanism, #simulator, #wellbeing, #results-data, #sensitivity, #adoption, #implement, #related, #faq, #citation, #policy-brief-section, #learn {
-      scroll-margin-top: 110px;
+      visibility: visible;
     }
 
     /* ============================================================
@@ -1153,6 +1142,53 @@
         padding-bottom: 2.5rem;
       }
     }
+    
+    /* ============================================================
+               RETURN TO TOP BUTTON (in-page, cyan glow)
+               ============================================================ */
+    .btn-return-top {
+      display: inline-block;
+      padding: 0.8rem 2.5rem;
+      border-radius: 60px;
+      border: none;
+      background: rgba(0, 255, 255, 0.12);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      color: #00ffff;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.15), inset 0 0 20px rgba(0, 255, 255, 0.05);
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    .btn-return-top:hover {
+      background: rgba(0, 255, 255, 0.25);
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.3), inset 0 0 40px rgba(0, 255, 255, 0.1);
+      transform: scale(1.02) translateY(-2px);
+    }
+    .btn-return-top:active {
+      transform: scale(0.98);
+    }
+    /* Pulse glow animation (subtle) */
+    .btn-return-top::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 60px;
+      background: radial-gradient(circle, rgba(0, 255, 255, 0.15) 0%, transparent 70%);
+      z-index: -1;
+      animation: pulseGlow 2.5s infinite alternate ease-in-out;
+    }
+    .btn-return-top {
+      position: relative;
+    }
+    @keyframes pulseGlow {
+      0% { opacity: 0.3; transform: scale(0.98); }
+      100% { opacity: 0.8; transform: scale(1.04); }
+    }
+    
   </style>
 </head>
 <body>
@@ -1164,7 +1200,7 @@
   <div class="orb orb-3"></div>
 
   <!-- ====== STICKY NAV ====== -->
-  <nav class="sticky-nav no-print">
+  <nav class="sticky-nav no-print visible">
     <a href="#abstract">Abstract</a>
     <a href="#model-definition">Model</a>
     <a href="#mechanism">Mechanism</a>
@@ -1194,7 +1230,7 @@
             <span class="badge-glow badge-version" style="margin-left:0.5rem;">v1.0.0</span>
             <h1 class="text-gradient" style="font-size:clamp(3rem,12vw,6rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">The Productivity<br>Bond Model</h1>
             <p style="font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:300; opacity:0.7; max-width:640px; margin:1rem 0 2rem;">
-              A sovereign debt instrument for a finite planet - formal definition, variables, and live simulation.
+              Financing prosperity without promising infinite growth.
             </p>
             <div style="display:flex; flex-wrap:wrap; gap:1rem; align-items:center;">
               <a href="#simulator" class="btn-primary">🚀 Run Live Simulation</a>
@@ -1897,6 +1933,12 @@
               <button class="btn-secondary" disabled title="Coming soon">🎧 Google Audiobook (Coming Soon)</button>
               <button class="btn-secondary" disabled title="Coming soon">🍏 iOS Audiobook (Coming Soon)</button>
             </div> 
+            
+<!-- Return to Top Button -->
+              <div style="text-align: center; margin-top: 2rem;">
+                <button id="backToTopBtn" class="btn-return-top">⬆ Return to Top</button>
+              </div>
+            
           </div>
         </section> 
 
@@ -2002,23 +2044,63 @@
         }
       };
 
-      // ---------- STICKY NAV: HIDE UNTIL SCROLL PAST HERO ----------
+      // ---------- STICKY NAV: hide on scroll down, show on scroll up ----------
       const stickyNav = document.querySelector('.sticky-nav');
-      const heroSection = document.querySelector('.hero');
-      if (stickyNav && heroSection) {
-        let heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
-        function checkNavVisibility() {
-          if (window.scrollY > heroBottom - 100) {
+      let lastScrollY = window.scrollY;
+      let scrollTimer;
+
+      if (stickyNav) {
+        function handleScroll() {
+          const currentScrollY = window.scrollY;
+          
+          // Always show at the very top
+          if (currentScrollY === 0) {
             stickyNav.classList.add('visible');
-          } else {
-            stickyNav.classList.remove('visible');
+            lastScrollY = currentScrollY;
+            return;
           }
+
+          // Determine direction with a small threshold to avoid flicker
+          if (currentScrollY > lastScrollY + 10) {
+            // Scrolling down – hide
+            stickyNav.classList.remove('visible');
+          } else if (currentScrollY < lastScrollY - 10) {
+            // Scrolling up – show
+            stickyNav.classList.add('visible');
+          }
+          lastScrollY = currentScrollY;
         }
-        window.addEventListener('scroll', checkNavVisibility);
-        window.addEventListener('resize', () => {
-          heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+
+        // Throttle with requestAnimationFrame for performance
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+          if (!ticking) {
+            window.requestAnimationFrame(() => {
+              handleScroll();
+              ticking = false;
+            });
+            ticking = true;
+          }
         });
-        checkNavVisibility(); // initial check
+
+        // Safety: show after scrolling stops
+        window.addEventListener('scroll', () => {
+          clearTimeout(scrollTimer);
+          scrollTimer = setTimeout(() => {
+            // If hidden and not at the very top, show it
+            if (!stickyNav.classList.contains('visible') && window.scrollY > 50) {
+              stickyNav.classList.add('visible');
+            }
+          }, 200);
+        });
+
+        // Initial state – show if at top or already scrolled
+        if (window.scrollY === 0) {
+          stickyNav.classList.add('visible');
+        } else {
+          // If page loads scrolled down, show the nav
+          stickyNav.classList.add('visible');
+        }
       }
 
       // ---------- SIMULATOR ENGINE ----------
@@ -2484,6 +2566,14 @@
 
       happinessSlider.addEventListener('input', updateHappinessMetrics);
       setTimeout(updateHappinessMetrics, 500);
+      
+      // ---------- RETURN TO TOP BUTTON (in-page) ----------
+      const backToTopBtn = document.getElementById('backToTopBtn');
+      if (backToTopBtn) {
+        backToTopBtn.addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
 
     })();
   </script>
