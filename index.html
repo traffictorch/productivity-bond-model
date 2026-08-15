@@ -1189,6 +1189,58 @@
       100% { opacity: 0.8; transform: scale(1.04); }
     }
     
+      /* ============================================================
+     FIX: Prevent "How to Implement" overflow on iPhone / mobile
+     ============================================================ */
+  @media (max-width: 640px) {
+    /* Force the main grid to one column and prevent overflow */
+    #implement .glass-card > div[style*="grid-template-columns:"] {
+      grid-template-columns: 1fr !important;
+      gap: 1.5rem !important;
+      width: 100% !important;
+      overflow: hidden !important;
+    }
+
+    /* Code blocks: wrap long URLs and add horizontal scroll if needed */
+    #implement .code-block {
+      width: 100% !important;
+      max-width: 100% !important;
+      overflow-x: auto !important;
+      white-space: pre-wrap !important;
+      word-break: break-word !important;
+      padding: 0.8rem 1rem !important;
+      box-sizing: border-box !important;
+      font-size: 0.7rem !important;
+    }
+
+    /* Specifically break the git clone URL */
+    #implement .code-block .cmd {
+      word-break: break-all !important;
+    }
+
+    /* Key Files list – prevent text from escaping */
+    #implement ul {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+      box-sizing: border-box !important;
+    }
+
+    #implement ul li {
+      width: 100% !important;
+      word-break: break-word !important;
+      overflow-wrap: break-word !important;
+      box-sizing: border-box !important;
+      padding: 0.6rem 1rem !important;
+      font-size: 0.8rem !important;
+    }
+
+    /* Ensure the card itself has safe padding */
+    #implement .glass-card {
+      padding: 1.5rem 1rem !important;
+    }
+  }
+    
   </style>
 </head>
 <body>
@@ -1525,39 +1577,45 @@
                 <span style="font-weight:600; font-size:0.9rem;">Expected Cost Comparison</span>
                 <span style="font-size:0.7rem; color:#a5b4fc;">Lower is better</span>
               </div>
-              <div class="bar-chart-wrap">
-                <div class="bar-chart" id="bar-chart">
-                  <div class="bar-item">
-                    <div class="bar-val" id="bar-conv-val">0.515</div>
-                    <div class="bar" id="bar-conv" style="height:90px;"></div>
-                    <div class="bar-label">Conv.</div>
-                  </div>
-                  <div class="bar-item">
-                    <div class="bar-val" id="bar-ilb-val">0.489</div>
-                    <div class="bar" id="bar-ilb" style="height:85px; background:#3b82f6;"></div>
-                    <div class="bar-label">ILB</div>
-                  </div>
-                  <div class="bar-item">
-                    <div class="bar-val" id="bar-gdp-val">0.511</div>
-                    <div class="bar" id="bar-gdp" style="height:89px; background:#8b5cf6;"></div>
-                    <div class="bar-label">GDP</div>
-                  </div>
-                  <div class="bar-item highlight">
-                    <div class="bar-val" id="bar-prod-val">0.499</div>
-                    <div class="bar" id="bar-prod" style="height:87px; background:#a78bfa;"></div>
-                    <div class="bar-label">Productivity</div>
-                  </div>
-                  <div class="bar-item">
-                    <div class="bar-val" id="bar-hybrid-val">0.527</div>
-                    <div class="bar" id="bar-hybrid" style="height:92px; background:#f59e0b;"></div>
-                    <div class="bar-label">Hybrid</div>
-                  </div>
-                </div>
-              </div>
-              <div style="font-size:0.8rem; color:#a5b4fc; margin-top:0.3rem; text-align:center;">
-                10,000 Monte Carlo paths · 10-year horizon · seed 42 · <a href="#implement">full code & data</a>
-              </div>
-            </div>
+              
+<div class="bar-chart-wrap" style="max-height: 200px; overflow: visible; padding: 0 4px;">
+  <div class="bar-chart" id="bar-chart" style="height: 160px; align-items: flex-end; gap: 6px; padding-top: 20px;">
+    <!-- Conventional -->
+    <div class="bar-item">
+      <div class="bar-val" id="bar-conv-val" style="font-size: 0.95rem; font-weight: 700; color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.9); margin-bottom: 2px;">0.515</div>
+      <div class="bar" id="bar-conv" style="height:90px; background:#4b5563; max-height: 120px; width: 100%;"></div>
+      <div class="bar-label" style="margin-top: 4px;">Conv.</div>
+    </div>
+    <!-- ILB -->
+    <div class="bar-item">
+      <div class="bar-val" id="bar-ilb-val" style="font-size: 0.95rem; font-weight: 700; color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.9); margin-bottom: 2px;">0.489</div>
+      <div class="bar" id="bar-ilb" style="height:85px; background:#3b82f6; max-height: 120px; width: 100%;"></div>
+      <div class="bar-label">ILB</div>
+    </div>
+    <!-- GDP -->
+    <div class="bar-item">
+      <div class="bar-val" id="bar-gdp-val" style="font-size: 0.95rem; font-weight: 700; color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.9); margin-bottom: 2px;">0.511</div>
+      <div class="bar" id="bar-gdp" style="height:89px; background:#8b5cf6; max-height: 120px; width: 100%;"></div>
+      <div class="bar-label">GDP</div>
+    </div>
+    <!-- Productivity (highlighted) -->
+    <div class="bar-item highlight">
+      <div class="bar-val" id="bar-prod-val" style="font-size: 0.95rem; font-weight: 700; color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.9); margin-bottom: 2px;">0.499</div>
+      <div class="bar" id="bar-prod" style="height:87px; background:#a78bfa; max-height: 120px; width: 100%;"></div>
+      <div class="bar-label">Productivity</div>
+    </div>
+    <!-- Hybrid -->
+    <div class="bar-item">
+      <div class="bar-val" id="bar-hybrid-val" style="font-size: 0.95rem; font-weight: 700; color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.9); margin-bottom: 2px;">0.527</div>
+      <div class="bar" id="bar-hybrid" style="height:92px; background:#f59e0b; max-height: 120px; width: 100%;"></div>
+      <div class="bar-label">Hybrid</div>
+    </div>
+  </div>
+  <div style="font-size:0.8rem; color:#a5b4fc; margin-top:0.3rem; text-align:center;">
+    10,000 Monte Carlo paths · 10-year horizon · seed 42 · <a href="#implement">full code & data</a>
+  </div>
+</div>
+            
           </div>
         </section>
 
@@ -1928,10 +1986,10 @@
             <div style="display:flex; flex-wrap:wrap; gap:1rem; margin-top:1rem;">
               <a href="https://traffictorch.github.io/productivity-bond-model/book/The_Infinite_Debt_Problem.pdf" class="btn-primary btn-success" style="box-shadow: 0 4px 20px rgba(4, 120, 87, 0.3);" title="Download PDF">⬇ Download PDF</a>
               
-              <a href="https://books.apple.com/au/book/the-infinite-debt-problem-how-to-replace-perpetual/id6801656366" target="_blank" rel="noopener noreferrer" class="btn-secondary">🍏 iPhone iOS</a>
-              <button class="btn-secondary" disabled title="Coming soon">📚 Google Books ePub (Coming Soon)</button>
+              <a href="https://books.apple.com/au/book/the-infinite-debt-problem-how-to-replace-perpetual/id6801656366" target="_blank" rel="noopener noreferrer" class="btn-secondary">🍏 Apple Ebook</a>
+              <button class="btn-secondary" disabled title="Coming soon">📚 Google Books (Coming Soon)</button>
+              <button class="btn-secondary" disabled title="Coming soon">🍏 Apple Audiobook (Coming Soon)</button>
               <button class="btn-secondary" disabled title="Coming soon">🎧 Google Audiobook (Coming Soon)</button>
-              <button class="btn-secondary" disabled title="Coming soon">🍏 iOS Audiobook (Coming Soon)</button>
             </div> 
             
 <!-- Return to Top Button -->
