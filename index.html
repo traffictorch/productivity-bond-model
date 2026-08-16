@@ -29,34 +29,65 @@
   <link rel="icon" type="image/png" sizes="512x512" href="/productivity-bond-model/icon-512.png" />
 
   <!-- Structured Data -->
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": ["CreativeWork", "DefinedTermSet", "HowTo"],
-      "name": "The Productivity Bond Model",
-      "description": "A sovereign debt instrument whose return is linked to measurable productivity gains (NPI), designed to replace perpetual-growth-dependent financing with productivity-linked prosperity.",
-      "author": {
-        "@type": "Person",
-        "name": "Ylia Callan",
-        "url": "https://yliacallan.github.io/"
-      }
-    }
-  </script>
 <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": ["CreativeWork", "DefinedTermSet", "HowTo"],
-    "name": "The Productivity Bond Model",
-    "description": "A sovereign debt instrument whose return is linked to measurable productivity gains (NPI), designed to replace perpetual-growth-dependent financing with productivity-linked prosperity.",
-    "author": {
-      "@type": "Person",
-      "name": "Ylia Callan",
-      "url": "https://yliacallan.github.io/"
+{
+  "@context": "https://schema.org",
+  "@type": "Book",
+  "name": "The Infinite Debt Problem: How to Replace Perpetual Growth with Productive Prosperity",
+  "alternateName": "The Productivity Bond Model",
+  "description": "A sovereign debt instrument whose return is linked to measurable productivity gains (NPI), designed to replace perpetual-growth-dependent financing with productivity-linked prosperity. This book presents the full theory, simulation results, and implementation roadmap.",
+  "isbn": "979-8-23578-956-2",
+  "version": "1.2.1",
+  "datePublished": "2026-08-12",
+  "author": {
+    "@type": "Person",
+    "name": "Ylia Callan",
+    "url": "https://yliacallan.github.io/"
+  },
+  "citation": "https://doi.org/10.5281/zenodo.21970251",
+  "sameAs": [
+    "https://philpapers.org/rec/CALTID",
+    "https://www.academia.edu/171903052/The_Infinite_Debt_Problem_How_to_Replace_Perpetual_Growth_with_Productive_Prosperity"
+  ],
+  "hasPart": {
+    "@type": "SoftwareApplication",
+    "name": "Productivity Bond Model Simulation Code",
+    "description": "Complete Python implementation of the 10,000-path Monte Carlo simulation used in the book, including all bond types, portfolio optimisation, and sensitivity analysis.",
+    "applicationCategory": "Simulation",
+    "operatingSystem": "Linux, macOS, Windows",
+    "softwareVersion": "1.2.1",
+    "codeRepository": "https://github.com/traffictorch/productivity-bond-model",
+    "url": "https://zenodo.org/records/21970090",
+    "citation": "https://doi.org/10.5281/zenodo.21970090",
+    "license": "https://opensource.org/licenses/MIT"
+  },
+  "license": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ylia Callan (self-published)"
+  },
+  "about": [
+    {
+      "@type": "DefinedTerm",
+      "name": "Productivity Bond",
+      "description": "A sovereign debt instrument whose coupon is linked to the National Productivity Index (NPI) rather than a fixed interest rate, eliminating automatic compounding and sharing economic risk."
     },
-    "isbn": "979-8-23578-956-2",
-    "version": "1.2.1",
-    "datePublished": "2026-08-12"
+    {
+      "@type": "DefinedTerm",
+      "name": "National Productivity Index (NPI)",
+      "description": "A weighted geometric average of labour, energy, material, and capital productivity, used as the reference index for Productivity Bond coupons."
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Productivity Dividend",
+      "description": "A universal, unconditional cash transfer to every citizen, funded by productivity-linked revenue, ensuring broad sharing of productivity gains."
+    }
+  ],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://traffictorch.github.io/productivity-bond-model/"
   }
+}
 </script>
 
   <style>
@@ -2436,15 +2467,23 @@
   </div>
 
   <!-- ====== FOOTER ====== -->
-  <footer class="footer">
-    <div class="container">
-      <p>© 2026 Ylia Callan · <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> · Version 1.2.1 · <button class="share-btn" style="background:transparent; border:none; color:#4f46e5; padding:0; font-size:0.85rem; cursor:pointer;">📤 Share</button></p>
-      <p style="font-size:0.7rem; margin-top:0.3rem;">Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI · <span id="last-updated"></span></p>
-      <p style="font-size:0.65rem; margin-top:0.5rem; color:var(--text-muted); opacity:0.7;">
-        📌 v1.2.1 – Sticky nav always visible, floating return-to-top button (desktop only), Install Apps text in blue, removed Bond Strength gauge.
-      </p>
-    </div>
-  </footer>
+<footer class="footer">
+  <div class="container">
+    <p>
+      © 2026 Ylia Callan ·
+      <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> ·
+      Version 1.2.1 ·
+      <a href="https://zenodo.org/records/21970090" target="_blank" rel="external noopener">Simulation Code (Zenodo)</a> ·
+      <button class="share-btn" style="background:transparent; border:none; color:#4f46e5; padding:0; font-size:0.85rem; cursor:pointer;">📤 Share</button>
+    </p>
+    <p style="font-size:0.7rem; margin-top:0.3rem;">
+      Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI · <span id="last-updated"></span>
+    </p>
+    <p style="font-size:0.65rem; margin-top:0.5rem; color:var(--text-muted); opacity:0.7;">
+      📌 v1.2.1 – Sticky nav always visible, floating return-to-top button (desktop only), Install Apps text in blue, removed Bond Strength gauge.
+    </p>
+  </div>
+</footer>
 
   <!-- ============================================================
   JAVASCRIPT
