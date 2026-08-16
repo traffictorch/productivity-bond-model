@@ -1,34 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <title>The Productivity Bond Model – Canonical Reference</title>
-  <meta name="description" content="The Productivity Bond Model: a sovereign debt instrument linked to productivity gains. Formal definition, variables, simulations, and implementation guide.">
-  <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/">
+  <meta name="description" content="The Productivity Bond Model: a sovereign debt instrument linked to productivity gains. Formal definition, variables, simulations, and implementation guide." />
+  <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="The Productivity Bond Model">
-  <meta property="og:description" content="A canonical sovereign debt model for a finite planet. Formal definition, variables, simulations, and implementation.">
-  <meta property="og:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.webp">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://traffictorch.github.io/productivity-bond-model/">
+  <meta property="og:title" content="The Productivity Bond Model" />
+  <meta property="og:description" content="A canonical sovereign debt model for a finite planet. Formal definition, variables, simulations, and implementation." />
+  <meta property="og:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.webp" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://traffictorch.github.io/productivity-bond-model/" />
 
-  <!-- ===== FIXED FONT LOADING (no more 404s) ===== -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" crossorigin="anonymous">
-
-  <link rel="preconnect" href="https://cdn.plot.ly">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" crossorigin="anonymous" />
+  <link rel="preconnect" href="https://cdn.plot.ly" />
 
   <!-- PWA Manifest -->
-  <link rel="manifest" href="/productivity-bond-model/manifest.json">
-  <!-- IMPORTANT: Change "display" in manifest.json from "standalone" to "browser" to show browser controls -->
+  <link rel="manifest" href="/productivity-bond-model/manifest.json" />
 
-  <!-- Static Favicon & App Icons  -->
-  <link rel="icon" href="/productivity-bond-model/favicon.ico">
-  <link rel="apple-touch-icon" href="/productivity-bond-model/icon-512.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="/productivity-bond-model/icon-512.png">
+  <!-- Favicon & App Icons -->
+  <link rel="icon" href="/productivity-bond-model/favicon.ico" />
+  <link rel="apple-touch-icon" href="/productivity-bond-model/icon-512.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/productivity-bond-model/icon-512.png" />
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -44,7 +42,6 @@
       }
     }
   </script>
-
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -63,8 +60,129 @@
 
   <style>
     /* ============================================================
-               RESET & BASE
-               ============================================================ */
+       CSS VARIABLES – Day/Night Mode Ready
+       ============================================================ */
+    :root {
+      /* Dark mode (default) */
+      --bg-body: #05060a;
+      --bg-card: rgba(12, 15, 25, 0.65);
+      --bg-card-hover: rgba(12, 15, 25, 0.75);
+      --bg-glass: rgba(12, 15, 25, 0.65);
+      --bg-input: rgba(255, 255, 255, 0.06);
+      --bg-metric: rgba(0, 0, 0, 0.3);
+      --bg-code: rgba(0, 0, 0, 0.5);
+      --bg-diagram: rgba(0, 0, 0, 0.2);
+      --bg-var: rgba(0, 0, 0, 0.25);
+      --bg-scenario: rgba(0, 0, 0, 0.25);
+      --bg-plot: rgba(0, 0, 0, 0.2);
+      --bg-faq: rgba(0, 0, 0, 0.15);
+      --bg-nav: rgba(5, 6, 10, 0.85);
+      --bg-hamburger: #eef2f8;
+      --bg-table-highlight: rgba(167, 139, 250, 0.12);
+      --bg-tooltip: #1a1f2e;
+
+      --text-primary: #eef2f8;
+      --text-secondary: #c7d2fe;
+      --text-muted: #a5b4fc;
+      --text-body: #c7d2fe;
+      --text-inverse: #0f111a;
+
+      --border-card: rgba(255, 255, 255, 0.06);
+      --border-input: rgba(255, 255, 255, 0.1);
+      --border-table: rgba(255, 255, 255, 0.08);
+      --border-divider: rgba(255, 255, 255, 0.04);
+
+      --shadow-card: 0 30px 60px -20px rgba(0, 0, 0, 0.8);
+      --shadow-glow: 0 30px 60px -20px rgba(79, 70, 229, 0.15);
+
+      --orb1: rgba(79, 70, 229, 0.15);
+      --orb2: rgba(236, 72, 153, 0.10);
+      --orb3: rgba(16, 185, 129, 0.08);
+
+      --scrollbar-track: #0f111a;
+      --scrollbar-thumb: #4f46e5;
+
+      --badge-bg: rgba(79, 70, 229, 0.15);
+      --badge-text: #c7d2fe;
+      --badge-border: rgba(79, 70, 229, 0.15);
+
+      --btn-secondary-bg: rgba(255, 255, 255, 0.06);
+      --btn-secondary-border: rgba(255, 255, 255, 0.15);
+      --btn-secondary-text: #eef2f8;
+
+      --chart-bg: rgba(0, 0, 0, 0.2);
+
+      --bar-conv: #4b5563;
+      --bar-ilb: #3b82f6;
+      --bar-gdp: #8b5cf6;
+      --bar-prod: #a78bfa;
+      --bar-hybrid: #f59e0b;
+
+      --footer-border: rgba(255, 255, 255, 0.04);
+    }
+
+    /* Light mode overrides */
+    [data-theme="light"] {
+      --bg-body: #f0f2f8;
+      --bg-card: rgba(255, 255, 255, 0.85);
+      --bg-card-hover: rgba(255, 255, 255, 0.92);
+      --bg-glass: rgba(255, 255, 255, 0.75);
+      --bg-input: rgba(0, 0, 0, 0.04);
+      --bg-metric: rgba(0, 0, 0, 0.06);
+      --bg-code: rgba(0, 0, 0, 0.05);
+      --bg-diagram: rgba(0, 0, 0, 0.04);
+      --bg-var: rgba(0, 0, 0, 0.04);
+      --bg-scenario: rgba(0, 0, 0, 0.04);
+      --bg-plot: rgba(0, 0, 0, 0.04);
+      --bg-faq: rgba(0, 0, 0, 0.04);
+      --bg-nav: rgba(255, 255, 255, 0.92);
+      --bg-hamburger: #1a1a2e;
+      --bg-table-highlight: rgba(167, 139, 250, 0.15);
+      --bg-tooltip: #f0f2f8;
+
+      --text-primary: #0f111a;
+      --text-secondary: #2d2f3e;
+      --text-muted: #4a4a6a;
+      --text-body: #2d2f3e;
+      --text-inverse: #eef2f8;
+
+      --border-card: rgba(0, 0, 0, 0.08);
+      --border-input: rgba(0, 0, 0, 0.1);
+      --border-table: rgba(0, 0, 0, 0.08);
+      --border-divider: rgba(0, 0, 0, 0.06);
+
+      --shadow-card: 0 30px 60px -20px rgba(0, 0, 0, 0.15);
+      --shadow-glow: 0 30px 60px -20px rgba(79, 70, 229, 0.08);
+
+      --orb1: rgba(79, 70, 229, 0.06);
+      --orb2: rgba(236, 72, 153, 0.05);
+      --orb3: rgba(16, 185, 129, 0.04);
+
+      --scrollbar-track: #e0e2e8;
+      --scrollbar-thumb: #4f46e5;
+
+      --badge-bg: rgba(79, 70, 229, 0.10);
+      --badge-text: #4a4a6a;
+      --badge-border: rgba(79, 70, 229, 0.12);
+
+      --btn-secondary-bg: rgba(0, 0, 0, 0.04);
+      --btn-secondary-border: rgba(0, 0, 0, 0.12);
+      --btn-secondary-text: #0f111a;
+
+      --chart-bg: rgba(0, 0, 0, 0.04);
+
+      --bar-conv: #9ca3af;
+      --bar-ilb: #60a5fa;
+      --bar-gdp: #a78bfa;
+      --bar-prod: #7c3aed;
+      --bar-hybrid: #f59e0b;
+
+      --footer-border: rgba(0, 0, 0, 0.06);
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
     * {
       margin: 0;
       padding: 0;
@@ -72,39 +190,37 @@
     }
     html {
       scroll-behavior: smooth;
-      overflow-x: hidden;
     }
     body {
       font-family: 'Inter', -apple-system, sans-serif;
-      background: #05060a;
-      color: #eef2f8;
+      background: var(--bg-body);
+      color: var(--text-primary);
       line-height: 1.6;
-      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
     ::-webkit-scrollbar {
       width: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: #0f111a;
+      background: var(--scrollbar-track);
     }
     ::-webkit-scrollbar-thumb {
-      background: #4f46e5;
+      background: var(--scrollbar-thumb);
       border-radius: 10px;
     }
-    
     a {
-      color: #a5b4fc;
+      color: var(--text-muted);
       text-decoration: underline;
       text-underline-offset: 2px;
       transition: color 0.2s;
     }
     a:hover {
-      color: #eef2f8;
+      color: var(--text-primary);
     }
 
     /* ============================================================
-               ANIMATED BACKGROUND
-               ============================================================ */
+       ANIMATED BACKGROUND
+       ============================================================ */
     #network-bg {
       position: fixed;
       top: 0;
@@ -114,6 +230,10 @@
       z-index: 0;
       pointer-events: none;
       opacity: 0.5;
+      transition: opacity 0.3s ease;
+    }
+    [data-theme="light"] #network-bg {
+      opacity: 0.25;
     }
     .orb {
       position: fixed;
@@ -121,13 +241,14 @@
       filter: blur(100px);
       z-index: 0;
       pointer-events: none;
+      transition: background 0.3s ease;
     }
     .orb-1 {
       width: 40vw;
       height: 40vw;
       top: -10vh;
       left: -10vw;
-      background: rgba(79, 70, 229, 0.15);
+      background: var(--orb1);
       animation: floatOrb 25s infinite alternate ease-in-out;
     }
     .orb-2 {
@@ -135,7 +256,7 @@
       height: 35vw;
       bottom: -15vh;
       right: -10vw;
-      background: rgba(236, 72, 153, 0.10);
+      background: var(--orb2);
       animation: floatOrb 30s infinite alternate-reverse ease-in-out;
     }
     .orb-3 {
@@ -143,7 +264,7 @@
       height: 25vw;
       top: 40vh;
       right: 20vw;
-      background: rgba(16, 185, 129, 0.08);
+      background: var(--orb3);
       animation: floatOrb 20s infinite alternate ease-in-out;
     }
     @keyframes floatOrb {
@@ -156,39 +277,140 @@
     }
 
     /* ============================================================
-               STICKY NAV (hidden initially, slides in)
-               ============================================================ */
+       STICKY NAV – ALWAYS VISIBLE
+       ============================================================ */
     .sticky-nav {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(5, 6, 10, 0.8);
+      background: var(--bg-nav);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border-divider);
+      padding: 0.5rem 1.5rem;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      transition: background 0.3s ease, border-color 0.3s ease;
+      visibility: visible;
+      opacity: 1;
+      transform: none;
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .nav-links {
+      display: flex;
       gap: 1.2rem;
       flex-wrap: wrap;
+      list-style: none;
       font-size: 0.75rem;
       font-weight: 500;
-      /* ---- slide in effect ---- */
-      transition: transform 0.3s ease, opacity 0.3s ease;
-      transform: translateY(-100%);
-      opacity: 0;
-      /* hide from accessibility when hidden */
-      visibility: hidden;
+      margin: 0;
+      padding: 0;
     }
-    .sticky-nav.visible {
-      transform: translateY(0);
-      opacity: 1;
-      visibility: visible;
+    .nav-links a {
+      color: var(--text-primary);
+      text-decoration: none;
+      padding: 0.3rem 0.2rem;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover {
+      border-color: #4f46e5;
+    }
+
+    /* Hamburger button */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      padding: 0.3rem;
+      gap: 5px;
+    }
+    .hamburger span {
+      display: block;
+      width: 26px;
+      height: 3px;
+      background: var(--text-primary);
+      border-radius: 3px;
+      transition: 0.25s ease;
+    }
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* Theme toggle button */
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--border-input);
+      border-radius: 40px;
+      padding: 0.2rem 0.6rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: 0.2s;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+    .theme-toggle:hover {
+      background: var(--bg-input);
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      .sticky-nav {
+        padding: 0.6rem 1rem;
+      }
+      .hamburger {
+        display: flex;
+      }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: var(--bg-nav);
+        padding: 0.5rem 0 1rem;
+        margin-top: 0.5rem;
+        border-top: 1px solid var(--border-divider);
+        gap: 0.2rem;
+        max-height: 70vh;
+        overflow-y: auto;
+      }
+      .nav-links.open {
+        display: flex;
+      }
+      .nav-links a {
+        padding: 0.6rem 0.8rem;
+        width: 100%;
+        text-align: left;
+        border-bottom: 1px solid var(--border-divider);
+        font-size: 0.85rem;
+        white-space: normal;
+      }
+      .nav-links a:last-child {
+        border-bottom: none;
+      }
+      .theme-toggle {
+        font-size: 1rem;
+        padding: 0.1rem 0.5rem;
+      }
     }
 
     /* ============================================================
-               CONTAINER & CARDS
-               ============================================================ */
+       CONTAINER & CARDS
+       ============================================================ */
     .container {
       position: relative;
       z-index: 1;
@@ -197,23 +419,23 @@
       padding: 0 1.5rem;
     }
     .glass-card {
-      background: rgba(12, 15, 25, 0.65);
+      background: var(--bg-card);
       backdrop-filter: blur(16px) saturate(1.4);
       -webkit-backdrop-filter: blur(16px) saturate(1.4);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-card);
       border-radius: 2.5rem;
       padding: 2.5rem 2rem;
-      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-      transition: border-color 0.3s, box-shadow 0.3s;
+      box-shadow: var(--shadow-card);
+      transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
     }
     .glass-card:hover {
       border-color: rgba(79, 70, 229, 0.2);
-      box-shadow: 0 30px 60px -20px rgba(79, 70, 229, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      box-shadow: var(--shadow-glow);
     }
 
     /* ============================================================
-               TYPOGRAPHY & BADGES
-               ============================================================ */
+       TYPOGRAPHY & BADGES
+       ============================================================ */
     .text-gradient {
       background: linear-gradient(135deg, #4f46e5 0%, #a78bfa 40%, #f472b6 100%);
       -webkit-background-clip: text;
@@ -222,26 +444,31 @@
     }
     .badge-glow {
       display: inline-block;
-      background: rgba(79, 70, 229, 0.15);
-      color: #c7d2fe;
+      background: var(--badge-bg);
+      color: var(--badge-text);
       font-size: 0.7rem;
       font-weight: 700;
       padding: 0.3rem 1rem;
       border-radius: 60px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      border: 1px solid rgba(79, 70, 229, 0.15);
+      border: 1px solid var(--badge-border);
       backdrop-filter: blur(4px);
+      transition: background 0.3s, color 0.3s, border 0.3s;
     }
     .badge-version {
       background: rgba(16, 185, 129, 0.12);
       color: #34d399;
       border-color: rgba(16, 185, 129, 0.15);
     }
+    [data-theme="light"] .badge-version {
+      background: rgba(16, 185, 129, 0.15);
+      color: #059669;
+    }
 
     /* ============================================================
-               BUTTONS (Your Tweaked Design)
-               ============================================================ */
+       BUTTONS
+       ============================================================ */
     .btn-primary {
       display: inline-block;
       background: #4f46e5;
@@ -267,12 +494,12 @@
     }
     .btn-secondary {
       display: inline-block;
-      background: rgba(255, 255, 255, 0.06);
-      color: #eef2f8;
+      background: var(--btn-secondary-bg);
+      color: var(--btn-secondary-text);
       font-weight: 500;
       padding: 0.8rem 2.2rem;
       border-radius: 60px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 1px solid var(--btn-secondary-border);
       text-decoration: none;
       transition: 0.2s;
       cursor: pointer;
@@ -280,6 +507,9 @@
     }
     .btn-secondary:hover {
       background: rgba(255, 255, 255, 0.12);
+    }
+    [data-theme="light"] .btn-secondary:hover {
+      background: rgba(0, 0, 0, 0.06);
     }
     .btn-success {
       background: #047857;
@@ -289,9 +519,9 @@
       background: #065f46;
     }
     .share-btn {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #eef2f8;
+      background: var(--btn-secondary-bg);
+      border: 1px solid var(--btn-secondary-border);
+      color: var(--btn-secondary-text);
       padding: 0.5rem 1.5rem;
       font-weight: 600;
       font-size: 0.9rem;
@@ -303,10 +533,13 @@
       background: rgba(255, 255, 255, 0.15);
       transform: scale(1.02);
     }
+    [data-theme="light"] .share-btn:hover {
+      background: rgba(0, 0, 0, 0.06);
+    }
 
     /* ============================================================
-               SECTIONS SPACING
-               ============================================================ */
+       SECTIONS SPACING
+       ============================================================ */
     .section-spacing {
       padding: 6rem 0;
     }
@@ -314,6 +547,9 @@
       padding: 3rem 0;
     }
 
+    /* ============================================================
+       VARIABLES GRID
+       ============================================================ */
     .variables-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -321,29 +557,30 @@
       margin: 1.5rem 0;
     }
     .var-item {
-      background: rgba(0, 0, 0, 0.25);
+      background: var(--bg-var);
       border-radius: 1rem;
       padding: 1rem 1.2rem;
       border-left: 3px solid #4f46e5;
+      transition: background 0.3s;
     }
     .var-item .symbol {
       font-family: 'Courier New', monospace;
       font-size: 1.2rem;
       font-weight: 700;
-      color: #a5b4fc;
+      color: var(--text-muted);
     }
     .var-item .desc {
       font-size: 0.85rem;
       opacity: 0.9;
       margin-top: 0.2rem;
-      color: #c7d2fe;
+      color: var(--text-secondary);
     }
     .var-item .default {
       font-size: 0.75rem;
       opacity: 0.8;
       margin-top: 0.2rem;
       font-family: monospace;
-      color: #a5b4fc;
+      color: var(--text-muted);
     }
     @media (max-width: 640px) {
       .variables-grid {
@@ -351,18 +588,31 @@
       }
     }
 
+    /* ============================================================
+       DIAGRAM
+       ============================================================ */
     .diagram-container {
-      background: rgba(0, 0, 0, 0.2);
+      background: var(--bg-diagram);
       border-radius: 1.5rem;
       padding: 1.5rem;
       margin: 1.5rem 0;
       text-align: center;
+      transition: background 0.3s;
     }
     .diagram-container svg {
       max-width: 100%;
       height: auto;
     }
+    .diagram-container svg text {
+      fill: var(--text-primary);
+    }
+    .diagram-container svg rect {
+      stroke: var(--border-input);
+    }
 
+    /* ============================================================
+       GRID HELPERS
+       ============================================================ */
     .grid-2col {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -382,25 +632,27 @@
       margin: 0.5rem 0;
     }
     .pill-list li {
-      background: rgba(79, 70, 229, 0.1);
+      background: var(--badge-bg);
       padding: 0.2rem 1rem;
       border-radius: 40px;
       font-size: 0.8rem;
-      border: 1px solid rgba(79, 70, 229, 0.1);
+      border: 1px solid var(--badge-border);
+      color: var(--badge-text);
     }
 
     .citation-block {
-      background: rgba(0, 0, 0, 0.3);
+      background: var(--bg-code);
       border-radius: 1.2rem;
       padding: 1.2rem 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-divider);
       font-family: 'Courier New', monospace;
       font-size: 0.8rem;
       overflow-x: auto;
       margin: 1rem 0;
+      transition: background 0.3s;
     }
     .citation-block .label {
-      color: #a5b4fc;
+      color: var(--text-muted);
       font-weight: 600;
       font-family: 'Inter', sans-serif;
       font-size: 0.7rem;
@@ -413,15 +665,15 @@
       display: flex;
       justify-content: space-between;
       padding: 0.4rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      border-bottom: 1px solid var(--border-divider);
       font-size: 0.9rem;
     }
     .param-row .sym {
       font-family: monospace;
-      color: #a5b4fc;
+      color: var(--text-muted);
     }
     .param-row .val {
-      color: #c7d2fe;
+      color: var(--text-secondary);
     }
 
     .sim-grid {
@@ -444,14 +696,15 @@
       font-weight: 600;
       letter-spacing: 0.02em;
       margin-bottom: 0.3rem;
+      color: var(--text-primary);
     }
     .slider-group .value-badge {
-      background: rgba(255, 255, 255, 0.06);
+      background: var(--bg-input);
       padding: 0.1rem 0.8rem;
       border-radius: 40px;
       font-size: 0.8rem;
       font-weight: 700;
-      color: #c7d2fe;
+      color: var(--text-secondary);
     }
     input[type="range"] {
       -webkit-appearance: none;
@@ -459,7 +712,7 @@
       width: 100%;
       height: 4px;
       border-radius: 4px;
-      background: rgba(255, 255, 255, 0.1);
+      background: var(--bg-input);
       outline: none;
       transition: background 0.2s;
     }
@@ -489,36 +742,43 @@
     }
 
     .metric-box {
-      background: rgba(0, 0, 0, 0.3);
+      background: var(--bg-metric);
       border-radius: 1.5rem;
       padding: 1.2rem 1.5rem;
       text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-divider);
+      transition: background 0.3s, border 0.3s;
     }
     .metric-box .number {
       font-size: 2.2rem;
       font-weight: 700;
       font-variant-numeric: tabular-nums;
-      color: #eef2f8;
+      color: var(--text-primary);
     }
     .metric-box .label {
       font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: #a5b4fc;
+      color: var(--text-muted);
       margin-top: 0.2rem;
     }
     .metric-box.better .number {
       color: #34d399;
     }
+    [data-theme="light"] .metric-box.better .number {
+      color: #059669;
+    }
     .metric-box.worse .number {
       color: #f87171;
+    }
+    [data-theme="light"] .metric-box.worse .number {
+      color: #dc2626;
     }
 
     .progress-wrap {
       width: 100%;
       height: 4px;
-      background: rgba(255, 255, 255, 0.06);
+      background: var(--bg-input);
       border-radius: 4px;
       overflow: hidden;
       margin: 1rem 0;
@@ -531,17 +791,21 @@
       transition: width 0.1s linear;
     }
 
+    /* ============================================================
+       BAR CHART (Fixed visibility + overflow)
+       ============================================================ */
     .bar-chart-wrap {
-      max-height: 180px;
-      overflow: hidden;
+      max-height: 200px;
+      overflow: visible;
+      padding: 0 4px;
     }
     .bar-chart {
       display: flex;
       align-items: flex-end;
       justify-content: space-around;
       height: 160px;
-      gap: 0.5rem;
-      padding-top: 1rem;
+      gap: 6px;
+      padding-top: 20px;
     }
     .bar-item {
       display: flex;
@@ -556,31 +820,55 @@
       border-radius: 8px 8px 4px 4px;
       min-height: 6px;
       transition: height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s;
-      background: #4b5563;
+      background: var(--bar-conv);
+      max-height: 120px;
     }
     .bar-item .bar-label {
-      font-size: 0.6rem;
+      font-size: 0.65rem;
       font-weight: 600;
-      margin-top: 0.4rem;
-      color: #c7d2fe;
+      margin-top: 4px;
+      color: var(--text-secondary);
       text-align: center;
       white-space: nowrap;
     }
     .bar-item .bar-val {
-      font-size: 0.65rem;
+      font-size: 0.95rem;
       font-weight: 700;
-      margin-bottom: 0.2rem;
-      color: #eef2f8;
+      margin-bottom: 2px;
+      color: var(--text-primary);
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+    }
+    [data-theme="light"] .bar-item .bar-val {
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
     }
     .highlight .bar {
-      background: #a78bfa !important;
+      background: var(--bar-prod) !important;
       box-shadow: 0 0 30px rgba(167, 139, 250, 0.4);
     }
     .highlight .bar-label {
-      color: #a78bfa;
+      color: var(--bar-prod);
       font-weight: 700;
     }
+    @media (max-width: 640px) {
+      .bar-chart-wrap {
+        max-height: 170px;
+      }
+      .bar-chart {
+        height: 130px;
+        gap: 4px;
+      }
+      .bar-item .bar-val {
+        font-size: 0.75rem;
+      }
+      .bar-item .bar {
+        max-width: 32px;
+        max-height: 90px;
+      }
+    }
 
+    /* ============================================================
+       HEADLINE METRICS
+       ============================================================ */
     .headline-metrics {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -588,11 +876,12 @@
       margin: 1.5rem 0 0.5rem;
     }
     .headline-metrics .metric-card {
-      background: rgba(0, 0, 0, 0.3);
+      background: var(--bg-metric);
       border-radius: 1.2rem;
       padding: 1rem 1.2rem;
       text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-divider);
+      transition: background 0.3s;
     }
     .headline-metrics .metric-card .big-number {
       font-size: 2.4rem;
@@ -601,14 +890,77 @@
     }
     .headline-metrics .metric-card .desc {
       font-size: 0.8rem;
-      color: #c7d2fe;
+      color: var(--text-secondary);
       margin-top: 0.1rem;
     }
     .headline-metrics .metric-card .tooltip-trigger {
       border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
       cursor: help;
     }
+    [data-theme="light"] .headline-metrics .metric-card .tooltip-trigger {
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+    }
 
+    /* ============================================================
+       LIVE COMPARISON TABLE
+       ============================================================ */
+    .live-table {
+      background: var(--bg-metric);
+      border-radius: 1.2rem;
+      padding: 1rem 1.2rem;
+      margin: 1rem 0;
+      border: 1px solid var(--border-divider);
+      overflow-x: auto;
+      transition: background 0.3s;
+    }
+    .live-table .table-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.5rem;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--border-divider);
+      font-size: 0.9rem;
+      color: var(--text-primary);
+    }
+    .live-table .table-row.header {
+      font-weight: 700;
+      color: var(--text-muted);
+      border-bottom: 2px solid var(--border-table);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .live-table .table-row .value-conv {
+      color: var(--bar-conv);
+    }
+    .live-table .table-row .value-prod {
+      color: var(--bar-prod);
+      font-weight: 600;
+    }
+    .live-table .table-row .value-saving {
+      color: #34d399;
+      font-weight: 700;
+    }
+    [data-theme="light"] .live-table .table-row .value-saving {
+      color: #059669;
+    }
+    .live-table .table-row .value-distress-inc {
+      color: #f87171;
+      font-weight: 700;
+    }
+    [data-theme="light"] .live-table .table-row .value-distress-inc {
+      color: #dc2626;
+    }
+    @media (max-width: 640px) {
+      .live-table .table-row {
+        font-size: 0.75rem;
+        gap: 0.3rem;
+      }
+    }
+
+    /* ============================================================
+       TABLE (Data tables)
+       ============================================================ */
     .table-wrap {
       overflow-x: auto;
       margin: 1rem 0;
@@ -621,8 +973,8 @@
     table.data-table th {
       text-align: left;
       padding: 0.6rem 0.8rem;
-      border-bottom: 2px solid rgba(255, 255, 255, 0.08);
-      color: #a5b4fc;
+      border-bottom: 2px solid var(--border-table);
+      color: var(--text-muted);
       font-weight: 600;
       font-size: 0.75rem;
       text-transform: uppercase;
@@ -630,25 +982,28 @@
     }
     table.data-table td {
       padding: 0.5rem 0.8rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      border-bottom: 1px solid var(--border-divider);
       text-align: right;
-      color: #eef2f8;
+      color: var(--text-primary);
     }
     table.data-table td:first-child {
       text-align: left;
       font-weight: 500;
     }
     table.data-table tr:hover td {
-      background: rgba(255, 255, 255, 0.03);
+      background: var(--bg-input);
     }
     table.data-table .highlight-row td {
-      background: rgba(167, 139, 250, 0.12);
+      background: var(--bg-table-highlight);
       border-left: 3px solid #a78bfa;
     }
     table.data-table .highlight-row td:first-child {
       border-left: none;
     }
 
+    /* ============================================================
+       ACCORDION
+       ============================================================ */
     .accordion-toggle {
       cursor: pointer;
       user-select: none;
@@ -656,7 +1011,8 @@
       justify-content: space-between;
       align-items: center;
       padding: 0.5rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      border-bottom: 1px solid var(--border-divider);
+      color: var(--text-primary);
     }
     .accordion-toggle .arrow {
       transition: transform 0.2s;
@@ -675,6 +1031,9 @@
       padding: 0.8rem 0.2rem 0;
     }
 
+    /* ============================================================
+       SCENARIO GRID
+       ============================================================ */
     .scenario-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -682,10 +1041,10 @@
       margin-top: 1.5rem;
     }
     .scenario-card {
-      background: rgba(0, 0, 0, 0.25);
+      background: var(--bg-scenario);
       border-radius: 1.5rem;
       padding: 1.8rem 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-divider);
       transition: all 0.3s;
       cursor: default;
     }
@@ -698,20 +1057,21 @@
       font-size: 1.2rem;
       font-weight: 700;
       margin-bottom: 0.3rem;
+      color: var(--text-primary);
     }
     .scenario-card .profile {
       font-size: 0.85rem;
-      color: #c7d2fe;
+      color: var(--text-secondary);
       margin-bottom: 1rem;
     }
     .scenario-card .preset-info {
       font-size: 0.8rem;
-      background: rgba(255, 255, 255, 0.04);
+      background: var(--bg-input);
       padding: 0.5rem 0.8rem;
       border-radius: 0.8rem;
       margin-bottom: 1rem;
       font-family: monospace;
-      color: #c7d2fe;
+      color: var(--text-secondary);
     }
     .scenario-card .preset-info span {
       display: inline-block;
@@ -719,13 +1079,13 @@
     }
     .scenario-card .btn-preset {
       display: inline-block;
-      background: rgba(79, 70, 229, 0.15);
-      color: #c7d2fe;
+      background: var(--badge-bg);
+      color: var(--badge-text);
       padding: 0.4rem 1.2rem;
       border-radius: 40px;
       font-size: 0.8rem;
       font-weight: 600;
-      border: 1px solid rgba(79, 70, 229, 0.2);
+      border: 1px solid var(--badge-border);
       cursor: pointer;
       transition: 0.2s;
     }
@@ -736,8 +1096,8 @@
     .scenario-pathway {
       margin-top: 0.8rem;
       font-size: 0.85rem;
-      color: #c7d2fe;
-      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border-divider);
       padding-top: 0.8rem;
       max-height: 0;
       overflow: hidden;
@@ -748,6 +1108,9 @@
       opacity: 1;
     }
 
+    /* ============================================================
+       PLOT CONTAINERS
+       ============================================================ */
     .chart-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -760,19 +1123,23 @@
       }
     }
     .plot-container {
-      background: rgba(0, 0, 0, 0.2);
+      background: var(--chart-bg);
       border-radius: 1.5rem;
       padding: 0.5rem;
+      transition: background 0.3s;
     }
     .plot-container .plot-title {
       font-size: 0.9rem;
       font-weight: 600;
       padding: 0.5rem 1rem 0;
-      color: #c7d2fe;
+      color: var(--text-secondary);
     }
 
+    /* ============================================================
+       CODE BLOCKS
+       ============================================================ */
     .code-block {
-      background: rgba(0, 0, 0, 0.5);
+      background: var(--bg-code);
       border-radius: 1rem;
       padding: 1.2rem 1.5rem;
       font-family: 'Courier New', monospace;
@@ -780,26 +1147,36 @@
       overflow-x: auto;
       border-left: 3px solid #4f46e5;
       margin: 1rem 0;
+      word-break: break-word;
+      white-space: pre-wrap;
+      transition: background 0.3s;
     }
     .code-block .prompt {
       color: #34d399;
     }
+    [data-theme="light"] .code-block .prompt {
+      color: #059669;
+    }
     .code-block .cmd {
-      color: #eef2f8;
+      color: var(--text-primary);
+      word-break: break-all;
     }
 
+    /* ============================================================
+       POLICY TEXT
+       ============================================================ */
     .policy-text {
       max-height: 600px;
       overflow-y: auto;
       padding-right: 0.5rem;
       font-size: 0.95rem;
-      color: #c7d2fe;
+      color: var(--text-body);
     }
     .policy-text::-webkit-scrollbar {
       width: 4px;
     }
     .policy-text::-webkit-scrollbar-thumb {
-      background: #4f46e5;
+      background: var(--scrollbar-thumb);
       border-radius: 10px;
     }
     .policy-text h3 {
@@ -807,13 +1184,13 @@
       font-weight: 700;
       margin-top: 1.5rem;
       margin-bottom: 0.3rem;
-      color: #a5b4fc;
+      color: var(--text-muted);
     }
     .policy-text h3:first-of-type {
       margin-top: 0;
     }
     .policy-text .formula {
-      background: rgba(0, 0, 0, 0.4);
+      background: var(--bg-code);
       padding: 0.8rem 1.2rem;
       border-radius: 1rem;
       font-family: 'Courier New', monospace;
@@ -821,8 +1198,12 @@
       margin: 0.5rem 0;
       overflow-x: auto;
       border-left: 3px solid #4f46e5;
+      transition: background 0.3s;
     }
 
+    /* ============================================================
+       TOOLTIP
+       ============================================================ */
     .tooltip-trigger {
       position: relative;
       cursor: help;
@@ -830,12 +1211,12 @@
     .tooltip-trigger .tooltip-text {
       visibility: hidden;
       width: 260px;
-      background: #1a1f2e;
-      color: #eef2f8;
+      background: var(--bg-tooltip);
+      color: var(--text-primary);
       text-align: left;
       padding: 0.8rem 1rem;
       border-radius: 0.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-divider);
       position: absolute;
       z-index: 10;
       bottom: 130%;
@@ -847,23 +1228,184 @@
       font-size: 0.8rem;
       line-height: 1.4;
       backdrop-filter: blur(4px);
+      transition: background 0.3s, color 0.3s;
     }
     .tooltip-trigger:hover .tooltip-text {
       visibility: visible;
       opacity: 1;
     }
 
+    /* ============================================================
+       FLOATING RETURN TO TOP – Desktop only
+       ============================================================ */
+    .floating-return-top {
+      position: fixed;
+      bottom: 7rem;
+      right: 2rem;
+      z-index: 9998;
+      background: rgba(0, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      border-radius: 60px;
+      padding: 0.7rem 1.2rem;
+      color: #00ffff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+    }
+    .floating-return-top:hover {
+      background: rgba(0, 255, 255, 0.25);
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+    .floating-return-top:active {
+      transform: scale(0.95);
+    }
+    @media (min-width: 768px) {
+      .floating-return-top {
+        display: flex;
+      }
+    }
+
+    /* ============================================================
+       PWA INSTALL BUTTON & IOS MODAL
+       ============================================================ */
+    .pwa-install-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 28px;
+      background: rgba(215, 255, 210, 0.35);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 2px solid rgba(230, 176, 137, 0.8);
+      border-radius: 999px;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 20px;
+      letter-spacing: -0.5px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      transition: all 0.2s ease;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    .pwa-install-btn:hover {
+      transform: scale(1.05);
+      background: rgba(215, 255, 210, 0.55);
+    }
+    .pwa-install-btn .icon {
+      font-size: 24px;
+    }
+    .pwa-install-btn .btn-text {
+      color: #2568ef;
+      font-weight: 700;
+    }
+    .pwa-ios-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      backdrop-filter: blur(4px);
+    }
+    .pwa-ios-modal {
+      background: var(--bg-card);
+      border: 1px solid var(--border-divider);
+      padding: 24px;
+      border-radius: 16px;
+      max-width: 340px;
+      width: 90%;
+      text-align: center;
+      box-shadow: var(--shadow-card);
+    }
+    .pwa-ios-modal h3 {
+      color: var(--text-primary);
+      margin-top: 0;
+    }
+    .pwa-ios-modal p {
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    .pwa-ios-modal .step {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 12px 0;
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+    .pwa-ios-modal .step-icon {
+      background: var(--bg-input);
+      padding: 6px 12px;
+      border-radius: 6px;
+    }
+    .pwa-ios-modal .close-btn {
+      margin-top: 16px;
+      padding: 10px 32px;
+      background: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 40px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .pwa-ios-modal .close-btn:hover {
+      background: #4338ca;
+      transform: scale(1.02);
+    }
+    @media (max-width: 640px) {
+      .pwa-install-btn {
+        bottom: 1rem;
+        right: 1rem;
+        padding: 10px 18px;
+        font-size: 16px;
+        gap: 8px;
+      }
+      .pwa-install-btn .icon {
+        font-size: 20px;
+      }
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
     .footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      border-top: 1px solid var(--footer-border);
       padding: 2rem 0;
       text-align: center;
       font-size: 0.85rem;
-      color: #a5b4fc;
+      color: var(--text-muted);
+      transition: border-color 0.3s, color 0.3s;
     }
     .footer a {
       color: #4f46e5;
     }
 
+    /* ============================================================
+       PRINT
+       ============================================================ */
     @media print {
       body {
         background: #fff !important;
@@ -900,7 +1442,11 @@
       }
       .btn-primary,
       .btn-secondary,
-      .btn-preset {
+      .btn-preset,
+      .share-btn,
+      .pwa-install-btn,
+      #pwaIosOverlay,
+      .floating-return-top {
         display: none !important;
       }
       table.data-table td,
@@ -920,6 +1466,9 @@
       }
     }
 
+    /* ============================================================
+       MOBILE OVERRIDES (Implementation fix, etc.)
+       ============================================================ */
     @media (max-width: 640px) {
       .glass-card {
         padding: 1.5rem 1rem;
@@ -931,12 +1480,6 @@
       .metric-box .number {
         font-size: 1.6rem;
       }
-      .bar-chart {
-        height: 120px;
-      }
-      .bar-item .bar {
-        max-width: 28px;
-      }
       .scenario-grid {
         grid-template-columns: 1fr;
       }
@@ -946,301 +1489,43 @@
       .headline-metrics {
         grid-template-columns: 1fr;
       }
-      .sticky-nav {
-        gap: 0.6rem;
-        font-size: 0.65rem;
-        padding: 0.3rem 0;
-      }
-      .sticky-nav a {
-        padding: 0.1rem 0.3rem;
-      }
 
-      /* ==========================================================
-         MOBILE LAYOUT FIXES (Forcing 1 column grids)
-         ========================================================== */
-      
-      /* Ensure Sticky Nav stays perfectly sticky on mobile */
-      .sticky-nav {
-        position: sticky !important;
-        top: 0 !important;
-        z-index: 100 !important;
-      }
-
-      /* Force "Quick Reference" grid to 1 column */
+      /* Force "Quick Reference", "Implement", "Related", "FAQ" to 1 col */
       .glass-card.quick-ref .accordion-content.open > div[style*="grid-template-columns:"] {
         grid-template-columns: 1fr !important;
       }
-
-      /* Force "How to Implement", "Related Work", and "FAQ" grids to 1 column */
       #implement .glass-card > div[style*="grid-template-columns:"],
       #related .glass-card > div[style*="grid-template-columns:"],
       #faq .glass-card > div[style*="grid-template-columns:"] {
         grid-template-columns: 1fr !important;
       }
-    }
 
-    /* ============================================================
-               PWA INSTALL BUTTON & IOS MODAL
-               ============================================================ */
-    .pwa-install-btn {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      z-index: 9999;
-      display: none;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 28px;
-      background: rgba(215, 255, 210, 0.35);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 2px solid rgba(230, 176, 137, 0.8);
-      border-radius: 999px;
-      color: #ffffff;
-      font-weight: 600;
-      font-size: 20px;
-      letter-spacing: -0.5px;
-      cursor: pointer;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-      transition: all 0.2s ease;
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    }
-    .pwa-install-btn:hover {
-      transform: scale(1.05);
-      background: rgba(215, 255, 210, 0.55);
-    }
-    .pwa-install-btn .icon {
-      font-size: 24px;
-    }
-
-    .pwa-ios-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
-      backdrop-filter: blur(4px);
-    }
-    .pwa-ios-modal {
-      background: #0f111a;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 24px;
-      border-radius: 16px;
-      max-width: 340px;
-      width: 90%;
-      text-align: center;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-    }
-    .pwa-ios-modal h3 {
-      color: #eef2f8;
-      margin-top: 0;
-    }
-    .pwa-ios-modal p {
-      color: #a5b4fc;
-      font-size: 15px;
-      line-height: 1.5;
-    }
-    .pwa-ios-modal .step {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin: 12px 0;
-      font-size: 14px;
-      color: #eef2f8;
-    }
-    .pwa-ios-modal .step-icon {
-      background: rgba(255, 255, 255, 0.08);
-      padding: 6px 12px;
-      border-radius: 6px;
-    }
-    .pwa-ios-modal .close-btn {
-      margin-top: 16px;
-      padding: 10px 32px;
-      background: #4f46e5;
-      color: white;
-      border: none;
-      border-radius: 40px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .pwa-ios-modal .close-btn:hover {
-      background: #4338ca;
-      transform: scale(1.02);
-    }
-
-    @media (max-width: 640px) {
-      .pwa-install-btn {
-        bottom: 1rem;
-        right: 1rem;
-        padding: 10px 18px;
-        font-size: 16px;
-        gap: 8px;
+      /* Code blocks wrap */
+      #implement .code-block {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        white-space: pre-wrap !important;
+        word-break: break-word !important;
+        padding: 0.8rem 1rem !important;
+        font-size: 0.7rem !important;
       }
-      .pwa-install-btn .icon {
-        font-size: 20px;
+      #implement ul {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+      }
+      #implement ul li {
+        width: 100% !important;
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+        padding: 0.6rem 1rem !important;
+        font-size: 0.8rem !important;
+      }
+      #implement .glass-card {
+        padding: 1.5rem 1rem !important;
       }
     }
-
-    /* ============================================================
-               BOND STRENGTH GAUGE
-               ============================================================ */
-    .gauge-container {
-      width: 100%;
-      max-width: 280px;
-      margin: 0 auto;
-      position: relative;
-    }
-    .gauge-svg {
-      width: 100%;
-      height: auto;
-      overflow: visible;
-    }
-    .gauge-bg {
-      fill: none;
-      stroke: rgba(255, 255, 255, 0.08);
-      stroke-width: 16;
-      stroke-linecap: round;
-    }
-    .gauge-fg {
-      fill: none;
-      stroke: #34d399;
-      stroke-width: 16;
-      stroke-linecap: round;
-      transition: stroke-dashoffset 0.2s ease, stroke 0.2s ease;
-      transform-origin: center;
-    }
-    .gauge-text {
-      font-size: 2.2rem;
-      font-weight: 800;
-      fill: #eef2f8;
-      text-anchor: middle;
-    }
-    .gauge-subtext {
-      font-size: 0.85rem;
-      fill: #a5b4fc;
-      text-anchor: middle;
-    }
-
-    .gauge-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      padding: 1rem 0;
-    }
-    @media (max-width: 640px) {
-      .gauge-wrapper {
-        padding-bottom: 2.5rem;
-      }
-    }
-    
-    /* ============================================================
-               RETURN TO TOP BUTTON (in-page, cyan glow)
-               ============================================================ */
-    .btn-return-top {
-      display: inline-block;
-      padding: 0.8rem 2.5rem;
-      border-radius: 60px;
-      border: none;
-      background: rgba(0, 255, 255, 0.12);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      color: #00ffff;
-      font-weight: 600;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.15), inset 0 0 20px rgba(0, 255, 255, 0.05);
-      text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    }
-    .btn-return-top:hover {
-      background: rgba(0, 255, 255, 0.25);
-      box-shadow: 0 0 40px rgba(0, 255, 255, 0.3), inset 0 0 40px rgba(0, 255, 255, 0.1);
-      transform: scale(1.02) translateY(-2px);
-    }
-    .btn-return-top:active {
-      transform: scale(0.98);
-    }
-    /* Pulse glow animation (subtle) */
-    .btn-return-top::after {
-      content: '';
-      position: absolute;
-      inset: -3px;
-      border-radius: 60px;
-      background: radial-gradient(circle, rgba(0, 255, 255, 0.15) 0%, transparent 70%);
-      z-index: -1;
-      animation: pulseGlow 2.5s infinite alternate ease-in-out;
-    }
-    .btn-return-top {
-      position: relative;
-    }
-    @keyframes pulseGlow {
-      0% { opacity: 0.3; transform: scale(0.98); }
-      100% { opacity: 0.8; transform: scale(1.04); }
-    }
-    
-      /* ============================================================
-     FIX: Prevent "How to Implement" overflow on iPhone / mobile
-     ============================================================ */
-  @media (max-width: 640px) {
-    /* Force the main grid to one column and prevent overflow */
-    #implement .glass-card > div[style*="grid-template-columns:"] {
-      grid-template-columns: 1fr !important;
-      gap: 1.5rem !important;
-      width: 100% !important;
-      overflow: hidden !important;
-    }
-
-    /* Code blocks: wrap long URLs and add horizontal scroll if needed */
-    #implement .code-block {
-      width: 100% !important;
-      max-width: 100% !important;
-      overflow-x: auto !important;
-      white-space: pre-wrap !important;
-      word-break: break-word !important;
-      padding: 0.8rem 1rem !important;
-      box-sizing: border-box !important;
-      font-size: 0.7rem !important;
-    }
-
-    /* Specifically break the git clone URL */
-    #implement .code-block .cmd {
-      word-break: break-all !important;
-    }
-
-    /* Key Files list – prevent text from escaping */
-    #implement ul {
-      width: 100% !important;
-      max-width: 100% !important;
-      padding: 0 !important;
-      box-sizing: border-box !important;
-    }
-
-    #implement ul li {
-      width: 100% !important;
-      word-break: break-word !important;
-      overflow-wrap: break-word !important;
-      box-sizing: border-box !important;
-      padding: 0.6rem 1rem !important;
-      font-size: 0.8rem !important;
-    }
-
-    /* Ensure the card itself has safe padding */
-    #implement .glass-card {
-      padding: 1.5rem 1rem !important;
-    }
-  }
-    
   </style>
 </head>
 <body>
@@ -1251,27 +1536,44 @@
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
 
-  <!-- ====== STICKY NAV ====== -->
-  <nav class="sticky-nav no-print visible">
-    <a href="#abstract">Abstract</a>
-    <a href="#model-definition">Model</a>
-    <a href="#mechanism">Mechanism</a>
-    <a href="#simulator">Simulator</a>
-    <a href="#wellbeing">Wellbeing</a>
-    <a href="#results-data">Results</a>
-    <a href="#sensitivity">Sensitivity</a>
-    <a href="#adoption">Scenarios</a>
-    <a href="#implement">Implement</a>
-    <a href="#related">Related</a>
-    <a href="#faq">FAQ</a>
-    <a href="#citation">Cite</a>
-    <a href="#learn">Learn</a>
+  <!-- ====== STICKY NAV (with Hamburger & Theme Toggle) ====== -->
+  <nav class="sticky-nav no-print" id="mainNav">
+    <div class="nav-left">
+      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-pressed="false">
+        <span id="themeIcon">🌙</span>
+      </button>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#model-definition">Model</a></li>
+      <li><a href="#mechanism">Mechanism</a></li>
+      <li><a href="#simulator">Simulator</a></li>
+      <li><a href="#wellbeing">Wellbeing</a></li>
+      <li><a href="#results-data">Results</a></li>
+      <li><a href="#sensitivity">Sensitivity</a></li>
+      <li><a href="#adoption">Scenarios</a></li>
+      <li><a href="#implement">Implement</a></li>
+      <li><a href="#glossary">Glossary</a></li>
+      <li><a href="#limitations">Limitations</a></li>
+      <li><a href="#related">Related</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#citation">Cite</a></li>
+      <li><a href="#learn">Learn</a></li>
+    </ul>
   </nav>
+
+  <!-- ====== FLOATING RETURN TO TOP – Desktop only ====== -->
+  <button class="floating-return-top" id="floatingReturnTop" aria-label="Return to top">
+    ⬆ Top
+  </button>
 
   <!-- ====== MAIN LANDMARK ====== -->
   <main id="main-content">
-    
-    <!-- ====== PAGE WRAPPER ====== -->
     <div class="page-wrapper">
       <div class="main-content">
 
@@ -1279,11 +1581,11 @@
         <section class="container hero" style="min-height:80vh; display:flex; align-items:center; padding:4rem 0 2rem;">
           <div>
             <span class="badge-glow">📘 Canonical Reference</span>
-            <span class="badge-glow badge-version" style="margin-left:0.5rem;">v1.0.0</span>
-            <h1 class="text-gradient" style="font-size:clamp(3rem,12vw,6rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">The Productivity<br>Bond Model</h1>
+            <span class="badge-glow badge-version" style="margin-left:0.5rem;">v1.2.1</span>
+            <h1 class="text-gradient" style="font-size:clamp(3rem,12vw,6rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">The Productivity<br />Bond Model</h1>
             <p style="font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:300; opacity:0.7; max-width:640px; margin:1rem 0 2rem;">
-     		   Financing prosperity without promising infinite growth. Here’s the <a href="#abstract" style="color:#00ffff; text-decoration:underline; text-underline-offset:2px; transition:color 0.2s;">alternative</a>.
-		    </p>
+              Financing prosperity without promising infinite growth. Here’s the <a href="#abstract" style="color:#00ffff; text-decoration:underline; text-underline-offset:2px; transition:color 0.2s;">alternative</a>.
+            </p>
             <div style="display:flex; flex-wrap:wrap; gap:1rem; align-items:center;">
               <a href="#simulator" class="btn-primary">🚀 Run Live Simulation</a>
               <a href="#citation" class="btn-secondary">📖 Cite This Model</a>
@@ -1295,61 +1597,59 @@
         <!-- ====== ABSTRACT ====== -->
         <section id="abstract" class="container section-spacing-sm" style="padding-top:0;">
           <div class="glass-card">
-            <h2 class="badge-glow" style="margin-bottom:0.8rem;">Abstract</h2>     
+            <h2 class="badge-glow" style="margin-bottom:0.8rem;">Abstract</h2>
             <p style="font-size:1.05rem; line-height:1.7; max-width:900px; margin-bottom: 1.5rem;">
-              Most of our <strong>money system</strong> assumes the economy will keep growing forever. But the planet doesn't grow - so we're borrowing against a <strong>future</strong> that may not arrive. This model offers a different way: a government bond that pays investors based on how efficient the economy becomes, not how big. If we get <strong>smarter</strong> with what we have, everyone wins - including <strong>citizens</strong>, who get a share of the gains. It's a financial tool that works with reality, not against it.
+              Most of our <strong>money system</strong> assumes the economy will keep growing forever. But the planet doesn't grow – so we're borrowing against a <strong>future</strong> that may not arrive. This model offers a different way: a government bond that pays investors based on how efficient the economy becomes, not how big. If we get <strong>smarter</strong> with what we have, everyone wins – including <strong>citizens</strong>, who get a share of the gains. It's a financial tool that works with reality, not against it.
             </p>
             <p style="font-size:1.05rem; line-height:1.7; max-width:900px; margin-top: 0;">
               The <strong>Productivity Bond Model</strong> proposes a sovereign debt instrument whose return is linked to measurable productivity gains (NPI) rather than fixed compounding. It addresses the fundamental contradiction between unlimited financial promises and a finite planet. The model is parameterised by <strong>θ_AI</strong> (government capture of AI gains), <strong>α_N</strong> (investor participation), and a cap/floor structure. Monte Carlo simulations (10,000 paths, 10‑year horizon) show a <strong>3.1% cost reduction</strong> vs conventional bonds, with a feedback loop that can be mitigated via principal adjustment. The model is designed for implementation by sovereign governments and includes a <strong>Productivity Dividend</strong> to share gains with citizens. This page is the canonical reference for the model, including formal definition, variable specification, simulation results, and implementation guide.
             </p>
-            <div style="display:flex; flex-wrap:wrap; gap:0.5rem 1.5rem; margin-top:1rem; font-size:0.85rem; color:#a5b4fc;">
+            <div style="display:flex; flex-wrap:wrap; gap:0.5rem 1.5rem; margin-top:1rem; font-size:0.85rem; color:var(--text-muted);">
               <span>📅 Published: 2026-08-13</span>
-              <span>📌 Version: 1.0.0</span>
+              <span>📌 Version: 1.2.1</span>
               <span>🔗 <a href="#citation">Cite this work</a></span>
             </div>
           </div>
         </section>
 
-        <!-- ====== MOBILE-FRIENDLY QUICK REFERENCE ACCORDION ====== -->
+        <!-- ====== MOBILE-FRIENDLY QUICK REFERENCE ====== -->
         <section class="container section-spacing-sm" style="padding-top:0;">
           <div class="glass-card quick-ref">
             <div class="accordion-toggle open" onclick="toggleAccordion(this)">
-              <h2 style="font-weight:700; font-size:1.1rem; margin:0; padding:0; border:none;">📖 Quick Reference</h2>
+              <h2 style="font-weight:700; font-size:1.1rem; margin:0; padding:0; border:none; color:var(--text-primary);">📖 Quick Reference</h2>
               <span class="arrow">▼</span>
             </div>
             <div class="accordion-content open">
-              <!-- Citizen's Explainer -->
-              <div style="margin-bottom:1rem; padding-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.06); color:#c7d2fe; font-size:0.95rem;">
-                <p><strong>Think of the economy like a machine.</strong> 
-                <span class="sym" style="color:#a5b4fc; font-family:monospace;">θ_AI</span> measures what % of AI efficiency gains the government collects to fund public services.
-                <span class="sym" style="color:#a5b4fc; font-family:monospace;">α_N</span> is the % of those gains paid out to bondholders.
-                <span class="sym" style="color:#a5b4fc; font-family:monospace;">C</span> sets a hard cap to prevent the government from overpaying in a boom, while <span class="sym" style="color:#a5b4fc; font-family:monospace;">F</span> acts as a safety net ensuring investors get 0% real return in bad years.</p>
+              <div style="margin-bottom:1rem; padding-bottom:1rem; border-bottom:1px solid var(--border-divider); color:var(--text-body); font-size:0.95rem;">
+                <p><strong>Think of the economy like a machine.</strong>
+                <span class="sym" style="color:var(--text-muted); font-family:monospace;">θ_AI</span> measures what % of AI efficiency gains the government collects to fund public services.
+                <span class="sym" style="color:var(--text-muted); font-family:monospace;">α_N</span> is the % of those gains paid out to bondholders.
+                <span class="sym" style="color:var(--text-muted); font-family:monospace;">C</span> sets a hard cap to prevent the government from overpaying in a boom, while <span class="sym" style="color:var(--text-muted); font-family:monospace;">F</span> acts as a safety net ensuring investors get 0% real return in bad years.</p>
               </div>
-
               <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem;">
                 <div>
-                  <h3 style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; color:#c7d2fe; margin-bottom:0.5rem;">Model Parameters</h3>
+                  <h3 style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-bottom:0.5rem;">Model Parameters</h3>
                   <div class="param-row"><span class="sym">θ_AI</span><span class="val">0.05–0.55</span></div>
                   <div class="param-row"><span class="sym">α_N</span><span class="val">0.30–0.90</span></div>
                   <div class="param-row"><span class="sym">C</span><span class="val">2–6%</span></div>
                   <div class="param-row"><span class="sym">F</span><span class="val">0%</span></div>
                 </div>
                 <div>
-                  <h3 style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; color:#c7d2fe; margin-bottom:0.5rem;">Key Equations</h3>
-                  <div style="font-family:monospace; font-size:0.7rem; color:#c7d2fe; line-height:1.4;">
+                  <h3 style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-bottom:0.5rem;">Key Equations</h3>
+                  <div style="font-family:monospace; font-size:0.7rem; color:var(--text-body); line-height:1.4;">
                     c = (1+π)(1+min[max(αg_NPI,0%),C])−1
                   </div>
-                  <div style="font-family:monospace; font-size:0.65rem; color:#a5b4fc; margin-top:0.3rem;">
+                  <div style="font-family:monospace; font-size:0.65rem; color:var(--text-muted); margin-top:0.3rem;">
                     NPI = GDP / (H^0.40 E^0.25 M^0.20 K^0.15)
                   </div>
-                  <h3 style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; color:#c7d2fe; margin-top:1rem;">Results</h3>
+                  <h3 style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-top:1rem;">Results</h3>
                   <div class="param-row"><span class="sym">Cost saving</span><span class="val" style="color:#34d399;">−3.1%</span></div>
                   <div class="param-row"><span class="sym">Distress</span><span class="val" style="color:#f87171;">+77.2pp</span></div>
                   <div class="param-row"><span class="sym">Optimal share</span><span class="val">30%</span></div>
-                  <div class="param-row"><span class="sym">Version</span><span class="val">v1.0.0</span></div>
+                  <div class="param-row"><span class="sym">Version</span><span class="val">v1.2.1</span></div>
                 </div>
               </div>
-              <div style="margin-top:0.5rem; padding-top:0.5rem; border-top:1px solid rgba(255,255,255,0.04);">
+              <div style="margin-top:0.5rem; padding-top:0.5rem; border-top:1px solid var(--border-divider);">
                 <a href="#citation">📖 Cite this model</a>
               </div>
             </div>
@@ -1360,37 +1660,37 @@
         <section id="model-definition" class="container section-spacing-sm" style="padding-top:0;">
           <div class="glass-card">
             <span class="badge-glow" style="margin-bottom:0.8rem;">Model Definition</span>
-            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">Formal Specification</h2>
-            <p style="color:#c7d2fe; margin-bottom:1.5rem;">This section defines the rules of our Productivity Bond. It explains what the model is, how wide it applies, the assumptions we make about the world, and the mathematical equation governing it.</p>
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">Formal Specification</h2>
+            <p style="color:var(--text-secondary); margin-bottom:1.5rem;">This section defines the rules of our Productivity Bond. It explains what the model is, how wide it applies, the assumptions we make about the world, and the mathematical equation governing it.</p>
 
             <div class="grid-2col">
-              <div style="background:rgba(0,0,0,0.2); border-radius:1.2rem; padding:1.2rem;">
-                <div style="font-weight:600; color:#a5b4fc; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">Purpose</div>
-                <p style="font-size:0.95rem; margin-top:0.3rem; color:#c7d2fe;">Replace perpetual‑growth‑dependent sovereign debt with productivity‑linked financing that shares risks and rewards.</p>
+              <div style="background:var(--bg-diagram); border-radius:1.2rem; padding:1.2rem; transition:background 0.3s;">
+                <div style="font-weight:600; color:var(--text-muted); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">Purpose</div>
+                <p style="font-size:0.95rem; margin-top:0.3rem; color:var(--text-body);">Replace perpetual‑growth‑dependent sovereign debt with productivity‑linked financing that shares risks and rewards.</p>
               </div>
-              <div style="background:rgba(0,0,0,0.2); border-radius:1.2rem; padding:1.2rem;">
-                <div style="font-weight:600; color:#a5b4fc; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">Scope</div>
-                <p style="font-size:0.95rem; margin-top:0.3rem; color:#c7d2fe;">Sovereign debt issuance, fiscal policy, AI‑driven productivity, and public goods funding.</p>
+              <div style="background:var(--bg-diagram); border-radius:1.2rem; padding:1.2rem; transition:background 0.3s;">
+                <div style="font-weight:600; color:var(--text-muted); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">Scope</div>
+                <p style="font-size:0.95rem; margin-top:0.3rem; color:var(--text-body);">Sovereign debt issuance, fiscal policy, AI‑driven productivity, and public goods funding.</p>
               </div>
-              <div style="background:rgba(0,0,0,0.2); border-radius:1.2rem; padding:1.2rem;">
-                <div style="font-weight:600; color:#a5b4fc; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">Assumptions</div>
-                <ul style="font-size:0.9rem; margin-top:0.3rem; padding-left:1.2rem; color:#c7d2fe;">
+              <div style="background:var(--bg-diagram); border-radius:1.2rem; padding:1.2rem; transition:background 0.3s;">
+                <div style="font-weight:600; color:var(--text-muted); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">Assumptions</div>
+                <ul style="font-size:0.9rem; margin-top:0.3rem; padding-left:1.2rem; color:var(--text-body);">
                   <li>Planet is finite (resources, ecological capacity).</li>
                   <li>Compound interest is the core problem of debt.</li>
                   <li>AI productivity gains are capturable by government.</li>
                   <li>NPI can be measured transparently and independently.</li>
                 </ul>
               </div>
-              <div style="background:rgba(0,0,0,0.2); border-radius:1.2rem; padding:1.2rem;">
-                <div style="font-weight:600; color:#a5b4fc; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">Key Equations</div>
-                <div style="font-family:monospace; font-size:0.8rem; margin-top:0.3rem; color:#c7d2fe;">
+              <div style="background:var(--bg-diagram); border-radius:1.2rem; padding:1.2rem; transition:background 0.3s;">
+                <div style="font-weight:600; color:var(--text-muted); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em;">Key Equations</div>
+                <div style="font-family:monospace; font-size:0.8rem; margin-top:0.3rem; color:var(--text-body);">
                   c(t) = (1+π) × (1 + min[max(α_N × g_NPI, 0%), C]) – 1<br>
                   NPI = GDP / (H^0.40 × E^0.25 × M^0.20 × K^0.15)
                 </div>
               </div>
             </div>
 
-            <h3 style="font-size:1.1rem; font-weight:600; margin:1.5rem 0 0.5rem;">Variables & Components</h3>
+            <h3 style="font-size:1.1rem; font-weight:600; margin:1.5rem 0 0.5rem; color:var(--text-primary);">Variables & Components</h3>
             <div class="variables-grid">
               <div class="var-item"><span class="symbol">θ_AI</span><div class="desc">Government capture of AI‑driven productivity gains</div><div class="default">Default: 0.30 · Range: 0.05 – 0.55</div></div>
               <div class="var-item"><span class="symbol">α_N</span><div class="desc">Investor participation in NPI growth</div><div class="default">Default: 0.70 · Range: 0.30 – 0.90</div></div>
@@ -1402,12 +1702,55 @@
           </div>
         </section>
 
-        <!-- ====== MECHANISM FLOW (SVG Diagram) ====== -->
+        <!-- ====== GLOSSARY ====== -->
+        <section id="glossary" class="container section-spacing-sm" style="padding-top:0;">
+          <div class="glass-card">
+            <span class="badge-glow" style="margin-bottom:0.8rem;">Reference</span>
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">📚 Glossary</h2>
+            <p style="color:var(--text-secondary); margin-bottom:1.5rem;">Quick definitions of all key terms used in this model.</p>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+              <div style="background:var(--bg-var); border-radius:1rem; padding:1rem; transition:background 0.3s;">
+                <div style="font-weight:700; color:var(--text-muted); font-family:monospace;">θ_AI</div>
+                <p style="font-size:0.9rem; color:var(--text-body);">Government capture of AI‑driven productivity gains. Default 0.30.</p>
+              </div>
+              <div style="background:var(--bg-var); border-radius:1rem; padding:1rem; transition:background 0.3s;">
+                <div style="font-weight:700; color:var(--text-muted); font-family:monospace;">α_N</div>
+                <p style="font-size:0.9rem; color:var(--text-body);">Investor participation in NPI growth. Default 0.70.</p>
+              </div>
+              <div style="background:var(--bg-var); border-radius:1rem; padding:1rem; transition:background 0.3s;">
+                <div style="font-weight:700; color:var(--text-muted); font-family:monospace;">C</div>
+                <p style="font-size:0.9rem; color:var(--text-body);">Real return cap – protects government from overpaying in booms. Default 4.0%.</p>
+              </div>
+              <div style="background:var(--bg-var); border-radius:1rem; padding:1rem; transition:background 0.3s;">
+                <div style="font-weight:700; color:var(--text-muted); font-family:monospace;">F</div>
+                <p style="font-size:0.9rem; color:var(--text-body);">Real return floor – protects investors in bad years. Default 0%.</p>
+              </div>
+              <div style="background:var(--bg-var); border-radius:1rem; padding:1rem; transition:background 0.3s;">
+                <div style="font-weight:700; color:var(--text-muted); font-family:monospace;">NPI</div>
+                <p style="font-size:0.9rem; color:var(--text-body);">National Productivity Index – weighted geometric average of labour, energy, materials, and capital productivity.</p>
+              </div>
+              <div style="background:var(--bg-var); border-radius:1rem; padding:1rem; transition:background 0.3s;">
+                <div style="font-weight:700; color:var(--text-muted); font-family:monospace;">τ (Tau)</div>
+                <p style="font-size:0.9rem; color:var(--text-body);">Productivity Dividend share – percentage of productivity gains distributed to citizens. Default 50%.</p>
+              </div>
+              <div style="background:var(--bg-var); border-radius:1rem; padding:1rem; transition:background 0.3s;">
+                <div style="font-weight:700; color:var(--text-muted); font-family:monospace;">g_NPI</div>
+                <p style="font-size:0.9rem; color:var(--text-body);">Growth rate of the National Productivity Index.</p>
+              </div>
+              <div style="background:var(--bg-var); border-radius:1rem; padding:1rem; transition:background 0.3s;">
+                <div style="font-weight:700; color:var(--text-muted); font-family:monospace;">π</div>
+                <p style="font-size:0.9rem; color:var(--text-body);">Inflation rate (CPI). The coupon is CPI‑linked to protect purchasing power.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====== MECHANISM FLOW ====== -->
         <section id="mechanism" class="container section-spacing-sm" style="padding-top:0;">
           <div class="glass-card">
             <span class="badge-glow" style="margin-bottom:0.8rem;">Mechanism</span>
-            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">How It Works</h2>
-            <p style="color:#c7d2fe; margin-bottom:1.5rem;">This diagram shows the cycle of the Productivity Bond in action: The Government issues the bond, the economy grows, the return is calculated based on NPI, and the gains are shared with investors and citizens.</p>
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">How It Works</h2>
+            <p style="color:var(--text-secondary); margin-bottom:1.5rem;">This diagram shows the cycle of the Productivity Bond in action: The Government issues the bond, the economy grows, the return is calculated based on NPI, and the gains are shared with investors and citizens.</p>
 
             <div class="diagram-container">
               <svg viewBox="0 0 800 180" preserveAspectRatio="xMidYMid meet" style="max-width:100%; height:auto;">
@@ -1421,33 +1764,33 @@
                   </linearGradient>
                 </defs>
                 <rect x="20" y="40" width="140" height="60" rx="12" fill="rgba(79, 70, 229, 0.12)" stroke="#4f46e5" stroke-width="1.5"/>
-                <text x="90" y="65" fill="#eef2f8" font-size="12" font-weight="600" text-anchor="middle">Government</text>
-                <text x="90" y="82" fill="#a5b4fc" font-size="9" text-anchor="middle">Issuer</text>
+                <text x="90" y="65" fill="var(--text-primary)" font-size="12" font-weight="600" text-anchor="middle">Government</text>
+                <text x="90" y="82" fill="var(--text-muted)" font-size="9" text-anchor="middle">Issuer</text>
 
                 <rect x="230" y="40" width="150" height="60" rx="12" fill="rgba(167,139,250,0.10)" stroke="#a78bfa" stroke-width="1.5"/>
-                <text x="305" y="65" fill="#eef2f8" font-size="12" font-weight="600" text-anchor="middle">NPI Growth</text>
-                <text x="305" y="82" fill="#a5b4fc" font-size="9" text-anchor="middle">Weighted Productivity</text>
+                <text x="305" y="65" fill="var(--text-primary)" font-size="12" font-weight="600" text-anchor="middle">NPI Growth</text>
+                <text x="305" y="82" fill="var(--text-muted)" font-size="9" text-anchor="middle">Weighted Productivity</text>
 
                 <rect x="450" y="40" width="140" height="60" rx="12" fill="rgba(52,211,153,0.10)" stroke="#34d399" stroke-width="1.5"/>
-                <text x="520" y="65" fill="#eef2f8" font-size="12" font-weight="600" text-anchor="middle">Investor</text>
-                <text x="520" y="82" fill="#a5b4fc" font-size="9" text-anchor="middle">Return (Capped)</text>
+                <text x="520" y="65" fill="var(--text-primary)" font-size="12" font-weight="600" text-anchor="middle">Investor</text>
+                <text x="520" y="82" fill="var(--text-muted)" font-size="9" text-anchor="middle">Return (Capped)</text>
 
                 <rect x="650" y="40" width="130" height="60" rx="12" fill="rgba(251,191,36,0.10)" stroke="#fbbf24" stroke-width="1.5"/>
-                <text x="715" y="65" fill="#eef2f8" font-size="12" font-weight="600" text-anchor="middle">Productivity</text>
-                <text x="715" y="82" fill="#a5b4fc" font-size="9" text-anchor="middle">Dividend</text>
+                <text x="715" y="65" fill="var(--text-primary)" font-size="12" font-weight="600" text-anchor="middle">Productivity</text>
+                <text x="715" y="82" fill="var(--text-muted)" font-size="9" text-anchor="middle">Dividend</text>
 
                 <line x1="160" y1="70" x2="225" y2="70" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow)"/>
                 <line x1="380" y1="70" x2="445" y2="70" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow)"/>
                 <line x1="590" y1="70" x2="645" y2="70" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow)"/>
 
                 <path d="M520,100 C520,150 305,150 305,100" fill="none" stroke="rgba(167,139,250,0.3)" stroke-width="1.5" stroke-dasharray="4 4"/>
-                <text x="410" y="145" fill="#a5b4fc" font-size="9" text-anchor="middle" opacity="0.6">Feedback Loop → Principal Adjustment</text>
+                <text x="410" y="145" fill="var(--text-muted)" font-size="9" text-anchor="middle" opacity="0.6">Feedback Loop → Principal Adjustment</text>
 
                 <text x="192" y="60" fill="#4f46e5" font-size="8" text-anchor="middle">Issuance</text>
                 <text x="412" y="60" fill="#a78bfa" font-size="8" text-anchor="middle">Coupon (capped)</text>
                 <text x="617" y="60" fill="#34d399" font-size="8" text-anchor="middle">Funds</text>
               </svg>
-              <div style="font-size:0.8rem; color:#c7d2fe; margin-top:0.5rem;">Bond mechanism: Government issues → NPI determines coupon → Investor receives capped return → Productivity Dividend funds citizens</div>
+              <div style="font-size:0.8rem; color:var(--text-secondary); margin-top:0.5rem;">Bond mechanism: Government issues → NPI determines coupon → Investor receives capped return → Productivity Dividend funds citizens</div>
             </div>
 
             <div class="diagram-container">
@@ -1458,16 +1801,16 @@
                   </marker>
                 </defs>
                 <rect x="20" y="30" width="160" height="60" rx="12" fill="rgba(79, 70, 229, 0.10)" stroke="#4f46e5" stroke-width="1.5"/>
-                <text x="100" y="58" fill="#eef2f8" font-size="13" font-weight="600" text-anchor="middle">Investors</text>
-                <text x="100" y="76" fill="#a5b4fc" font-size="9" text-anchor="middle">Capital</text>
+                <text x="100" y="58" fill="var(--text-primary)" font-size="13" font-weight="600" text-anchor="middle">Investors</text>
+                <text x="100" y="76" fill="var(--text-muted)" font-size="9" text-anchor="middle">Capital</text>
 
                 <rect x="320" y="30" width="160" height="60" rx="12" fill="rgba(167,139,250,0.10)" stroke="#a78bfa" stroke-width="1.5"/>
-                <text x="400" y="58" fill="#eef2f8" font-size="13" font-weight="600" text-anchor="middle">Government</text>
-                <text x="400" y="76" fill="#a5b4fc" font-size="9" text-anchor="middle">Issuer / Fiscal Policy</text>
+                <text x="400" y="58" fill="var(--text-primary)" font-size="13" font-weight="600" text-anchor="middle">Government</text>
+                <text x="400" y="76" fill="var(--text-muted)" font-size="9" text-anchor="middle">Issuer / Fiscal Policy</text>
 
                 <rect x="620" y="30" width="160" height="60" rx="12" fill="rgba(52,211,153,0.10)" stroke="#34d399" stroke-width="1.5"/>
-                <text x="700" y="58" fill="#eef2f8" font-size="13" font-weight="600" text-anchor="middle">Citizens</text>
-                <text x="700" y="76" fill="#a5b4fc" font-size="9" text-anchor="middle">Dividend / Circular Flow</text>
+                <text x="700" y="58" fill="var(--text-primary)" font-size="13" font-weight="600" text-anchor="middle">Citizens</text>
+                <text x="700" y="76" fill="var(--text-muted)" font-size="9" text-anchor="middle">Dividend / Circular Flow</text>
 
                 <line x1="180" y1="60" x2="315" y2="60" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow2)"/>
                 <line x1="480" y1="60" x2="615" y2="60" stroke="#34d399" stroke-width="2" marker-end="url(#arrow2)"/>
@@ -1475,7 +1818,7 @@
                 <text x="248" y="50" fill="#4f46e5" font-size="9" text-anchor="middle">Bond Proceeds</text>
                 <text x="548" y="50" fill="#34d399" font-size="9" text-anchor="middle">Productivity Dividend</text>
               </svg>
-              <div style="font-size:0.8rem; color:#c7d2fe; margin-top:0.5rem;">Stakeholder flow: Capital from investors → Government issues bonds → Citizens receive dividends</div>
+              <div style="font-size:0.8rem; color:var(--text-secondary); margin-top:0.5rem;">Stakeholder flow: Capital from investors → Government issues bonds → Citizens receive dividends</div>
             </div>
           </div>
         </section>
@@ -1484,20 +1827,20 @@
         <section id="simulator" class="container section-spacing" style="padding-top:0;">
           <div class="glass-card" style="border-color:rgba(79, 70, 229, 0.2);">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:1.5rem;">
-              <h2 style="font-size:1.8rem; font-weight:700;">⚡ Live Monte Carlo Simulator</h2>
-              <span style="font-size:0.8rem; color:#a5b4fc;">10,000 paths · 10-year horizon</span>
+              <h2 style="font-size:1.8rem; font-weight:700; color:var(--text-primary);">⚡ Live Monte Carlo Simulator</h2>
+              <span style="font-size:0.8rem; color:var(--text-muted);">10,000 paths · 10-year horizon</span>
             </div>
-            <p style="color:#c7d2fe; margin-bottom:1.5rem;">Move the sliders below to simulate the economy. θ_AI, α_N, and Cap control how the bond behaves. The graph will update to show you the expected financial cost and distress risk.</p>
+            <p style="color:var(--text-secondary); margin-bottom:1.5rem;">Move the sliders below to simulate the economy. θ_AI, α_N, and Cap control how the bond behaves. The graph will update to show you the expected financial cost and distress risk.</p>
 
             <div class="sim-grid">
               <div>
                 <div class="slider-group">
                   <label>
-                    <span>🤖 θ_AI <span style="font-weight:400; color:#c7d2fe;">(Gov. capture of AI gains)</span></span>
+                    <span>🤖 θ_AI <span style="font-weight:400; color:var(--text-muted);">(Gov. capture of AI gains)</span></span>
                     <span class="value-badge" id="theta-label">0.30</span>
                   </label>
                   <input type="range" id="theta-slider" min="0.05" max="0.55" step="0.01" value="0.30" aria-label="Government capture of AI gains (theta AI)">
-                  <div style="display:flex; justify-content:space-between; font-size:0.65rem; color:#a5b4fc; padding:0 0.2rem;">
+                  <div style="display:flex; justify-content:space-between; font-size:0.65rem; color:var(--text-muted); padding:0 0.2rem;">
                     <span>Low (5%)</span>
                     <span>Critical Threshold (30%)</span>
                     <span>High (55%)</span>
@@ -1506,7 +1849,7 @@
 
                 <div class="slider-group">
                   <label>
-                    <span>📊 α_N <span style="font-weight:400; color:#c7d2fe;">(Investor participation)</span></span>
+                    <span>📊 α_N <span style="font-weight:400; color:var(--text-muted);">(Investor participation)</span></span>
                     <span class="value-badge" id="alpha-label">0.70</span>
                   </label>
                   <input type="range" id="alpha-slider" min="0.30" max="0.90" step="0.01" value="0.70" aria-label="Investor participation (alpha N)">
@@ -1514,7 +1857,7 @@
 
                 <div class="slider-group">
                   <label>
-                    <span>📈 Cap <span style="font-weight:400; color:#c7d2fe;">(Max real return)</span></span>
+                    <span>📈 Cap <span style="font-weight:400; color:var(--text-muted);">(Max real return)</span></span>
                     <span class="value-badge" id="cap-label">4.0%</span>
                   </label>
                   <input type="range" id="cap-slider" min="0.02" max="0.06" step="0.005" value="0.04" aria-label="Real return cap">
@@ -1524,10 +1867,14 @@
                   ▶ Run Simulation
                 </button>
 
+                <button id="download-csv-btn" class="btn-secondary" style="width:100%; margin-top:0.5rem; padding:0.6rem; border-color:rgba(52,211,153,0.3);">
+                  ⬇ Download Results (CSV)
+                </button>
+
                 <div class="progress-wrap" style="margin-top:1rem;">
                   <div class="progress-bar" id="progress-bar" style="width:0%;"></div>
                 </div>
-                <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:#a5b4fc;">
+                <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:var(--text-muted);">
                   <span id="status-text">Ready</span>
                   <span id="path-counter">0 / 10000</span>
                 </div>
@@ -1552,6 +1899,36 @@
                     <div class="label">Productivity Distress</div>
                   </div>
                 </div>
+
+                <!-- Live Comparison Table -->
+                <div class="live-table" id="liveComparisonTable">
+                  <div class="table-row header">
+                    <span>Metric</span>
+                    <span>Conventional</span>
+                    <span>Productivity</span>
+                  </div>
+                  <div class="table-row">
+                    <span>Cost</span>
+                    <span class="value-conv" id="lt-conv-cost">0.515</span>
+                    <span class="value-prod" id="lt-prod-cost">0.499</span>
+                  </div>
+                  <div class="table-row">
+                    <span>Distress</span>
+                    <span class="value-conv" id="lt-conv-dist">11.0%</span>
+                    <span class="value-prod" id="lt-prod-dist">88.2%</span>
+                  </div>
+                  <div class="table-row">
+                    <span>Cost Saving</span>
+                    <span>—</span>
+                    <span class="value-saving" id="lt-saving">-3.1%</span>
+                  </div>
+                  <div class="table-row">
+                    <span>Distress Increase</span>
+                    <span>—</span>
+                    <span class="value-distress-inc" id="lt-dist-inc">+77.2pp</span>
+                  </div>
+                </div>
+
                 <div class="headline-metrics">
                   <div class="metric-card">
                     <div class="big-number" style="color:#34d399;" id="headline-cost">−3.1%</div>
@@ -1572,92 +1949,80 @@
               </div>
             </div>
 
-            <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.04);">
+            <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--border-divider);">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
-                <span style="font-weight:600; font-size:0.9rem;">Expected Cost Comparison</span>
-                <span style="font-size:0.7rem; color:#a5b4fc;">Lower is better</span>
+                <span style="font-weight:600; font-size:0.9rem; color:var(--text-primary);">Expected Cost Comparison</span>
+                <span style="font-size:0.7rem; color:var(--text-muted);">Lower is better</span>
               </div>
-              
-<div class="bar-chart-wrap" style="max-height: 200px; overflow: visible; padding: 0 4px;">
-  <div class="bar-chart" id="bar-chart" style="height: 160px; align-items: flex-end; gap: 6px; padding-top: 20px;">
-    <!-- Conventional -->
-    <div class="bar-item">
-      <div class="bar-val" id="bar-conv-val" style="font-size: 0.95rem; font-weight: 700; color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.9); margin-bottom: 2px;">0.515</div>
-      <div class="bar" id="bar-conv" style="height:90px; background:#4b5563; max-height: 120px; width: 100%;"></div>
-      <div class="bar-label" style="margin-top: 4px;">Conv.</div>
-    </div>
-    <!-- ILB -->
-    <div class="bar-item">
-      <div class="bar-val" id="bar-ilb-val" style="font-size: 0.95rem; font-weight: 700; color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.9); margin-bottom: 2px;">0.489</div>
-      <div class="bar" id="bar-ilb" style="height:85px; background:#3b82f6; max-height: 120px; width: 100%;"></div>
-      <div class="bar-label">ILB</div>
-    </div>
-    <!-- GDP -->
-    <div class="bar-item">
-      <div class="bar-val" id="bar-gdp-val" style="font-size: 0.95rem; font-weight: 700; color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.9); margin-bottom: 2px;">0.511</div>
-      <div class="bar" id="bar-gdp" style="height:89px; background:#8b5cf6; max-height: 120px; width: 100%;"></div>
-      <div class="bar-label">GDP</div>
-    </div>
-    <!-- Productivity (highlighted) -->
-    <div class="bar-item highlight">
-      <div class="bar-val" id="bar-prod-val" style="font-size: 0.95rem; font-weight: 700; color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.9); margin-bottom: 2px;">0.499</div>
-      <div class="bar" id="bar-prod" style="height:87px; background:#a78bfa; max-height: 120px; width: 100%;"></div>
-      <div class="bar-label">Productivity</div>
-    </div>
-    <!-- Hybrid -->
-    <div class="bar-item">
-      <div class="bar-val" id="bar-hybrid-val" style="font-size: 0.95rem; font-weight: 700; color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.9); margin-bottom: 2px;">0.527</div>
-      <div class="bar" id="bar-hybrid" style="height:92px; background:#f59e0b; max-height: 120px; width: 100%;"></div>
-      <div class="bar-label">Hybrid</div>
-    </div>
-  </div>
-  <div style="font-size:0.8rem; color:#a5b4fc; margin-top:0.3rem; text-align:center;">
-    10,000 Monte Carlo paths · 10-year horizon · seed 42 · <a href="#implement">full code & data</a>
-  </div>
-</div>
-            
+              <div class="bar-chart-wrap">
+                <div class="bar-chart" id="bar-chart">
+                  <div class="bar-item">
+                    <div class="bar-val" id="bar-conv-val">0.515</div>
+                    <div class="bar" id="bar-conv" style="height:90px; background:var(--bar-conv);"></div>
+                    <div class="bar-label">Conv.</div>
+                  </div>
+                  <div class="bar-item">
+                    <div class="bar-val" id="bar-ilb-val">0.489</div>
+                    <div class="bar" id="bar-ilb" style="height:85px; background:var(--bar-ilb);"></div>
+                    <div class="bar-label">ILB</div>
+                  </div>
+                  <div class="bar-item">
+                    <div class="bar-val" id="bar-gdp-val">0.511</div>
+                    <div class="bar" id="bar-gdp" style="height:89px; background:var(--bar-gdp);"></div>
+                    <div class="bar-label">GDP</div>
+                  </div>
+                  <div class="bar-item highlight">
+                    <div class="bar-val" id="bar-prod-val">0.499</div>
+                    <div class="bar" id="bar-prod" style="height:87px; background:var(--bar-prod);"></div>
+                    <div class="bar-label">Productivity</div>
+                  </div>
+                  <div class="bar-item">
+                    <div class="bar-val" id="bar-hybrid-val">0.527</div>
+                    <div class="bar" id="bar-hybrid" style="height:92px; background:var(--bar-hybrid);"></div>
+                    <div class="bar-label">Hybrid</div>
+                  </div>
+                </div>
+              </div>
+              <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.3rem; text-align:center;">
+                10,000 Monte Carlo paths · 10-year horizon · seed 42 · <a href="#implement">full code & data</a>
+              </div>
+            </div>
           </div>
         </section>
 
-        <!-- ====== WELLBEING & BOND STRENGTH ====== -->
+        <!-- ====== WELLBEING & BOND STRENGTH (Gauge removed) ====== -->
         <section id="wellbeing" class="container section-spacing" style="padding-top:0;">
           <div class="glass-card">
-            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">😌 Happiness Curve & Bond Strength</h2>
-            <p style="color:#c7d2fe; margin-bottom:1.5rem;">Here we show the relationship between economic productivity, societal happiness, and the strength of the financial bond. Move the slider to find the 'sweet spot' where the economy grows happily.</p>
-            
-            <div class="sim-grid">
-              <div>
-                <div class="slider-group">
-                  <label>
-                    <span>📈 Productivity Growth (<i>g_NPI</i>)</span>
-                    <span class="value-badge" id="happiness-label">3.0%</span>
-                  </label>
-                  <input type="range" id="happiness-slider" min="0.0" max="0.06" step="0.001" value="0.03" aria-label="Productivity Growth slider for Happiness">
-                </div>
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">😌 Happiness Curve & Bond Strength</h2>
+            <p style="color:var(--text-secondary); margin-bottom:1.5rem;">Here we show the relationship between economic productivity, societal happiness, and the strength of the financial bond. Move the slider to find the 'sweet spot' where the economy grows happily.</p>
 
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem;">
-                  <div class="metric-box better">
-                    <div class="number" id="happiness-val">50.0%</div>
-                    <div class="label">Citizen Happiness</div>
-                  </div>
-                  <div class="metric-box" id="bond-strength-box">
-                    <div class="number" id="bond-strength-val">75.0%</div>
-                    <div class="label">Bond Strength</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="gauge-wrapper">
-                <div class="gauge-container">
-                  <svg class="gauge-svg" viewBox="0 0 220 130">
-                    <path class="gauge-bg" d="M 46.36 173.64 A 90 90 0 1 1 173.64 46.36" />
-                    <path class="gauge-fg" id="gauge-progress" d="M 46.36 173.64 A 90 90 0 1 1 173.64 46.36" stroke-dasharray="424.12 424.12" stroke-dashoffset="424.12" />
-                    <text class="gauge-text" id="gauge-percent" x="110" y="105">75%</text>
-                    <text class="gauge-subtext" x="110" y="125">Bond Strength</text>
-                  </svg>
-                </div>
-              </div>
-            </div>
+<div class="sim-grid">
+  <!-- Left Column: Slider + helper text -->
+  <div>
+    <div class="slider-group">
+      <label>
+        <span>📈 Productivity Growth (<i>g_NPI</i>)</span>
+        <span class="value-badge" id="happiness-label">3.0%</span>
+      </label>
+      <input type="range" id="happiness-slider" min="0.0" max="0.06" step="0.001" value="0.03" aria-label="Productivity Growth slider for Happiness">
+    </div>
+    <div style="font-size:0.85rem; color:var(--text-muted); margin-top:0.5rem; opacity:0.7;">
+      ⚡ Happiness rises with productivity up to ~3%, then plateaus.
+    </div>
+  </div>
+
+  <!-- Right Column: Live metrics (formerly occupying the empty placeholder) -->
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; align-content:center; height:100%; min-height:100px;">
+    <div class="metric-box better">
+      <div class="number" id="happiness-val">50.0%</div>
+      <div class="label">Citizen Happiness</div>
+    </div>
+    <div class="metric-box" id="bond-strength-box">
+      <div class="number" id="bond-strength-val">75.0%</div>
+      <div class="label">Bond Strength</div>
+    </div>
+  </div>
+</div>
 
             <div class="plot-container" style="margin-top:1.5rem;">
               <div class="plot-title">Happiness vs Productivity Growth</div>
@@ -1669,10 +2034,10 @@
         <!-- ====== RESULTS TABLES ====== -->
         <section id="results-data" class="container section-spacing" style="padding-top:0;">
           <div class="glass-card">
-            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">📊 Simulation Results</h2>
-            <p style="color:#c7d2fe; margin-bottom:1.5rem;">Here are the hard numbers. We compare our Productivity Bond against other types of bonds. A lower 'Cost' means it's cheaper for the government, and 'Distress' measures the chance of financial trouble.</p>
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">📊 Simulation Results</h2>
+            <p style="color:var(--text-secondary); margin-bottom:1.5rem;">Here are the hard numbers. We compare our Productivity Bond against other types of bonds. A lower 'Cost' means it's cheaper for the government, and 'Distress' measures the chance of financial trouble.</p>
 
-            <h3 style="font-size:1.1rem; font-weight:600; margin:1.5rem 0 0.5rem;">Bond Type Comparison</h3>
+            <h3 style="font-size:1.1rem; font-weight:600; margin:1.5rem 0 0.5rem; color:var(--text-primary);">Bond Type Comparison</h3>
             <div class="table-wrap">
               <table class="data-table">
                 <thead><tr><th>Bond Type</th><th>Expected Cost</th><th>Distress Prob.</th><th>Welfare</th><th>Effective Yield</th></tr></thead>
@@ -1688,7 +2053,7 @@
 
             <div style="margin-top:2rem;">
               <div class="accordion-toggle" onclick="toggleAccordion(this)">
-                <span style="font-weight:600; font-size:1rem;">📈 Portfolio Optimisation</span>
+                <span style="font-weight:600; font-size:1rem; color:var(--text-primary);">📈 Portfolio Optimisation</span>
                 <span class="arrow">▼</span>
               </div>
               <div class="accordion-content">
@@ -1706,7 +2071,7 @@
                     </tbody>
                   </table>
                 </div>
-                <div style="font-size:0.8rem; color:#a5b4fc; margin-top:0.3rem;">Optimal portfolio: <strong>30%</strong> Productivity Bonds</div>
+                <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.3rem;">Optimal portfolio: <strong>30%</strong> Productivity Bonds</div>
               </div>
             </div>
           </div>
@@ -1715,8 +2080,8 @@
         <!-- ====== SENSITIVITY CHARTS ====== -->
         <section id="sensitivity" class="container section-spacing" style="padding-top:0;">
           <div class="glass-card">
-            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">🎯 Sensitivity Analysis</h2>
-            <p style="color:#c7d2fe; margin-bottom:1.5rem;">How key parameters affect outcomes.</p>
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">🎯 Sensitivity Analysis</h2>
+            <p style="color:var(--text-secondary); margin-bottom:1.5rem;">How key parameters affect outcomes.</p>
             <div class="chart-grid">
               <div class="plot-container">
                 <div class="plot-title">Cost vs θ_AI (Gov. capture of AI gains)</div>
@@ -1727,7 +2092,7 @@
                 <div id="chart-distress-alpha" style="height:280px;"></div>
               </div>
             </div>
-            <div style="font-size:0.8rem; color:#a5b4fc; text-align:center; margin-top:0.5rem;">
+            <div style="font-size:0.8rem; color:var(--text-muted); text-align:center; margin-top:0.5rem;">
               Hover for values · Data from Appendix C
             </div>
           </div>
@@ -1736,8 +2101,8 @@
         <!-- ====== ADOPTION SCENARIOS ====== -->
         <section id="adoption" class="container section-spacing" style="padding-top:0;">
           <div class="glass-card">
-            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">🌍 Adoption Scenarios</h2>
-            <p style="color:#c7d2fe; margin-bottom:1.5rem;">
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">🌍 Adoption Scenarios</h2>
+            <p style="color:var(--text-secondary); margin-bottom:1.5rem;">
               Click a preset to load optimal parameters for your country type.
             </p>
             <div class="scenario-grid" id="scenario-grid">
@@ -1752,7 +2117,7 @@
                 <button class="btn-preset" data-preset="advanced">Load Preset</button>
                 <div class="scenario-pathway">
                   <strong>Pathway:</strong> Pilot $1‑5B → 10‑15% issuance → 30% portfolio.<br>
-                  <span style="color:#a5b4fc;">Enablers: deep capital markets, strong stats.</span>
+                  <span style="color:var(--text-muted);">Enablers: deep capital markets, strong stats.</span>
                 </div>
               </div>
               <div class="scenario-card" data-theta="0.25" data-alpha="0.65" data-cap="0.05">
@@ -1766,7 +2131,7 @@
                 <button class="btn-preset" data-preset="emerging">Load Preset</button>
                 <div class="scenario-pathway">
                   <strong>Pathway:</strong> Multilateral guarantee → 5‑10Y bonds → 20% portfolio.<br>
-                  <span style="color:#a5b4fc;">Enablers: World Bank/IMF support, capacity building.</span>
+                  <span style="color:var(--text-muted);">Enablers: World Bank/IMF support, capacity building.</span>
                 </div>
               </div>
               <div class="scenario-card" data-theta="0.45" data-alpha="0.75" data-cap="0.035">
@@ -1780,7 +2145,7 @@
                 <button class="btn-preset" data-preset="smallopen">Load Preset</button>
                 <div class="scenario-pathway">
                   <strong>Pathway:</strong> Demonstration project → 20% portfolio → regional export.<br>
-                  <span style="color:#a5b4fc;">Enablers: trusted stats, first‑mover advantage.</span>
+                  <span style="color:var(--text-muted);">Enablers: trusted stats, first‑mover advantage.</span>
                 </div>
               </div>
             </div>
@@ -1791,40 +2156,40 @@
         <section id="implement" class="container section-spacing" style="padding-top:0;">
           <div class="glass-card">
             <span class="badge-glow" style="margin-bottom:0.8rem;">Implementation</span>
-            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">🧪 How to Implement the Model</h2>
-            <p style="color:#c7d2fe; margin-bottom:1.5rem;">Step‑by‑step guide to running the full simulation locally.</p>
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">🧪 How to Implement the Model</h2>
+            <p style="color:var(--text-secondary); margin-bottom:1.5rem;">Step‑by‑step guide to running the full simulation locally.</p>
 
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
               <div>
-                <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:0.5rem;">1. Clone the Repository</h3>
+                <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">1. Clone the Repository</h3>
                 <div class="code-block" style="margin-top:0;">
                   <div><span class="prompt">$</span> <span class="cmd">git clone https://github.com/traffictorch/productivity-bond-model.git</span></div>
                   <div><span class="prompt">$</span> <span class="cmd">cd productivity-bond-model</span></div>
                 </div>
 
-                <h3 style="font-size:1.1rem; font-weight:600; margin:1rem 0 0.5rem;">2. Install Dependencies</h3>
+                <h3 style="font-size:1.1rem; font-weight:600; margin:1rem 0 0.5rem; color:var(--text-primary);">2. Install Dependencies</h3>
                 <div class="code-block" style="margin-top:0;">
                   <div><span class="prompt">$</span> <span class="cmd">pip install -r requirements.txt</span></div>
                 </div>
 
-                <h3 style="font-size:1.1rem; font-weight:600; margin:1rem 0 0.5rem;">3. Run the Simulation</h3>
+                <h3 style="font-size:1.1rem; font-weight:600; margin:1rem 0 0.5rem; color:var(--text-primary);">3. Run the Simulation</h3>
                 <div class="code-block" style="margin-top:0;">
                   <div><span class="prompt">$</span> <span class="cmd">python run_simulation.py --paths 10000 --years 10</span></div>
                 </div>
 
-                <h3 style="font-size:1.1rem; font-weight:600; margin:1rem 0 0.5rem;">4. View Results</h3>
+                <h3 style="font-size:1.1rem; font-weight:600; margin:1rem 0 0.5rem; color:var(--text-primary);">4. View Results</h3>
                 <div class="code-block" style="margin-top:0;">
                   <div><span class="cmd">cat results/bond_comparison.csv</span></div>
                   <div><span class="cmd">cat results/portfolio_results.csv</span></div>
                 </div>
               </div>
               <div>
-                <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:0.5rem;">Key Files</h3>
+                <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">Key Files</h3>
                 <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:0.5rem;">
-                  <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #4f46e5;"><strong>ROADMAP.md</strong> – Full mathematical specification</li>
-                  <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #a78bfa;"><strong>run_simulation.py</strong> – Main simulation engine</li>
-                  <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #34d399;"><strong>results/</strong> – All CSV outputs from Appendix C</li>
-                  <li style="background:rgba(0,0,0,0.2); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #fbbf24;"><strong>CONTRIBUTING.md</strong> – How to help improve the model</li>
+                  <li style="background:var(--bg-var); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #4f46e5; color:var(--text-body);"><strong>ROADMAP.md</strong> – Full mathematical specification</li>
+                  <li style="background:var(--bg-var); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #a78bfa; color:var(--text-body);"><strong>run_simulation.py</strong> – Main simulation engine</li>
+                  <li style="background:var(--bg-var); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #34d399; color:var(--text-body);"><strong>results/</strong> – All CSV outputs from Appendix C</li>
+                  <li style="background:var(--bg-var); border-radius:0.8rem; padding:0.6rem 1rem; border-left:3px solid #fbbf24; color:var(--text-body);"><strong>CONTRIBUTING.md</strong> – How to help improve the model</li>
                 </ul>
                 <div style="margin-top:1rem; display:flex; gap:0.8rem; flex-wrap:wrap;">
                   <a href="https://github.com/traffictorch/productivity-bond-model" target="_blank" class="btn-secondary" style="padding:0.4rem 1.5rem;">📁 Repository</a>
@@ -1836,38 +2201,64 @@
           </div>
         </section>
 
+        <!-- ====== KNOWN LIMITATIONS ====== -->
+        <section id="limitations" class="container section-spacing" style="padding-top:0;">
+          <div class="glass-card" style="border-color:rgba(251, 191, 36, 0.15);">
+            <span class="badge-glow" style="background:rgba(251, 191, 36, 0.12); color:#fbbf24; border-color:rgba(251, 191, 36, 0.15); margin-bottom:0.8rem;">Honest</span>
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">🧐 Known Limitations</h2>
+            <p style="color:var(--text-secondary); margin-bottom:1.5rem;">Every model has blind spots. Here are the most important ones to keep in mind.</p>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+              <div style="background:var(--bg-var); border-radius:1rem; padding:1rem; border-left:3px solid #f87171; transition:background 0.3s;">
+                <div style="font-weight:700; color:#f87171;">Feedback Loop</div>
+                <p style="font-size:0.9rem; color:var(--text-body); margin-top:0.3rem;">In good years, higher coupons increase debt service, which can enlarge the debt stock. The principal‑adjustment mechanism mitigates this but is still under active research.</p>
+              </div>
+              <div style="background:var(--bg-var); border-radius:1rem; padding:1rem; border-left:3px solid #fbbf24; transition:background 0.3s;">
+                <div style="font-weight:700; color:#fbbf24;">NPI Measurement</div>
+                <p style="font-size:0.9rem; color:var(--text-body); margin-top:0.3rem;">NPI relies on accurate, transparent data. In countries with weak statistical capacity, the bond could be gamed or mis‑priced. Legal locks and independent agencies are critical.</p>
+              </div>
+              <div style="background:var(--bg-var); border-radius:1rem; padding:1rem; border-left:3px solid #f59e0b; transition:background 0.3s;">
+                <div style="font-weight:700; color:#f59e0b;">Governance Risk</div>
+                <p style="font-size:0.9rem; color:var(--text-body); margin-top:0.3rem;">The model assumes the government acts in good faith. In practice, political capture could distort θ_AI or τ. Strong institutions and independent oversight are essential.</p>
+              </div>
+              <div style="background:var(--bg-var); border-radius:1rem; padding:1rem; border-left:3px solid #8b5cf6; transition:background 0.3s;">
+                <div style="font-weight:700; color:#8b5cf6;">AI Capture Assumption</div>
+                <p style="font-size:0.9rem; color:var(--text-body); margin-top:0.3rem;">The model assumes the government can capture a significant share of AI‑driven productivity gains. If AI gains flow mostly to private actors, θ_AI will be lower and the bond less effective.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- ====== RELATED WORK ====== -->
         <section id="related" class="container section-spacing" style="padding-top:0;">
           <div class="glass-card">
             <span class="badge-glow" style="margin-bottom:0.8rem;">Scholarship</span>
-            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">📚 Related Work</h2>
-            <p style="color:#c7d2fe; margin-bottom:1.5rem;">The Productivity Bond Model builds on and extends several intellectual traditions.</p>
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">📚 Related Work</h2>
+            <p style="color:var(--text-secondary); margin-bottom:1.5rem;">The Productivity Bond Model builds on and extends several intellectual traditions.</p>
 
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-              <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem;">
-                <div style="font-weight:600; color:#a5b4fc;">Thomas Piketty</div>
-                <p style="font-size:0.9rem; color:#c7d2fe;">r > g dynamics - capital returns outpace growth. The Productivity Bond flips this by capping returns and linking them to productivity.</p>
+              <div style="background:var(--bg-var); border-radius:1rem; padding:1rem; transition:background 0.3s;">
+                <div style="font-weight:600; color:var(--text-muted);">Thomas Piketty</div>
+                <p style="font-size:0.9rem; color:var(--text-body);">r > g dynamics - capital returns outpace growth. The Productivity Bond flips this by capping returns and linking them to productivity.</p>
               </div>
-              <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem;">
-                <div style="font-weight:600; color:#a5b4fc;">Rockström et al. (Planetary Boundaries)</div>
-                <p style="font-size:0.9rem; color:#c7d2fe;">Finite planet constraints. The model is designed to operate within ecological limits, not demand perpetual growth.</p>
+              <div style="background:var(--bg-var); border-radius:1rem; padding:1rem; transition:background 0.3s;">
+                <div style="font-weight:600; color:var(--text-muted);">Rockström et al. (Planetary Boundaries)</div>
+                <p style="font-size:0.9rem; color:var(--text-body);">Finite planet constraints. The model is designed to operate within ecological limits, not demand perpetual growth.</p>
               </div>
-              <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem;">
-                <div style="font-weight:600; color:#a5b4fc;">IMF / World Bank</div>
-                <p style="font-size:0.9rem; color:#c7d2fe;">State‑contingent debt instruments. The Productivity Bond extends GDP‑linked bonds to productivity, with a governance lock to avoid past failures.</p>
+              <div style="background:var(--bg-var); border-radius:1rem; padding:1rem; transition:background 0.3s;">
+                <div style="font-weight:600; color:var(--text-muted);">IMF / World Bank</div>
+                <p style="font-size:0.9rem; color:var(--text-body);">State‑contingent debt instruments. The Productivity Bond extends GDP‑linked bonds to productivity, with a governance lock to avoid past failures.</p>
               </div>
-              <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem;">
-                <div style="font-weight:600; color:#a5b4fc;">Elinor Ostrom</div>
-                <p style="font-size:0.9rem; color:#c7d2fe;">Common‑pool resource governance. The Productivity Dividend treats productivity gains as a shared resource, distributed via universal dividend.</p>
+              <div style="background:var(--bg-var); border-radius:1rem; padding:1rem; transition:background 0.3s;">
+                <div style="font-weight:600; color:var(--text-muted);">Elinor Ostrom</div>
+                <p style="font-size:0.9rem; color:var(--text-body);">Common‑pool resource governance. The Productivity Dividend treats productivity gains as a shared resource, distributed via universal dividend.</p>
               </div>
-              <div style="background:rgba(0,0,0,0.2); border-radius:1rem; padding:1rem;">
-                <div style="font-weight:600; color:#a5b4fc;">Nassim Nicholas Taleb</div>
-                <p style="font-size:0.9rem; color:#c7d2fe;">Anti‑fragile systems. The cap/floor structure and countercyclical coupons make the bond resilient to shocks, not brittle.</p>
+              <div style="background:var(--bg-var); border-radius:1rem; padding:1rem; transition:background 0.3s;">
+                <div style="font-weight:600; color:var(--text-muted);">Nassim Nicholas Taleb</div>
+                <p style="font-size:0.9rem; color:var(--text-body);">Anti‑fragile systems. The cap/floor structure and countercyclical coupons make the bond resilient to shocks, not brittle.</p>
               </div>
-              
             </div>
-            <div style="margin-top:1.5rem; font-size:0.9rem; border-top:1px solid rgba(255,255,255,0.04); padding-top:1rem; color:#a5b4fc;">
-            This model is part of the <a href="https://traffictorch.net">Traffic Torch</a> research on incentive design and system‑level optimisation.
+            <div style="margin-top:1.5rem; font-size:0.9rem; border-top:1px solid var(--border-divider); padding-top:1rem; color:var(--text-muted);">
+              This model is part of the <a href="https://traffictorch.net">Traffic Torch</a> research on incentive design and system‑level optimisation.
             </div>
           </div>
         </section>
@@ -1876,29 +2267,29 @@
         <section id="faq" class="container section-spacing" style="padding-top:0;">
           <div class="glass-card">
             <span class="badge-glow" style="margin-bottom:0.8rem;">Questions</span>
-            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">❓ Frequently Asked Questions</h2>
-            <p style="color:#c7d2fe; margin-bottom:1.5rem;">Quick answers to the most common questions about this model.</p>
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">❓ Frequently Asked Questions</h2>
+            <p style="color:var(--text-secondary); margin-bottom:1.5rem;">Quick answers to the most common questions about this model.</p>
 
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
-              <div style="background:rgba(0,0,0,0.15); border-radius:1rem; padding:1rem;">
-                <div style="font-weight:700; font-size:0.95rem;">“Isn’t this just Universal Basic Income?”</div>
-                <p style="font-size:0.9rem; color:#c7d2fe; margin-top:0.3rem;">No. The Productivity Dividend is funded from productivity gains, not general taxation. It’s a recognition of contribution, not a transfer payment.</p>
+              <div style="background:var(--bg-faq); border-radius:1rem; padding:1rem; transition:background 0.3s;">
+                <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">“Isn’t this just Universal Basic Income?”</div>
+                <p style="font-size:0.9rem; color:var(--text-body); margin-top:0.3rem;">No. The Productivity Dividend is funded from productivity gains, not general taxation. It’s a recognition of contribution, not a transfer payment.</p>
               </div>
-              <div style="background:rgba(0,0,0,0.15); border-radius:1rem; padding:1rem;">
-                <div style="font-weight:700; font-size:0.95rem;">“What about inflation?”</div>
-                <p style="font-size:0.9rem; color:#c7d2fe; margin-top:0.3rem;">The coupon is CPI‑linked, so purchasing power is fully protected. The real return is floored at 0%.</p>
+              <div style="background:var(--bg-faq); border-radius:1rem; padding:1rem; transition:background 0.3s;">
+                <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">“What about inflation?”</div>
+                <p style="font-size:0.9rem; color:var(--text-body); margin-top:0.3rem;">The coupon is CPI‑linked, so purchasing power is fully protected. The real return is floored at 0%.</p>
               </div>
-              <div style="background:rgba(0,0,0,0.15); border-radius:1rem; padding:1rem;">
-                <div style="font-weight:700; font-size:0.95rem;">“Can the government manipulate the NPI?”</div>
-                <p style="font-size:0.9rem; color:#c7d2fe; margin-top:0.3rem;">No – the NPI methodology is legally locked in the bond’s trust indenture. The statistical agency is independent, and revisions don’t affect past coupons.</p>
+              <div style="background:var(--bg-faq); border-radius:1rem; padding:1rem; transition:background 0.3s;">
+                <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">“Can the government manipulate the NPI?”</div>
+                <p style="font-size:0.9rem; color:var(--text-body); margin-top:0.3rem;">No – the NPI methodology is legally locked in the bond’s trust indenture. The statistical agency is independent, and revisions don’t affect past coupons.</p>
               </div>
-              <div style="background:rgba(0,0,0,0.15); border-radius:1rem; padding:1rem;">
-                <div style="font-weight:700; font-size:0.95rem;">“What about default?”</div>
-                <p style="font-size:0.9rem; color:#c7d2fe; margin-top:0.3rem;">The floor/cap structure prevents default. In bad years, the coupon drops to inflation (0% real). The principal‑adjustment mechanism can also reduce debt stock.</p>
+              <div style="background:var(--bg-faq); border-radius:1rem; padding:1rem; transition:background 0.3s;">
+                <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">“What about default?”</div>
+                <p style="font-size:0.9rem; color:var(--text-body); margin-top:0.3rem;">The floor/cap structure prevents default. In bad years, the coupon drops to inflation (0% real). The principal‑adjustment mechanism can also reduce debt stock.</p>
               </div>
-              <div style="background:rgba(0,0,0,0.15); border-radius:1rem; padding:1rem;">
-                <div style="font-weight:700; font-size:0.95rem;">“What’s the catch?”</div>
-                <p style="font-size:0.9rem; color:#c7d2fe; margin-top:0.3rem;">The feedback loop. In good years, higher coupons can increase debt service and enlarge the debt stock. This is fixed with a principal‑adjustment mechanism, which is under active research.</p>
+              <div style="background:var(--bg-faq); border-radius:1rem; padding:1rem; transition:background 0.3s;">
+                <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">“What’s the catch?”</div>
+                <p style="font-size:0.9rem; color:var(--text-body); margin-top:0.3rem;">The feedback loop. In good years, higher coupons can increase debt service and enlarge the debt stock. This is fixed with a principal‑adjustment mechanism, which is under active research.</p>
               </div>
             </div>
           </div>
@@ -1908,32 +2299,32 @@
         <section id="citation" class="container section-spacing" style="padding-top:0;">
           <div class="glass-card" style="border-color:rgba(16,185,129,0.2);">
             <span class="badge-glow" style="margin-bottom:0.8rem;">Cite This Work</span>
-            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">🔗 Canonical Reference</h2>
-            <p style="color:#c7d2fe; margin-bottom:1.5rem;">How to cite the Productivity Bond Model in academic work.</p>
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">🔗 Canonical Reference</h2>
+            <p style="color:var(--text-secondary); margin-bottom:1.5rem;">How to cite the Productivity Bond Model in academic work.</p>
 
             <div class="citation-block">
               <div class="label">APA 7th</div>
-              Callan, Y. (2026). <em>The Productivity Bond Model</em> (Version 1.0.0). Traffic Torch. https://traffictorch.github.io/productivity-bond-model/
+              Callan, Y. (2026). <em>The Productivity Bond Model</em> (Version 1.2.1). Traffic Torch. https://traffictorch.github.io/productivity-bond-model/
             </div>
 
             <div class="citation-block">
               <div class="label">BibTeX</div>
-              <pre style="margin:0; white-space:pre-wrap; color:#eef2f8; font-family:'Courier New',monospace; font-size:0.8rem;">
+              <pre style="margin:0; white-space:pre-wrap; color:var(--text-primary); font-family:'Courier New',monospace; font-size:0.8rem;">
               @misc{callan2026productivitybond,
                 author = {Ylia Callan},
                 title = {The Productivity Bond Model},
                 year = {2026},
                 publisher = {Traffic Torch},
                 url = {https://traffictorch.github.io/productivity-bond-model/},
-                version = {1.0.0},
+                version = {1.2.1},
                 note = {Canonical reference for the Productivity Bond Model}
               }
               </pre>
             </div>
 
             <div style="display:flex; flex-wrap:wrap; gap:1rem; margin-top:1rem;">
-              <a href="#" onclick="navigator.clipboard.writeText('Callan, Y. (2026). The Productivity Bond Model (Version 1.0.0). Traffic Torch. https://traffictorch.github.io/productivity-bond-model/'); alert('Copied APA citation!'); return false;" class="btn-secondary" style="padding:0.4rem 1.5rem;">📋 Copy APA</a>
-              <a href="#" onclick="navigator.clipboard.writeText('@misc{callan2026productivitybond,\n  author = {Ylia Callan},\n  title = {The Productivity Bond Model},\n  year = {2026},\n  publisher = {Traffic Torch},\n  url = {https://traffictorch.github.io/productivity-bond-model/},\n  version = {1.0.0}\n}'); alert('Copied BibTeX!'); return false;" class="btn-secondary" style="padding:0.4rem 1.5rem;">📋 Copy BibTeX</a>
+              <a href="#" onclick="navigator.clipboard.writeText('Callan, Y. (2026). The Productivity Bond Model (Version 1.2.1). Traffic Torch. https://traffictorch.github.io/productivity-bond-model/'); alert('Copied APA citation!'); return false;" class="btn-secondary" style="padding:0.4rem 1.5rem;">📋 Copy APA</a>
+              <a href="#" onclick="navigator.clipboard.writeText('@misc{callan2026productivitybond,\n  author = {Ylia Callan},\n  title = {The Productivity Bond Model},\n  year = {2026},\n  publisher = {Traffic Torch},\n  url = {https://traffictorch.github.io/productivity-bond-model/},\n  version = {1.2.1}\n}'); alert('Copied BibTeX!'); return false;" class="btn-secondary" style="padding:0.4rem 1.5rem;">📋 Copy BibTeX</a>
               <a href="https://github.com/traffictorch/productivity-bond-model" target="_blank" class="btn-secondary" style="padding:0.4rem 1.5rem;">📁 Repository</a>
             </div>
           </div>
@@ -1943,7 +2334,7 @@
         <section id="policy-brief-section" class="container section-spacing" style="padding-top:0;">
           <div class="glass-card" style="border-color:rgba(16,185,129,0.15);">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:1.5rem;">
-              <h2 style="font-size:1.8rem; font-weight:700;">📄 Policy Brief</h2>
+              <h2 style="font-size:1.8rem; font-weight:700; color:var(--text-primary);">📄 Policy Brief</h2>
               <button id="print-policy-btn" class="btn-primary btn-success" style="padding:0.6rem 1.5rem;">
                 ⬇ Download PDF
               </button>
@@ -1974,31 +2365,29 @@
           </div>
         </section>
 
-        <!-- ====== NEW: LEARN CTA SECTION ====== -->
+        <!-- ====== LEARN CTA SECTION ====== -->
         <section id="learn" class="container section-spacing" style="padding-top:0;">
           <div class="glass-card" style="border-color:rgba(251, 191, 36, 0.2);">
             <span class="badge-glow" style="background:rgba(251, 191, 36, 0.15); color:#fbbf24; border-color:rgba(251, 191, 36, 0.15); margin-bottom:0.8rem;">📖 Learn</span>
-            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem;">Read the Book</h2>
-            <p style="color:#c7d2fe; margin-bottom:1.5rem; max-width:800px;">
+            <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">Read the Book</h2>
+            <p style="color:var(--text-secondary); margin-bottom:1.5rem; max-width:800px;">
               The concepts and models on this page are the foundation of a larger, comprehensive book exploring the infinite debt problem, the productivity bond solution, and a complete roadmap for citizens and policymakers. To truly understand the depth of this philosophy, reading the book is essential.
             </p>
 
             <div style="display:flex; flex-wrap:wrap; gap:1rem; margin-top:1rem;">
               <a href="https://traffictorch.github.io/productivity-bond-model/book/The_Infinite_Debt_Problem.pdf" class="btn-primary btn-success" style="box-shadow: 0 4px 20px rgba(4, 120, 87, 0.3);" title="Download PDF">⬇ Download PDF</a>
-              
               <a href="https://books.apple.com/au/book/the-infinite-debt-problem-how-to-replace-perpetual/id6801656366" target="_blank" rel="noopener noreferrer" class="btn-secondary">🍏 Apple Ebook</a>
               <button class="btn-secondary" disabled title="Coming soon">📚 Google Books (Coming Soon)</button>
               <button class="btn-secondary" disabled title="Coming soon">🍏 Apple Audiobook (Coming Soon)</button>
               <button class="btn-secondary" disabled title="Coming soon">🎧 Google Audiobook (Coming Soon)</button>
-            </div> 
-            
-<!-- Return to Top Button -->
-              <div style="text-align: center; margin-top: 2rem;">
-                <button id="backToTopBtn" class="btn-return-top">⬆ Return to Top</button>
-              </div>
-            
+            </div>
+
+            <!-- Return to Top Button -->
+            <div style="text-align: center; margin-top: 2rem;">
+              <button id="backToTopBtn" class="btn-return-top" style="display:inline-block; padding:0.8rem 2.5rem; border-radius:60px; border:none; background:rgba(0,255,255,0.12); backdrop-filter:blur(4px); color:#00ffff; font-weight:600; font-size:1.1rem; cursor:pointer; transition:all 0.3s ease; box-shadow:0 0 20px rgba(0,255,255,0.15), inset 0 0 20px rgba(0,255,255,0.05); text-shadow:0 0 10px rgba(0,255,255,0.3); font-family:'Inter',system-ui,-apple-system,sans-serif; position:relative;">⬆ Return to Top</button>
+            </div>
           </div>
-        </section> 
+        </section>
 
       </div>
     </div>
@@ -2007,7 +2396,7 @@
   <!-- ====== PWA INSTALL BUTTON & IOS MODAL ====== -->
   <button id="pwaInstallBtn" class="pwa-install-btn">
     <span class="icon">📱</span>
-    <span>Install Apps</span>
+    <span class="btn-text">Install Apps</span>
     <span class="icon">💻</span>
   </button>
 
@@ -2032,8 +2421,11 @@
   <!-- ====== FOOTER ====== -->
   <footer class="footer">
     <div class="container">
-      <p>© 2026 Ylia Callan · <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> · Version 1.0.0 · <button class="share-btn" style="background:transparent; border:none; color:#4f46e5; padding:0; font-size:0.85rem; cursor:pointer;">📤 Share</button></p>
+      <p>© 2026 Ylia Callan · <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> · Version 1.2.1 · <button class="share-btn" style="background:transparent; border:none; color:#4f46e5; padding:0; font-size:0.85rem; cursor:pointer;">📤 Share</button></p>
       <p style="font-size:0.7rem; margin-top:0.3rem;">Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI · <span id="last-updated"></span></p>
+      <p style="font-size:0.65rem; margin-top:0.5rem; color:var(--text-muted); opacity:0.7;">
+        📌 v1.2.1 – Sticky nav always visible, floating return-to-top button (desktop only), Install Apps text in blue, removed Bond Strength gauge.
+      </p>
     </div>
   </footer>
 
@@ -2044,13 +2436,55 @@
     (function() {
       'use strict';
 
+      // ---------- THEME TOGGLE ----------
+      const themeToggle = document.getElementById('themeToggle');
+      const themeIcon = document.getElementById('themeIcon');
+      const html = document.documentElement;
+
+      function setTheme(theme) {
+        html.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        const isDark = theme === 'dark';
+        themeIcon.textContent = isDark ? '🌙' : '☀️';
+        themeToggle.setAttribute('aria-pressed', isDark ? 'false' : 'true');
+      }
+
+      function getPreferredTheme() {
+        const stored = localStorage.getItem('theme');
+        if (stored) return stored;
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+          return 'light';
+        }
+        return 'dark';
+      }
+
+      setTheme(getPreferredTheme());
+
+      themeToggle.addEventListener('click', function() {
+        const current = html.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        setTheme(next);
+        // Re-render Plotly charts after theme change
+        setTimeout(loadPlotlyAndRender, 100);
+      });
+
+      const systemMedia = window.matchMedia('(prefers-color-scheme: light)');
+      systemMedia.addEventListener('change', function(e) {
+        if (!localStorage.getItem('theme')) {
+          const newTheme = e.matches ? 'light' : 'dark';
+          setTheme(newTheme);
+        }
+      });
+
       // ---------- CANVAS NETWORK ----------
       const canvas = document.getElementById('network-bg');
       const ctx = canvas.getContext('2d');
       let w, h;
 
-      function resize() { w = canvas.width = window.innerWidth;
-        h = canvas.height = window.innerHeight; }
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      }
       window.addEventListener('resize', resize);
       resize();
       const nodes = [];
@@ -2102,63 +2536,41 @@
         }
       };
 
-      // ---------- STICKY NAV: hide on scroll down, show on scroll up ----------
-      const stickyNav = document.querySelector('.sticky-nav');
-      let lastScrollY = window.scrollY;
-      let scrollTimer;
+      // ---------- HAMBURGER NAV TOGGLE ----------
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const navLinks = document.getElementById('navLinks');
 
-      if (stickyNav) {
-        function handleScroll() {
-          const currentScrollY = window.scrollY;
-          
-          // Always show at the very top
-          if (currentScrollY === 0) {
-            stickyNav.classList.add('visible');
-            lastScrollY = currentScrollY;
-            return;
-          }
-
-          // Determine direction with a small threshold to avoid flicker
-          if (currentScrollY > lastScrollY + 10) {
-            // Scrolling down – hide
-            stickyNav.classList.remove('visible');
-          } else if (currentScrollY < lastScrollY - 10) {
-            // Scrolling up – show
-            stickyNav.classList.add('visible');
-          }
-          lastScrollY = currentScrollY;
-        }
-
-        // Throttle with requestAnimationFrame for performance
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-          if (!ticking) {
-            window.requestAnimationFrame(() => {
-              handleScroll();
-              ticking = false;
-            });
-            ticking = true;
-          }
+      if (hamburgerBtn && navLinks) {
+        hamburgerBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navLinks.classList.toggle('open');
+          hamburgerBtn.classList.toggle('open');
         });
 
-        // Safety: show after scrolling stops
-        window.addEventListener('scroll', () => {
-          clearTimeout(scrollTimer);
-          scrollTimer = setTimeout(() => {
-            // If hidden and not at the very top, show it
-            if (!stickyNav.classList.contains('visible') && window.scrollY > 50) {
-              stickyNav.classList.add('visible');
-            }
-          }, 200);
+        navLinks.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navLinks.classList.remove('open');
+            hamburgerBtn.classList.remove('open');
+          });
         });
 
-        // Initial state – show if at top or already scrolled
-        if (window.scrollY === 0) {
-          stickyNav.classList.add('visible');
-        } else {
-          // If page loads scrolled down, show the nav
-          stickyNav.classList.add('visible');
-        }
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('.sticky-nav')) {
+            navLinks.classList.remove('open');
+            hamburgerBtn.classList.remove('open');
+          }
+        });
+      }
+
+      // ---------- STICKY NAV – Always visible (no hide/show logic needed) ----------
+      // The nav is always visible – nothing to do here.
+
+      // ---------- FLOATING RETURN TO TOP ----------
+      const floatingReturnTop = document.getElementById('floatingReturnTop');
+      if (floatingReturnTop) {
+        floatingReturnTop.addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
       }
 
       // ---------- SIMULATOR ENGINE ----------
@@ -2187,6 +2599,13 @@
       const barIlbVal = document.getElementById('bar-ilb-val');
       const barGdpVal = document.getElementById('bar-gdp-val');
       const barHybridVal = document.getElementById('bar-hybrid-val');
+
+      const ltConvCost = document.getElementById('lt-conv-cost');
+      const ltProdCost = document.getElementById('lt-prod-cost');
+      const ltConvDist = document.getElementById('lt-conv-dist');
+      const ltProdDist = document.getElementById('lt-prod-dist');
+      const ltSaving = document.getElementById('lt-saving');
+      const ltDistInc = document.getElementById('lt-dist-inc');
 
       function updateLabels() {
         document.getElementById('theta-label').textContent = thetaSlider.value;
@@ -2251,7 +2670,6 @@
         function processBatch() {
           const end = Math.min(currentBatch + batchSize, totalPaths);
           for (let i = currentBatch; i < end; i++) {
-            // Conventional (fixed 4%)
             let debtC = 100,
               revC = 30,
               costC = 0,
@@ -2322,6 +2740,13 @@
           barGdpVal.textContent = '0.511';
           barHybridVal.textContent = '0.527';
 
+          ltConvCost.textContent = cCost.toFixed(3);
+          ltProdCost.textContent = pCost.toFixed(3);
+          ltConvDist.textContent = cDist.toFixed(1) + '%';
+          ltProdDist.textContent = pDist.toFixed(1) + '%';
+          ltSaving.textContent = costSave.toFixed(1) + '%';
+          ltDistInc.textContent = (distDiff > 0 ? '+' : '') + distDiff.toFixed(1) + 'pp';
+
           const prodBox = document.getElementById('cost-prod-box');
           if (pCost < cCost) {
             prodBox.className = 'metric-box better';
@@ -2351,6 +2776,39 @@
 
       runBtn.addEventListener('click', runSimulation);
       window.addEventListener('load', () => { setTimeout(runSimulation, 300); });
+
+      // ---------- CSV DOWNLOAD ----------
+      document.getElementById('download-csv-btn').addEventListener('click', function() {
+        const convCost = document.getElementById('cost-conv').textContent;
+        const prodCost = document.getElementById('cost-prod').textContent;
+        const convDist = document.getElementById('distress-conv').textContent.replace('%', '');
+        const prodDist = document.getElementById('distress-prod').textContent.replace('%', '');
+        const theta = document.getElementById('theta-slider').value;
+        const alpha = document.getElementById('alpha-slider').value;
+        const cap = document.getElementById('cap-slider').value;
+
+        const csvRows = [
+          ['Metric', 'Value'],
+          ['Theta_AI', theta],
+          ['Alpha_N', alpha],
+          ['Cap', cap],
+          ['Conv_Cost', convCost],
+          ['Prod_Cost', prodCost],
+          ['Conv_Distress_Pct', convDist],
+          ['Prod_Distress_Pct', prodDist],
+          ['Cost_Saving_Pct', ((parseFloat(convCost) - parseFloat(prodCost)) / parseFloat(convCost) * 100).toFixed(2)]
+        ];
+        const csvContent = csvRows.map(row => row.join(',')).join('\n');
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `productivity_bond_results_${new Date().toISOString().slice(0,10)}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
 
       // ---------- ADOPTION PRESETS ----------
       document.querySelectorAll('.btn-preset').forEach(btn => {
@@ -2390,6 +2848,10 @@
         const distressAlpha = [82.5, 85.8, 88.17, 89.6, 90.1];
 
         if (typeof Plotly !== 'undefined') {
+          const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+          const textColor = isDark ? '#eef2f8' : '#0f111a';
+          const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
+
           const trace1 = {
             x: thetaValues,
             y: costConv,
@@ -2411,10 +2873,10 @@
           const layout1 = {
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)',
-            font: { color: '#eef2f8', family: 'Inter' },
+            font: { color: textColor, family: 'Inter' },
             margin: { l: 40, r: 20, t: 20, b: 40 },
-            xaxis: { title: 'θ_AI', gridcolor: 'rgba(255,255,255,0.05)' },
-            yaxis: { title: 'Expected Cost', gridcolor: 'rgba(255,255,255,0.05)' },
+            xaxis: { title: 'θ_AI', gridcolor: gridColor },
+            yaxis: { title: 'Expected Cost', gridcolor: gridColor },
             legend: { orientation: 'h', x: 0, y: 1.05 },
             displayModeBar: false
           };
@@ -2432,16 +2894,15 @@
           const layout2 = {
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)',
-            font: { color: '#eef2f8', family: 'Inter' },
+            font: { color: textColor, family: 'Inter' },
             margin: { l: 40, r: 20, t: 20, b: 40 },
-            xaxis: { title: 'α_N (participation)', gridcolor: 'rgba(255,255,255,0.05)' },
-            yaxis: { title: 'Distress Probability (%)', gridcolor: 'rgba(255,255,255,0.05)' },
+            xaxis: { title: 'α_N (participation)', gridcolor: gridColor },
+            yaxis: { title: 'Distress Probability (%)', gridcolor: gridColor },
             legend: { orientation: 'h', x: 0, y: 1.05 },
             displayModeBar: false
           };
           Plotly.newPlot('chart-distress-alpha', [trace3], layout2, { responsive: true });
 
-          // ---------- HAPPINESS PLOTLY CHART ----------
           const happinessDiv = document.getElementById('chart-happiness');
           if (happinessDiv) {
             const gNpiValues = Array.from({ length: 61 }, (_, i) => i * 0.001);
@@ -2458,10 +2919,10 @@
             const layoutH = {
               paper_bgcolor: 'rgba(0,0,0,0)',
               plot_bgcolor: 'rgba(0,0,0,0)',
-              font: { color: '#eef2f8', family: 'Inter' },
+              font: { color: textColor, family: 'Inter' },
               margin: { l: 40, r: 20, t: 20, b: 40 },
-              xaxis: { title: 'Productivity Growth (g_NPI)', gridcolor: 'rgba(255,255,255,0.05)', tickformat: '.0%' },
-              yaxis: { title: 'Happiness Index', gridcolor: 'rgba(255,255,255,0.05)', range: [0, 1.1], tickformat: '.0%' },
+              xaxis: { title: 'Productivity Growth (g_NPI)', gridcolor: gridColor, tickformat: '.0%' },
+              yaxis: { title: 'Happiness Index', gridcolor: gridColor, range: [0, 1.1], tickformat: '.0%' },
               displayModeBar: false
             };
             Plotly.newPlot('chart-happiness', [traceH], layoutH, { responsive: true });
@@ -2469,15 +2930,15 @@
         }
       }
 
-      const script = document.createElement('script');
-      script.src = 'https://cdn.plot.ly/plotly-2.27.1.min.js';
-      script.onload = loadPlotlyAndRender;
-      script.onerror = function() {
+      const plotlyScript = document.createElement('script');
+      plotlyScript.src = 'https://cdn.plot.ly/plotly-2.27.1.min.js';
+      plotlyScript.onload = loadPlotlyAndRender;
+      plotlyScript.onerror = function() {
         document.querySelectorAll('.plot-container').forEach(el => {
           el.innerHTML += '<p style="text-align:center;opacity:0.5;">Plotly could not load. Please try again later.</p>';
         });
       };
-      document.head.appendChild(script);
+      document.head.appendChild(plotlyScript);
 
       // ---------- FOOTER LAST UPDATED ----------
       document.getElementById('last-updated').textContent = 'Last updated: ' + new Date().toLocaleString();
@@ -2570,13 +3031,11 @@
         }
       });
 
-      // ---------- HAPPINESS GAUGE ----------
+      // ---------- HAPPINESS (Bond Strength gauge removed) ----------
       const happinessSlider = document.getElementById('happiness-slider');
       const happinessLabel = document.getElementById('happiness-label');
       const happinessVal = document.getElementById('happiness-val');
       const bondStrengthVal = document.getElementById('bond-strength-val');
-      const gaugeProgress = document.getElementById('gauge-progress');
-      const gaugePercent = document.getElementById('gauge-percent');
 
       function updateHappinessMetrics() {
         const gNPI = parseFloat(happinessSlider.value);
@@ -2586,13 +3045,6 @@
         happinessLabel.textContent = (gNPI * 100).toFixed(1) + '%';
         happinessVal.textContent = (happiness * 100).toFixed(1) + '%';
         bondStrengthVal.textContent = (bondStrength * 100).toFixed(1) + '%';
-
-        const dashArray = 424.12;
-        const offset = dashArray * (1 - bondStrength);
-        gaugeProgress.style.strokeDasharray = `${dashArray} 424.12`;
-        gaugeProgress.style.strokeDashoffset = offset;
-        gaugeProgress.style.stroke = bondStrength > 0.6 ? '#34d399' : bondStrength > 0.3 ? '#fbbf24' : '#f87171';
-        gaugePercent.textContent = (bondStrength * 100).toFixed(0) + '%';
 
         const chartDiv = document.getElementById('chart-happiness');
         if (chartDiv && typeof Plotly !== 'undefined') {
@@ -2616,7 +3068,6 @@
             name: 'Current',
             showlegend: true
           };
-          // Ensure displayModeBar persists in react update
           const currentLayout = chartDiv.layout || { displayModeBar: false };
           Plotly.react('chart-happiness', [traceLine, tracePoint], { ...currentLayout, displayModeBar: false }, { responsive: true });
         }
@@ -2624,7 +3075,7 @@
 
       happinessSlider.addEventListener('input', updateHappinessMetrics);
       setTimeout(updateHappinessMetrics, 500);
-      
+
       // ---------- RETURN TO TOP BUTTON (in-page) ----------
       const backToTopBtn = document.getElementById('backToTopBtn');
       if (backToTopBtn) {
@@ -2636,17 +3087,17 @@
     })();
   </script>
 
-<!-- Service Worker Registration -->
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/productivity-bond-model/sw.js')
-      .then(registration => {
-        console.log('Service Worker registered successfully:', registration);
-      })
-      .catch(error => {
-        console.log('Service Worker registration failed:', error);
-      });
-  }
-</script>
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/productivity-bond-model/sw.js')
+        .then(registration => {
+          console.log('Service Worker registered successfully:', registration);
+        })
+        .catch(error => {
+          console.log('Service Worker registration failed:', error);
+        });
+    }
+  </script>
 </body>
 </html>
