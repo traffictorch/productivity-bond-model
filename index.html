@@ -1467,9 +1467,7 @@
       }
     }
 
-    /* ============================================================
-       MOBILE OVERRIDES (Implementation fix, etc.)
-       ============================================================ */
+    /* MOBILE OVERRIDES (Implementation fix, etc.) */
     @media (max-width: 640px) {
       .glass-card {
         padding: 1.5rem 1rem;
@@ -1526,16 +1524,29 @@
       #implement .glass-card {
         padding: 1.5rem 1rem !important;
       }
-    }
+    
+    /* Animated Background */
+    body {
+  background: var(--bg-body);
+  background-image: radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.15) 0%, transparent 60%),
+                    radial-gradient(circle at 80% 70%, rgba(236, 72, 153, 0.10) 0%, transparent 60%),
+                    radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.06) 0%, transparent 60%);
+  background-attachment: fixed;
+  animation: gradientShift 20s ease-in-out infinite alternate;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
   </style>
 </head>
-<body>
-
-  <!-- ====== BACKGROUND ====== -->
-  <canvas id="network-bg"></canvas>
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
+<body> 
 
   <!-- ====== STICKY NAV (with Hamburger & Theme Toggle) ====== -->
   <nav class="sticky-nav no-print" id="mainNav">
@@ -2481,55 +2492,6 @@
           setTheme(newTheme);
         }
       });
-
-      // ---------- CANVAS NETWORK ----------
-      const canvas = document.getElementById('network-bg');
-      const ctx = canvas.getContext('2d');
-      let w, h;
-
-      function resize() {
-        w = canvas.width = window.innerWidth;
-        h = canvas.height = window.innerHeight;
-      }
-      window.addEventListener('resize', resize);
-      resize();
-      const nodes = [];
-      const NUM_NODES = 40;
-      for (let i = 0; i < NUM_NODES; i++) {
-        nodes.push({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) *
-            0.4, r: 1.5 + Math.random() * 2 });
-      }
-
-      function drawNetwork() {
-        ctx.clearRect(0, 0, w, h);
-        for (let n of nodes) {
-          n.x += n.vx;
-          n.y += n.vy;
-          if (n.x < 0 || n.x > w) n.vx *= -1;
-          if (n.y < 0 || n.y > h) n.vy *= -1;
-          ctx.beginPath();
-          ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(79, 70, 229, 0.4)';
-          ctx.fill();
-        }
-        for (let i = 0; i < nodes.length; i++) {
-          for (let j = i + 1; j < nodes.length; j++) {
-            const dx = nodes[i].x - nodes[j].x;
-            const dy = nodes[i].y - nodes[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 150) {
-              ctx.beginPath();
-              ctx.moveTo(nodes[i].x, nodes[i].y);
-              ctx.lineTo(nodes[j].x, nodes[j].y);
-              ctx.strokeStyle = `rgba(79, 70, 229, ${0.08 * (1 - dist / 150)})`;
-              ctx.lineWidth = 0.6;
-              ctx.stroke();
-            }
-          }
-        }
-        requestAnimationFrame(drawNetwork);
-      }
-      drawNetwork();
 
       // ---------- ACCORDION TOGGLE ----------
       window.toggleAccordion = function(el) {
