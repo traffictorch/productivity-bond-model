@@ -1,0 +1,6 @@
+# The Productivity Bond Model
+A sovereign debt instrument linked to productivity gains.
+- Formal definition: https://traffictorch.github.io/productivity-bond-model/#model-definition
+- Simulator: https://traffictorch.github.io/productivity-bond-model/#simulator
+- Full book PDF: https://traffictorch.github.io/productivity-bond-model/book/The_Infinite_Debt_Problem.pdf
+- Repository: https://github.com/traffictorch/productivity-bond-model
