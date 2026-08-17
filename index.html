@@ -1642,6 +1642,31 @@
                 background-position: 100% 100%;
             }
         }
+
+        /* ============================================================
+   WHO WINS CARDS – 1 COLUMN ON MOBILE
+   ============================================================ */
+@media (max-width: 640px) {
+  #problem-visualized .glass-card > div:last-of-type > div {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ============================================================
+   MOBILE OVERRIDES for Infinite Debt Problem section
+   ============================================================ */
+@media (max-width: 640px) {
+/* Old Way / New Way – match inline style exactly (no spaces) */
+#problem-visualized .glass-card > div[style*="grid-template-columns:1fr 1fr"] {
+  grid-template-columns: 1fr !important;
+}
+
+/* Who Wins 4‑column cards – match inline style exactly (no spaces) */
+#problem-visualized .glass-card > div > div[style*="grid-template-columns:repeat(4,1fr)"] {
+  grid-template-columns: 1fr !important;
+}
+}
+
     </style>
 </head>
 <body>
@@ -1818,55 +1843,55 @@
       </div>
     </div>
 
-    <!-- ===== WHO WINS ===== -->
-    <div style="margin-top:1rem;">
-      <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:0.8rem; color:var(--text-primary); text-align:center;">
-        🏆 Who Wins with the Productivity Bond?
-      </h3>
-      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1rem;">
-        
-        <!-- Investor -->
-        <div style="background:var(--bg-metric); border-radius:1rem; padding:1.2rem 1rem; text-align:center; border:1px solid var(--border-divider);">
-          <div style="font-size:2.2rem; margin-bottom:0.2rem;">📈</div>
-          <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">Investors</div>
-          <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">
-            Fair, capped returns<br>
-            <span style="color:#34d399;">0% real floor</span> protection
-          </div>
-        </div>
-
-        <!-- Government -->
-        <div style="background:var(--bg-metric); border-radius:1rem; padding:1.2rem 1rem; text-align:center; border:1px solid var(--border-divider);">
-          <div style="font-size:2.2rem; margin-bottom:0.2rem;">🏛️</div>
-          <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">Government</div>
-          <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">
-            <span style="color:#34d399;">−3.1%</span> lower costs<br>
-            Sustainable debt service
-          </div>
-        </div>
-
-        <!-- Citizens -->
-        <div style="background:var(--bg-metric); border-radius:1rem; padding:1.2rem 1rem; text-align:center; border:1px solid var(--border-divider);">
-          <div style="font-size:2.2rem; margin-bottom:0.2rem;">👨‍👩‍👧‍👦</div>
-          <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">Citizens</div>
-          <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">
-            Productivity Dividend<br>
-            <span style="color:#34d399;">50%</span> of gains shared
-          </div>
-        </div>
-
-        <!-- Planet -->
-        <div style="background:var(--bg-metric); border-radius:1rem; padding:1.2rem 1rem; text-align:center; border:1px solid var(--border-divider);">
-          <div style="font-size:2.2rem; margin-bottom:0.2rem;">🌍</div>
-          <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">Planet</div>
-          <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">
-            No demand for<br>
-            <span style="color:#34d399;">infinite growth</span>
-          </div>
-        </div>
-
+<!-- ===== WHO WINS ===== -->
+<div style="margin-top:1rem;">
+  <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:0.8rem; color:var(--text-primary); text-align:center;">
+    🏆 Who Wins with the Productivity Bond?
+  </h3>
+  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1rem;">
+    
+    <!-- Investor -->
+    <div style="background:var(--bg-metric); border-radius:1rem; padding:1.2rem 1rem; text-align:center; border:1px solid var(--border-divider);">
+      <div style="font-size:2.2rem; margin-bottom:0.2rem;">📈</div>
+      <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">Investors</div>
+      <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">
+        Fair, capped returns<br>
+        <span style="color:#34d399;">0% real floor</span> protection
       </div>
     </div>
+
+    <!-- Government -->
+    <div style="background:var(--bg-metric); border-radius:1rem; padding:1.2rem 1rem; text-align:center; border:1px solid var(--border-divider);">
+      <div style="font-size:2.2rem; margin-bottom:0.2rem;">🏛️</div>
+      <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">Government</div>
+      <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">
+        <span style="color:#34d399;">−3.1%</span> lower costs<br>
+        Sustainable debt service
+      </div>
+    </div>
+
+    <!-- Citizens -->
+    <div style="background:var(--bg-metric); border-radius:1rem; padding:1.2rem 1rem; text-align:center; border:1px solid var(--border-divider);">
+      <div style="font-size:2.2rem; margin-bottom:0.2rem;">👨‍👩‍👧‍👦</div>
+      <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">Citizens</div>
+      <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">
+        Productivity Dividend<br>
+        <span style="color:#34d399;">50%</span> of gains shared
+      </div>
+    </div>
+
+    <!-- Planet -->
+    <div style="background:var(--bg-metric); border-radius:1rem; padding:1.2rem 1rem; text-align:center; border:1px solid var(--border-divider);">
+      <div style="font-size:2.2rem; margin-bottom:0.2rem;">🌍</div>
+      <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">Planet</div>
+      <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">
+        No demand for<br>
+        <span style="color:#34d399;">infinite growth</span>
+      </div>
+    </div>
+
+  </div>
+</div>
 
     <!-- ===== HAPPINESS CURVE CALLOUT ===== -->
     <div style="margin-top:1.5rem; padding:1rem 1.5rem; background:var(--bg-diagram); border-radius:1rem; border:1px dashed var(--border-divider); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;">
@@ -3293,164 +3318,124 @@
                 setTimeout(updateHappinessMetrics, 300);
             }
 
-            // ----------------------------------------------------------
-            // PLOTLY CHARTS
-            // ----------------------------------------------------------
-            function renderAllCharts() {
-                if (typeof Plotly === 'undefined') return;
-
-                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-                const textColor = isDark ? '#eef2f8' : '#0f111a';
-                const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
-
-                // Chart 1: Cost vs θ_AI
-                const thetaValues = [0.10, 0.20, 0.30, 0.40, 0.50];
-                const costConv = [0.5154, 0.5154, 0.5154, 0.5154, 0.5154];
-                const costProd = [0.5079, 0.5035, 0.4994, 0.4959, 0.4923];
-
-                const trace1 = {
-                    x: thetaValues,
-                    y: costConv,
-                    name: 'Conventional',
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    line: { color: '#4b5563', width: 2 },
-                    marker: { color: '#4b5563' }
-                };
-                const trace2 = {
-                    x: thetaValues,
-                    y: costProd,
-                    name: 'Productivity Bond',
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    line: { color: '#a78bfa', width: 3 },
-                    marker: { color: '#a78bfa', size: 8 }
-                };
-                const layout1 = {
-                    paper_bgcolor: 'rgba(0,0,0,0)',
-                    plot_bgcolor: 'rgba(0,0,0,0)',
-                    font: { color: textColor, family: 'Inter' },
-                    margin: { l: 40, r: 20, t: 20, b: 40 },
-                    xaxis: { title: 'θ_AI', gridcolor: gridColor },
-                    yaxis: { title: 'Expected Cost', gridcolor: gridColor },
-                    legend: { orientation: 'h', x: 0, y: 1.05 },
-                    displayModeBar: false
-                };
-                Plotly.newPlot('chart-cost-theta', [trace1, trace2], layout1, { responsive: true });
-
-                // Chart 2: Distress vs α_N
-                const alphaValues = [0.30, 0.50, 0.70, 0.90, 1.00];
-                const distressAlpha = [82.5, 85.8, 88.17, 89.6, 90.1];
-                const trace3 = {
-                    x: alphaValues,
-                    y: distressAlpha,
-                    name: 'Distress Probability',
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    line: { color: '#f87171', width: 3 },
-                    marker: { color: '#f87171', size: 8 }
-                };
-                const layout2 = {
-                    paper_bgcolor: 'rgba(0,0,0,0)',
-                    plot_bgcolor: 'rgba(0,0,0,0)',
-                    font: { color: textColor, family: 'Inter' },
-                    margin: { l: 40, r: 20, t: 20, b: 40 },
-                    xaxis: { title: 'α_N (participation)', gridcolor: gridColor },
-                    yaxis: { title: 'Distress Probability (%)', gridcolor: gridColor },
-                    legend: { orientation: 'h', x: 0, y: 1.05 },
-                    displayModeBar: false
-                };
-                Plotly.newPlot('chart-distress-alpha', [trace3], layout2, { responsive: true });
-
-                // Chart 3: Happiness curve
-                const happinessDiv = document.getElementById('chart-happiness');
-                if (happinessDiv) {
-                    const gNpiValues = Array.from({ length: 61 }, (_, i) => i * 0.001);
-                    const happinessValues = gNpiValues.map(g => 1 / (1 + Math.exp(-80 * (g - 0.03))));
-                    const traceH = {
-                        x: gNpiValues,
-                        y: happinessValues,
-                        type: 'scatter',
-                        mode: 'lines',
-                        line: { color: '#f472b6', width: 3 },
-                        name: 'Happiness Curve'
-                    };
-                    const layoutH = {
-                        paper_bgcolor: 'rgba(0,0,0,0)',
-                        plot_bgcolor: 'rgba(0,0,0,0)',
-                        font: { color: textColor, family: 'Inter' },
-                        margin: { l: 40, r: 20, t: 20, b: 40 },
-                        xaxis: { title: 'Productivity Growth (g_NPI)', gridcolor: gridColor,
-                        tickformat: '.0%' },
-                        yaxis: { title: 'Happiness Index', gridcolor: gridColor, range: [0, 1.1],
-                            tickformat: '.0%' },
-                        displayModeBar: false
-                    };
-                    Plotly.newPlot('chart-happiness', [traceH], layoutH, { responsive: true });
-                }
-
-                // Update happiness slider point
-                const hSlider = document.getElementById('happiness-slider');
-                if (hSlider && typeof Plotly !== 'undefined') {
-                    const gNPI = parseFloat(hSlider.value);
-                    const happiness = 1 / (1 + Math.exp(-80 * (gNPI - 0.03)));
-                    const xRange = Array.from({ length: 61 }, (_, i) => i * 0.001);
-                    const yRange = xRange.map(g => 1 / (1 + Math.exp(-80 * (g - 0.03))));
-                    const traceLine = {
-                        x: xRange,
-                        y: yRange,
-                        type: 'scatter',
-                        mode: 'lines',
-                        line: { color: '#f472b6', width: 3 },
-                        name: 'Happiness Curve',
-                        showlegend: true
-                    };
-                    const tracePoint = {
-                        x: [gNPI],
-                        y: [happiness],
-                        type: 'scatter',
-                        mode: 'markers',
-                        marker: { color: '#ffffff', size: 12, line: { color: '#f472b6', width: 3 } },
-                        name: 'Current',
-                        showlegend: true
-                    };
-                    const currentLayout = happinessDiv.layout || { displayModeBar: false };
-                    Plotly.react('chart-happiness', [traceLine, tracePoint], { ...currentLayout,
-                        displayModeBar: false }, { responsive: true });
-                        renderDivergenceChart();
-                }
-            }
-            
-// ===== DIVERGENCE CHART (Growth vs Resources) =====
-function renderDivergenceChart() {
-  const div = document.getElementById('chart-divergence');
-  if (!div || typeof Plotly === 'undefined') return;
+ // ============================================================
+// PLOTLY CHARTS (including Divergence)
+// ============================================================
+function renderAllCharts() {
+  if (typeof Plotly === 'undefined') return;
 
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
   const textColor = isDark ? '#eef2f8' : '#0f111a';
   const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
 
-  // Generate data: 1980-2025 (46 years)
+  // --- Chart 1: Cost vs θ_AI ---
+  const thetaValues = [0.10, 0.20, 0.30, 0.40, 0.50];
+  const costConv = [0.5154, 0.5154, 0.5154, 0.5154, 0.5154];
+  const costProd = [0.5079, 0.5035, 0.4994, 0.4959, 0.4923];
+  const trace1 = {
+    x: thetaValues, y: costConv, name: 'Conventional', type: 'scatter',
+    mode: 'lines+markers', line: { color: '#4b5563', width: 2 }, marker: { color: '#4b5563' }
+  };
+  const trace2 = {
+    x: thetaValues, y: costProd, name: 'Productivity Bond', type: 'scatter',
+    mode: 'lines+markers', line: { color: '#a78bfa', width: 3 }, marker: { color: '#a78bfa', size: 8 }
+  };
+  const layout1 = {
+    paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
+    font: { color: textColor, family: 'Inter' }, margin: { l: 40, r: 20, t: 20, b: 40 },
+    xaxis: { title: 'θ_AI', gridcolor: gridColor }, yaxis: { title: 'Expected Cost', gridcolor: gridColor },
+    legend: { orientation: 'h', x: 0, y: 1.05 }, displayModeBar: false
+  };
+  Plotly.newPlot('chart-cost-theta', [trace1, trace2], layout1, { responsive: true });
+
+  // --- Chart 2: Distress vs α_N ---
+  const alphaValues = [0.30, 0.50, 0.70, 0.90, 1.00];
+  const distressAlpha = [82.5, 85.8, 88.17, 89.6, 90.1];
+  const trace3 = {
+    x: alphaValues, y: distressAlpha, name: 'Distress Probability', type: 'scatter',
+    mode: 'lines+markers', line: { color: '#f87171', width: 3 }, marker: { color: '#f87171', size: 8 }
+  };
+  const layout2 = {
+    paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
+    font: { color: textColor, family: 'Inter' }, margin: { l: 40, r: 20, t: 20, b: 40 },
+    xaxis: { title: 'α_N (participation)', gridcolor: gridColor }, yaxis: { title: 'Distress Probability (%)', gridcolor: gridColor },
+    legend: { orientation: 'h', x: 0, y: 1.05 }, displayModeBar: false
+  };
+  Plotly.newPlot('chart-distress-alpha', [trace3], layout2, { responsive: true });
+
+  // --- Chart 3: Happiness curve (initial) ---
+  const happinessDiv = document.getElementById('chart-happiness');
+  if (happinessDiv) {
+    const gNpiValues = Array.from({ length: 61 }, (_, i) => i * 0.001);
+    const happinessValues = gNpiValues.map(g => 1 / (1 + Math.exp(-80 * (g - 0.03))));
+    const traceH = {
+      x: gNpiValues, y: happinessValues, type: 'scatter', mode: 'lines',
+      line: { color: '#f472b6', width: 3 }, name: 'Happiness Curve'
+    };
+    const layoutH = {
+      paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
+      font: { color: textColor, family: 'Inter' }, margin: { l: 40, r: 20, t: 20, b: 40 },
+      xaxis: { title: 'Productivity Growth (g_NPI)', gridcolor: gridColor, tickformat: '.0%' },
+      yaxis: { title: 'Happiness Index', gridcolor: gridColor, range: [0, 1.1], tickformat: '.0%' },
+      displayModeBar: false
+    };
+    Plotly.newPlot('chart-happiness', [traceH], layoutH, { responsive: true });
+  }
+
+  // --- Update happiness slider point (and keep it interactive) ---
+  const hSlider = document.getElementById('happiness-slider');
+  if (hSlider && typeof Plotly !== 'undefined') {
+    const gNPI = parseFloat(hSlider.value);
+    const happiness = 1 / (1 + Math.exp(-80 * (gNPI - 0.03)));
+    const xRange = Array.from({ length: 61 }, (_, i) => i * 0.001);
+    const yRange = xRange.map(g => 1 / (1 + Math.exp(-80 * (g - 0.03))));
+    const traceLine = {
+      x: xRange, y: yRange, type: 'scatter', mode: 'lines',
+      line: { color: '#f472b6', width: 3 }, name: 'Happiness Curve', showlegend: true
+    };
+    const tracePoint = {
+      x: [gNPI], y: [happiness], type: 'scatter', mode: 'markers',
+      marker: { color: '#ffffff', size: 12, line: { color: '#f472b6', width: 3 } }, name: 'Current', showlegend: true
+    };
+    const currentLayout = happinessDiv.layout || { displayModeBar: false };
+    Plotly.react('chart-happiness', [traceLine, tracePoint], { ...currentLayout, displayModeBar: false }, { responsive: true });
+  }
+
+  // --- FINALLY, render the divergence chart ---
+  renderDivergenceChart();
+}
+
+// ============================================================
+// DIVERGENCE CHART (Growth vs Resources)
+// ============================================================
+function renderDivergenceChart() {
+  const div = document.getElementById('chart-divergence');
+  if (!div) {
+    // Retry if container not ready
+    setTimeout(renderDivergenceChart, 300);
+    return;
+  }
+  if (typeof Plotly === 'undefined') {
+    setTimeout(renderDivergenceChart, 300);
+    return;
+  }
+
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const textColor = isDark ? '#eef2f8' : '#0f111a';
+  const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
+
+  // Data generation (your existing code)
   const years = Array.from({ length: 46 }, (_, i) => 1980 + i);
-  
-  // Financial obligations: $50T in 1980 → $300T in 2025 (exponential)
-  // Using a proper exponential curve that stays visible
   const financial = years.map((y, i) => {
-    const t = i / 45; // 0 to 1
-    // Exponential growth: 50 * e^(0.04 * years) capped at ~300
-    const base = 50 * Math.exp(0.035 * i);
-    // Smooth the curve and ensure it hits ~300 by 2025
+    const t = i / 45;
     const target = 50 + (250 * Math.pow(t, 1.8));
     return Math.min(target, 320);
   });
-  // Ensure exact end values
   financial[0] = 50;
   financial[45] = 305;
 
-  // Resource extraction: starts at 50, rises, then flattens and declines
   const resources = years.map((y, i) => {
     const t = i / 45;
-    // Rise from 50 to peak ~82 around 2005, then flatten and decline
     const rise = 50 + 32 * (1 - Math.exp(-5 * t));
     const decline = Math.max(0, (i - 30) * 0.8);
     const plateau = rise - decline * 0.12;
@@ -3459,7 +3444,6 @@ function renderDivergenceChart() {
   resources[0] = 50;
   resources[45] = 58;
 
-  // Gap shading – fill between financial and resources
   const gapTrace = {
     x: years.concat(years.slice().reverse()),
     y: financial.concat(resources.slice().reverse()),
@@ -3472,89 +3456,24 @@ function renderDivergenceChart() {
   };
 
   const traceFinancial = {
-    x: years,
-    y: financial,
-    name: 'Financial Obligations (Debt)',
-    type: 'scatter',
-    mode: 'lines+markers',
-    line: { color: '#4f46e5', width: 3 },
-    marker: { color: '#4f46e5', size: 4 },
+    x: years, y: financial, name: 'Financial Obligations (Debt)', type: 'scatter',
+    mode: 'lines+markers', line: { color: '#4f46e5', width: 3 }, marker: { color: '#4f46e5', size: 4 },
     hovertemplate: '%{x}: $%{y:.0f}T<extra>Debt</extra>'
   };
 
   const traceResources = {
-    x: years,
-    y: resources,
-    name: 'Resource Extraction',
-    type: 'scatter',
-    mode: 'lines+markers',
-    line: { color: '#34d399', width: 3 },
-    marker: { color: '#34d399', size: 4 },
+    x: years, y: resources, name: 'Resource Extraction', type: 'scatter',
+    mode: 'lines+markers', line: { color: '#34d399', width: 3 }, marker: { color: '#34d399', size: 4 },
     hovertemplate: '%{x}: %{y:.0f}<extra>Resources</extra>'
   };
 
-  // Annotations matching the book's narrative
   const annotations = [
-    {
-      x: 1985,
-      y: 58,
-      text: '📈 Debt: $50T (1980)',
-      showarrow: true,
-      arrowhead: 2,
-      ax: 0,
-      ay: -35,
-      font: { size: 10, color: textColor }
-    },
-    {
-      x: 1995,
-      y: 110,
-      text: '💳 Debt accelerates',
-      showarrow: true,
-      arrowhead: 2,
-      ax: -40,
-      ay: -25,
-      font: { size: 10, color: textColor }
-    },
-    {
-      x: 2008,
-      y: 175,
-      text: '📉 2008 Financial Crisis',
-      showarrow: true,
-      arrowhead: 2,
-      ax: 50,
-      ay: -20,
-      font: { size: 10, color: textColor }
-    },
-    {
-      x: 2015,
-      y: 220,
-      text: '⚠️ The Gap Widens',
-      showarrow: true,
-      arrowhead: 2,
-      ax: -50,
-      ay: -30,
-      font: { size: 11, color: '#f87171', weight: 'bold' }
-    },
-    {
-      x: 2005,
-      y: 82,
-      text: '🌍 Resource extraction peaks',
-      showarrow: true,
-      arrowhead: 2,
-      ax: 40,
-      ay: 30,
-      font: { size: 10, color: textColor }
-    },
-    {
-      x: 2025,
-      y: 305,
-      text: '❓ $300T+ in debt',
-      showarrow: true,
-      arrowhead: 2,
-      ax: 0,
-      ay: -40,
-      font: { size: 11, color: '#f87171', weight: 'bold' }
-    }
+    { x: 1985, y: 58, text: '📈 Debt: $50T (1980)', showarrow: true, arrowhead: 2, ax: 0, ay: -35, font: { size: 10, color: textColor } },
+    { x: 1995, y: 110, text: '💳 Debt accelerates', showarrow: true, arrowhead: 2, ax: -40, ay: -25, font: { size: 10, color: textColor } },
+    { x: 2008, y: 175, text: '📉 2008 Financial Crisis', showarrow: true, arrowhead: 2, ax: 50, ay: -20, font: { size: 10, color: textColor } },
+    { x: 2015, y: 220, text: '⚠️ The Gap Widens', showarrow: true, arrowhead: 2, ax: -50, ay: -30, font: { size: 11, color: '#f87171', weight: 'bold' } },
+    { x: 2005, y: 82, text: '🌍 Resource extraction peaks', showarrow: true, arrowhead: 2, ax: 40, ay: 30, font: { size: 10, color: textColor } },
+    { x: 2025, y: 305, text: '❓ $300T+ in debt', showarrow: true, arrowhead: 2, ax: 0, ay: -40, font: { size: 11, color: '#f87171', weight: 'bold' } }
   ];
 
   const layout = {
@@ -3562,37 +3481,19 @@ function renderDivergenceChart() {
     plot_bgcolor: 'rgba(0,0,0,0)',
     font: { color: textColor, family: 'Inter' },
     margin: { l: 60, r: 30, t: 30, b: 50 },
-    xaxis: { 
-      title: 'Year', 
-      gridcolor: gridColor,
-      range: [1978, 2027],
-      tickmode: 'linear',
-      dtick: 5
-    },
-    yaxis: { 
-      title: 'Index (1980 = 50)', 
-      gridcolor: gridColor,
-      range: [0, 350],
-      tickformat: '.0f'
-    },
-    legend: { 
-      orientation: 'h', 
-      x: 0.5, 
-      y: 1.08,
-      xanchor: 'center',
-      font: { size: 11 }
-    },
+    xaxis: { title: 'Year', gridcolor: gridColor, range: [1978, 2027], tickmode: 'linear', dtick: 5 },
+    yaxis: { title: 'Index (1980 = 50)', gridcolor: gridColor, range: [0, 350], tickformat: '.0f' },
+    legend: { orientation: 'h', x: 0.5, y: 1.08, xanchor: 'center', font: { size: 11 } },
     annotations: annotations,
     displayModeBar: false,
     hovermode: 'x unified'
   };
 
-  Plotly.newPlot('chart-divergence', [gapTrace, traceFinancial, traceResources], layout, { 
+  Plotly.newPlot('chart-divergence', [gapTrace, traceFinancial, traceResources], layout, {
     responsive: true,
     displayModeBar: false
   });
 }
-
 
             // ----------------------------------------------------------
             // FOOTER LAST UPDATED
