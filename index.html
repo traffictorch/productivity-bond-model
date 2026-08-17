@@ -177,23 +177,24 @@
         /* ============================================================
            CSS VARIABLES – Day/Night Mode Ready
            ============================================================ */
-        :root {
-            --bg-body: #05060a;
-            --bg-card: rgba(12, 15, 25, 0.65);
-            --bg-card-hover: rgba(12, 15, 25, 0.75);
-            --bg-glass: rgba(12, 15, 25, 0.65);
-            --bg-input: rgba(255, 255, 255, 0.06);
-            --bg-metric: rgba(0, 0, 0, 0.3);
-            --bg-code: rgba(0, 0, 0, 0.5);
-            --bg-diagram: rgba(0, 0, 0, 0.2);
-            --bg-var: rgba(0, 0, 0, 0.25);
-            --bg-scenario: rgba(0, 0, 0, 0.25);
-            --bg-plot: rgba(0, 0, 0, 0.2);
-            --bg-faq: rgba(0, 0, 0, 0.15);
-            --bg-nav: rgba(5, 6, 10, 0.85);
-            --bg-hamburger: #eef2f8;
-            --bg-table-highlight: rgba(167, 139, 250, 0.12);
-            --bg-tooltip: #1a1f2e;
+:root {
+  /* Dark mode (default) */
+  --bg-body: #05060a;
+  --bg-card: rgba(12, 15, 25, 0.65);
+  --bg-card-hover: rgba(12, 15, 25, 0.75);
+  --bg-glass: rgba(12, 15, 25, 0.65);
+  --bg-input: rgba(255, 255, 255, 0.06);
+  --bg-metric: rgba(0, 0, 0, 0.3);
+  --bg-code: rgba(0, 0, 0, 0.5);
+  --bg-diagram: rgba(0, 0, 0, 0.2);
+  --bg-var: rgba(0, 0, 0, 0.25);
+  --bg-scenario: rgba(0, 0, 0, 0.25);
+  --bg-plot: rgba(0, 0, 0, 0.2);
+  --bg-faq: rgba(0, 0, 0, 0.15);
+  --bg-nav: rgba(5, 6, 10, 0.35); /* ← glass! */
+  --bg-hamburger: #eef2f8;
+  --bg-table-highlight: rgba(167, 139, 250, 0.12);
+  --bg-tooltip: #1a1f2e;
 
             --text-primary: #eef2f8;
             --text-secondary: #c7d2fe;
@@ -236,23 +237,23 @@
         }
 
         /* Light mode overrides */
-        [data-theme="light"] {
-            --bg-body: #f0f2f8;
-            --bg-card: rgba(255, 255, 255, 0.85);
-            --bg-card-hover: rgba(255, 255, 255, 0.92);
-            --bg-glass: rgba(255, 255, 255, 0.75);
-            --bg-input: rgba(0, 0, 0, 0.04);
-            --bg-metric: rgba(0, 0, 0, 0.06);
-            --bg-code: rgba(0, 0, 0, 0.05);
-            --bg-diagram: rgba(0, 0, 0, 0.04);
-            --bg-var: rgba(0, 0, 0, 0.04);
-            --bg-scenario: rgba(0, 0, 0, 0.04);
-            --bg-plot: rgba(0, 0, 0, 0.04);
-            --bg-faq: rgba(0, 0, 0, 0.04);
-            --bg-nav: rgba(255, 255, 255, 0.92);
-            --bg-hamburger: #1a1a2e;
-            --bg-table-highlight: rgba(167, 139, 250, 0.15);
-            --bg-tooltip: #f0f2f8;
+[data-theme="light"] {
+  --bg-body: #f0f2f8;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-hover: rgba(255, 255, 255, 0.92);
+  --bg-glass: rgba(255, 255, 255, 0.75);
+  --bg-input: rgba(0, 0, 0, 0.04);
+  --bg-metric: rgba(0, 0, 0, 0.06);
+  --bg-code: rgba(0, 0, 0, 0.05);
+  --bg-diagram: rgba(0, 0, 0, 0.04);
+  --bg-var: rgba(0, 0, 0, 0.04);
+  --bg-scenario: rgba(0, 0, 0, 0.04);
+  --bg-plot: rgba(0, 0, 0, 0.04);
+  --bg-faq: rgba(0, 0, 0, 0.04);
+  --bg-nav: rgba(255, 255, 255, 0.50); /* ← glass! */
+  --bg-hamburger: #1a1a2e;
+  --bg-table-highlight: rgba(167, 139, 250, 0.15);
+  --bg-tooltip: #f0f2f8;
 
             --text-primary: #0f111a;
             --text-secondary: #2d2f3e;
