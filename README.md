@@ -8,6 +8,10 @@
 
 ---
 
+##DEMO CAVEATS
+
+⚠️ Proof-of-Concept Notice: This simulation holds the debt path constant across instruments to isolate coupon effects. It does not yet implement endogenous debt feedback (higher coupons → higher borrowing). The NPI is currently simulated as a correlated proxy rather than the full geometric H-E-M-K index. Results are directional/illustrative, not actuarial.
+
 ## Overview
 
 This repository contains the simulation model that powers the book **The Infinite Debt Problem** by Ylia Callan. The model compares five sovereign debt instruments:

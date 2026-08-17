@@ -27,7 +27,7 @@ def welfare_metrics(paths, bond_type, cfg=None):
         cfg = DEFAULT_CONFIG
 
     coupons = compute_coupons(paths, bond_type, cfg)
-    pv_cost = present_value_cost(coupons, cfg)
+    pv_cost = present_value_cost(coupons, cfg, paths)
 
     expected_cost = float(np.mean(pv_cost))
     cost_vol = float(np.std(pv_cost, ddof=1))
