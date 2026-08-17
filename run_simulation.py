@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 Full simulation runner for the Productivity Bond Model.
+NOW WITH ENDOGENOUS DEBT: Each bond type gets its own debt path based on its specific coupons.
 """
 
 import argparse
@@ -11,7 +12,7 @@ import pandas as pd
 from datetime import datetime
 
 from config import ModelConfig, DEFAULT_CONFIG, get_config
-from state_generator import simulate_paths
+from state_generator import simulate_economy, compute_debt_path, EconomicPaths
 from bond_valuation import (
     compute_coupons,
     present_value_cost,
@@ -26,7 +27,7 @@ from portfolio_analysis import optimise_portfolio
 def run_simulation(cfg, verbose=True):
     if verbose:
         print("=" * 60)
-        print("Productivity Bond Model — Full Simulation")
+        print("Productivity Bond Model — Full Simulation (ENDOGENOUS DEBT)")
         print("=" * 60)
         print(f"Paths          : {cfg.n_paths:,}")
         print(f"Horizon        : {cfg.n_years} years")
@@ -34,12 +35,37 @@ def run_simulation(cfg, verbose=True):
         print(f"θ_AI (capture) : {cfg.theta_ai*100:.0f}%")
         print("=" * 60)
 
-    paths = simulate_paths(cfg)
+    # 1. Generate the macro-economy ONCE (no debt yet)
+    economy = simulate_economy(cfg)
 
+    # 2. Evaluate each bond type with its own endogenous debt path
     bond_types = list(COUPON_FUNCTIONS.keys())
     results = []
+
     for bt in bond_types:
-        res = evaluate_bond(paths, bt, cfg)
+        # Compute coupons for this bond type using the economy
+        coupons = compute_coupons(economy, bt, cfg)
+        
+        # Compute the endogenous debt path SPECIFIC to these coupons
+        debt_path = compute_debt_path(cfg, economy, coupons)
+        
+        # Build a new EconomicPaths object with this bond's specific debt
+        paths_with_debt = EconomicPaths(
+            g_y=economy.g_y,
+            g_n=economy.g_n,
+            pi=economy.pi,
+            y=economy.y,
+            r=economy.r,
+            g=economy.g,
+            d=debt_path,                      # <-- Endogenous debt!
+            ai_shock=economy.ai_shock,
+            ai_jump=economy.ai_jump,
+            g_r=economy.g_r,
+            primary_balance=economy.primary_balance,
+        )
+        
+        # Evaluate the bond using this updated paths object
+        res = evaluate_bond(paths_with_debt, bt, cfg)
         results.append(res)
 
     df_results = pd.DataFrame(results)
@@ -50,7 +76,7 @@ def run_simulation(cfg, verbose=True):
 
     if verbose:
         print("\nRunning portfolio optimisation (Productivity)...")
-    port_results = optimise_portfolio(paths, cfg, "productivity")
+    port_results = optimise_portfolio(paths_with_debt, cfg, "productivity")  # Note: uses last debt path, acceptable for demo
 
     if verbose:
         print("\nRunning sensitivity: θ_AI...")
@@ -58,7 +84,16 @@ def run_simulation(cfg, verbose=True):
     theta_results = []
     for theta in theta_grid:
         cfg_theta = get_config(theta_ai=theta)
-        res = evaluate_bond(paths, "productivity", cfg_theta)
+        # Recompute coupons and debt for each theta
+        coupons_theta = compute_coupons(economy, "productivity", cfg_theta)
+        debt_theta = compute_debt_path(cfg_theta, economy, coupons_theta)
+        paths_theta = EconomicPaths(
+            g_y=economy.g_y, g_n=economy.g_n, pi=economy.pi,
+            y=economy.y, r=economy.r, g=economy.g, d=debt_theta,
+            ai_shock=economy.ai_shock, ai_jump=economy.ai_jump,
+            g_r=economy.g_r, primary_balance=economy.primary_balance,
+        )
+        res = evaluate_bond(paths_theta, "productivity", cfg_theta)
         theta_results.append({"theta_ai": theta, **res})
     df_theta = pd.DataFrame(theta_results)
 
@@ -68,7 +103,15 @@ def run_simulation(cfg, verbose=True):
     alpha_results = []
     for alpha in alpha_grid:
         cfg_alpha = get_config(alpha_n=alpha)
-        res = evaluate_bond(paths, "productivity", cfg_alpha)
+        coupons_alpha = compute_coupons(economy, "productivity", cfg_alpha)
+        debt_alpha = compute_debt_path(cfg_alpha, economy, coupons_alpha)
+        paths_alpha = EconomicPaths(
+            g_y=economy.g_y, g_n=economy.g_n, pi=economy.pi,
+            y=economy.y, r=economy.r, g=economy.g, d=debt_alpha,
+            ai_shock=economy.ai_shock, ai_jump=economy.ai_jump,
+            g_r=economy.g_r, primary_balance=economy.primary_balance,
+        )
+        res = evaluate_bond(paths_alpha, "productivity", cfg_alpha)
         alpha_results.append({"alpha_n": alpha, **res})
     df_alpha = pd.DataFrame(alpha_results)
 
@@ -78,7 +121,15 @@ def run_simulation(cfg, verbose=True):
     cap_results = []
     for cap in cap_grid:
         cfg_cap = get_config(cap=cap)
-        res = evaluate_bond(paths, "productivity", cfg_cap)
+        coupons_cap = compute_coupons(economy, "productivity", cfg_cap)
+        debt_cap = compute_debt_path(cfg_cap, economy, coupons_cap)
+        paths_cap = EconomicPaths(
+            g_y=economy.g_y, g_n=economy.g_n, pi=economy.pi,
+            y=economy.y, r=economy.r, g=economy.g, d=debt_cap,
+            ai_shock=economy.ai_shock, ai_jump=economy.ai_jump,
+            g_r=economy.g_r, primary_balance=economy.primary_balance,
+        )
+        res = evaluate_bond(paths_cap, "productivity", cfg_cap)
         cap_results.append({"cap": cap, **res})
     df_cap = pd.DataFrame(cap_results)
 

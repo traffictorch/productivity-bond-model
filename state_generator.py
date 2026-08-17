@@ -1,12 +1,13 @@
 """
 State variable generation for the Productivity Bond Model.
+Now supports endogenous debt: debt path is computed separately for each coupon series.
 """
 
 from __future__ import annotations
 
 import numpy as np
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, Dict, Any
 
 from config import ModelConfig, DEFAULT_CONFIG
 
@@ -19,12 +20,12 @@ class EconomicPaths:
     g_n: np.ndarray
     pi: np.ndarray
     y: np.ndarray
-    r: np.ndarray
-    g: np.ndarray
-    d: np.ndarray
+    r: np.ndarray          # Revenue
+    g: np.ndarray          # Government spending
+    d: np.ndarray          # Debt (will be filled later per bond type)
     ai_shock: np.ndarray
     ai_jump: np.ndarray
-    g_r: np.ndarray
+    g_r: np.ndarray        # Revenue growth
     primary_balance: np.ndarray
 
 
@@ -45,7 +46,11 @@ def generate_ai_shocks(n_paths, n_years, lambda_ai, shape, scale, rng):
     return shock.astype(float), jump
 
 
-def simulate_paths(cfg: Optional[ModelConfig] = None) -> EconomicPaths:
+def simulate_economy(cfg: Optional[ModelConfig] = None) -> EconomicPaths:
+    """
+    Simulate the macroeconomic variables (GDP, inflation, revenue, primary balance).
+    Debt (d) is initialized to zero here - it will be overridden by compute_debt_path().
+    """
     if cfg is None:
         cfg = DEFAULT_CONFIG
 
@@ -64,7 +69,6 @@ def simulate_paths(cfg: Optional[ModelConfig] = None) -> EconomicPaths:
     y = np.zeros((n_paths, n_years))
     r = np.zeros((n_paths, n_years))
     g_spend = np.zeros((n_paths, n_years))
-    d = np.zeros((n_paths, n_years))
     g_r = np.zeros((n_paths, n_years))
     primary_balance = np.zeros((n_paths, n_years))
 
@@ -72,9 +76,7 @@ def simulate_paths(cfg: Optional[ModelConfig] = None) -> EconomicPaths:
     g_n_prev = np.full(n_paths, cfg.mu_n)
     pi_prev = np.full(n_paths, cfg.mu_pi)
     y_prev = np.full(n_paths, cfg.y0)
-    d_prev = np.full(n_paths, cfg.d0_over_y0 * cfg.y0)
     r_prev = cfg.tau * cfg.y0
-    i_neutral = cfg.conventional_coupon
 
     for t in range(n_years):
         ai_gdp = cfg.ai_gdp_mult * ai_jump[:, t]
@@ -108,7 +110,6 @@ def simulate_paths(cfg: Optional[ModelConfig] = None) -> EconomicPaths:
         g_r[:, t] = np.where(r_prev > 1e-8, (r[:, t] / r_prev) - 1.0, 0.0)
 
         # Spending: baseline + automatic stabilizer (countercyclical)
-        # In bad years (g_y < mu_y), this increases spending
         auto_stab = -0.05 * (g_y[:, t] - cfg.mu_y) * y[:, t]
         g_spend[:, t] = (
             cfg.g0_over_y0 * y[:, t] * (1.0 + 0.3 * (g_y[:, t] - cfg.mu_y))
@@ -119,16 +120,15 @@ def simulate_paths(cfg: Optional[ModelConfig] = None) -> EconomicPaths:
         # Primary balance = revenue - spending
         primary_balance[:, t] = r[:, t] - g_spend[:, t]
 
-        # Base debt path using conventional coupon (for reference only)
-        d[:, t] = d_prev * (1.0 + i_neutral) - primary_balance[:, t]
-        d[:, t] = np.maximum(d[:, t], 0.0)
-
+        # Update previous values for next iteration
         g_y_prev = g_y[:, t]
         g_n_prev = g_n[:, t]
         pi_prev = pi[:, t]
         y_prev = y[:, t]
-        d_prev = d[:, t]
         r_prev = r[:, t]
+
+    # Debt is set to zero here. It will be computed later via compute_debt_path().
+    d = np.zeros((n_paths, n_years))
 
     return EconomicPaths(
         g_y=g_y,
@@ -143,3 +143,48 @@ def simulate_paths(cfg: Optional[ModelConfig] = None) -> EconomicPaths:
         g_r=g_r,
         primary_balance=primary_balance,
     )
+
+
+def compute_debt_path(
+    cfg: ModelConfig,
+    economy: EconomicPaths,
+    coupon_series: np.ndarray
+) -> np.ndarray:
+    """
+    Roll forward the debt stock using the given coupon series (endogenous).
+    
+    Args:
+        cfg: Model configuration
+        economy: EconomicPaths containing primary_balance, etc.
+        coupon_series: Shape (n_paths, n_years) - the specific coupons for this bond type.
+    
+    Returns:
+        d: Shape (n_paths, n_years) - the debt path for this specific bond type.
+    """
+    n_paths, n_years = coupon_series.shape
+    d = np.zeros((n_paths, n_years))
+    
+    # Initial debt
+    d_prev = np.full(n_paths, cfg.d0_over_y0 * cfg.y0)
+    
+    for t in range(n_years):
+        # Use the specific coupon for this bond type at time t
+        current_coupon = coupon_series[:, t]
+        
+        # Debt rollover: d_t = d_{t-1} * (1 + coupon_t) - primary_balance_t
+        d[:, t] = d_prev * (1.0 + current_coupon) - economy.primary_balance[:, t]
+        d[:, t] = np.maximum(d[:, t], 0.0)  # Debt cannot be negative
+        
+        d_prev = d[:, t]
+    
+    return d
+
+
+# Legacy alias for backward compatibility (deprecated, but prevents crashes)
+def simulate_paths(cfg: Optional[ModelConfig] = None) -> EconomicPaths:
+    """
+    DEPRECATED: Kept for backward compatibility.
+    This now returns the economy with zero debt.
+    Use simulate_economy() + compute_debt_path() instead.
+    """
+    return simulate_economy(cfg)
