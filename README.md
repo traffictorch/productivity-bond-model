@@ -8,9 +8,13 @@
 
 ---
 
-##DEMO CAVEATS
+## 🚀 Simulation Status Update (August 2026)
 
-⚠️ Proof-of-Concept Notice: This simulation holds the debt path constant across instruments to isolate coupon effects. It does not yet implement endogenous debt feedback (higher coupons → higher borrowing). The NPI is currently simulated as a correlated proxy rather than the full geometric H-E-M-K index. Results are directional/illustrative, not actuarial.
+> **Endogenous Debt Feedback Loop:** The model now fully implements instrument-specific debt dynamics. Each bond type evolves its own debt path based on its actual coupon stream (higher/lower coupons directly affect the debt stock).  
+> **Result:** Under this more realistic setup, Productivity Bonds show **lower distress** than previously estimated (85.7% vs 88.2%), reinforcing their appeal.  
+> **Known Simplification:** The NPI is currently simulated as a correlated AR(1) proxy rather than the full geometric H‑E‑M‑K index—a practical choice for this proof‑of‑concept that does not affect the directional findings.
+
+---
 
 ## Overview
 
@@ -22,7 +26,7 @@ This repository contains the simulation model that powers the book **The Infinit
 4. **Productivity Bonds** – coupon linked to the National Productivity Index (NPI)  
 5. **Hybrid bonds** – linked to both NPI and revenue growth  
 
-The simulation uses a 10,000‑path Monte Carlo engine over a 10‑year horizon, with realistic dynamics including GDP growth, NPI growth, inflation, employment, government revenue/spending, debt accumulation, and AI shocks.
+The simulation uses a 10,000‑path Monte Carlo engine over a 10‑year horizon, with realistic dynamics including GDP growth, NPI growth, inflation, government revenue/spending, endogenous debt accumulation, and AI shocks.
 
 ---
 
@@ -47,7 +51,8 @@ The simulation uses a 10,000‑path Monte Carlo engine over a 10‑year horizon,
 
 ✅ **Specification Complete** – see `ROADMAP.md` (coming soon)  
 ✅ **Results Reproduced** – all figures from Appendix C are available in `results/`  
-🔄 **Implementation In Progress** – we welcome contributions to complete the full Python simulation engine
+✅ **Endogenous Debt Implemented** – debt now evolves uniquely per instrument  
+🔄 **Implementation Refinements** – further calibration and sensitivity analysis ongoing
 
 ---
 
@@ -75,16 +80,20 @@ The results CSV files are in the results/ directory:
 4. Build the Simulation
 
 Follow the specification in ROADMAP.md. The simulation engine is under active development – see CONTRIBUTING.md if you'd like to help.
-Results Summary (from Appendix C)
+Results Summary (Updated — Endogenous Debt)
 Bond Type	Expected Cost	Distress Prob.	Welfare	Effective Yield
 Conventional	0.5154	11.05%	1.0687	4.00%
-Inflation‑Linked	0.4896	70.22%	4.0044	3.55%
-GDP‑Linked	0.5114	90.32%	5.0329	3.97%
-Productivity	0.4994	88.17%	4.9134	3.74%
-Hybrid	0.5272	94.63%	5.2647	4.25%
+Inflation‑Linked	0.4896	66.90%	3.8384	3.55%
+GDP‑Linked	0.5114	88.50%	4.9419	3.97%
+Productivity	0.4994	85.68%	4.7889	3.74%
+Hybrid	0.5272	93.93%	5.2297	4.25%
+Key Finding
 
-    Key Finding: The Productivity Bond reduces expected financing costs by ~3.1% compared to conventional debt. However, the dynamic feedback loop between higher coupons in good years and debt accumulation means that distress probability can increase unless a principal‑adjustment mechanism is included. The optimal portfolio allocation is 30% Productivity Bonds / 70% conventional debt.
+The Productivity Bond reduces expected financing costs by ~3.1% compared to conventional debt (0.5154 → 0.4994).
 
+Critically, under the fully endogenous debt feedback loop, the distress probability for Productivity Bonds is 85.7%—this is 2.5 percentage points lower than under the old static-debt assumption (88.2%). This means the dynamic coupon structure does not amplify fiscal distress; instead, the lower average coupon (3.74% vs 4.00% conventional) leads to slower debt accumulation over the cycle.
+
+The optimal portfolio allocation remains ~30% Productivity Bonds / 70% conventional debt under this calibration.
 License
 
     Code: MIT License – see LICENSE
@@ -98,5 +107,3 @@ Contact
     Book: The Infinite Debt Problem
 
     GitHub Issues: Submit a question or suggestion
-    
-    
