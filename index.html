@@ -80,8 +80,8 @@
     "applicationCategory": "Simulation",
     "operatingSystem": "Linux, macOS, Windows",
     "softwareVersion": "1.2.1",
-    "codeRepository": "https://github.com/traffictorch/productivity-bond-model",
     "url": "https://zenodo.org/records/21970090",
+    "sameAs": "https://github.com/traffictorch/productivity-bond-model",
     "citation": "https://doi.org/10.5281/zenodo.21970090",
     "license": "https://opensource.org/licenses/MIT"
   },
@@ -1660,8 +1660,11 @@
                             Most of our <strong>financial system</strong> assumes the economy will keep growing forever. But the planet doesn't grow – so we're borrowing against a <strong>future</strong> that may not arrive. This model offers a different way: a government bond that pays investors based on how efficient the economy becomes, not how big. If we get <strong>smarter</strong> with what we have, everyone wins – including <strong>citizens</strong>, who get a share of the gains. It's a financial tool that works with reality, not against it.
                         </p>
                         <p style="font-size:1.05rem; line-height:1.7; max-width:900px; margin-top: 0;">
-                            The <strong>Productivity Bond Model</strong> proposes a sovereign debt instrument whose return is linked to measurable productivity gains (NPI) rather than fixed compounding. It addresses the fundamental contradiction between unlimited financial promises and a finite planet. The model is parameterised by <strong>θ_AI</strong> (government capture of AI gains), <strong>α_N</strong> (investor participation), and a cap/floor structure. Monte Carlo simulations (10,000 paths, 10‑year horizon) show a <strong>3.1% cost reduction</strong> vs conventional bonds, with a feedback loop that can be mitigated via principal adjustment. The model is designed for implementation by sovereign governments and includes a <strong>Productivity Dividend</strong> to share gains with citizens. This page is the canonical reference for the model, including formal definition, variable specification, simulation results, and implementation guide.
+                            The <strong>Productivity Bond Model</strong> proposes a sovereign debt instrument whose return is linked to measurable productivity gains (NPI) rather than fixed compounding. It addresses the fundamental contradiction between unlimited financial promises and a finite planet. The model is parameterised by <strong>θ_AI</strong> (government capture of AI gains), <strong>α_N</strong> (investor participation), and a cap/floor structure. Monte Carlo simulations (10,000 paths, 10‑year horizon) show a <strong>3.1% cost reduction</strong> vs conventional bonds, with a feedback loop that can be mitigated via principal adjustment. 
                         </p>
+                        <p style="font-size:1.05rem; line-height:1.7; max-width:900px; margin-top: 0;">
+                            The <strong>model</strong> is designed for implementation by sovereign governments and includes a <strong>Productivity Dividend</strong> to share gains with citizens. This page is the canonical reference for the model, including formal definition, variable specification, simulation results, and implementation guide.
+                        </p>                        
                         <div style="display:flex; flex-wrap:wrap; gap:0.5rem 1.5rem; margin-top:1rem; font-size:0.85rem; color:var(--text-muted);">
                             <span>📅 Published: 2026-08-12</span>
                             <span>📌 Version: 1.2.1</span>
@@ -2387,40 +2390,40 @@
                     </div>
                 </section>
 
-                <!-- ====== POLICY BRIEF ====== -->
-                <section id="policy-brief-section" class="container section-spacing" style="padding-top:0;">
-                    <div class="glass-card" style="border-color:rgba(16,185,129,0.15);">
-                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:1.5rem;">
-                            <h2 style="font-size:1.8rem; font-weight:700; color:var(--text-primary);">📄 Policy Brief</h2>
-                            <button id="print-policy-btn" class="btn-primary btn-success" style="padding:0.6rem 1.5rem;">
-                                ⬇ Download PDF
-                            </button>
-                        </div>
-                        <div class="policy-text" id="policy-text-content">
-                            <h3>The Problem in One Sentence</h3>
-                            <p>We have built a financial system that assumes unlimited growth on a planet with limits.</p>
+<!-- ====== POLICY BRIEF ====== -->
+<section id="policy-brief-section" class="container section-spacing" style="padding-top:0;">
+  <div class="glass-card" style="border-color:rgba(16,185,129,0.15);">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:1.5rem;">
+      <h2 style="font-size:1.8rem; font-weight:700; color:var(--text-primary);">📄 Policy Brief</h2>
+      <button id="print-policy-btn" class="btn-primary btn-success" style="padding:0.6rem 1.5rem;">
+        ⬇ Download PDF
+      </button>
+    </div>
+    <div class="policy-text" id="policy-text-content" style="max-height: none; overflow-y: visible; height: auto; padding-right: 0;">
+      <h3>The Problem in One Sentence</h3>
+      <p>We have built a financial system that assumes unlimited growth on a planet with limits.</p>
 
-                            <h3>The Contradiction</h3>
-                            <p><strong>Global debt</strong> has grown from ~$50 trillion in 1980 to over <strong>$300 trillion</strong> today – an almost perfect exponential curve. <strong>Global resource extraction</strong> is flattening or declining in per‑capita terms. The gap between these two curves is <strong>the infinite debt problem</strong>.</p>
+      <h3>The Contradiction</h3>
+      <p><strong>Global debt</strong> has grown from ~$50 trillion in 1980 to over <strong>$300 trillion</strong> today – an almost perfect exponential curve. <strong>Global resource extraction</strong> is flattening or declining in per‑capita terms. The gap between these two curves is <strong>the infinite debt problem</strong>.</p>
 
-                            <h3>The Solution: Productivity Bonds</h3>
-                            <div class="formula">c(t) = (1 + π) × (1 + min[max(α_N × g_NPI, 0%), C]) – 1</div>
-                            <ul>
-                                <li><strong>Inflation protection</strong> – CPI‑linked</li>
-                                <li><strong>Productivity participation</strong> – α_N × NPI growth</li>
-                                <li><strong>Downside protection</strong> – 0% real floor</li>
-                                <li><strong>Upside limit</strong> – C (cap)</li>
-                            </ul>
+      <h3>The Solution: Productivity Bonds</h3>
+      <div class="formula">c(t) = (1 + π) × (1 + min[max(α_N × g_NPI, 0%), C]) – 1</div>
+      <ul>
+        <li><strong>Inflation protection</strong> – CPI‑linked</li>
+        <li><strong>Productivity participation</strong> – α_N × NPI growth</li>
+        <li><strong>Downside protection</strong> – 0% real floor</li>
+        <li><strong>Upside limit</strong> – C (cap)</li>
+      </ul>
 
-                            <h3>Key Results</h3>
-                            <ul>
-                                <li><strong>Cost Saving:</strong> −3.1% vs conventional debt</li>
-                                <li><strong>Optimal Portfolio:</strong> 30% Productivity Bonds</li>
-                                <li><strong>Critical Variable:</strong> θ_AI > 0.30</li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
+      <h3>Key Results</h3>
+      <ul>
+        <li><strong>Cost Saving:</strong> −3.1% vs conventional debt</li>
+        <li><strong>Optimal Portfolio:</strong> 30% Productivity Bonds</li>
+        <li><strong>Critical Variable:</strong> θ_AI > 0.30</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
                 <!-- ====== LEARN CTA SECTION ====== -->
                 <section id="learn" class="container section-spacing" style="padding-top:0;">
@@ -2454,9 +2457,9 @@
       <a class="a2a_button_facebook"></a>
       <a class="a2a_button_mastodon"></a>
       <a class="a2a_button_email"></a>
-      <a class="a2a_button_copy_link"></a>
       <a class="a2a_button_reddit"></a>
       <a class="a2a_button_pinterest"></a>
+      <a class="a2a_button_copy_link"></a>
     </div>
   </div>
 </div>
