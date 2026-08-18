@@ -1644,28 +1644,47 @@
             }
         }
 
-        /* ============================================================
-   WHO WINS CARDS – 1 COLUMN ON MOBILE
+/* ============================================================
+   MOBILE OVERRIDES for #problem-visualized
    ============================================================ */
 @media (max-width: 640px) {
-  #problem-visualized .glass-card > div:last-of-type > div {
+  /* 1. Old Way / New Way – using class (recommended) */
+  #problem-visualized .old-new-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* 2. Old Way / New Way – fallback for inline style (if class missing) */
+  #problem-visualized .glass-card > div[style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* 3. Who Wins 4‑column grid – using class (recommended) */
+  #problem-visualized .who-wins-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* 4. Who Wins – fallback for inline style (if class missing) */
+  #problem-visualized .glass-card > div > div[style*="grid-template-columns:repeat(4,1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* 5. Extra safety: any direct child grid of the glass-card that has two columns */
+  #problem-visualized .glass-card > div[style*="grid-template-columns:"] {
     grid-template-columns: 1fr !important;
   }
 }
 
 /* ============================================================
-   MOBILE OVERRIDES for Infinite Debt Problem section
+   MOBILE HOME LINK – hidden on desktop, shown in mobile nav
    ============================================================ */
-@media (max-width: 640px) {
-/* Old Way / New Way – match inline style exactly (no spaces) */
-#problem-visualized .glass-card > div[style*="grid-template-columns:1fr 1fr"] {
-  grid-template-columns: 1fr !important;
+.mobile-home {
+    display: none;
 }
 
-/* Who Wins 4‑column cards – match inline style exactly (no spaces) */
-#problem-visualized .glass-card > div > div[style*="grid-template-columns:repeat(4,1fr)"] {
-  grid-template-columns: 1fr !important;
-}
+@media (max-width: 768px) {
+    .mobile-home {
+        display: block;
+    }
 }
 
 /* ---- SHARE Buttons Top ---- */
@@ -1710,6 +1729,7 @@
             </button>
         </div>
         <ul class="nav-links" id="navLinks">
+            <li class="mobile-home"><a href="#hero">🏠 Home</a></li>
             <li><a href="#abstract">Abstract</a></li>
             <li><a href="#model-definition">Model</a></li>
             <li><a href="#mechanism">Mechanism</a></li>
@@ -1747,6 +1767,7 @@
             <div class="main-content">
 
                 <!-- ====== HERO ====== -->
+				<section id="hero" class="container hero" style="min-height:80vh; display:flex; align-items:center; padding:4rem 6px 2rem;">
                 <section class="container hero" style="min-height:80vh; display:flex; align-items:center; padding:4rem 6px 2rem;">
                     <div>
                         <span class="badge-glow">📘 Canonical Reference</span>
@@ -1759,12 +1780,12 @@
     <a href="#simulator" class="btn-primary">🚀 Run Live Simulation</a>
     <a href="#citation" class="btn-secondary">📖 Cite This Model</a>
     <button class="share-btn" id="nativeShareBtn">📤 Share (Native)</button>
-    <a class="a2a_dd btn-secondary" 
-       href="https://www.addtoany.com/share" 
-       data-a2a-url="https://traffictorch.github.io/productivity-bond-model/" 
-       data-a2a-title="The Productivity Bond Model">
-       📤 Share (Social)
-    </a>
+<a class="btn-secondary" 
+   href="#"
+   onclick="event.preventDefault(); if (window.a2a && window.a2a.init) { window.a2a.init('page'); } else { window.open('https://www.addtoany.com/share?linkurl=https://traffictorch.github.io/productivity-bond-model/&linkname=The%20Productivity%20Bond%20Model', '_blank'); }"
+   style="display:inline-block; padding:0.8rem 2.2rem; text-decoration:none; text-align:center; background:var(--btn-secondary-bg); border:1px solid var(--btn-secondary-border); border-radius:60px; color:var(--btn-secondary-text); font-weight:500; transition:0.2s; cursor:pointer;">
+   📤 Share (Social)
+</a>
 </div>
 <script defer src="https://static.addtoany.com/menu/page.js"></script>
                         </div>
@@ -1797,35 +1818,35 @@
                 
 <!-- ====== THE INFINITE DEBT PROBLEM VISUALIZED ====== -->
 <section id="problem-visualized" class="container section-spacing-sm" style="padding-top:0;">
-  <div class="glass-card" style="border-color:rgba(79,70,229,0.2);">
+  <div class="glass-card" style="border-color:rgba(79,70,229,0.2); overflow:hidden;"> <!-- FIX: prevent overflow -->
     <span class="badge-glow" style="margin-bottom:0.8rem;">The Problem</span>
     <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">📉 The Infinite Debt Problem</h2>
-<p style="color:var(--text-secondary); margin-bottom:1.5rem; max-width:800px;">
-  The gap between financial promises and physical reality is the defining challenge of our time.
-  Explore the divergence below – then see how the Productivity Bond bridges the gap.
-</p>
+    <p style="color:var(--text-secondary); margin-bottom:1.5rem; max-width:800px;">
+      The gap between financial promises and physical reality is the defining challenge of our time.
+      Explore the divergence below – then see how the Productivity Bond bridges the gap.
+    </p>
 
-<!-- CHART EXPLANATION -->
-<p style="color:var(--text-muted); font-size:0.9rem; margin-top:-0.5rem; margin-bottom:1.5rem; max-width:800px; display:flex; flex-wrap:wrap; gap:0.5rem 1.2rem;">
-  <span>
-    <span style="display:inline-block; background:#4f46e5; width:14px; height:14px; border-radius:4px; vertical-align:middle; margin-right:6px;"></span>
-    Financial obligations (debt) rise steeply – compound interest fuels exponential growth.
-  </span>
-  <span>
-    <span style="display:inline-block; background:#34d399; width:14px; height:14px; border-radius:4px; vertical-align:middle; margin-right:6px;"></span>
-    Resource extraction flattens as we hit planetary limits.
-  </span>
-  <span style="font-weight:600; color:var(--text-primary);">
-    The growing gap between them is the Infinite Debt Problem.
-  </span>
-</p>
+    <!-- CHART EXPLANATION -->
+    <p style="color:var(--text-muted); font-size:0.9rem; margin-top:-0.5rem; margin-bottom:1.5rem; max-width:800px; display:flex; flex-wrap:wrap; gap:0.5rem 1.2rem;">
+      <span>
+        <span style="display:inline-block; background:#4f46e5; width:14px; height:14px; border-radius:4px; vertical-align:middle; margin-right:6px;"></span>
+        Financial obligations (debt) rise steeply – compound interest fuels exponential growth.
+      </span>
+      <span>
+        <span style="display:inline-block; background:#34d399; width:14px; height:14px; border-radius:4px; vertical-align:middle; margin-right:6px;"></span>
+        Resource extraction flattens as we hit planetary limits.
+      </span>
+      <span style="font-weight:600; color:var(--text-primary);">
+        The growing gap between them is the Infinite Debt Problem.
+      </span>
+    </p>
 
-<!-- ===== INTERACTIVE CHART ===== -->
-<div class="plot-container" style="margin:1rem 0 0.5rem;">
-  <div id="chart-divergence" style="height:380px; width:100%;"></div>
-</div>
+    <!-- INTERACTIVE CHART -->
+    <div class="plot-container" style="margin:1rem 0 0.5rem;">
+      <div id="chart-divergence" style="height:380px; width:100%;"></div>
+    </div>
 
-    <!-- ===== DIVERGENCE CALLOUT ===== -->
+    <!-- DIVERGENCE CALLOUT -->
     <div style="background:var(--bg-metric); border-radius:1.2rem; padding:1.2rem 1.8rem; margin:0.5rem 0 1.5rem; border-left:4px solid #f87171; display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
       <span style="font-size:2rem;">⚠️</span>
       <div>
@@ -1837,114 +1858,113 @@
     </div>
 
     <!-- ===== OLD WAY VS NEW WAY ===== -->
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin:1.5rem 0;">
+    <div class="old-new-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin:1.5rem 0; max-width:100%; overflow:hidden;"> <!-- FIX: added class + overflow -->
       
-<!-- OLD WAY -->
-<div style="background:var(--bg-var); border-radius:1.2rem; padding:1.5rem; border:1px solid rgba(248,113,113,0.2);">
-  <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.3rem;">
-    <span style="font-size:1.5rem;">🔄</span>
-    <h3 style="font-size:1.1rem; font-weight:700; margin:0; color:#f87171;">The Old Way</h3>
-  </div>
-  <!-- Tag moved below heading -->
-  <div style="font-size:0.7rem; background:rgba(248,113,113,0.15); padding:0.2rem 0.8rem; border-radius:40px; color:#f87171; display:inline-block; margin-bottom:0.8rem;">
-    Grow forever or break
-  </div>
-  <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:0.5rem;">
-    <li style="display:flex; align-items:center; gap:0.6rem; color:var(--text-secondary); font-size:0.9rem;">
-      <span>💸</span> Compound interest on debt – grows forever
-    </li>
-    <li style="display:flex; align-items:center; gap:0.6rem; color:var(--text-secondary); font-size:0.9rem;">
-      <span>📈</span> GDP growth is the only metric that matters
-    </li>
-    <li style="display:flex; align-items:center; gap:0.6rem; color:var(--text-secondary); font-size:0.9rem;">
-      <span>🏦</span> Debt stock expands exponentially
-    </li>
-    <li style="display:flex; align-items:center; gap:0.6rem; color:var(--text-secondary); font-size:0.9rem;">
-      <span>🌍</span> Planet pays the price
-    </li>
-    <li style="display:flex; align-items:center; gap:0.6rem; color:var(--text-secondary); font-size:0.9rem;">
-      <span>❌</span> No one wins in the long run
-    </li>
-  </ul>
-</div>
+      <!-- OLD WAY -->
+      <div style="background:var(--bg-var); border-radius:1.2rem; padding:1.5rem; border:1px solid rgba(248,113,113,0.2);">
+        <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.3rem;">
+          <span style="font-size:1.5rem;">🔄</span>
+          <h3 style="font-size:1.1rem; font-weight:700; margin:0; color:#f87171;">The Old Way</h3>
+        </div>
+        <div style="font-size:0.7rem; background:rgba(248,113,113,0.15); padding:0.2rem 0.8rem; border-radius:40px; color:#f87171; display:inline-block; margin-bottom:0.8rem;">
+          Grow forever or break
+        </div>
+        <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:0.5rem;">
+          <li style="display:flex; align-items:center; gap:0.6rem; color:var(--text-secondary); font-size:0.9rem;">
+            <span>💸</span> Compound interest on debt – grows forever
+          </li>
+          <li style="display:flex; align-items:center; gap:0.6rem; color:var(--text-secondary); font-size:0.9rem;">
+            <span>📈</span> GDP growth is the only metric that matters
+          </li>
+          <li style="display:flex; align-items:center; gap:0.6rem; color:var(--text-secondary); font-size:0.9rem;">
+            <span>🏦</span> Debt stock expands exponentially
+          </li>
+          <li style="display:flex; align-items:center; gap:0.6rem; color:var(--text-secondary); font-size:0.9rem;">
+            <span>🌍</span> Planet pays the price
+          </li>
+          <li style="display:flex; align-items:center; gap:0.6rem; color:var(--text-secondary); font-size:0.9rem;">
+            <span>❌</span> No one wins in the long run
+          </li>
+        </ul>
+      </div>
 
-<!-- NEW WAY -->
-<div style="background:var(--bg-var); border-radius:1.2rem; padding:1.5rem; border:1px solid rgba(52,211,153,0.2);">
-  <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.3rem;">
-    <span style="font-size:1.5rem;">⚡</span>
-    <h3 style="font-size:1.1rem; font-weight:700; margin:0; color:#34d399;">The New Way</h3>
-  </div>
-  <!-- Tag moved below heading -->
-  <div style="font-size:0.7rem; background:rgba(52,211,153,0.15); padding:0.2rem 0.8rem; border-radius:40px; color:#34d399; display:inline-block; margin-bottom:0.8rem;">
-    Get more from what we have
-  </div>
-  <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:0.5rem;">
-    <li style="display:flex; align-items:center; gap:0.6rem; color:var(--text-secondary); font-size:0.9rem;">
-      <span>📊</span> Productivity-linked bonds (NPI)
-    </li>
-    <li style="display:flex; align-items:center; gap:0.6rem; color:var(--text-secondary); font-size:0.9rem;">
-      <span>🔒</span> Capped returns + floor protection
-    </li>
-    <li style="display:flex; align-items:center; gap:0.6rem; color:var(--text-secondary); font-size:0.9rem;">
-      <span>💎</span> Shared gains – Productivity Dividend
-    </li>
-    <li style="display:flex; align-items:center; gap:0.6rem; color:var(--text-secondary); font-size:0.9rem;">
-      <span>🌱</span> Works within planetary boundaries
-    </li>
-  </ul>
-</div>
-
-<!-- ===== WHO WINS ===== -->
-<div style="margin-top:1rem;">
-  <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:0.8rem; color:var(--text-primary); text-align:center;">
-    🏆 Who Wins with the Productivity Bond?
-  </h3>
-  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1rem;">
-    
-    <!-- Investor -->
-    <div style="background:var(--bg-metric); border-radius:1rem; padding:1.2rem 1rem; text-align:center; border:1px solid var(--border-divider);">
-      <div style="font-size:2.2rem; margin-bottom:0.2rem;">📈</div>
-      <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">Investors</div>
-      <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">
-        Fair, capped returns<br>
-        <span style="color:#34d399;">0% real floor</span> protection
+      <!-- NEW WAY -->
+      <div style="background:var(--bg-var); border-radius:1.2rem; padding:1.5rem; border:1px solid rgba(52,211,153,0.2);">
+        <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.3rem;">
+          <span style="font-size:1.5rem;">⚡</span>
+          <h3 style="font-size:1.1rem; font-weight:700; margin:0; color:#34d399;">The New Way</h3>
+        </div>
+        <div style="font-size:0.7rem; background:rgba(52,211,153,0.15); padding:0.2rem 0.8rem; border-radius:40px; color:#34d399; display:inline-block; margin-bottom:0.8rem;">
+          Get more from what we have
+        </div>
+        <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:0.5rem;">
+          <li style="display:flex; align-items:center; gap:0.6rem; color:var(--text-secondary); font-size:0.9rem;">
+            <span>📊</span> Productivity-linked bonds (NPI)
+          </li>
+          <li style="display:flex; align-items:center; gap:0.6rem; color:var(--text-secondary); font-size:0.9rem;">
+            <span>🔒</span> Capped returns + floor protection
+          </li>
+          <li style="display:flex; align-items:center; gap:0.6rem; color:var(--text-secondary); font-size:0.9rem;">
+            <span>💎</span> Shared gains – Productivity Dividend
+          </li>
+          <li style="display:flex; align-items:center; gap:0.6rem; color:var(--text-secondary); font-size:0.9rem;">
+            <span>🌱</span> Works within planetary boundaries
+          </li>
+        </ul>
       </div>
     </div>
 
-    <!-- Government -->
-    <div style="background:var(--bg-metric); border-radius:1rem; padding:1.2rem 1rem; text-align:center; border:1px solid var(--border-divider);">
-      <div style="font-size:2.2rem; margin-bottom:0.2rem;">🏛️</div>
-      <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">Government</div>
-      <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">
-        <span style="color:#34d399;">−3.1%</span> lower costs<br>
-        Sustainable debt service
+    <!-- ===== WHO WINS ===== -->
+    <div style="margin-top:1rem; max-width:100%; overflow:hidden;"> <!-- FIX: added overflow -->
+      <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:0.8rem; color:var(--text-primary); text-align:center;">
+        🏆 Who Wins with the Productivity Bond?
+      </h3>
+      <div class="who-wins-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:1rem;"> <!-- FIX: added class -->
+        
+        <!-- Investor -->
+        <div style="background:var(--bg-metric); border-radius:1rem; padding:1.2rem 1rem; text-align:center; border:1px solid var(--border-divider);">
+          <div style="font-size:2.2rem; margin-bottom:0.2rem;">📈</div>
+          <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">Investors</div>
+          <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">
+            Fair, capped returns<br>
+            <span style="color:#34d399;">0% real floor</span> protection
+          </div>
+        </div>
+
+        <!-- Government -->
+        <div style="background:var(--bg-metric); border-radius:1rem; padding:1.2rem 1rem; text-align:center; border:1px solid var(--border-divider);">
+          <div style="font-size:2.2rem; margin-bottom:0.2rem;">🏛️</div>
+          <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">Government</div>
+          <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">
+            <span style="color:#34d399;">−3.1%</span> lower costs<br>
+            Sustainable debt service
+          </div>
+        </div>
+
+        <!-- Citizens -->
+        <div style="background:var(--bg-metric); border-radius:1rem; padding:1.2rem 1rem; text-align:center; border:1px solid var(--border-divider);">
+          <div style="font-size:2.2rem; margin-bottom:0.2rem;">👨‍👩‍👧‍👦</div>
+          <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">Citizens</div>
+          <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">
+            Productivity Dividend<br>
+            <span style="color:#34d399;">50%</span> of gains shared
+          </div>
+        </div>
+
+        <!-- Planet -->
+        <div style="background:var(--bg-metric); border-radius:1rem; padding:1.2rem 1rem; text-align:center; border:1px solid var(--border-divider);">
+          <div style="font-size:2.2rem; margin-bottom:0.2rem;">🌍</div>
+          <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">Planet</div>
+          <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">
+            No demand for<br>
+            <span style="color:#34d399;">infinite growth</span>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <!-- Citizens -->
-    <div style="background:var(--bg-metric); border-radius:1rem; padding:1.2rem 1rem; text-align:center; border:1px solid var(--border-divider);">
-      <div style="font-size:2.2rem; margin-bottom:0.2rem;">👨‍👩‍👧‍👦</div>
-      <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">Citizens</div>
-      <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">
-        Productivity Dividend<br>
-        <span style="color:#34d399;">50%</span> of gains shared
-      </div>
-    </div>
-
-    <!-- Planet -->
-    <div style="background:var(--bg-metric); border-radius:1rem; padding:1.2rem 1rem; text-align:center; border:1px solid var(--border-divider);">
-      <div style="font-size:2.2rem; margin-bottom:0.2rem;">🌍</div>
-      <div style="font-weight:700; font-size:0.95rem; color:var(--text-primary);">Planet</div>
-      <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">
-        No demand for<br>
-        <span style="color:#34d399;">infinite growth</span>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-    <!-- ===== HAPPINESS CURVE CALLOUT ===== -->
+    <!-- HAPPINESS CURVE CALLOUT -->
     <div style="margin-top:1.5rem; padding:1rem 1.5rem; background:var(--bg-diagram); border-radius:1rem; border:1px dashed var(--border-divider); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;">
       <div style="display:flex; align-items:center; gap:0.8rem;">
         <span style="font-size:1.5rem;">😌</span>
@@ -2777,7 +2797,7 @@
             <div class="step">
                 <span>1.</span>
                 <span class="step-icon">⬆️</span>
-                <span>Tap the <strong>Share</strong> button at the bottom.</span>
+                <span>In <strong>Safari</strong> tap the <strong>Share</strong> button at the bottom.</span>
             </div>
             <div class="step">
                 <span>2.</span>
