@@ -16,6 +16,10 @@
 
 ---
 
+🚧 Proof of Concept - Peer Refinement Encouraged
+
+---
+
 ## Overview
 
 This repository contains the simulation model that powers the book **The Infinite Debt Problem** by Ylia Callan. The model compares five sovereign debt instruments:
