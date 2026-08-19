@@ -1797,7 +1797,7 @@
                     <div class="glass-card">
                         <h2 class="badge-glow" style="margin-bottom:0.8rem;">Abstract</h2>                
 						<p style="font-size:1.05rem; line-height:1.7; max-width:900px; margin-bottom: 1.5rem;">
- 						 <strong>With Universal Basic Income (UBI) on the horizon</strong> as an inevitable dividend of the coming AI economy. We’ve built a financial system that needs the economy to grow forever — but the planet doesn’t work that way. Global debt has exploded while resources stay finite, and ordinary people eventually pay the price through higher taxes, service cuts, or inflation.
+ 						 With <strong>Universal Basic Income (UBI)</strong> on the horizon as an inevitable dividend of the coming AI economy. We’ve built a financial system that needs the economy to grow forever — but the planet doesn’t work that way. Global debt has exploded while resources stay finite, and ordinary people eventually pay the price through higher taxes, service cuts, or inflation.
 						</p>
 						<p style="font-size:1.05rem; line-height:1.7; max-width:900px; margin-bottom: 1.5rem;">
  						 The Productivity Bond Model offers a better way: a government bond that pays investors when we get <strong>smarter</strong> with what we already have, not just bigger. When efficiency rises, a share of the gains goes to every citizen as a <strong>Productivity Dividend</strong> — your share of the prosperity you helped create. It’s a financial tool that works with reality, not against it.
@@ -2202,53 +2202,53 @@
                         </div>
                         <p style="color:var(--text-secondary); margin-bottom:1.5rem;">Move the sliders below to simulate the economy. θ_AI, α_N, and Cap control how the bond behaves. The graph will update to show you the expected financial cost and distress risk.</p>
 
-                        <div class="sim-grid">
-                            <div>
-                                <div class="slider-group">
-                                    <label>
-                                        <span>🤖 θ_AI <span style="font-weight:400; color:var(--text-muted);">(Gov. capture of AI gains)</span></span>
-                                        <span class="value-badge" id="theta-label">0.30</span>
-                                    </label>
-                                    <input type="range" id="theta-slider" min="0.05" max="0.55" step="0.01" value="0.30" aria-label="Government capture of AI gains (theta AI)">
-                                    <div style="display:flex; justify-content:space-between; font-size:0.65rem; color:var(--text-muted); padding:0 0.2rem;">
-                                        <span>Low (5%)</span>
-                                        <span>Critical Threshold (30%)</span>
-                                        <span>High (55%)</span>
-                                    </div>
-                                </div>
+<div class="sim-grid">
+    <div>
+        <div class="slider-group">
+            <label>
+                <span>🤖 θ_AI <span style="font-weight:400; color:var(--text-muted);">(Gov. capture of AI gains)</span></span>
+                <span class="value-badge" id="theta-label">0.15</span>
+            </label>
+            <input type="range" id="theta-slider" min="0.05" max="0.55" step="0.01" value="0.15" aria-label="Government capture of AI gains (theta AI)">
+            <div style="display:flex; justify-content:space-between; font-size:0.65rem; color:var(--text-muted); padding:0 0.2rem;">
+                <span>Low (5%)</span>
+                <span>Critical Threshold (30%)</span>
+                <span>High (55%)</span>
+            </div>
+        </div>
 
-                                <div class="slider-group">
-                                    <label>
-                                        <span>📊 α_N <span style="font-weight:400; color:var(--text-muted);">(Investor participation)</span></span>
-                                        <span class="value-badge" id="alpha-label">0.70</span>
-                                    </label>
-                                    <input type="range" id="alpha-slider" min="0.30" max="0.90" step="0.01" value="0.70" aria-label="Investor participation (alpha N)">
-                                </div>
+        <div class="slider-group">
+            <label>
+                <span>📊 α_N <span style="font-weight:400; color:var(--text-muted);">(Investor participation)</span></span>
+                <span class="value-badge" id="alpha-label">0.55</span>
+            </label>
+            <input type="range" id="alpha-slider" min="0.30" max="0.90" step="0.01" value="0.55" aria-label="Investor participation (alpha N)">
+        </div>
 
-                                <div class="slider-group">
-                                    <label>
-                                        <span>📈 Cap <span style="font-weight:400; color:var(--text-muted);">(Max real return)</span></span>
-                                        <span class="value-badge" id="cap-label">4.0%</span>
-                                    </label>
-                                    <input type="range" id="cap-slider" min="0.02" max="0.06" step="0.005" value="0.04" aria-label="Real return cap">
-                                </div>
+        <div class="slider-group">
+            <label>
+                <span>📈 Cap <span style="font-weight:400; color:var(--text-muted);">(Max real return)</span></span>
+                <span class="value-badge" id="cap-label">2.0%</span>
+            </label>
+            <input type="range" id="cap-slider" min="0.02" max="0.06" step="0.005" value="0.02" aria-label="Real return cap">
+        </div>
 
-                                <button id="run-btn" class="btn-primary" style="width:100%; padding:1rem; font-size:1.1rem; margin-top:0.5rem;">
-                                    ▶ Run Simulation
-                                </button>
+        <button id="run-btn" class="btn-primary" style="width:100%; padding:1rem; font-size:1.1rem; margin-top:0.5rem;">
+            ▶ Run Simulation
+        </button>
 
-                                <button id="download-csv-btn" class="btn-secondary" style="width:100%; margin-top:0.5rem; padding:0.6rem; border-color:rgba(52,211,153,0.3);">
-                                    ⬇ Download Results (CSV)
-                                </button>
+        <button id="download-csv-btn" class="btn-secondary" style="width:100%; margin-top:0.5rem; padding:0.6rem; border-color:rgba(52,211,153,0.3);">
+            ⬇ Download Results (CSV)
+        </button>
 
-                                <div class="progress-wrap" style="margin-top:1rem;">
-                                    <div class="progress-bar" id="progress-bar" style="width:0%;"></div>
-                                </div>
-                                <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:var(--text-muted);">
-                                    <span id="status-text">Ready</span>
-                                    <span id="path-counter">0 / 10000</span>
-                                </div>
-                            </div>
+        <div class="progress-wrap" style="margin-top:1rem;">
+            <div class="progress-bar" id="progress-bar" style="width:0%;"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:var(--text-muted);">
+            <span id="status-text">Ready</span>
+            <span id="path-counter">0 / 10000</span>
+        </div>
+    </div> 
 
                             <div>
                                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem;">
