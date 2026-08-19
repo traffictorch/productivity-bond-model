@@ -2398,51 +2398,99 @@
                     </div>
                 </section>
 
-                <!-- ====== RESULTS TABLES ====== -->
-                <section id="results-data" class="container section-spacing" style="padding-top:0;">
-                    <div class="glass-card">
-                        <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">📊 Simulation Results</h2>
-                        <p style="color:var(--text-secondary); margin-bottom:1.5rem;">Here are the hard numbers. We compare our Productivity Bond against other types of bonds. A lower 'Cost' means it's cheaper for the government, and 'Distress' measures the chance of financial trouble.</p>
+<!-- ====== RESULTS TABLES ====== -->
+<section id="results-data" class="container section-spacing" style="padding-top:0;">
+    <div class="glass-card">
+        <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">📊 Simulation Results</h2>
+        <p style="color:var(--text-secondary); margin-bottom:1.5rem;">
+            Here are the hard numbers. We compare our Productivity Bond against other types of bonds. 
+            <strong style="color:var(--text-primary);">A lower 'Cost' and 'Welfare' are better for the government</strong> 
+            (Welfare minimizes cost, volatility, and distress risk). 'Distress' measures the chance of financial trouble.
+        </p>
+        
+        <!-- IMPORTANT CAVEAT BOX -->
+        <div style="background: rgba(255, 193, 7, 0.1); border-left: 4px solid #ffc107; padding: 0.75rem 1rem; margin-bottom: 1.5rem; border-radius: 4px; font-size: 0.9rem; color: var(--text-secondary);">
+            <strong style="color:var(--text-primary);">📌 Note on the 88.17% Distress figure:</strong> 
+            This reflects the <em>raw</em> variable-coupon bond without the Principal-Adjustment Mechanism (PAM). 
+            The book explicitly flags this feedback loop as a design problem to be solved in full implementation 
+            (see Chapter 4.6). The simulation demonstrates the issue so the safety rails can be refined.
+        </div>
 
-                        <h3 style="font-size:1.1rem; font-weight:600; margin:1.5rem 0 0.5rem; color:var(--text-primary);">Bond Type Comparison</h3>
-                        <div class="table-wrap">
-                            <table class="data-table">
-                                <thead><tr><th>Bond Type</th><th>Expected Cost</th><th>Distress Prob.</th><th>Welfare</th><th>Effective Yield</th></tr></thead>
-                                <tbody>
-                                    <tr><td>Conventional</td><td>0.5154</td><td>11.05%</td><td>1.0687</td><td>4.00%</td></tr>
-                                    <tr><td>Inflation‑Linked</td><td>0.4896</td><td>70.22%</td><td>4.0044</td><td>3.55%</td></tr>
-                                    <tr><td>GDP‑Linked</td><td>0.5114</td><td>90.32%</td><td>5.0329</td><td>3.97%</td></tr>
-                                    <tr class="highlight-row"><td><strong>Productivity</strong></td><td><strong>0.4994</strong></td><td><strong>88.17%</strong></td><td><strong>4.9134</strong></td><td><strong>3.74%</strong></td></tr>
-                                    <tr><td>Hybrid</td><td>0.5272</td><td>94.63%</td><td>5.2647</td><td>4.25%</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
+        <h3 style="font-size:1.1rem; font-weight:600; margin:1.5rem 0 0.5rem; color:var(--text-primary);">Bond Type Comparison</h3>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">Bond Type</th>
+                        <th style="text-align: right;">Expected Cost</th>
+                        <th style="text-align: right;">Distress Prob.</th>
+                        <th style="text-align: right;">Welfare <span style="font-weight:400; font-size:0.7rem;">(lower is better)</span></th>
+                        <th style="text-align: right;">Effective Yield</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td style="text-align: left;">Conventional</td><td style="text-align: right;">0.5154</td><td style="text-align: right;">11.05%</td><td style="text-align: right;">1.0687</td><td style="text-align: right;">4.00%</td></tr>
+                    <tr><td style="text-align: left;">Inflation‑Linked</td><td style="text-align: right;">0.4896</td><td style="text-align: right;">70.22%</td><td style="text-align: right;">4.0044</td><td style="text-align: right;">3.55%</td></tr>
+                    <tr><td style="text-align: left;">GDP‑Linked</td><td style="text-align: right;">0.5114</td><td style="text-align: right;">90.32%</td><td style="text-align: right;">5.0329</td><td style="text-align: right;">3.97%</td></tr>
+                    <tr class="highlight-row">
+                        <td style="text-align: left;"><strong>Productivity</strong></td>
+                        <td style="text-align: right;"><strong>0.4994</strong></td>
+                        <td style="text-align: right;"><strong>88.17%</strong></td>
+                        <td style="text-align: right;"><strong>4.9134</strong></td>
+                        <td style="text-align: right;"><strong>3.74%</strong></td>
+                    </tr>
+                    <tr><td style="text-align: left;">Hybrid</td><td style="text-align: right;">0.5272</td><td style="text-align: right;">94.63%</td><td style="text-align: right;">5.2647</td><td style="text-align: right;">4.25%</td></tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Footnote for Welfare definition -->
+        <div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.3rem; text-align:right; border-top:1px solid var(--border-color); padding-top:0.3rem;">
+            † Welfare = E[Cost] + κ·Var[Cost] + η·P(Distress) — lower is better.
+        </div>
 
-                        <div style="margin-top:2rem;">
-                            <div class="accordion-toggle" onclick="toggleAccordion(this)">
-                                <span style="font-weight:600; font-size:1rem; color:var(--text-primary);">📈 Portfolio Optimisation</span>
-                                <span class="arrow">▼</span>
-                            </div>
-                            <div class="accordion-content">
-                                <div class="table-wrap">
-                                    <table class="data-table">
-                                        <thead><tr><th>Share</th><th>Expected Cost</th><th>Distress Prob.</th><th>Welfare</th></tr></thead>
-                                        <tbody>
-                                            <tr><td>0% (Conv. only)</td><td>0.5154</td><td>11.05%</td><td>1.0687</td></tr>
-                                            <tr><td>10%</td><td>0.5139</td><td>19.20%</td><td>1.437</td></tr>
-                                            <tr><td>20%</td><td>0.5112</td><td>35.40%</td><td>2.320</td></tr>
-                                            <tr class="highlight-row"><td><strong>30%</strong></td><td><strong>0.5088</strong></td><td><strong>52.10%</strong></td><td><strong>3.451</strong></td></tr>
-                                            <tr><td>40%</td><td>0.5061</td><td>67.80%</td><td>4.501</td></tr>
-                                            <tr><td>50%</td><td>0.5035</td><td>76.50%</td><td>5.112</td></tr>
-                                            <tr><td>100%</td><td>0.4994</td><td>88.17%</td><td>4.9134</td></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.3rem;">Optimal portfolio: <strong>30%</strong> Productivity Bonds</div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+        <div style="margin-top:2rem;">
+            <div class="accordion-toggle" onclick="toggleAccordion(this)">
+                <span style="font-weight:600; font-size:1rem; color:var(--text-primary);">📈 Portfolio Optimisation</span>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="table-wrap">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th style="text-align: left;">Share</th>
+                                <th style="text-align: right;">Expected Cost</th>
+                                <th style="text-align: right;">Distress Prob.</th>
+                                <th style="text-align: right;">Welfare <span style="font-weight:400; font-size:0.7rem;">(lower is better)</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td style="text-align: left;">0% (Conv. only)</td><td style="text-align: right;">0.5154</td><td style="text-align: right;">11.05%</td><td style="text-align: right;">1.0687</td></tr>
+                            <tr><td style="text-align: left;">10%</td><td style="text-align: right;">0.5139</td><td style="text-align: right;">19.20%</td><td style="text-align: right;">1.437</td></tr>
+                            <tr><td style="text-align: left;">20%</td><td style="text-align: right;">0.5112</td><td style="text-align: right;">35.40%</td><td style="text-align: right;">2.320</td></tr>
+                            <tr class="highlight-row">
+                                <td style="text-align: left;"><strong>30%</strong></td>
+                                <td style="text-align: right;"><strong>0.5088</strong></td>
+                                <td style="text-align: right;"><strong>52.10%</strong></td>
+                                <td style="text-align: right;"><strong>3.451</strong></td>
+                            </tr>
+                            <tr><td style="text-align: left;">40%</td><td style="text-align: right;">0.5061</td><td style="text-align: right;">67.80%</td><td style="text-align: right;">4.501</td></tr>
+                            <tr><td style="text-align: left;">50%</td><td style="text-align: right;">0.5035</td><td style="text-align: right;">76.50%</td><td style="text-align: right;">5.112</td></tr>
+                            <tr><td style="text-align: left;">100%</td><td style="text-align: right;">0.4994</td><td style="text-align: right;">88.17%</td><td style="text-align: right;">4.9134</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.3rem;">
+                    Optimal portfolio: <strong>30%</strong> Productivity Bonds 
+                    <span style="display:inline-block; background:rgba(255,255,255,0.05); padding:0 0.5rem; border-radius:4px; margin-left:0.25rem;">
+                        (minimizes the combined cost-volatility-distress welfare function; Welfare = lower is better)
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
                 <!-- ====== SENSITIVITY CHARTS ====== -->
                 <section id="sensitivity" class="container section-spacing" style="padding-top:0;">
