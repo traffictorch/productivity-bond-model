@@ -2193,7 +2193,7 @@
                     </div>
                 </section>
 
-                <!-- ====== PBM SIMULATOR ====== -->
+                <!-- ====== LIVE SIMULATOR ====== -->
                 <section id="simulator" class="container section-spacing" style="padding-top:0;">
                     <div class="glass-card" style="border-color:rgba(79, 70, 229, 0.2);">
                         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:1.5rem;">
@@ -2358,37 +2358,9 @@
                         </div>
                     </div>
                 </section>
-                
-<!-- ====== PREDICTION ENGINE ====== -->
-<div class="glass-card" style="margin-top: 0rem; border-color: rgba(167, 139, 250, 0.3);">
-  <div style="display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1rem;">
-    <span class="badge-glow" style="background: rgba(167, 139, 250, 0.15); color: #a78bfa;">AI-Experiment</span>
-    <h3 style="font-weight: 700; font-size: 1.2rem; margin: 0; color: var(--text-primary);">
-      Economic Prediction Engine
-    </h3>
-<span style="font-size: 0.7rem; color: var(--text-muted); display: flex; gap: 0.5rem; flex-wrap: wrap;">
-  <a href="https://github.com/THUDM/GLM" target="_blank" style="color: var(--text-muted);">GLM</a>
-  <span style="opacity:0.3;">·</span>
-  <a href="https://ai.google.dev/gemma" target="_blank" style="color: var(--text-muted);">Google</a>
-  <span style="opacity:0.3;">·</span>
-  <a href="https://ai.meta.com/llama/" target="_blank" style="color: var(--text-muted);">Llama</a>
-</span>
-  </div>
-
-  <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
-    <button id="predict-btn" class="btn-primary" style="padding: 0.6rem 1.8rem;">
-      🧠 Generate Interpretation
-    </button>
-    <span style="font-size: 0.8rem; color: var(--text-muted);" id="prediction-status">Ready</span>
-  </div>
-
-  <div id="prediction-output" style="margin-top: 1rem; padding: 1rem 1.5rem; background: var(--bg-code); border-radius: 1rem; border-left: 4px solid #a78bfa; min-height: 80px; font-size: 0.95rem; color: var(--text-body);">
-    <span style="opacity: 0.5;">Interpretation will appear here.</span>
-  </div>
-</div>
 
                 <!-- ====== WELLBEING & BOND STRENGTH ====== -->
-                <section id="wellbeing" class="container section-spacing" style="padding-top:1;">
+                <section id="wellbeing" class="container section-spacing" style="padding-top:0;">
                     <div class="glass-card">
                         <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">😌 Happiness Curve & Bond Strength</h2>
                         <p style="color:var(--text-secondary); margin-bottom:1.5rem;">Here we show the relationship between economic productivity, societal happiness, and the strength of the financial bond. Move the slider to find the 'sweet spot' where the economy grows happily.</p>
@@ -3401,90 +3373,7 @@
                 });
 
                 setTimeout(runSimulation, 500);
-            }         
-            
-// ---------- PREDICTION ENGINE ----------
-(function() {
-  const predictBtn = document.getElementById('predict-btn');
-  const outputDiv = document.getElementById('prediction-output');
-  const statusSpan = document.getElementById('prediction-status');
-
-  let isFetching = false;
-
-  function getCurrentResults() {
-    const theta = parseFloat(document.getElementById('theta-slider').value);
-    const alpha = parseFloat(document.getElementById('alpha-slider').value);
-    const cap = parseFloat(document.getElementById('cap-slider').value);
-    const convCost = parseFloat(document.getElementById('cost-conv').textContent);
-    const prodCost = parseFloat(document.getElementById('cost-prod').textContent);
-    const convDistress = parseFloat(document.getElementById('distress-conv').textContent.replace('%', ''));
-    const prodDistress = parseFloat(document.getElementById('distress-prod').textContent.replace('%', ''));
-
-    return { theta, alpha, cap, convCost, prodCost, convDistress, prodDistress };
-  }
-
-  async function generateInterpretation() {
-    if (isFetching) return;
-
-    const current = getCurrentResults();
-
-    isFetching = true;
-    predictBtn.disabled = true;
-    statusSpan.textContent = '⏳ Generating...';
-    outputDiv.innerHTML = '<span style="opacity:0.5;">Thinking...</span>';
-
-    try {
-      const payload = {
-        theta_ai: current.theta,
-        alpha_n: current.alpha,
-        cap: current.cap,
-        conv_cost: current.convCost,
-        prod_cost: current.prodCost,
-        conv_distress: current.convDistress,
-        prod_distress: current.prodDistress,
-      };
-
-      const url = `https://productivity-interpretation.traffictorch.workers.dev/?_=${Date.now()}`;
-
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || `HTTP error ${response.status}`);
-      }
-
-      if (data.interpretation) {
-        // Render paragraphs (from Worker) or split on \n\n
-        let html = '';
-        if (data.paragraphs && data.paragraphs.length) {
-          html = data.paragraphs.map(p => `<p style="margin-bottom: 0.6rem;">${p}</p>`).join('');
-        } else {
-          const paras = data.interpretation.split(/\n\s*\n/);
-          html = paras.map(p => `<p style="margin-bottom: 0.6rem;">${p.trim()}</p>`).join('');
-        }
-        outputDiv.innerHTML = html;
-        statusSpan.textContent = '✅ Done';
-      } else {
-        outputDiv.innerHTML = `⚠️ No interpretation returned. Raw response: <pre>${JSON.stringify(data, null, 2)}</pre>`;
-        statusSpan.textContent = '❌ No content';
-      }
-    } catch (error) {
-      console.error('Prediction Engine error:', error);
-      outputDiv.innerHTML = `⚠️ Error: ${error.message}`;
-      statusSpan.textContent = '❌ Error';
-    } finally {
-      isFetching = false;
-      predictBtn.disabled = false;
-    }
-  }
-
-  predictBtn.addEventListener('click', generateInterpretation);
-})();
+            }
 
             // ----------------------------------------------------------
             // HAPPINESS SLIDER
