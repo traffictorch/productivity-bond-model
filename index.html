@@ -2359,12 +2359,12 @@
                     </div>
                 </section>
                 
-<!-- ====== PREDICTION ENGINE ====== -->
+<!-- ====== Interpretation ENGINE ====== -->
 <div class="glass-card" style="margin-top: 0rem; border-color: rgba(167, 139, 250, 0.3);">
   <div style="display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1rem;">
     <span class="badge-glow" style="background: rgba(167, 139, 250, 0.15); color: #a78bfa;">AI-Experiment</span>
     <h3 style="font-weight: 700; font-size: 1.2rem; margin: 0; color: var(--text-primary);">
-      Economic Prediction Engine
+      Economic Interpretation Engine
     </h3>
 <span style="font-size: 0.7rem; color: var(--text-muted); display: flex; gap: 0.5rem; flex-wrap: wrap;">
   <a href="https://github.com/THUDM/GLM" target="_blank" style="color: var(--text-muted);">GLM</a>
@@ -2377,7 +2377,7 @@
 
   <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
     <button id="predict-btn" class="btn-primary" style="padding: 0.6rem 1.8rem;">
-      🧠 Generate Interpretation
+      🧠 Generate
     </button>
     <span style="font-size: 0.8rem; color: var(--text-muted);" id="prediction-status">Ready</span>
   </div>
@@ -2423,6 +2423,13 @@
                             <div class="plot-title">Happiness vs Productivity Growth</div>
                             <div id="chart-happiness" style="height:280px;"></div>
                         </div>
+<!-- Inside the Happiness card, after the slider -->
+<button id="happiness-predict-btn" class="btn-primary" style="margin-top: 1rem;">
+  😌 Unified Interpretation
+</button>
+<div id="happiness-output" style="margin-top: 1rem; padding: 1rem; background: var(--bg-code); border-radius: 1rem; border-left: 4px solid #34d399; min-height: 60px; font-size: 0.95rem; color: var(--text-body);">
+  <span style="opacity:0.5;">Interpretation will appear here.</span>
+</div>
                     </div>
                 </section>
 
@@ -2897,9 +2904,9 @@
             <p style="font-size:0.7rem; margin-top:0.3rem;">
                 Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI · <span id="last-updated"></span>
             </p>
-            <p style="font-size:0.65rem; margin-top:0.5rem; color:var(--text-muted); opacity:0.7;">
-                📌 v0.8.0 – feat: Endogenous debt feedback loop implemented - reveals 2.5pp lower distress for Productivity.
-            </p>
+			<p style="font-size:0.65rem; margin-top:0.5rem; color:var(--text-muted); opacity:0.7;">
+  			  📌 v0.8.0 – feat: Endogenous debt feedback loop + AI interpretation engines.
+			</p>
         </div>
     </footer>
 
@@ -3403,7 +3410,7 @@
                 setTimeout(runSimulation, 500);
             }         
             
-// ---------- PREDICTION ENGINE ----------
+// ---------- AI Economic PREDICTION Interpretation ----------
 (function() {
   const predictBtn = document.getElementById('predict-btn');
   const outputDiv = document.getElementById('prediction-output');
@@ -3412,6 +3419,7 @@
   let isFetching = false;
 
   function getCurrentResults() {
+    // Read simulation values from DOM
     const theta = parseFloat(document.getElementById('theta-slider').value);
     const alpha = parseFloat(document.getElementById('alpha-slider').value);
     const cap = parseFloat(document.getElementById('cap-slider').value);
@@ -3434,6 +3442,7 @@
     outputDiv.innerHTML = '<span style="opacity:0.5;">Thinking...</span>';
 
     try {
+      // Build payload with snake_case field names expected by the worker
       const payload = {
         theta_ai: current.theta,
         alpha_n: current.alpha,
@@ -3441,7 +3450,7 @@
         conv_cost: current.convCost,
         prod_cost: current.prodCost,
         conv_distress: current.convDistress,
-        prod_distress: current.prodDistress,
+        prod_distress: current.prodDistress
       };
 
       const url = `https://productivity-interpretation.traffictorch.workers.dev/?_=${Date.now()}`;
@@ -3459,7 +3468,6 @@
       }
 
       if (data.interpretation) {
-        // Render paragraphs (from Worker) or split on \n\n
         let html = '';
         if (data.paragraphs && data.paragraphs.length) {
           html = data.paragraphs.map(p => `<p style="margin-bottom: 0.6rem;">${p}</p>`).join('');
@@ -3547,6 +3555,61 @@
                 happinessSlider.addEventListener('input', updateHappinessMetrics);
                 setTimeout(updateHappinessMetrics, 300);
             }
+            
+// Happiness Prediction Engine
+(function() {
+  const btn = document.getElementById('happiness-predict-btn');
+  const output = document.getElementById('happiness-output');
+
+  async function generateHappinessInterpretation() {
+    // Always read fresh values from the DOM
+    const gNPI = parseFloat(document.getElementById('happiness-slider').value);
+    const happiness = parseFloat(document.getElementById('happiness-val').textContent.replace('%', '')) / 100;
+    const bondStrength = parseFloat(document.getElementById('bond-strength-val').textContent.replace('%', '')) / 100;
+
+    // Read simulation metrics (if available)
+    const theta_ai = parseFloat(document.getElementById('theta-slider').value);
+    const alpha_n = parseFloat(document.getElementById('alpha-slider').value);
+    const cap = parseFloat(document.getElementById('cap-slider').value);
+    const convCost = parseFloat(document.getElementById('cost-conv').textContent);
+    const prodCost = parseFloat(document.getElementById('cost-prod').textContent);
+    const convDistress = parseFloat(document.getElementById('distress-conv').textContent.replace('%', ''));
+    const prodDistress = parseFloat(document.getElementById('distress-prod').textContent.replace('%', ''));
+
+    const payload = {
+      productivityGrowth: gNPI,
+      happiness,
+      bondStrength,
+      theta_ai,
+      alpha_n,
+      cap,
+      convCost,
+      prodCost,
+      convDistress,
+      prodDistress
+    };
+
+    output.innerHTML = '<span style="opacity:0.5;">Thinking...</span>';
+    try {
+      const response = await fetch('https://happiness-bs-interpretation.traffictorch.workers.dev/?_=' + Date.now(), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'HTTP error');
+      if (data.paragraphs) {
+        output.innerHTML = data.paragraphs.map(p => `<p style="margin-bottom:0.6rem;">${p}</p>`).join('');
+      } else {
+        output.innerHTML = data.interpretation || 'No interpretation.';
+      }
+    } catch (err) {
+      output.innerHTML = `⚠️ Error: ${err.message}`;
+    }
+  }
+
+  btn.addEventListener('click', generateHappinessInterpretation);
+})();
 
  // ============================================================
 // PLOTLY CHARTS (including Divergence)
