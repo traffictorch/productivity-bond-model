@@ -1,6 +1,3 @@
-## 📄 `README.md` (Updated)
-
-```markdown
 # Productivity Bond Model
 
 **Simulation code, canonical reference, and interactive web platform for *The Infinite Debt Problem: How to Replace Perpetual Growth with Productive Prosperity***
@@ -157,7 +154,7 @@ cd productivity-bond-model
 
 ### 2. Read the Policy Brief (Start Here)
 
-For a quick, non‑technical overview, open `policy_brief.md`.
+For a quick, non‑technical overview, open [`policy_brief.md`](policy_brief.md).
 
 ### 3. Explore the Website
 
@@ -207,6 +204,7 @@ python run_simulation.py --paths 5000 --years 5 --theta_ai 0.40
 
 1. Open `data/posts.json`
 2. Add a new post to the `"posts"` array:
+
 ```json
 {
   "slug": "your-post-slug",
@@ -216,6 +214,7 @@ python run_simulation.py --paths 5000 --years 5 --theta_ai 0.40
   "content": "<p>Your full post content in HTML.</p>"
 }
 ```
+
 3. Commit and push – the site updates instantly.
 
 ---
@@ -297,24 +296,3 @@ Special thanks to the open-source community, the GLM, Google, and Llama teams fo
 **The choice is ours. We can continue with extraction, inequality, and instability – or we can choose productivity, sharing, and sustainability.**
 
 **The infinite debt problem is not an inevitability. It is an invitation to build a financial system that serves prosperity.**
-```
-
----
-
-## ✅ What's been added to the README
-
-| Section | New Content |
-|---------|-------------|
-| **Live Website** | Badge and link with description of all features |
-| **AI-Power Engine** | Full explanation of GLM, Google Gemma, Llama integration |
-| **Happiness Interpreter** | Unified wellbeing analyser description |
-| **Complete Website Ecosystem** | Table of all 9 pages with descriptions |
-| **News & Blog System** | JSON-powered blog with post list |
-| **Repository Contents** | Expanded to include all website files |
-| **Simulation Status** | Updated with AI engines, website, interpreters |
-| **How to Use** | Added website exploration and blog post instructions |
-| **Sensitivity Analysis** | New table with critical thresholds |
-| **Citation** | BibTeX citation format |
-| **Acknowledgements** | GLM, Google, Llama teams, community |
-| **Closing Statement** | From the book – powerful and memorable |
-

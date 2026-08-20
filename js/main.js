@@ -57,31 +57,52 @@
   // ============================================================
   // HAMBURGER NAV
   // ============================================================
-  function initHamburger() {
-    const hamburgerBtn = getEl('hamburgerBtn');
+function initHamburger() {
+  // Remove previous listeners to avoid duplicates
+  document.removeEventListener('click', handleHamburgerClick);
+  document.removeEventListener('click', handleNavLinkClick);
+  document.removeEventListener('click', handleOutsideClick);
+
+  function handleHamburgerClick(e) {
+    const hamburger = e.target.closest('.hamburger');
+    if (!hamburger) return;
+    e.stopPropagation();
     const navLinks = getEl('navLinks');
-    if (!hamburgerBtn || !navLinks) return;
-
-    hamburgerBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
+    if (navLinks) {
       navLinks.classList.toggle('open');
-      hamburgerBtn.classList.toggle('open');
-    });
-
-    navLinks.querySelectorAll('a').forEach(function(link) {
-      link.addEventListener('click', function() {
-        navLinks.classList.remove('open');
-        hamburgerBtn.classList.remove('open');
-      });
-    });
-
-    document.addEventListener('click', function(e) {
-      if (!e.target.closest('.sticky-nav')) {
-        navLinks.classList.remove('open');
-        hamburgerBtn.classList.remove('open');
-      }
-    });
+      hamburger.classList.toggle('open');
+    }
   }
+
+  function handleNavLinkClick(e) {
+    const link = e.target.closest('a');
+    if (!link) return;
+    if (link.closest('.dropdown-toggle')) return;
+    const navLinks = getEl('navLinks');
+    if (navLinks && navLinks.contains(link)) {
+      navLinks.classList.remove('open');
+      const hamburger = document.querySelector('.hamburger');
+      if (hamburger) hamburger.classList.remove('open');
+    }
+  }
+
+  function handleOutsideClick(e) {
+    const nav = document.querySelector('.sticky-nav');
+    if (!nav) return;
+    if (!nav.contains(e.target)) {
+      const navLinks = getEl('navLinks');
+      if (navLinks) {
+        navLinks.classList.remove('open');
+        const hamburger = document.querySelector('.hamburger');
+        if (hamburger) hamburger.classList.remove('open');
+      }
+    }
+  }
+
+  document.addEventListener('click', handleHamburgerClick);
+  document.addEventListener('click', handleNavLinkClick);
+  document.addEventListener('click', handleOutsideClick);
+}
 
   // ============================================================
   // DROPDOWN TOGGLING (mobile)
