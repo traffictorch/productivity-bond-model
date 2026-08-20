@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book – The Infinite Debt Problem</title>
+  <meta name="description" content="The Infinite Debt Problem: How to Replace Perpetual Growth with Productive Prosperity – the full book by Ylia Callan." />
+  <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/book.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Book – The Infinite Debt Problem" />
+  <meta property="og:description" content="The Infinite Debt Problem: How to Replace Perpetual Growth with Productive Prosperity." />
+  <meta property="og:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.webp" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://traffictorch.github.io/productivity-bond-model/book.html" />
+
+  <!-- PWA Manifest & Icons -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="icon-512.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" media="print" onload="this.media='all'" crossorigin="anonymous" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" crossorigin="anonymous" /></noscript>
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="css/main.css" />
+
+  <!-- GA4 -->
+  <script src="js/ga4.js" defer></script>
+
+  <!-- Structured Data (Book schema) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Book",
+  "name": "The Infinite Debt Problem: How to Replace Perpetual Growth with Productive Prosperity",
+  "alternateName": "The Productivity Bond Model",
+  "description": "A sovereign debt instrument whose return is linked to measurable productivity gains (NPI), designed to replace perpetual-growth-dependent financing with productivity-linked prosperity. This book presents the full theory, simulation results, and implementation roadmap.",
+  "isbn": "979-8-23578-956-2",
+  "version": "0.8.0",
+  "datePublished": "2026-08-12",
+  "author": {
+    "@type": "Person",
+    "name": "Ylia Callan",
+    "url": "https://yliacallan.github.io/"
+  },
+  "citation": "https://doi.org/10.5281/zenodo.21970251",
+  "sameAs": [
+    "https://explore.openaire.eu/search/result?pid=10.5281/zenodo.21970090",
+    "https://philpapers.org/rec/CALTID",
+    "https://www.academia.edu/171903052/The_Infinite_Debt_Problem_How_to_Replace_Perpetual_Growth_with_Productive_Prosperity"
+  ],
+  "workExample": [
+    {
+      "@type": "Book",
+      "bookFormat": "https://schema.org/EBook",
+      "name": "The Infinite Debt Problem (Ebook – Apple Books)",
+      "url": "https://books.apple.com/au/book/the-infinite-debt-problem-how-to-replace-perpetual/id6801656366",
+      "sameAs": "https://books.apple.com/au/book/the-infinite-debt-problem-how-to-replace-perpetual/id6801656366"
+    },
+    {
+      "@type": "Book",
+      "bookFormat": "https://schema.org/EBook",
+      "name": "The Infinite Debt Problem (Ebook – Google Play)",
+      "url": "https://play.google.com/store/books/details/Ylia_Callan_The_Infinite_Debt_Problem?id=6bIBEgAAQBAJ",
+      "sameAs": "https://play.google.com/store/books/details/Ylia_Callan_The_Infinite_Debt_Problem?id=6bIBEgAAQBAJ"
+    },
+    {
+      "@type": "Audiobook",
+      "bookFormat": "https://schema.org/AudiobookFormat",
+      "name": "The Infinite Debt Problem (Audiobook – Google Play)",
+      "url": "https://play.google.com/store/audiobooks/details/Ylia_Callan_The_Infinite_Debt_Problem?id=AQAAAED6F3ZXnM",
+      "sameAs": "https://play.google.com/store/audiobooks/details/Ylia_Callan_The_Infinite_Debt_Problem?id=AQAAAED6F3ZXnM"
+    }
+  ],
+  "hasPart": {
+    "@type": "SoftwareApplication",
+    "name": "Productivity Bond Model Simulation Code",
+    "description": "Complete Python implementation of the 10,000-path Monte Carlo simulation used in the book, including all bond types, portfolio optimisation, and sensitivity analysis.",
+    "applicationCategory": "Simulation",
+    "operatingSystem": "Linux, macOS, Windows",
+    "softwareVersion": "0.8.0",
+    "url": "https://zenodo.org/records/21970090",
+    "sameAs": "https://github.com/traffictorch/productivity-bond-model",
+    "citation": "https://doi.org/10.5281/zenodo.21970090",
+    "license": "https://opensource.org/licenses/MIT"
+  },
+  "license": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ylia Callan (self-published)"
+  },
+  "about": [
+    {
+      "@type": "DefinedTerm",
+      "name": "Productivity Bond",
+      "description": "A sovereign debt instrument whose coupon is linked to the National Productivity Index (NPI) rather than a fixed interest rate, eliminating automatic compounding and sharing economic risk."
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "National Productivity Index (NPI)",
+      "description": "A weighted geometric average of labour, energy, material, and capital productivity, used as the reference index for Productivity Bond coupons."
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Productivity Dividend",
+      "description": "A universal, unconditional cash transfer to every citizen, funded by productivity-linked revenue, ensuring broad sharing of productivity gains."
+    }
+  ],
+  "keywords": [
+    "Productivity Bond",
+    "Infinite Debt Problem",
+    "sovereign debt reform",
+    "financial system redesign",
+    "perpetual growth",
+    "compound interest problem",
+    "GDP-linked bonds",
+    "AI dividend",
+    "universal basic income",
+    "countercyclical finance",
+    "National Productivity Index",
+    "sustainable finance",
+    "steady-state economy",
+    "finite planet economics",
+    "public debt management",
+    "state-contingent debt"
+  ],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://traffictorch.github.io/productivity-bond-model/book.html"
+  }
+}
+</script>
+</head>
+<body>
+
+  <!-- ====== NAVIGATION PLACEHOLDER ====== -->
+  <div id="nav-placeholder" style="display: contents;"></div>
+
+  <!-- ====== MAIN CONTENT (book) ====== -->
+<main id="main-content">
+
+  <!-- HERO -->
+  <section id="hero" class="container hero" style="min-height:80vh; display:flex; align-items:center; padding:4rem 6px 2rem;">
+    <div>
+      <span class="badge-glow fade-step delay-1">📚 The Book</span>
+      <span class="badge-glow badge-version fade-step delay-1" style="margin-left:0.5rem;">v0.8.0</span>
+      <h1 class="text-gradient fade-step delay-2" style="font-size:clamp(3rem,12vw,6rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">
+        The Infinite<br />Debt Problem
+      </h1>
+      <p class="fade-step delay-3" style="font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:300; opacity:0.7; max-width:640px; margin:1rem 0 2rem;">
+        How to Replace Perpetual Growth with Productive Prosperity. <a href="index.html#abstract" style="color:#059669; text-decoration:underline;">Learn more</a>.
+      </p>
+      <div class="fade-step delay-3" style="display:flex; flex-wrap:wrap; gap:1rem; align-items:center;">
+        <a href="#download" class="btn-primary">⬇ Download PDF</a>
+        <a href="https://books.apple.com/au/book/the-infinite-debt-problem-how-to-replace-perpetual/id6801656366" target="_blank" class="btn-secondary">🍏 Apple Books</a>
+        <a href="https://play.google.com/store/books/details/Ylia_Callan_The_Infinite_Debt_Problem?id=6bIBEgAAQBAJ" target="_blank" class="btn-secondary">📚 Google Books</a>
+        <button class="share-btn" id="nativeShareBtn">📤 Share</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== BREADCRUMB ====== -->
+  <div class="container" style="padding-top:1rem; padding-bottom:0;">
+    <nav class="breadcrumb" style="font-size:0.85rem; color:var(--text-muted); display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+      <a href="index.html" style="color:var(--text-muted); text-decoration:none;">🏠 Home</a>
+      <span style="opacity:0.5;">/</span>
+      <span style="color:var(--text-primary); font-weight:500;">The Infinite Debt Problem</span>
+    </nav>
+  </div>
+
+  <!-- ====== BOOK DETAILS ====== -->
+  <section id="book" class="container section-spacing" style="padding-top:1rem;">
+    <div class="glass-card">
+
+      <!-- Book Grid -->
+      <div style="display:grid; grid-template-columns: 1fr 2fr; gap:2.5rem; margin-bottom:2rem;">
+
+<!-- Cover Column with CSS class -->
+<div style="display:flex; flex-direction:column; align-items:center;">
+  <div class="book-cover">
+    <picture>
+      <source 
+        srcset="/images/the-book-cover.webp" 
+        type="image/webp"
+      >
+      <img 
+        src="/images/book-cover.jpg" 
+        alt="The Infinite Debt Problem – Book Cover by Ylia Callan"
+        loading="lazy"
+        width="1200"
+        height="1600"
+      >
+    </picture>
+  </div>
+  <!-- Download Buttons -->
+  <div id="download" style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:1rem; justify-content:center; width:100%;">
+    <a href="https://traffictorch.github.io/productivity-bond-model/book/The_Infinite_Debt_Problem.pdf" class="btn-primary btn-success" style="padding:0.5rem 1.5rem; font-size:0.9rem; box-shadow:0 4px 20px rgba(4,120,87,0.3);">⬇ Download PDF</a>
+    <a href="https://books.apple.com/au/book/the-infinite-debt-problem-how-to-replace-perpetual/id6801656366" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">🍏 Apple</a>
+    <a href="https://play.google.com/store/books/details/Ylia_Callan_The_Infinite_Debt_Problem?id=6bIBEgAAQBAJ" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">📚 Google</a>
+  </div>
+</div>
+
+        <!-- Details Column -->
+        <div>
+          <h1 style="font-size:2.2rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">The Infinite Debt Problem</h1>
+          <p style="font-size:1.1rem; color:var(--text-secondary); margin-bottom:0.5rem;"><em>How to Replace Perpetual Growth with Productive Prosperity</em></p>
+          
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem 1.5rem; background:var(--bg-metric); border-radius:1rem; padding:1rem 1.2rem; margin:1rem 0; border:1px solid var(--border-divider);">
+            <div><span style="color:var(--text-muted); font-size:0.75rem;">Author</span><br><strong style="color:var(--text-primary);">Ylia Callan</strong></div>
+            <div><span style="color:var(--text-muted); font-size:0.75rem;">Published</span><br><strong style="color:var(--text-primary);">2026-08-12</strong></div>
+            <div><span style="color:var(--text-muted); font-size:0.75rem;">Category</span><br><strong style="color:var(--text-primary);">Economics • Public Finance • Policy</strong></div>
+            <div><span style="color:var(--text-muted); font-size:0.75rem;">ISBN (eBook)</span><br><strong style="color:var(--text-primary);">979-8-23578-956-2</strong></div>
+            <div><span style="color:var(--text-muted); font-size:0.75rem;">Formats</span><br><strong style="color:var(--text-primary);">PDF • EPUB • Audiobook</strong></div>
+            <div><span style="color:var(--text-muted); font-size:0.75rem;">Version</span><br><strong style="color:var(--text-primary);">0.8.0</strong></div>
+          </div>
+
+          <!-- Book Description -->
+          <div style="margin-top:1rem;">
+            <h2 style="font-size:1.1rem; font-weight:600; color:var(--text-primary); margin-bottom:0.5rem;">Book Description</h2>
+            <p style="color:var(--text-body); line-height:1.8;">
+              The financial system demands endless growth on a finite planet. A $100 loan at 5% becomes $13,000 in a century. The solution? The <strong>Productivity Bond</strong> – a revolutionary instrument that rewards efficiency, not expansion. This is the blueprint for a sustainable financial future.
+            </p>
+            <p style="color:var(--text-body); line-height:1.8; margin-top:0.8rem;">
+              We have built a financial system that makes promises about an unlimited future on a planet with limits. That's the contradiction at the heart of modern finance. Global debt has climbed from $50 trillion to over $300 trillion in four decades – an exponential curve. Meanwhile, resource extraction is flattening. Two lines, two opposing stories. The gap between them is <strong>The Infinite Debt Problem</strong>.
+            </p>
+            <p style="color:var(--text-body); line-height:1.8; margin-top:0.8rem;">
+              This isn't a doom-and-gloom book. It's a practical, market-based solution and redesign for the financial system itself. Replace fixed-rate sovereign debt – which demands perpetual growth – with the <strong>Productivity Bond</strong>, an instrument whose return is linked to measurable improvements in efficiency.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Features -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:1rem; margin:1.5rem 0; padding:1.5rem; background:var(--bg-diagram); border-radius:1.5rem; border:1px solid var(--border-divider);">
+        <div style="text-align:center;">
+          <div style="font-size:2rem; margin-bottom:0.3rem;">📊</div>
+          <div style="font-weight:600; color:var(--text-primary); font-size:0.9rem;">Productivity-Linked</div>
+          <div style="font-size:0.8rem; color:var(--text-muted);">Rewards efficiency, not expansion</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:2rem; margin-bottom:0.3rem;">🛡️</div>
+          <div style="font-weight:600; color:var(--text-primary); font-size:0.9rem;">Countercyclical</div>
+          <div style="font-size:0.8rem; color:var(--text-muted);">Lower in bad years, higher in good</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:2rem; margin-bottom:0.3rem;">💰</div>
+          <div style="font-weight:600; color:var(--text-primary); font-size:0.9rem;">Productivity Dividend</div>
+          <div style="font-size:0.8rem; color:var(--text-muted);">Universal payments to citizens</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:2rem; margin-bottom:0.3rem;">🌍</div>
+          <div style="font-weight:600; color:var(--text-primary); font-size:0.9rem;">Finite Planet</div>
+          <div style="font-size:0.8rem; color:var(--text-muted);">Works within ecological limits</div>
+        </div>
+      </div>
+
+      <!-- How It Works -->
+      <div style="background:var(--bg-code); border-radius:1.2rem; padding:1.2rem 1.5rem; margin:1.5rem 0; border-left:4px solid #4f46e5;">
+        <h3 style="font-size:1.1rem; font-weight:600; color:var(--text-primary); margin-bottom:0.5rem;">⚡ How the Productivity Bond Works</h3>
+        <ul style="list-style:none; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:0.5rem 1.5rem;">
+          <li style="display:flex; align-items:center; gap:0.5rem; color:var(--text-body); font-size:0.9rem;"><span style="color:#34d399;">✓</span> Inflation protection (CPI-linked)</li>
+          <li style="display:flex; align-items:center; gap:0.5rem; color:var(--text-body); font-size:0.9rem;"><span style="color:#34d399;">✓</span> Share of productivity gains (NPI)</li>
+          <li style="display:flex; align-items:center; gap:0.5rem; color:var(--text-body); font-size:0.9rem;"><span style="color:#34d399;">✓</span> Real-return floor (0%) protects investors</li>
+          <li style="display:flex; align-items:center; gap:0.5rem; color:var(--text-body); font-size:0.9rem;"><span style="color:#34d399;">✓</span> Cap (5%) protects governments</li>
+          <li style="display:flex; align-items:center; gap:0.5rem; color:var(--text-body); font-size:0.9rem;"><span style="color:#34d399;">✓</span> Countercyclical: lower in bad years, higher in good</li>
+          <li style="display:flex; align-items:center; gap:0.5rem; color:var(--text-body); font-size:0.9rem;"><span style="color:#34d399;">✓</span> Principal-adjustment mechanism</li>
+        </ul>
+      </div>
+
+      <!-- Key Results -->
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin:1.5rem 0;">
+        <div style="background:var(--bg-metric); border-radius:1rem; padding:1rem; text-align:center; border:1px solid var(--border-divider);">
+          <div style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em;">Cost Saving</div>
+          <div style="font-size:2rem; font-weight:700; color:#34d399;">3.1%</div>
+          <div style="font-size:0.75rem; color:var(--text-secondary);">vs conventional debt</div>
+        </div>
+        <div style="background:var(--bg-metric); border-radius:1rem; padding:1rem; text-align:center; border:1px solid var(--border-divider);">
+          <div style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em;">Optimal Share</div>
+          <div style="font-size:2rem; font-weight:700; color:#a78bfa;">30%</div>
+          <div style="font-size:0.75rem; color:var(--text-secondary);">Productivity Bonds in portfolio</div>
+        </div>
+        <div style="background:var(--bg-metric); border-radius:1rem; padding:1rem; text-align:center; border:1px solid var(--border-divider);">
+          <div style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em;">AI Capture Threshold</div>
+          <div style="font-size:2rem; font-weight:700; color:#fbbf24;">&gt;30%</div>
+          <div style="font-size:0.75rem; color:var(--text-secondary);">θ_AI critical mass</div>
+        </div>
+        <div style="background:var(--bg-metric); border-radius:1rem; padding:1rem; text-align:center; border:1px solid var(--border-divider);">
+          <div style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em;">Distress Reduction</div>
+          <div style="font-size:2rem; font-weight:700; color:#34d399;">25.9%</div>
+          <div style="font-size:0.75rem; color:var(--text-secondary);">hybrid version</div>
+        </div>
+      </div>
+
+      <!-- The AI Paradox -->
+      <div style="background:rgba(251,191,36,0.05); border-radius:1.2rem; padding:1.2rem 1.5rem; margin:1.5rem 0; border:1px solid rgba(251,191,36,0.15);">
+        <h3 style="font-size:1rem; font-weight:600; color:#fbbf24; margin-bottom:0.3rem;">🤖 The AI Paradox</h3>
+        <p style="color:var(--text-body); font-size:0.95rem; line-height:1.6; margin:0;">
+          AI could vault us over the <strong>Four Walls</strong> (demographic, productivity, resource, ecological) – or break the financial system by concentrating wealth and breaking the link between work and income. The <strong>Productivity Dividend</strong> ensures everyone benefits from the AI revolution.
+        </p>
+      </div>
+
+      <!-- Key Themes -->
+      <div style="margin:1.5rem 0;">
+        <h3 style="font-size:1rem; font-weight:600; color:var(--text-primary); margin-bottom:0.5rem;">🔑 Key Themes</h3>
+        <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+          <span style="background:var(--badge-bg); color:var(--badge-text); padding:0.3rem 1rem; border-radius:40px; font-size:0.8rem; border:1px solid var(--badge-border);">Productivity Bond</span>
+          <span style="background:var(--badge-bg); color:var(--badge-text); padding:0.3rem 1rem; border-radius:40px; font-size:0.8rem; border:1px solid var(--badge-border);">Infinite Debt Problem</span>
+          <span style="background:var(--badge-bg); color:var(--badge-text); padding:0.3rem 1rem; border-radius:40px; font-size:0.8rem; border:1px solid var(--badge-border);">Sovereign Debt Reform</span>
+          <span style="background:var(--badge-bg); color:var(--badge-text); padding:0.3rem 1rem; border-radius:40px; font-size:0.8rem; border:1px solid var(--badge-border);">Financial System Redesign</span>
+          <span style="background:var(--badge-bg); color:var(--badge-text); padding:0.3rem 1rem; border-radius:40px; font-size:0.8rem; border:1px solid var(--badge-border);">AI Dividend</span>
+          <span style="background:var(--badge-bg); color:var(--badge-text); padding:0.3rem 1rem; border-radius:40px; font-size:0.8rem; border:1px solid var(--badge-border);">Universal Basic Income</span>
+          <span style="background:var(--badge-bg); color:var(--badge-text); padding:0.3rem 1rem; border-radius:40px; font-size:0.8rem; border:1px solid var(--badge-border);">Countercyclical Finance</span>
+          <span style="background:var(--badge-bg); color:var(--badge-text); padding:0.3rem 1rem; border-radius:40px; font-size:0.8rem; border:1px solid var(--badge-border);">National Productivity Index</span>
+          <span style="background:var(--badge-bg); color:var(--badge-text); padding:0.3rem 1rem; border-radius:40px; font-size:0.8rem; border:1px solid var(--badge-border);">Sustainable Finance</span>
+          <span style="background:var(--badge-bg); color:var(--badge-text); padding:0.3rem 1rem; border-radius:40px; font-size:0.8rem; border:1px solid var(--badge-border);">Steady-State Economy</span>
+        </div>
+      </div>
+
+<!-- ====== PDF VIEWER ====== -->
+<div style="margin:2rem 0; text-align:center;">
+  <h3 style="font-size:1.1rem; font-weight:600; color:var(--text-primary); margin-bottom:0.8rem;">📄 Full PDF Preview</h3>
+  <div style="position:relative; width:100%; max-width:1000px; margin:0 auto; aspect-ratio: 16/10; background:var(--bg-code); border-radius:1rem; overflow:hidden; border:1px solid var(--border-card); box-shadow:var(--shadow-card);">
+    <object 
+      data="/book/The_Infinite_Debt_Problem.pdf#toolbar=1&navpanes=1&scrollbar=1&page=1&view=FitH" 
+      type="application/pdf" 
+      style="width:100%; height:100%; display:block;"
+      aria-label="PDF viewer for The Infinite Debt Problem"
+    >
+      <p style="padding:2rem; color:var(--text-secondary); text-align:center;">
+        Your browser doesn't support PDF viewing.<br>
+        <a href="https://traffictorch.github.io/productivity-bond-model/book/The_Infinite_Debt_Problem.pdf" target="_blank" style="color:#4f46e5;">Download the PDF instead</a>
+      </p>
+    </object>
+  </div>
+  <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.5rem;">
+    Use the controls to zoom, navigate, or download. 
+    <a href="https://traffictorch.github.io/productivity-bond-model/book/The_Infinite_Debt_Problem.pdf" target="_blank" style="color:#4f46e5;">⬇ Download full PDF</a>
+  </p>
+</div>
+
+      <!-- Audiobooks -->
+      <div style="margin:1.5rem 0; background:var(--bg-diagram); border-radius:1.2rem; padding:1.2rem 1.5rem; text-align:center;">
+        <h3 style="font-size:1rem; font-weight:600; color:var(--text-primary); margin-bottom:0.5rem;">🎧 Audiobook Editions</h3>
+        <div style="display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;">
+          <a href="https://play.google.com/store/audiobooks/details/Ylia_Callan_The_Infinite_Debt_Problem?id=AQAAAED6F3ZXnM" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="padding:0.5rem 1.5rem;">🎧 Google Play Audiobook</a>
+          <button class="btn-secondary" disabled title="Coming soon" style="padding:0.5rem 1.5rem; opacity:0.6;">🍏 Apple Audiobook (Coming Soon)</button>
+        </div>
+      </div>
+
+      <!-- Back to Home -->
+      <div style="margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border-divider);">
+        <a href="index.html" class="btn-secondary" style="padding:0.4rem 1.5rem;">← Back to Home</a>
+        <a href="changelog.html" class="btn-secondary" style="padding:0.4rem 1.5rem; margin-left:0.5rem;">📋 Changelog</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====== LEARN SECTION ====== -->
+  <section id="learn" class="container section-spacing" style="padding-top:0;">
+    <div class="glass-card" style="border-color:rgba(251,191,36,0.2);">
+      <span class="badge-glow" style="background:rgba(251,191,36,0.15); color:#fbbf24; border-color:rgba(251,191,36,0.15); margin-bottom:0.8rem;">📖 Explore</span>
+      <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">Continue Your Journey</h2>
+      <p style="color:var(--text-secondary); margin-bottom:1.5rem; max-width:800px;">
+        The concepts and models in this book are brought to life through interactive simulations and detailed reference materials. Explore the model in action or dive into the technical specifications.
+      </p>
+      <div style="display:flex; flex-wrap:wrap; gap:1rem;">
+        <a href="index.html#simulator" class="btn-primary">💸 Run Live Simulation</a>
+        <a href="index.html#model-definition" class="btn-secondary">📐 View the Model</a>
+        <a href="changelog.html" class="btn-secondary">📋 Changelog</a>
+        <a href="about.html" class="btn-secondary">ℹ️ About the Author</a>
+      </div>
+
+      <!-- Share Buttons -->
+      <div style="margin-top:2rem; padding-top:1.5rem; text-align:center; border-top:1px solid var(--border-divider, rgba(255,255,255,0.06));">
+        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.75rem;">
+          <strong style="font-size:1.1rem; font-weight:600; color:var(--text-secondary); letter-spacing:0.02em;">Share the Book</strong>
+          <div class="a2a_kit a2a_kit_size_32 a2a_default_style" data-a2a-url="https://traffictorch.github.io/productivity-bond-model/" data-a2a-title="The Infinite Debt Problem – How to Replace Perpetual Growth with Productive Prosperity">
+            <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+            <a class="a2a_button_facebook"></a>
+            <a class="a2a_button_mastodon"></a>
+            <a class="a2a_button_email"></a>
+            <a class="a2a_button_reddit"></a>
+            <a class="a2a_button_linkedin"></a>
+            <a class="a2a_button_copy_link"></a>
+          </div>
+        </div>
+      </div>
+      <script defer src="https://static.addtoany.com/menu/page.js"></script>
+
+      <div style="text-align:center; margin-top:2rem;">
+        <button id="backToTopBtn" class="btn-return-top" style="display:inline-block; padding:0.8rem 2.5rem; border-radius:60px; border:none; background:rgba(0,255,255,0.12); backdrop-filter:blur(4px); color:#17cfcf; font-weight:600; font-size:1.1rem; cursor:pointer; transition:all 0.3s ease; box-shadow:0 0 20px rgba(0,255,255,0.15), inset 0 0 20px rgba(0,255,255,0.05); text-shadow:0 0 10px rgba(0,255,255,0.3); font-family:'Inter',system-ui,-apple-system,sans-serif; position:relative;">⬆ Return to Top</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+  <!-- ====== FLOATING RETURN TO TOP ====== -->
+  <button class="floating-return-top" id="floatingReturnTop" aria-label="Return to top">⬆ Top</button>
+
+  <!-- ====== PWA INSTALL BUTTON & IOS MODAL ====== -->
+  <button id="pwaInstallBtn" class="pwa-install-btn">
+    <span class="icon">📱</span>
+    <span class="btn-text">Install Apps</span>
+    <span class="icon">💻</span>
+  </button>
+  <div id="pwaIosOverlay" class="pwa-ios-overlay">
+    <div class="pwa-ios-modal">
+      <h3>Install on iPhone</h3>
+      <p>To add this app to your home screen:</p>
+      <div class="step"><span>1.</span><span class="step-icon">⬆️</span><span>In <strong>Safari</strong> tap the <strong>Share</strong> button at the bottom.</span></div>
+      <div class="step"><span>2.</span><span class="step-icon">➕</span><span>Scroll down and tap <strong>"Add to Home Screen"</strong>.</span></div>
+      <button id="pwaCloseIosModal" class="close-btn">Got it</button>
+    </div>
+  </div>
+
+  <!-- ====== FOOTER PLACEHOLDER ====== -->
+  <div id="footer-placeholder"></div>
+
+  <!-- ====== SCRIPTS ====== -->
+  <script src="js/share.js" defer></script>
+  <script src="js/main.js" defer></script>
+
+  <!-- ====== COMPONENT LOADER ====== -->
+  <script>
+    (function loadComponents() {
+      const navPlaceholder = document.getElementById('nav-placeholder');
+      const footerPlaceholder = document.getElementById('footer-placeholder');
+
+      function fetchAndInsert(url, target) {
+        if (!target) return;
+        fetch(url)
+          .then(res => {
+            if (!res.ok) throw new Error('Failed to load ' + url);
+            return res.text();
+          })
+          .then(html => {
+            target.innerHTML = html;
+            // Re‑initialise UI after nav is injected
+            if (typeof window.initUI === 'function') {
+              requestAnimationFrame(() => window.initUI());
+            } else {
+              console.warn('window.initUI not ready – retrying...');
+              let attempts = 0;
+              const waitForInit = setInterval(() => {
+                if (typeof window.initUI === 'function') {
+                  window.initUI();
+                  clearInterval(waitForInit);
+                } else if (++attempts > 20) {
+                  clearInterval(waitForInit);
+                  console.error('window.initUI never became available.');
+                }
+              }, 100);
+            }
+          })
+          .catch(err => console.warn('Could not load component:', err));
+      }
+
+      fetchAndInsert('nav.html', navPlaceholder);
+      fetchAndInsert('footer.html', footerPlaceholder);
+    })();
+  </script>
+</body>
+</html>

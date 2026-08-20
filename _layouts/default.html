@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  {% include head.html %}
+</head>
+<body>
+  {% include nav.html %}
+
+  <main id="main-content">
+    {{ content }}
+  </main>
+
+  {% include footer.html %}
+
+  <!-- Shared JavaScript -->
+  <script src="{{ site.baseurl }}/assets/js/main.js" defer></script>
+
+  <!-- Additional page‑specific scripts (if any) -->
+  {% if page.custom_js %}
+    <script src="{{ site.baseurl }}/{{ page.custom_js }}" defer></script>
+  {% endif %}
+</body>
+</html>

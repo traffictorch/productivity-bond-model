@@ -1,3 +1,4 @@
 User-agent: *
+Disallow: /404.html
 Allow: /
 Sitemap: https://traffictorch.github.io/productivity-bond-model/sitemap.xml

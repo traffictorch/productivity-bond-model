@@ -1,0 +1,48 @@
+</main> <!-- closes main opened in header -->
+
+<footer class="footer">
+    <div class="container">
+        <p>© 2026 <a href="https://traffictorch.net">Traffic Torch</a> · <a href="https://github.com/traffictorch/productivity-bond-model">GitHub</a> · Version 0.8.0</p>
+        <p style="font-size:0.7rem;">Creative Commons BY‑NC‑ND 4.0 · <span id="last-updated"></span></p>
+    </div>
+</footer>
+
+<!-- Shared JavaScript -->
+<script src="/assets/js/main.js" defer></script>
+
+<!-- Inline scripts (PWA, service worker, hero reveal, etc.) -->
+<script>
+    // PWA install
+    const installBtn = document.getElementById('pwaInstallBtn');
+    // ... full PWA code ...
+    // Service worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/productivity-bond-model/sw.js');
+    }
+    // Hero reveal
+    (function() {
+        const heroRevealElements = document.querySelectorAll('.hero .fade-step');
+        const aiWrapper = document.querySelector('.ai-power-wrapper');
+        setTimeout(() => {
+            heroRevealElements.forEach(el => el.classList.add('reveal'));
+        }, 500);
+        if (aiWrapper && 'IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        aiWrapper.classList.add('visible');
+                        observer.unobserve(aiWrapper);
+                    }
+                });
+            }, { threshold: 0.9 });
+            observer.observe(aiWrapper);
+        } else if (aiWrapper) {
+            setTimeout(() => aiWrapper.classList.add('visible'), 5000);
+        }
+    })();
+    // Last updated
+    document.getElementById('last-updated').textContent = 'Last updated: ' + new Date().toLocaleString();
+</script>
+
+</body>
+</html>
