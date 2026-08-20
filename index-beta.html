@@ -1712,6 +1712,36 @@
     background: rgba(0, 0, 0, 0.06);
 }
 
+/* ===== HERO PROGRESSIVE REVEAL ===== */
+.hero .fade-step {
+    opacity: 0;
+    transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.hero .fade-step.reveal {
+    opacity: 1;
+}
+
+/* Stagger delays – optional */
+.hero .fade-step.delay-1 { transition-delay: 0.1s; }
+.hero .fade-step.delay-2 { transition-delay: 0.3s; }
+.hero .fade-step.delay-3 { transition-delay: 0.5s; }
+
+/* AI‑Experiment button – hidden until scrolled */
+.ai-power-wrapper {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+.ai-power-wrapper.visible {
+    opacity: 1;
+}
+
+/* Keep the hero background plain on load – we’ll add a subtle gradient later if wanted */
+.hero {
+    background: var(--bg-body);
+    /* or a very soft off‑white */
+}
+
     </style>
 </head>
 <body>
@@ -1766,31 +1796,37 @@
         <div class="page-wrapper">
             <div class="main-content">
 
-                <!-- ====== HERO ====== -->
-				<section id="hero" class="container hero" style="min-height:80vh; display:flex; align-items:center; padding:4rem 6px 2rem;">
-                <section class="container hero" style="min-height:80vh; display:flex; align-items:center; padding:4rem 6px 2rem;">
-                    <div>
-                        <span class="badge-glow">📘 Canonical Reference</span>
-                        <span class="badge-glow badge-version" style="margin-left:0.5rem;">v0.8.0</span>
-                        <h1 class="text-gradient" style="font-size:clamp(3rem,12vw,6rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">The Productivity<br />Bond Model</h1>
-                        <p style="font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:300; opacity:0.7; max-width:640px; margin:1rem 0 2rem;">
-                            Financing prosperity without promising infinite growth. Here's the <a href="#abstract" style="color:#059669; text-decoration:underline; text-underline-offset:2px; transition:color 0.2s;">alternative</a>.
-                        </p>
-<div style="display:flex; flex-wrap:wrap; gap:1rem; align-items:center;">
-    <a href="#simulator" class="btn-primary">🚀 Run Live Simulation</a>
-    <a href="#citation" class="btn-secondary">📖 Cite This Model</a>
-    <button class="share-btn" id="nativeShareBtn">📤 Share (Native)</button>
-    <a class="btn-secondary" 
-       href="https://www.addtoany.com/share#url=https%3A%2F%2Ftraffictorch.github.io%2Fproductivity-bond-model%2F&amp;title=The%20Infinite%20Debt%20Problem" 
-       target="_blank" 
-       rel="noopener noreferrer"
-       style="display:inline-block; padding:0.8rem 2.2rem; text-decoration:none; text-align:center; background:var(--btn-secondary-bg); border:1px solid var(--btn-secondary-border); border-radius:60px; color:var(--btn-secondary-text); font-weight:500; transition:0.2s; cursor:pointer;">
-       📤 Share (Social)
-    </a>
-</div>
-                        </div>
-                    </div>
-                </section>
+<section id="hero" class="container hero" style="min-height:80vh; display:flex; align-items:center; padding:4rem 6px 2rem;">
+    <div>
+        <!-- Badges – fade in first -->
+        <span class="badge-glow fade-step delay-1">📘 Canonical Reference</span>
+        <span class="badge-glow badge-version fade-step delay-1" style="margin-left:0.5rem;">v0.8.0</span>
+
+        <!-- Title – gradient only appears after reveal -->
+        <h1 class="text-gradient fade-step delay-2" style="font-size:clamp(3rem,12vw,6rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">
+            The Productivity<br />Bond Model
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="fade-step delay-3" style="font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:300; opacity:0.7; max-width:640px; margin:1rem 0 2rem;">
+            Financing prosperity without promising infinite growth. Here's the <a href="#abstract" style="color:#059669; text-decoration:underline;">alternative</a>.
+        </p>
+
+        <!-- Buttons – all fade together -->
+        <div class="fade-step delay-3" style="display:flex; flex-wrap:wrap; gap:1rem; align-items:center;">
+            <a href="#simulator" class="btn-primary">💸 Run Live Simulation</a>
+            <a href="#citation" class="btn-secondary">📖 Cite This Model</a>
+            <button class="share-btn" id="nativeShareBtn">📤 Share (Native)</button>
+            <a class="btn-secondary" 
+               href="https://www.addtoany.com/share#url=https%3A%2F%2Ftraffictorch.github.io%2Fproductivity-bond-model%2F&amp;title=The%20Infinite%20Debt%20Problem" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               style="display:inline-block; padding:0.8rem 2.2rem; text-decoration:none; text-align:center; background:var(--btn-secondary-bg); border:1px solid var(--btn-secondary-border); border-radius:60px; color:var(--btn-secondary-text); font-weight:500; transition:0.2s; cursor:pointer;">
+               📤 Share (Social)
+            </a>
+        </div>
+    </div>
+</section>
 
                 <!-- ====== ABSTRACT ====== -->
                 <section id="abstract" class="container section-spacing-sm" style="padding-top:0;">
@@ -2358,11 +2394,13 @@
                         </div>
                     </div>
                 </section>
-                
+
 <!-- ====== Interpretation ENGINE ====== -->
-<div class="glass-card" style="margin-top: 0rem; border-color: rgba(167, 139, 250, 0.3);">
+<div class="ai-power-wrapper">
+    <div class="glass-card" style="margin-top: 0rem; border-color: rgba(167, 139, 250, 0.3);">
+        <div class="glass-card" style="margin-top: 0rem; border-color: rgba(167, 139, 250, 0.3);">
   <div style="display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1rem;">
-    <span class="badge-glow" style="background: rgba(167, 139, 250, 0.15); color: #a78bfa;">AI-Experiment</span>
+    <span class="badge-glow" style="background: rgba(167, 139, 250, 0.15); color: #a78bfa;">AI-Power</span>
     <h3 style="font-weight: 700; font-size: 1.2rem; margin: 0; color: var(--text-primary);">
       Economic Interpretation Engine
     </h3>
@@ -2385,6 +2423,8 @@
   <div id="prediction-output" style="margin-top: 1rem; padding: 1rem 1.5rem; background: var(--bg-code); border-radius: 1rem; border-left: 4px solid #a78bfa; min-height: 80px; font-size: 0.95rem; color: var(--text-body);">
     <span style="opacity: 0.5;">Interpretation will appear here.</span>
   </div>
+</div>
+    </div>
 </div>
 
                 <!-- ====== WELLBEING & BOND STRENGTH ====== -->
@@ -3816,6 +3856,33 @@ function renderDivergenceChart() {
                     console.log('Service Worker registration failed:', error);
                 });
         }
+        
+// ----- HERO PROGRESSIVE REVEAL -----
+(function() {
+    const heroRevealElements = document.querySelectorAll('.hero .fade-step');
+    const aiWrapper = document.querySelector('.ai-power-wrapper');
+
+    // 1. Reveal hero elements after 1 seconds
+    setTimeout(() => {
+        heroRevealElements.forEach(el => el.classList.add('reveal'));
+    }, 500);
+
+    // 2. AI‑Experiment button – reveal when scrolled into view
+    if (aiWrapper && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    aiWrapper.classList.add('visible');
+                    observer.unobserve(aiWrapper);
+                }
+            });
+        }, { threshold: 0.9 });
+        observer.observe(aiWrapper);
+    } else if (aiWrapper) {
+        // Fallback: show after 5 seconds if no IntersectionObserver
+        setTimeout(() => aiWrapper.classList.add('visible'), 5000);
+    }
+})();
     </script>
 </body>
 </html>
