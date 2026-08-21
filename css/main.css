@@ -1747,4 +1747,10 @@ table.data-table .highlight-row td:first-child {
   background: #ffffff !important;
 }
 
+/* Centre PDF */
+iframe {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
 
