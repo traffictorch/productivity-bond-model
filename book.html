@@ -178,7 +178,7 @@
 
   <!-- ====== BOOK DETAILS ====== -->
   <section id="book" class="container section-spacing" style="padding-top:1rem;">
-    <div class="glass-card" style="padding:2rem 1.5rem;">
+    <div class="glass-card" style="padding:2rem 0.5rem;">
 
       <!-- Book Flex – stacks on mobile -->
       <div style="display:flex; flex-wrap:wrap; gap:2rem; margin-bottom:2rem;">
@@ -325,45 +325,40 @@
         </div>
       </div>
       
-      <!-- ====== PDF VIEWER – Self-Hosted PDF.js ====== -->
+<!-- ====== PDF VIEWER – Fixed Centering ====== -->
 <div style="margin:2rem 0; text-align:center;">
-  <h3 style="font-size:1.1rem; font-weight:600; color:var(--text-primary); margin-bottom:0.8rem;">📄 Full PDF</h3>
+  <h3 style="font-size:1.1rem; font-weight:600; color:var(--text-primary); margin-bottom:0.8rem;">📄 Full PDF Preview</h3>
   
-  <div style="
+  <div class="viewer-container" style="
     width:100%;
     max-width:1000px;
     margin:0 auto;
-    background:var(--bg-code); 
-    border:2px solid rgba(79,70,229,0.2); 
-    border-radius:16px; 
+    background:var(--bg-code);
+    border:2px solid rgba(79,70,229,0.2);
+    border-radius:16px;
     overflow:hidden;
     box-shadow:var(--shadow-card);
   ">
-<iframe 
-  src="assets/pdfjs/web/viewer.html?file=../../../book/The_Infinite_Debt_Problem.pdf"
-  style="
-    width:100%; 
-    height:80vh; 
-    border:none; 
-    display:block;
-    margin:0;
-    padding:0;
-  "
-  allow="autoplay"
-  loading="lazy"
-  title="The Infinite Debt Problem – PDF Preview"
-></iframe>
+    <iframe 
+      src="assets/pdfjs/web/viewer.html?file=../../../book/The_Infinite_Debt_Problem.pdf"
+      style="
+        width:100%;
+        max-width:100%;
+        height:80vh;
+        border:none;
+        display:block;
+        margin:0;
+        padding:0;
+      "
+      allow="autoplay"
+      loading="lazy"
+      title="The Infinite Debt Problem – PDF Preview"
+    ></iframe>
   </div>
   
   <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.5rem;">
     PDF preview – 
-    <a href="https://traffictorch.github.io/productivity-bond-model/book/The_Infinite_Debt_Problem.pdf" target="_blank" style="color:#4f46e5;">⬇ Download full PDF</a>
-  </p>
-</div>
-  
-  <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.5rem;">
-    PDF preview – 
-    <a href="https://traffictorch.github.io/productivity-bond-model/book/The_Infinite_Debt_Problem.pdf" target="_blank" style="color:#4f46e5;">⬇ Download full PDF</a>
+    <a href="/book/The_Infinite_Debt_Problem.pdf" target="_blank" style="color:#4f46e5;">⬇ Download full PDF</a>
   </p>
 </div>
 

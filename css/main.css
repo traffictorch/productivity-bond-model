@@ -246,7 +246,7 @@ a:hover {
   flex-wrap: wrap;
   list-style: none;
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 260;
   margin: 0;
   padding: 0;
 }
@@ -1414,10 +1414,10 @@ table.data-table .highlight-row td:first-child {
   transition-delay: 0.1s;
 }
 .hero .fade-step.delay-2 {
-  transition-delay: 0.3s;
+  transition-delay: 0.2s;
 }
 .hero .fade-step.delay-3 {
-  transition-delay: 0.5s;
+  transition-delay: 0.3s;
 }
 
 .ai-power-wrapper {
@@ -1746,11 +1746,3 @@ table.data-table .highlight-row td:first-child {
 [data-theme="light"] .nav-links .dropdown-menu {
   background: #ffffff !important;
 }
-
-/* Centre PDF */
-iframe {
-  margin-left: 0 !important;
-  padding-left: 0 !important;
-}
-
-
