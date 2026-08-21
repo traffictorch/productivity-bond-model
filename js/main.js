@@ -11,48 +11,46 @@
   // ============================================================
   // THEME TOGGLE
   // ============================================================
-  function initTheme() {
-    const themeToggle = getEl('themeToggle');
-    const themeIcon = getEl('themeIcon');
-    const html = document.documentElement;
+function initTheme() {
+  const html = document.documentElement;
 
-    if (!themeToggle || !themeIcon) {
-      console.warn('Theme elements not found – nav may not be loaded.');
-      return;
-    }
-
-    function setTheme(theme) {
-      html.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
-      const isDark = theme === 'dark';
-      themeIcon.textContent = isDark ? '🌙' : '☀️';
-      themeToggle.setAttribute('aria-pressed', isDark ? 'false' : 'true');
-    }
-
-    function getPreferredTheme() {
-      const stored = localStorage.getItem('theme');
-      if (stored) return stored;
-      return window.matchMedia?.('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-    }
-
-    setTheme(getPreferredTheme());
-
-    themeToggle.addEventListener('click', function() {
-      const current = html.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
-      setTheme(next);
-      if (typeof Plotly !== 'undefined') {
-        setTimeout(renderAllCharts, 200);
-      }
-    });
-
-    const systemMedia = window.matchMedia('(prefers-color-scheme: light)');
-    systemMedia.addEventListener('change', function(e) {
-      if (!localStorage.getItem('theme')) {
-        setTheme(e.matches ? 'light' : 'dark');
-      }
-    });
+  function setTheme(theme) {
+    html.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    const icon = document.getElementById('themeIcon');
+    const toggle = document.getElementById('themeToggle');
+    if (icon) icon.textContent = theme === 'dark' ? '🌙' : '☀️';
+    if (toggle) toggle.setAttribute('aria-pressed', theme === 'dark' ? 'false' : 'true');
   }
+
+  function getPreferredTheme() {
+    const stored = localStorage.getItem('theme');
+    if (stored) return stored;
+    return window.matchMedia?.('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  }
+
+  setTheme(getPreferredTheme());
+
+  // 👇 THIS IS THE FIX – event delegation on document
+  document.addEventListener('click', function(e) {
+    const toggle = e.target.closest('#themeToggle');
+    if (!toggle) return;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    if (typeof Plotly !== 'undefined') {
+      setTimeout(renderAllCharts, 200);
+    }
+  });
+
+  // System preference changes
+  const systemMedia = window.matchMedia('(prefers-color-scheme: light)');
+  systemMedia.addEventListener('change', function(e) {
+    if (!localStorage.getItem('theme')) {
+      setTheme(e.matches ? 'light' : 'dark');
+    }
+  });
+}
 
   // ============================================================
   // HAMBURGER NAV
@@ -724,14 +722,18 @@ function initHamburger() {
   // ============================================================
   // PLOTLY CHARTS
   // ============================================================
-  function renderAllCharts() {
-    if (typeof Plotly === 'undefined') return;
+function renderAllCharts() {
+  if (typeof Plotly === 'undefined') return;
 
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const textColor = isDark ? '#eef2f8' : '#0f111a';
-    const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const textColor = isDark ? '#eef2f8' : '#0f111a';
+  const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
 
-    // Cost vs θ_AI
+  // ============================================
+  // Chart 1: Cost vs θ_AI
+  // ============================================
+  const costTheta = document.getElementById('chart-cost-theta');
+  if (costTheta) {
     const thetaValues = [0.10, 0.20, 0.30, 0.40, 0.50];
     const costConv = [0.5154, 0.5154, 0.5154, 0.5154, 0.5154];
     const costProd = [0.5079, 0.5035, 0.4994, 0.4959, 0.4923];
@@ -749,10 +751,15 @@ function initHamburger() {
       { x: thetaValues, y: costConv, name: 'Conventional', type: 'scatter', mode: 'lines+markers', line: { color: '#4b5563', width: 2 }, marker: { color: '#4b5563' } },
       { x: thetaValues, y: costProd, name: 'Productivity Bond', type: 'scatter', mode: 'lines+markers', line: { color: '#a78bfa', width: 3 }, marker: { color: '#a78bfa', size: 8 } }
     ], layout1, { responsive: true });
+  }
 
-    // Distress vs α_N
+  // ============================================
+  // Chart 2: Distress vs α_N
+  // ============================================
+  const distressAlpha = document.getElementById('chart-distress-alpha');
+  if (distressAlpha) {
     const alphaValues = [0.30, 0.50, 0.70, 0.90, 1.00];
-    const distressAlpha = [82.5, 85.8, 88.17, 89.6, 90.1];
+    const distressValues = [82.5, 85.8, 88.17, 89.6, 90.1];
     const layout2 = {
       paper_bgcolor: 'rgba(0,0,0,0)',
       plot_bgcolor: 'rgba(0,0,0,0)',
@@ -764,31 +771,39 @@ function initHamburger() {
       displayModeBar: false
     };
     Plotly.newPlot('chart-distress-alpha', [
-      { x: alphaValues, y: distressAlpha, name: 'Distress Probability', type: 'scatter', mode: 'lines+markers', line: { color: '#f87171', width: 3 }, marker: { color: '#f87171', size: 8 } }
+      { x: alphaValues, y: distressValues, name: 'Distress Probability', type: 'scatter', mode: 'lines+markers', line: { color: '#f87171', width: 3 }, marker: { color: '#f87171', size: 8 } }
     ], layout2, { responsive: true });
+  }
 
-    // Happiness curve (initial)
-    const happinessDiv = getEl('chart-happiness');
-    if (happinessDiv) {
-      const gNpiValues = Array.from({ length: 61 }, (_, i) => i * 0.001);
-      const happinessValues = gNpiValues.map(g => 1 / (1 + Math.exp(-80 * (g - 0.03))));
-      const layoutH = {
-        paper_bgcolor: 'rgba(0,0,0,0)',
-        plot_bgcolor: 'rgba(0,0,0,0)',
-        font: { color: textColor, family: 'Inter' },
-        margin: { l: 40, r: 20, t: 20, b: 40 },
-        xaxis: { title: 'Productivity Growth (g_NPI)', gridcolor: gridColor, tickformat: '.0%' },
-        yaxis: { title: 'Happiness Index', gridcolor: gridColor, range: [0, 1.1], tickformat: '.0%' },
-        displayModeBar: false
-      };
-      Plotly.newPlot('chart-happiness', [
-        { x: gNpiValues, y: happinessValues, type: 'scatter', mode: 'lines', line: { color: '#f472b6', width: 3 }, name: 'Happiness Curve' }
-      ], layoutH, { responsive: true });
-    }
+  // ============================================
+  // Chart 3: Happiness Curve
+  // ============================================
+  const happinessDiv = document.getElementById('chart-happiness');
+  if (happinessDiv) {
+    const gNpiValues = Array.from({ length: 61 }, (_, i) => i * 0.001);
+    const happinessValues = gNpiValues.map(g => 1 / (1 + Math.exp(-80 * (g - 0.03))));
+    const layoutH = {
+      paper_bgcolor: 'rgba(0,0,0,0)',
+      plot_bgcolor: 'rgba(0,0,0,0)',
+      font: { color: textColor, family: 'Inter' },
+      margin: { l: 40, r: 20, t: 20, b: 40 },
+      xaxis: { title: 'Productivity Growth (g_NPI)', gridcolor: gridColor, tickformat: '.0%' },
+      yaxis: { title: 'Happiness Index', gridcolor: gridColor, range: [0, 1.1], tickformat: '.0%' },
+      displayModeBar: false
+    };
+    Plotly.newPlot('chart-happiness', [
+      { x: gNpiValues, y: happinessValues, type: 'scatter', mode: 'lines', line: { color: '#f472b6', width: 3 }, name: 'Happiness Curve' }
+    ], layoutH, { responsive: true });
+  }
 
-    // Divergence chart
+  // ============================================
+  // Chart 4: Divergence Chart
+  // ============================================
+  const divergenceDiv = document.getElementById('chart-divergence');
+  if (divergenceDiv) {
     renderDivergenceChart();
   }
+}
 
   // ============================================================
   // DIVERGENCE CHART
