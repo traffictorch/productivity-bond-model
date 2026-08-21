@@ -42,6 +42,13 @@
 
   <!-- ===== CRITICAL CSS (inlined) ===== -->
   <style>
+    html {
+ 	 opacity: 0;
+ 	 transition: opacity 0.12s ease;
+	}
+	html.loaded {
+	  opacity: 1;
+	}
     :root {
       --bg-body: #05060a;
       --bg-card: rgba(12,15,25,0.65);
@@ -1181,6 +1188,10 @@
 
 <!-- ====== HOME JS ====== -->
 <script src="js/home.js" defer></script>
+
+<script>
+  document.documentElement.classList.add('loaded');
+</script>
 
 </body>
 </html>
