@@ -61,25 +61,3 @@
   </ul>
 </nav>
 
-<script>
-  // Re‑attach theme toggle after nav is injected
-  (function() {
-    const toggle = document.getElementById('themeToggle');
-    const icon = document.getElementById('themeIcon');
-    if (!toggle || !icon) return;
-
-    // Remove old listener (if any) and attach fresh
-    toggle.removeEventListener('click', toggleTheme);
-    toggle.addEventListener('click', toggleTheme);
-
-    function toggleTheme() {
-      const html = document.documentElement;
-      const current = html.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      icon.textContent = next === 'dark' ? '🌙' : '☀️';
-      toggle.setAttribute('aria-pressed', next === 'dark' ? 'false' : 'true');
-    }
-  })();
-</script>
