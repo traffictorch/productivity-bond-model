@@ -3,16 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Privacy Policy – The Productivity Bond Model</title>
-  <meta name="description" content="Privacy policy for the Productivity Bond Model website. Information on data collection, cookies, and user rights." />
+
+  <!-- Primary Meta -->
+  <title>Privacy Policy – The Productivity Bond Model & Traffic Torch</title>
+  <meta name="description" content="Privacy policy for the Productivity Bond Model website. Learn about data collection, cookies, Google Analytics 4 usage, and your rights regarding personal information." />
   <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/privacy.html" />
+  <meta name="robots" content="index, follow" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Privacy Policy – The Productivity Bond Model" />
-  <meta property="og:description" content="Privacy policy for the Productivity Bond Model website." />
+  <meta property="og:title" content="Privacy Policy – The Productivity Bond Model & Traffic Torch" />
+  <meta property="og:description" content="Privacy policy for the Productivity Bond Model website. Learn about data collection, cookies, analytics, and your rights." />
   <meta property="og:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.webp" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://traffictorch.github.io/productivity-bond-model/privacy.html" />
+  <meta property="og:site_name" content="The Productivity Bond Model" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Privacy Policy – The Productivity Bond Model & Traffic Torch" />
+  <meta name="twitter:description" content="Privacy policy for the Productivity Bond Model website. Learn about data collection, cookies, analytics, and your rights." />
+  <meta name="twitter:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.webp" />
 
   <!-- PWA Manifest & Icons -->
   <link rel="manifest" href="manifest.json" />
@@ -32,22 +42,96 @@
   <!-- GA4 -->
   <script src="js/ga4.js" defer></script>
 
-  <!-- Structured Data (WebPage) -->
+  <!-- Structured Data (PrivacyPolicy + WebSite + Breadcrumb + Organization + Person) -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "Privacy Policy – The Productivity Bond Model",
-      "description": "Privacy policy for the Productivity Bond Model website.",
-      "publisher": {
-        "@type": "Organization",
-        "name": "Traffic Torch",
-        "url": "https://traffictorch.net"
-      },
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://traffictorch.github.io/productivity-bond-model/privacy.html"
-      }
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://traffictorch.github.io/productivity-bond-model/#website",
+          "url": "https://traffictorch.github.io/productivity-bond-model/",
+          "name": "The Productivity Bond Model",
+          "description": "A sovereign debt instrument designed to replace perpetual-growth-dependent financing with productivity-linked prosperity.",
+          "inLanguage": "en-US",
+          "publisher": {
+            "@type": "Organization",
+            "@id": "https://traffictorch.net/#organization"
+          }
+        },
+        {
+          "@type": "PrivacyPolicy",
+          "@id": "https://traffictorch.github.io/productivity-bond-model/privacy.html#privacypolicy",
+          "url": "https://traffictorch.github.io/productivity-bond-model/privacy.html",
+          "name": "Privacy Policy – The Productivity Bond Model & Traffic Torch",
+          "description": "Privacy policy for the Productivity Bond Model website. Learn about data collection, cookies, Google Analytics 4 usage, and your rights regarding personal information.",
+          "inLanguage": "en-US",
+          "dateModified": "2026-08-22",
+          "about": {
+            "@type": "Thing",
+            "name": "Productivity Bond Model",
+            "description": "A sovereign debt instrument that aligns government financing with real productivity metrics rather than perpetual GDP growth."
+          },
+          "author": {
+            "@type": "Person",
+            "@id": "https://yliacallan.github.io/#person",
+            "name": "Ylia Callan",
+            "url": "https://yliacallan.github.io/",
+            "jobTitle": "Researcher & Founder"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "@id": "https://traffictorch.net/#organization"
+          },
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://traffictorch.github.io/productivity-bond-model/privacy.html"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://traffictorch.github.io/productivity-bond-model/privacy.html#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://traffictorch.github.io/productivity-bond-model/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Privacy Policy",
+              "item": "https://traffictorch.github.io/productivity-bond-model/privacy.html"
+            }
+          ]
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://traffictorch.net/#organization",
+          "name": "Traffic Torch",
+          "url": "https://traffictorch.net",
+          "description": "Research initiative exploring innovative economic and financial models.",
+          "logo": "https://traffictorch.github.io/productivity-bond-model/icon-512.png",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "privacy inquiry",
+            "url": "https://traffictorch.github.io/productivity-bond-model/contact.html",
+            "availableLanguage": "English"
+          }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://yliacallan.github.io/#person",
+          "name": "Ylia Callan",
+          "url": "https://yliacallan.github.io/",
+          "jobTitle": "Researcher & Founder",
+          "affiliation": {
+            "@type": "Organization",
+            "@id": "https://traffictorch.net/#organization"
+          }
+        }
+      ]
     }
   </script>
 </head>

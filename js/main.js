@@ -11,99 +11,97 @@
   // ============================================================
   // THEME TOGGLE
   // ============================================================
-function initTheme() {
-  const html = document.documentElement;
+  function initTheme() {
+    const html = document.documentElement;
 
-  function setTheme(theme) {
-    html.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-    const icon = document.getElementById('themeIcon');
-    const toggle = document.getElementById('themeToggle');
-    if (icon) icon.textContent = theme === 'dark' ? '🌙' : '☀️';
-    if (toggle) toggle.setAttribute('aria-pressed', theme === 'dark' ? 'false' : 'true');
-  }
-
-  function getPreferredTheme() {
-    const stored = localStorage.getItem('theme');
-    if (stored) return stored;
-    return window.matchMedia?.('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-  }
-
-  setTheme(getPreferredTheme());
-
-  // 👇 THIS IS THE FIX – event delegation on document
-  document.addEventListener('click', function(e) {
-    const toggle = e.target.closest('#themeToggle');
-    if (!toggle) return;
-    const current = html.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    setTheme(next);
-    if (typeof Plotly !== 'undefined') {
-      setTimeout(renderAllCharts, 200);
+    function setTheme(theme) {
+      html.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      const icon = document.getElementById('themeIcon');
+      const toggle = document.getElementById('themeToggle');
+      if (icon) icon.textContent = theme === 'dark' ? '🌙' : '☀️';
+      if (toggle) toggle.setAttribute('aria-pressed', theme === 'dark' ? 'false' : 'true');
     }
-  });
 
-  // System preference changes
-  const systemMedia = window.matchMedia('(prefers-color-scheme: light)');
-  systemMedia.addEventListener('change', function(e) {
-    if (!localStorage.getItem('theme')) {
-      setTheme(e.matches ? 'light' : 'dark');
+    function getPreferredTheme() {
+      const stored = localStorage.getItem('theme');
+      if (stored) return stored;
+      return window.matchMedia?.('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
     }
-  });
-}
+
+    setTheme(getPreferredTheme());
+
+    document.addEventListener('click', function(e) {
+      const toggle = e.target.closest('#themeToggle');
+      if (!toggle) return;
+      const current = html.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      setTheme(next);
+      // Re-render charts after theme change (if Plotly is loaded)
+      if (typeof Plotly !== 'undefined') {
+        setTimeout(renderAllCharts, 200);
+      }
+    });
+
+    const systemMedia = window.matchMedia('(prefers-color-scheme: light)');
+    systemMedia.addEventListener('change', function(e) {
+      if (!localStorage.getItem('theme')) {
+        setTheme(e.matches ? 'light' : 'dark');
+      }
+    });
+  }
 
   // ============================================================
   // HAMBURGER NAV
   // ============================================================
-function initHamburger() {
-  // Remove previous listeners to avoid duplicates
-  document.removeEventListener('click', handleHamburgerClick);
-  document.removeEventListener('click', handleNavLinkClick);
-  document.removeEventListener('click', handleOutsideClick);
+  function initHamburger() {
+    document.removeEventListener('click', handleHamburgerClick);
+    document.removeEventListener('click', handleNavLinkClick);
+    document.removeEventListener('click', handleOutsideClick);
 
-  function handleHamburgerClick(e) {
-    const hamburger = e.target.closest('.hamburger');
-    if (!hamburger) return;
-    e.stopPropagation();
-    const navLinks = getEl('navLinks');
-    if (navLinks) {
-      navLinks.classList.toggle('open');
-      hamburger.classList.toggle('open');
-    }
-  }
-
-  function handleNavLinkClick(e) {
-    const link = e.target.closest('a');
-    if (!link) return;
-    if (link.closest('.dropdown-toggle')) return;
-    const navLinks = getEl('navLinks');
-    if (navLinks && navLinks.contains(link)) {
-      navLinks.classList.remove('open');
-      const hamburger = document.querySelector('.hamburger');
-      if (hamburger) hamburger.classList.remove('open');
-    }
-  }
-
-  function handleOutsideClick(e) {
-    const nav = document.querySelector('.sticky-nav');
-    if (!nav) return;
-    if (!nav.contains(e.target)) {
+    function handleHamburgerClick(e) {
+      const hamburger = e.target.closest('.hamburger');
+      if (!hamburger) return;
+      e.stopPropagation();
       const navLinks = getEl('navLinks');
       if (navLinks) {
+        navLinks.classList.toggle('open');
+        hamburger.classList.toggle('open');
+      }
+    }
+
+    function handleNavLinkClick(e) {
+      const link = e.target.closest('a');
+      if (!link) return;
+      if (link.closest('.dropdown-toggle')) return;
+      const navLinks = getEl('navLinks');
+      if (navLinks && navLinks.contains(link)) {
         navLinks.classList.remove('open');
         const hamburger = document.querySelector('.hamburger');
         if (hamburger) hamburger.classList.remove('open');
       }
     }
+
+    function handleOutsideClick(e) {
+      const nav = document.querySelector('.sticky-nav');
+      if (!nav) return;
+      if (!nav.contains(e.target)) {
+        const navLinks = getEl('navLinks');
+        if (navLinks) {
+          navLinks.classList.remove('open');
+          const hamburger = document.querySelector('.hamburger');
+          if (hamburger) hamburger.classList.remove('open');
+        }
+      }
+    }
+
+    document.addEventListener('click', handleHamburgerClick);
+    document.addEventListener('click', handleNavLinkClick);
+    document.addEventListener('click', handleOutsideClick);
   }
 
-  document.addEventListener('click', handleHamburgerClick);
-  document.addEventListener('click', handleNavLinkClick);
-  document.addEventListener('click', handleOutsideClick);
-}
-
   // ============================================================
-  // DROPDOWN TOGGLING (mobile)
+  // DROPDOWN
   // ============================================================
   function initDropdowns() {
     qsa('.dropdown-toggle').forEach(toggle => {
@@ -237,33 +235,71 @@ function initHamburger() {
   }
 
   // ============================================================
-  // HERO PROGRESSIVE REVEAL
+  // LAZY LOAD PLOTLY (Intersection Observer)
   // ============================================================
-  function initHeroReveal() {
-    const heroElements = qsa('.hero .fade-step');
-    const aiWrapper = qs('.ai-power-wrapper');
+  let plotlyLoaded = false;
+  let plotlyLoading = false;
+  let plotlyQueue = [];
 
-    setTimeout(() => {
-      heroElements.forEach(el => el.classList.add('reveal'));
-    }, 500);
+  function loadPlotly() {
+    return new Promise((resolve, reject) => {
+      if (plotlyLoaded) { resolve(); return; }
+      if (plotlyLoading) {
+        // Queue the resolve callback
+        plotlyQueue.push(resolve);
+        return;
+      }
+      plotlyLoading = true;
+      const script = document.createElement('script');
+      script.src = 'https://cdn.plot.ly/plotly-2.27.1.min.js';
+      script.async = true;
+      script.onload = () => {
+        plotlyLoaded = true;
+        plotlyLoading = false;
+        // Resolve all queued promises
+        plotlyQueue.forEach(r => r());
+        plotlyQueue = [];
+        resolve();
+        // Render charts that were waiting
+        renderAllCharts();
+      };
+      script.onerror = () => {
+        plotlyLoading = false;
+        reject(new Error('Failed to load Plotly'));
+      };
+      document.body.appendChild(script);
+    });
+  }
 
-    if (aiWrapper && 'IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            aiWrapper.classList.add('visible');
-            observer.unobserve(aiWrapper);
-          }
-        });
-      }, { threshold: 0.9 });
-      observer.observe(aiWrapper);
-    } else if (aiWrapper) {
-      setTimeout(() => aiWrapper.classList.add('visible'), 5000);
-    }
+  function lazyObserveCharts() {
+    const chartSelectors = [
+      '#chart-divergence',
+      '#chart-happiness',
+      '#chart-cost-theta',
+      '#chart-distress-alpha'
+    ];
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          const chartId = entry.target.id;
+          // Load Plotly and render this chart
+          loadPlotly().then(() => {
+            // Render all charts or just this one; we'll just call renderAllCharts
+            renderAllCharts();
+          }).catch(console.error);
+          observer.unobserve(entry.target);
+        }
+      }
+    }, { rootMargin: '200px' });
+
+    chartSelectors.forEach(sel => {
+      const el = document.querySelector(sel);
+      if (el) observer.observe(el);
+    });
   }
 
   // ============================================================
-  // SIMULATOR ENGINE (Monte Carlo)
+  // SIMULATOR ENGINE (unchanged logic, but uses batch updates)
   // ============================================================
   function initSimulator() {
     const thetaSlider = getEl('theta-slider');
@@ -318,8 +354,7 @@ function initHamburger() {
     function normalRandom(mean, std) {
       mean = mean || 0;
       std = std || 1;
-      let u = 0,
-        v = 0;
+      let u = 0, v = 0;
       while (u === 0) u = Math.random();
       while (v === 0) v = Math.random();
       return mean + std * Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
@@ -356,10 +391,8 @@ function initHamburger() {
       const cap = parseFloat(capSlider.value);
       const totalPaths = 10000;
       let completed = 0;
-      let convCostSum = 0,
-        prodCostSum = 0;
-      let convDistress = 0,
-        prodDistress = 0;
+      let convCostSum = 0, prodCostSum = 0;
+      let convDistress = 0, prodDistress = 0;
 
       if (statusText) statusText.textContent = 'Simulating...';
       if (runBtn) {
@@ -374,10 +407,7 @@ function initHamburger() {
         const end = Math.min(currentBatch + batchSize, totalPaths);
         for (let i = currentBatch; i < end; i++) {
           // Conventional
-          let debtC = 100,
-            revC = 30,
-            costC = 0,
-            distressC = false;
+          let debtC = 100, revC = 30, costC = 0, distressC = false;
           for (let y = 0; y < 10; y++) {
             const gdpG = normalRandom(0.025, 0.02);
             const debtService = debtC * 0.04;
@@ -435,37 +465,36 @@ function initHamburger() {
 
         const maxCost = 0.55;
         const scale = 140 / maxCost;
-        if (barConv) barConv.style.height = Math.max(10, cCost * scale) + 'px';
-        if (barProd) barProd.style.height = Math.max(10, pCost * scale) + 'px';
-        if (barIlb) barIlb.style.height = Math.max(10, 0.489 * scale) + 'px';
-        if (barGdp) barGdp.style.height = Math.max(10, 0.511 * scale) + 'px';
-        if (barHybrid) barHybrid.style.height = Math.max(10, 0.527 * scale) + 'px';
+        // Batch DOM updates to reduce reflows
+        requestAnimationFrame(() => {
+          if (barConv) barConv.style.height = Math.max(10, cCost * scale) + 'px';
+          if (barProd) barProd.style.height = Math.max(10, pCost * scale) + 'px';
+          if (barIlb) barIlb.style.height = Math.max(10, 0.489 * scale) + 'px';
+          if (barGdp) barGdp.style.height = Math.max(10, 0.511 * scale) + 'px';
+          if (barHybrid) barHybrid.style.height = Math.max(10, 0.527 * scale) + 'px';
 
-        if (barConvVal) barConvVal.textContent = cCost.toFixed(3);
-        if (barProdVal) barProdVal.textContent = pCost.toFixed(3);
-        if (barIlbVal) barIlbVal.textContent = '0.489';
-        if (barGdpVal) barGdpVal.textContent = '0.511';
-        if (barHybridVal) barHybridVal.textContent = '0.527';
+          if (barConvVal) barConvVal.textContent = cCost.toFixed(3);
+          if (barProdVal) barProdVal.textContent = pCost.toFixed(3);
+          if (barIlbVal) barIlbVal.textContent = '0.489';
+          if (barGdpVal) barGdpVal.textContent = '0.511';
+          if (barHybridVal) barHybridVal.textContent = '0.527';
 
-        if (ltConvCost) ltConvCost.textContent = cCost.toFixed(3);
-        if (ltProdCost) ltProdCost.textContent = pCost.toFixed(3);
-        if (ltConvDist) ltConvDist.textContent = cDist.toFixed(1) + '%';
-        if (ltProdDist) ltProdDist.textContent = pDist.toFixed(1) + '%';
-        if (ltSaving) ltSaving.textContent = costSave.toFixed(1) + '%';
-        if (ltDistInc) ltDistInc.textContent = (distDiff > 0 ? '+' : '') + distDiff.toFixed(1) + 'pp';
+          if (ltConvCost) ltConvCost.textContent = cCost.toFixed(3);
+          if (ltProdCost) ltProdCost.textContent = pCost.toFixed(3);
+          if (ltConvDist) ltConvDist.textContent = cDist.toFixed(1) + '%';
+          if (ltProdDist) ltProdDist.textContent = pDist.toFixed(1) + '%';
+          if (ltSaving) ltSaving.textContent = costSave.toFixed(1) + '%';
+          if (ltDistInc) ltDistInc.textContent = (distDiff > 0 ? '+' : '') + distDiff.toFixed(1) + 'pp';
 
-        const prodBox = getEl('cost-prod-box');
-        if (prodBox) prodBox.className = 'metric-box' + (pCost < cCost ? ' better' : ' worse');
-        const distBox = getEl('distress-prod-box');
-        if (distBox) distBox.className = 'metric-box' + (pDist < cDist ? ' better' : ' worse');
+          const prodBox = getEl('cost-prod-box');
+          if (prodBox) prodBox.className = 'metric-box' + (pCost < cCost ? ' better' : ' worse');
+          const distBox = getEl('distress-prod-box');
+          if (distBox) distBox.className = 'metric-box' + (pDist < cDist ? ' better' : ' worse');
+        });
       }
 
-      convCostSum = 0;
-      prodCostSum = 0;
-      convDistress = 0;
-      prodDistress = 0;
-      completed = 0;
-      currentBatch = 0;
+      convCostSum = 0; prodCostSum = 0; convDistress = 0; prodDistress = 0;
+      completed = 0; currentBatch = 0;
       if (progressBar) progressBar.style.width = '0%';
       if (pathCounter) pathCounter.textContent = '0 / 10000';
       if (statusText) statusText.textContent = 'Running...';
@@ -564,6 +593,7 @@ function initHamburger() {
         if (happinessVal) happinessVal.textContent = (happiness * 100).toFixed(1) + '%';
         if (bondStrengthVal) bondStrengthVal.textContent = (bondStrength * 100).toFixed(1) + '%';
 
+        // If Plotly is loaded, update the happiness chart
         if (typeof Plotly !== 'undefined') {
           const chartDiv = getEl('chart-happiness');
           if (chartDiv) {
@@ -601,10 +631,9 @@ function initHamburger() {
   }
 
   // ============================================================
-  // AI PREDICTION ENGINES
+  // AI PREDICTION ENGINES (unchanged)
   // ============================================================
   function initPredictionEngines() {
-    // Economic Interpretation
     (function() {
       const btn = getEl('predict-btn');
       const output = getEl('prediction-output');
@@ -664,7 +693,6 @@ function initHamburger() {
       if (btn) btn.addEventListener('click', generate);
     })();
 
-    // Happiness Interpretation
     (function() {
       const btn = getEl('happiness-predict-btn');
       const output = getEl('happiness-output');
@@ -722,91 +750,80 @@ function initHamburger() {
   // ============================================================
   // PLOTLY CHARTS
   // ============================================================
-function renderAllCharts() {
-  if (typeof Plotly === 'undefined') return;
+  function renderAllCharts() {
+    if (typeof Plotly === 'undefined') return;
 
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  const textColor = isDark ? '#eef2f8' : '#0f111a';
-  const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const textColor = isDark ? '#eef2f8' : '#0f111a';
+    const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
 
-  // ============================================
-  // Chart 1: Cost vs θ_AI
-  // ============================================
-  const costTheta = document.getElementById('chart-cost-theta');
-  if (costTheta) {
-    const thetaValues = [0.10, 0.20, 0.30, 0.40, 0.50];
-    const costConv = [0.5154, 0.5154, 0.5154, 0.5154, 0.5154];
-    const costProd = [0.5079, 0.5035, 0.4994, 0.4959, 0.4923];
-    const layout1 = {
-      paper_bgcolor: 'rgba(0,0,0,0)',
-      plot_bgcolor: 'rgba(0,0,0,0)',
-      font: { color: textColor, family: 'Inter' },
-      margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { title: 'θ_AI', gridcolor: gridColor },
-      yaxis: { title: 'Expected Cost', gridcolor: gridColor },
-      legend: { orientation: 'h', x: 0, y: 1.05 },
-      displayModeBar: false
-    };
-    Plotly.newPlot('chart-cost-theta', [
-      { x: thetaValues, y: costConv, name: 'Conventional', type: 'scatter', mode: 'lines+markers', line: { color: '#4b5563', width: 2 }, marker: { color: '#4b5563' } },
-      { x: thetaValues, y: costProd, name: 'Productivity Bond', type: 'scatter', mode: 'lines+markers', line: { color: '#a78bfa', width: 3 }, marker: { color: '#a78bfa', size: 8 } }
-    ], layout1, { responsive: true });
-  }
+    // Chart 1: Cost vs θ_AI
+    const costTheta = document.getElementById('chart-cost-theta');
+    if (costTheta) {
+      const thetaValues = [0.10, 0.20, 0.30, 0.40, 0.50];
+      const costConv = [0.5154, 0.5154, 0.5154, 0.5154, 0.5154];
+      const costProd = [0.5079, 0.5035, 0.4994, 0.4959, 0.4923];
+      const layout1 = {
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        font: { color: textColor, family: 'Inter' },
+        margin: { l: 40, r: 20, t: 20, b: 40 },
+        xaxis: { title: 'θ_AI', gridcolor: gridColor },
+        yaxis: { title: 'Expected Cost', gridcolor: gridColor },
+        legend: { orientation: 'h', x: 0, y: 1.05 },
+        displayModeBar: false
+      };
+      Plotly.newPlot('chart-cost-theta', [
+        { x: thetaValues, y: costConv, name: 'Conventional', type: 'scatter', mode: 'lines+markers', line: { color: '#4b5563', width: 2 }, marker: { color: '#4b5563' } },
+        { x: thetaValues, y: costProd, name: 'Productivity Bond', type: 'scatter', mode: 'lines+markers', line: { color: '#a78bfa', width: 3 }, marker: { color: '#a78bfa', size: 8 } }
+      ], layout1, { responsive: true });
+    }
 
-  // ============================================
-  // Chart 2: Distress vs α_N
-  // ============================================
-  const distressAlpha = document.getElementById('chart-distress-alpha');
-  if (distressAlpha) {
-    const alphaValues = [0.30, 0.50, 0.70, 0.90, 1.00];
-    const distressValues = [82.5, 85.8, 88.17, 89.6, 90.1];
-    const layout2 = {
-      paper_bgcolor: 'rgba(0,0,0,0)',
-      plot_bgcolor: 'rgba(0,0,0,0)',
-      font: { color: textColor, family: 'Inter' },
-      margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { title: 'α_N (participation)', gridcolor: gridColor },
-      yaxis: { title: 'Distress Probability (%)', gridcolor: gridColor },
-      legend: { orientation: 'h', x: 0, y: 1.05 },
-      displayModeBar: false
-    };
-    Plotly.newPlot('chart-distress-alpha', [
-      { x: alphaValues, y: distressValues, name: 'Distress Probability', type: 'scatter', mode: 'lines+markers', line: { color: '#f87171', width: 3 }, marker: { color: '#f87171', size: 8 } }
-    ], layout2, { responsive: true });
-  }
+    // Chart 2: Distress vs α_N
+    const distressAlpha = document.getElementById('chart-distress-alpha');
+    if (distressAlpha) {
+      const alphaValues = [0.30, 0.50, 0.70, 0.90, 1.00];
+      const distressValues = [82.5, 85.8, 88.17, 89.6, 90.1];
+      const layout2 = {
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        font: { color: textColor, family: 'Inter' },
+        margin: { l: 40, r: 20, t: 20, b: 40 },
+        xaxis: { title: 'α_N (participation)', gridcolor: gridColor },
+        yaxis: { title: 'Distress Probability (%)', gridcolor: gridColor },
+        legend: { orientation: 'h', x: 0, y: 1.05 },
+        displayModeBar: false
+      };
+      Plotly.newPlot('chart-distress-alpha', [
+        { x: alphaValues, y: distressValues, name: 'Distress Probability', type: 'scatter', mode: 'lines+markers', line: { color: '#f87171', width: 3 }, marker: { color: '#f87171', size: 8 } }
+      ], layout2, { responsive: true });
+    }
 
-  // ============================================
-  // Chart 3: Happiness Curve
-  // ============================================
-  const happinessDiv = document.getElementById('chart-happiness');
-  if (happinessDiv) {
-    const gNpiValues = Array.from({ length: 61 }, (_, i) => i * 0.001);
-    const happinessValues = gNpiValues.map(g => 1 / (1 + Math.exp(-80 * (g - 0.03))));
-    const layoutH = {
-      paper_bgcolor: 'rgba(0,0,0,0)',
-      plot_bgcolor: 'rgba(0,0,0,0)',
-      font: { color: textColor, family: 'Inter' },
-      margin: { l: 40, r: 20, t: 20, b: 40 },
-      xaxis: { title: 'Productivity Growth (g_NPI)', gridcolor: gridColor, tickformat: '.0%' },
-      yaxis: { title: 'Happiness Index', gridcolor: gridColor, range: [0, 1.1], tickformat: '.0%' },
-      displayModeBar: false
-    };
-    Plotly.newPlot('chart-happiness', [
-      { x: gNpiValues, y: happinessValues, type: 'scatter', mode: 'lines', line: { color: '#f472b6', width: 3 }, name: 'Happiness Curve' }
-    ], layoutH, { responsive: true });
-  }
+    // Chart 3: Happiness Curve
+    const happinessDiv = document.getElementById('chart-happiness');
+    if (happinessDiv) {
+      const gNpiValues = Array.from({ length: 61 }, (_, i) => i * 0.001);
+      const happinessValues = gNpiValues.map(g => 1 / (1 + Math.exp(-80 * (g - 0.03))));
+      const layoutH = {
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        font: { color: textColor, family: 'Inter' },
+        margin: { l: 40, r: 20, t: 20, b: 40 },
+        xaxis: { title: 'Productivity Growth (g_NPI)', gridcolor: gridColor, tickformat: '.0%' },
+        yaxis: { title: 'Happiness Index', gridcolor: gridColor, range: [0, 1.1], tickformat: '.0%' },
+        displayModeBar: false
+      };
+      Plotly.newPlot('chart-happiness', [
+        { x: gNpiValues, y: happinessValues, type: 'scatter', mode: 'lines', line: { color: '#f472b6', width: 3 }, name: 'Happiness Curve' }
+      ], layoutH, { responsive: true });
+    }
 
-  // ============================================
-  // Chart 4: Divergence Chart
-  // ============================================
-  const divergenceDiv = document.getElementById('chart-divergence');
-  if (divergenceDiv) {
+    // Chart 4: Divergence
     renderDivergenceChart();
   }
-}
 
   // ============================================================
-  // DIVERGENCE CHART
+  // DIVERGENCE CHART (separate)
   // ============================================================
   function renderDivergenceChart() {
     const div = getEl('chart-divergence');
@@ -900,7 +917,7 @@ function renderAllCharts() {
   }
 
   // ============================================================
-  // INITIALISE UI – call after DOM ready
+  // INITIALISE UI
   // ============================================================
   function initUI() {
     initTheme();
@@ -910,28 +927,20 @@ function renderAllCharts() {
     initShare();
     initFloatingReturn();
     initPWA();
-    initHeroReveal();
+    // No hero reveal needed – CSS handles it.
     initSimulator();
     initHappinessSlider();
     initPredictionEngines();
 
+    // Lazy-load Plotly charts
+    lazyObserveCharts();
+
+    // If Plotly is already loaded (e.g., by other means), render immediately
     if (typeof Plotly !== 'undefined') {
       renderAllCharts();
-    } else {
-      let attempts = 0;
-      const checkPlotly = setInterval(() => {
-        if (typeof Plotly !== 'undefined') {
-          renderAllCharts();
-          clearInterval(checkPlotly);
-        } else if (++attempts > 20) {
-          clearInterval(checkPlotly);
-          console.warn('Plotly did not load.');
-        }
-      }, 200);
     }
   }
 
-  // EXPOSE initUI globally so other scripts can call it
   window.initUI = initUI;
 
   // ============================================================
