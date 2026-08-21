@@ -1630,3 +1630,46 @@ table.data-table .highlight-row td:first-child {
     max-width: 180px;
   }
 }
+
+/* ============================================================
+   ABOUT PAGE – Mobile Specific Layout
+   ============================================================ */
+
+/* Three pillar cards – mobile: first card full width, others 2 columns */
+@media (max-width: 640px) {
+  .about-pillars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin: 1.5rem 0;
+  }
+
+  .about-pillars .pillar-card:first-child {
+    grid-column: 1 / -1; /* span both columns */
+  }
+
+  /* Author section – mobile: center avatar */
+  .about-author {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .about-author .author-avatar {
+    flex-shrink: 0;
+    margin: 0 auto;
+  }
+
+  .about-author .author-bio {
+    text-align: center;
+  }
+}
+
+/* Contact page – social cards mobile */
+@media (max-width: 640px) {
+  .contact-social {
+    grid-template-columns: 1fr !important;
+  }
+}

@@ -30,7 +30,7 @@
   <link rel="preconnect" href="https://cdn.plot.ly" />
 
   <!-- ===== MAIN CSS ===== -->
-  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/main.css?v=2" />
 
   <!-- ===== GA4 – Deferred Load ===== -->
   <script src="js/ga4.js" defer></script>
@@ -118,7 +118,7 @@
 <!-- ====== NAVIGATION PLACEHOLDER ====== -->
 <div id="nav-placeholder" style="display: contents;"></div>
 
-  <noscript>
+  <noscript> 
     <div style="max-width:1280px; margin:2rem auto; padding:1.5rem; background:#f8fafc; color:#0f172a; font-family:system-ui; line-height:1.6; border-radius:1.5rem; box-shadow:0 4px 20px rgba(0,0,0,0.05);">
       <h1 style="font-size:3rem; font-weight:800; background:linear-gradient(135deg,#4f46e5,#a78bfa); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:0.25rem;">The Productivity Bond Model</h1>
       <p style="font-size:1.3rem; color:#475569; margin-bottom:1.5rem;">Financing prosperity without promising infinite growth.</p>
@@ -134,25 +134,25 @@
     <div class="page-wrapper">
       <div class="main-content">
 
-        <!-- HERO -->
-        <section id="hero" class="container hero" style="min-height:80vh; display:flex; align-items:center; padding:4rem 6px 2rem;">
-          <div>
-            <span class="badge-glow fade-step delay-1">📘 Canonical Reference</span>
-            <span class="badge-glow badge-version fade-step delay-1" style="margin-left:0.5rem;">v0.8.0</span>
-            <h1 class="text-gradient fade-step delay-2" style="font-size:clamp(3rem,12vw,6rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">
-              The Productivity<br />Bond Model
-            </h1>
-            <p class="fade-step delay-3" style="font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:300; opacity:0.7; max-width:640px; margin:1rem 0 2rem;">
-              Financing prosperity without promising infinite growth. Here's the <a href="#abstract" style="color:#059669; text-decoration:underline;">alternative</a>.
-            </p>
-            <div class="fade-step delay-3" style="display:flex; flex-wrap:wrap; gap:1rem; align-items:center;">
-              <a href="#simulator" class="btn-primary">💸 Run Live Simulation</a>
-              <a href="#citation" class="btn-secondary">📖 Cite This Model</a>
-              <button class="share-btn" id="nativeShareBtn">📤 Share (Native)</button>
-              <a class="btn-secondary" href="https://www.addtoany.com/share#url=https%3A%2F%2Ftraffictorch.github.io%2Fproductivity-bond-model%2F&amp;title=The%20Infinite%20Debt%20Problem" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding:0.8rem 2.2rem; text-decoration:none; text-align:center; background:var(--btn-secondary-bg); border:1px solid var(--btn-secondary-border); border-radius:60px; color:var(--btn-secondary-text); font-weight:500; transition:0.2s; cursor:pointer;">📤 Share (Social)</a>
-            </div>
-          </div>
-        </section>
+<!-- HERO -->
+<section id="hero" class="container hero" style="min-height:80vh; display:flex; align-items:center; padding:4rem 6px 2rem; background:transparent;">
+  <div>
+    <span class="badge-glow fade-step delay-1">📘 Canonical Reference</span>
+    <span class="badge-glow badge-version fade-step delay-1" style="margin-left:0.5rem;">v0.8.0</span>
+    <h1 class="text-gradient fade-step delay-2" style="font-size:clamp(3rem,12vw,6rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">
+      The Productivity<br />Bond Model
+    </h1>
+    <p class="fade-step delay-3" style="font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:300; opacity:0.7; max-width:640px; margin:1rem 0 2rem;">
+      Financing prosperity without promising infinite growth. Here's the <a href="#abstract" style="color:#059669; text-decoration:underline;">alternative</a>.
+    </p>
+    <div class="fade-step delay-3" style="display:flex; flex-wrap:wrap; gap:1rem; align-items:center;">
+      <a href="#simulator" class="btn-primary">💸 Run Live Simulation</a>
+      <a href="#citation" class="btn-secondary">📖 Cite This Model</a>
+      <button class="share-btn" id="nativeShareBtn">📤 Share (Native)</button>
+      <a class="btn-secondary" href="https://www.addtoany.com/share#url=https%3A%2F%2Ftraffictorch.github.io%2Fproductivity-bond-model%2F&amp;title=The%20Infinite%20Debt%20Problem" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding:0.8rem 2.2rem; text-decoration:none; text-align:center; background:var(--btn-secondary-bg); border:1px solid var(--btn-secondary-border); border-radius:60px; color:var(--btn-secondary-text); font-weight:500; transition:0.2s; cursor:pointer;">📤 Share (Social)</a>
+    </div>
+  </div>
+</section>
 
         <!-- ABSTRACT -->
         <section id="abstract" class="container section-spacing-sm" style="padding-top:0;">
@@ -730,7 +730,7 @@
                 <p style="font-size:0.9rem; color:var(--text-body);">Anti‑fragile systems. The cap/floor structure and countercyclical coupons make the bond resilient to shocks, not brittle.</p>
               </div>
             </div>
-            <div style="margin-top:1.5rem; font-size:0.9rem; border-top:1px solid var(--border-divider); padding-top:1rem; color:var(--text-muted);">This model is part of the <a href="https://traffictorch.net">Traffic Torch</a> research on incentive design and system‑level optimisation.</div>
+            <div style="margin-top:1.5rem; font-size:0.9rem; border-top:1px solid var(--border-divider); padding-top:1rem; color:var(--text-muted);">This model is part of the <a href="https://traffictorch.net">Traffic Torch</a> research on incentive design and system optimisation.</div>
           </div>
         </section>
 
@@ -891,7 +891,7 @@
 <!-- ====== SCRIPTS ====== -->
   <script src="https://cdn.plot.ly/plotly-2.27.1.min.js" defer></script>
   <script src="js/share.js" defer></script>
-  <script src="js/main.js" defer></script>
+  <script src="js/main.js?v=2" defer></script>
   
 <!-- ====== COMPONENT LOADER ====== -->
 <script>
