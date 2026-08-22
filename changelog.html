@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Changelog – Productivity Bond Model Versions & Latest Updates</title>
-<meta name="description" content="Track every improvement, fix, and milestone in the Productivity Bond Model – the sovereign debt simulation that ties returns to national productivity gains (NPI)." />
-<link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/changelog.html" />
+  <title>Changelog – Productivity Bond Model Versions & Latest Updates</title>
+  <meta name="description" content="Track every improvement, fix, and milestone in the Productivity Bond Model – the sovereign debt simulation that ties returns to national productivity gains (NPI)." />
+  <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/changelog.html" />
 
-<!-- Open Graph -->
-<meta property="og:title" content="Changelog – Productivity Bond Model Versions & Latest Updates" />
-<meta property="og:description" content="Track every improvement, fix, and milestone in the Productivity Bond Model – a sovereign debt simulation linking returns to productivity gains." />
-<meta property="og:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.webp" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://traffictorch.github.io/productivity-bond-model/changelog.html" />
-<meta property="og:site_name" content="The Productivity Bond Model" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Changelog – Productivity Bond Model Versions & Latest Updates" />
+  <meta property="og:description" content="Track every improvement, fix, and milestone in the Productivity Bond Model – a sovereign debt simulation linking returns to productivity gains." />
+  <meta property="og:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.webp" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://traffictorch.github.io/productivity-bond-model/changelog.html" />
+  <meta property="og:site_name" content="The Productivity Bond Model" />
 
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Changelog – Productivity Bond Model Versions & Latest Updates" />
-<meta name="twitter:description" content="Track every improvement, fix, and milestone in the Productivity Bond Model – a sovereign debt simulation linking returns to productivity gains." />
-<meta name="twitter:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.webp" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Changelog – Productivity Bond Model Versions & Latest Updates" />
+  <meta name="twitter:description" content="Track every improvement, fix, and milestone in the Productivity Bond Model – a sovereign debt simulation linking returns to productivity gains." />
+  <meta name="twitter:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.webp" />
 
   <!-- PWA Manifest & Icons -->
   <link rel="manifest" href="manifest.json" />
@@ -33,117 +33,365 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" media="print" onload="this.media='all'" crossorigin="anonymous" />
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" crossorigin="anonymous" /></noscript>
 
-  <!-- Marked.js for Markdown parsing -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Preconnect for AddToAny -->
+  <link rel="preconnect" href="https://static.addtoany.com" />
 
-  <!-- Main CSS -->
-  <link rel="stylesheet" href="css/main.css" />
+  <!-- ===== INLINE THEME SCRIPT ===== -->
+  <script>
+    (function() {
+      const stored = localStorage.getItem('theme');
+      if (stored) {
+        document.documentElement.setAttribute('data-theme', stored);
+      } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
 
-  <!-- GA4 -->
+  <!-- ===== CRITICAL CSS (inlined – same as index) ===== -->
+  <style>
+    html {
+      opacity: 0;
+      transition: opacity 0.12s ease;
+    }
+    html.loaded { opacity: 1; }
+
+    :root {
+      --bg-body: #05060a;
+      --bg-card: rgba(12,15,25,0.65);
+      --bg-glass: rgba(12,15,25,0.65);
+      --btn-primary-bg: linear-gradient(135deg,#4f46e5,#7c3aed);
+      --btn-primary-text: #fff;
+      --btn-secondary-bg: rgba(255,255,255,0.06);
+      --btn-secondary-border: rgba(255,255,255,0.15);
+      --btn-secondary-text: #eef2f8;
+      --text-primary: #eef2f8;
+      --text-secondary: #c7d2fe;
+      --text-muted: #a5b4fc;
+      --border-divider: rgba(255,255,255,0.04);
+      --bar-conv: #4b5563;
+      --bar-ilb: #3b82f6;
+      --bar-gdp: #8b5cf6;
+      --bar-prod: #a78bfa;
+      --bar-hybrid: #f59e0b;
+    }
+    [data-theme="light"] {
+      --bg-body: #f0f2f8;
+      --bg-card: rgba(255,255,255,0.85);
+      --bg-glass: rgba(255,255,255,0.75);
+      --btn-secondary-bg: rgba(0,0,0,0.04);
+      --btn-secondary-border: rgba(0,0,0,0.12);
+      --btn-secondary-text: #0f111a;
+      --text-primary: #0f111a;
+      --text-secondary: #2d2f3e;
+      --text-muted: #4a4a6a;
+      --border-divider: rgba(0,0,0,0.06);
+      --bar-conv: #9ca3af;
+      --bar-ilb: #60a5fa;
+      --bar-gdp: #a78bfa;
+      --bar-prod: #7c3aed;
+      --bar-hybrid: #f59e0b;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      font-family:'Inter',system-ui,-apple-system,sans-serif;
+      background:var(--bg-body);
+      color:var(--text-primary);
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+    }
+    .container { max-width:1280px; margin:0 auto; padding:0 1.5rem; }
+    .glass-card {
+      background:var(--bg-glass);
+      backdrop-filter:blur(16px);
+      border:1px solid rgba(255,255,255,0.06);
+      border-radius:2.5rem;
+      padding:2.5rem 2rem;
+      box-shadow:0 30px 60px -20px rgba(0,0,0,0.8);
+      transition:border-color 0.3s, box-shadow 0.3s;
+    }
+    .text-gradient {
+      background:linear-gradient(135deg,#4f46e5,#a78bfa,#f472b6);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .badge-glow {
+      display:inline-block;
+      background:rgba(79,70,229,0.15);
+      color:var(--text-secondary);
+      font-size:0.7rem;
+      font-weight:700;
+      padding:0.3rem 1rem;
+      border-radius:60px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      border:1px solid rgba(79,70,229,0.15);
+    }
+    .btn-primary {
+      display:inline-block;
+      background:var(--btn-primary-bg);
+      color:var(--btn-primary-text);
+      font-weight:600;
+      padding:0.8rem 2.2rem;
+      border-radius:60px;
+      border:none;
+      cursor:pointer;
+      transition:0.2s;
+      text-decoration:none;
+      text-align:center;
+      box-shadow:0 4px 20px rgba(79,70,229,0.4);
+    }
+    .btn-primary:hover { background:#4338ca; transform:scale(1.02); }
+    .btn-secondary {
+      display:inline-block;
+      background:var(--btn-secondary-bg);
+      color:var(--btn-secondary-text);
+      font-weight:500;
+      padding:0.8rem 2.2rem;
+      border-radius:60px;
+      border:1px solid var(--btn-secondary-border);
+      text-decoration:none;
+      transition:0.2s;
+      cursor:pointer;
+      text-align:center;
+    }
+    .btn-secondary:hover { background:rgba(255,255,255,0.12); }
+    .share-btn {
+      background:var(--btn-secondary-bg);
+      border:1px solid var(--btn-secondary-border);
+      color:var(--btn-secondary-text);
+      padding:0.8rem 2.2rem;
+      font-weight:600;
+      font-size:0.9rem;
+      border-radius:60px;
+      cursor:pointer;
+      transition:0.2s;
+      font-family:inherit;
+      display:inline-block;
+      text-align:center;
+    }
+    .share-btn:hover { background:rgba(255,255,255,0.15); transform:scale(1.02); }
+
+    .hero { min-height:80vh; display:flex; align-items:center; padding:4rem 6px 2rem; background:transparent; }
+
+    .section-spacing-sm { padding:3rem 0; }
+    .section-spacing { padding:6rem 0; }
+    .grid-2col { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+    @media (max-width:768px) {
+      .grid-2col { grid-template-columns:1fr; }
+      .glass-card { padding:1.5rem 1rem; border-radius:1.5rem; }
+      .hero { min-height:60vh; padding:2rem 0; }
+    }
+    .sticky-nav { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 1.5rem; background:var(--bg-glass); backdrop-filter:blur(12px); border-bottom:1px solid var(--border-divider); flex-wrap:wrap; }
+    .nav-left { display:flex; align-items:center; gap:0.8rem; }
+    .nav-links { display:flex; gap:0.4rem; list-style:none; align-items:center; }
+    .hamburger { display:none; flex-direction:column; cursor:pointer; background:transparent; border:none; padding:0.3rem; gap:5px; }
+    .hamburger span { display:block; width:26px; height:3px; background:var(--text-primary); border-radius:3px; }
+    .theme-toggle { background:transparent; border:1px solid var(--border-divider); border-radius:40px; padding:0.2rem 0.6rem; font-size:1.1rem; cursor:pointer; color:var(--text-primary); }
+    .dropdown { position:relative; }
+    .dropdown-toggle { cursor:pointer; }
+    .dropdown-menu { display:none; position:absolute; top:100%; left:0; background:var(--bg-body); border:1px solid var(--border-divider); border-radius:0.8rem; padding:0.5rem 0; min-width:200px; list-style:none; box-shadow:0 20px 40px rgba(0,0,0,0.3); z-index:200; }
+    .dropdown-menu a { display:block; padding:0.4rem 1.2rem; color:var(--text-primary); text-decoration:none; font-size:0.9rem; }
+    .dropdown-menu a:hover { background:var(--bg-input); }
+    @media (min-width:769px) { .dropdown:hover .dropdown-menu { display:block; } }
+    @media (max-width:768px) {
+      .hamburger { display:flex; }
+      .nav-links { display:none; flex-direction:column; width:100%; background:var(--bg-body); padding:0.5rem 0; margin-top:0.5rem; border-top:1px solid var(--border-divider); }
+      .nav-links.open { display:flex; }
+      .dropdown-menu { position:static; background:transparent; border:none; box-shadow:none; padding-left:1.5rem; }
+      .nav-links .dropdown.open .dropdown-menu { display:block; }
+    }
+    .floating-return-top { position:fixed; bottom:7rem; right:2rem; z-index:9998; display:none; background:rgba(0,255,255,0.12); backdrop-filter:blur(8px); border:1px solid rgba(0,255,255,0.2); border-radius:60px; padding:0.7rem 1.2rem; color:#17cfcf; font-weight:600; font-size:0.9rem; cursor:pointer; transition:0.3s; font-family:'Inter',system-ui; }
+    @media (min-width:768px) { .floating-return-top { display:flex; } }
+    .plot-container { background:rgba(0,0,0,0.2); border-radius:1.5rem; padding:0.5rem; min-height:200px; }
+    .bar-item .bar { transition:height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); will-change:height; background:var(--bar-conv); height:120px; max-height:120px; width:100%; max-width:48px; border-radius:8px 8px 4px 4px; min-height:6px; }
+    .bar-item.highlight .bar { background:var(--bar-prod); box-shadow:0 0 30px rgba(167,139,250,0.4); }
+    .bar-item .bar-label { font-size:0.65rem; font-weight:600; margin-top:4px; color:var(--text-secondary); text-align:center; white-space:nowrap; }
+    .bar-item .bar-val { font-size:0.8rem; font-weight:700; color:var(--text-primary); text-shadow:0 0 10px rgba(0,0,0,0.9); }
+    .progress-bar { transition:width 0.1s linear; will-change:width; background:linear-gradient(90deg,#4f46e5,#a78bfa); height:100%; border-radius:4px; }
+    .progress-wrap { width:100%; height:4px; background:var(--bg-input); border-radius:4px; overflow:hidden; margin:1rem 0; }
+
+    .accordion-toggle { cursor:pointer; user-select:none; display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0; border-bottom:1px solid var(--border-divider); color:var(--text-primary); }
+    .accordion-toggle .arrow { transition:transform 0.2s; }
+    .accordion-toggle.open .arrow { transform:rotate(180deg); }
+    .accordion-content { max-height:0; overflow:hidden; transition:max-height 0.4s ease,padding 0.3s ease; padding:0 0.2rem; }
+    .accordion-content.open { max-height:800px; padding:0.8rem 0.2rem 0; }
+
+    /* Changelog specific */
+    .changelog-content pre { white-space:pre-wrap; word-wrap:break-word; font-family:inherit; color:var(--text-body); background:var(--bg-code); padding:1rem; border-radius:0.8rem; border-left:3px solid #a78bfa; }
+    .changelog-content h1, .changelog-content h2, .changelog-content h3 { color:var(--text-primary); margin-top:1.5rem; }
+    .changelog-content ul, .changelog-content ol { padding-left:1.5rem; color:var(--text-body); }
+    .changelog-content li { margin:0.3rem 0; }
+    .changelog-content a { color:#4f46e5; }
+    .changelog-content blockquote { border-left:4px solid #4f46e5; padding-left:1rem; color:var(--text-muted); }
+  </style>
+
+  <!-- ===== CORE CSS (non‑blocking) ===== -->
+  <link rel="stylesheet" href="css/core.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="css/core.min.css"></noscript>
+
+  <!-- ===== GA4 (deferred) ===== -->
   <script src="js/ga4.js" defer></script>
 
-  <!-- Structured Data (Changelog / SoftwareVersion schema) -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
+  <!-- Structured Data (unchanged – keep the same) -->
+  <script type="application/ld+json">
     {
-      "@type": "WebSite",
-      "@id": "https://traffictorch.github.io/productivity-bond-model/#website",
-      "url": "https://traffictorch.github.io/productivity-bond-model/",
-      "name": "The Productivity Bond Model",
-      "description": "A sovereign debt instrument designed to replace perpetual-growth-dependent financing with productivity-linked prosperity.",
-      "inLanguage": "en-US",
-      "publisher": {
-        "@type": "Organization",
-        "@id": "https://traffictorch.net/#organization"
-      }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "@id": "https://traffictorch.github.io/productivity-bond-model/changelog.html#software",
-      "name": "The Productivity Bond Model",
-      "description": "A sovereign debt simulation whose return is linked to measurable productivity gains (NPI), designed to replace perpetual-growth-dependent financing with productivity-linked prosperity.",
-      "applicationCategory": "Simulation",
-      "operatingSystem": "Linux, macOS, Windows",
-      "softwareVersion": "0.8.0",
-      "version": "0.8.0",
-      "datePublished": "2026-08-20",
-      "url": "https://github.com/traffictorch/productivity-bond-model",
-      "license": "https://opensource.org/licenses/MIT",
-      "citation": "https://doi.org/10.5281/zenodo.21970090",
-      "inLanguage": "en-US",
-      "author": {
-        "@type": "Person",
-        "@id": "https://yliacallan.github.io/#person",
-        "name": "Ylia Callan",
-        "url": "https://yliacallan.github.io/",
-        "jobTitle": "Researcher & Founder"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "@id": "https://traffictorch.net/#organization"
-      },
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://traffictorch.github.io/productivity-bond-model/changelog.html"
-      },
-      "about": {
-        "@type": "Thing",
-        "name": "Productivity Bond Model",
-        "description": "A sovereign debt instrument that aligns government financing with real productivity metrics rather than perpetual GDP growth."
-      }
-    },
-    {
-      "@type": "BreadcrumbList",
-      "@id": "https://traffictorch.github.io/productivity-bond-model/changelog.html#breadcrumb",
-      "itemListElement": [
+      "@context": "https://schema.org",
+      "@graph": [
         {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://traffictorch.github.io/productivity-bond-model/"
+          "@type": "WebSite",
+          "@id": "https://traffictorch.github.io/productivity-bond-model/#website",
+          "url": "https://traffictorch.github.io/productivity-bond-model/",
+          "name": "The Productivity Bond Model",
+          "description": "A sovereign debt instrument designed to replace perpetual-growth-dependent financing with productivity-linked prosperity.",
+          "inLanguage": "en-US",
+          "publisher": {
+            "@type": "Organization",
+            "@id": "https://traffictorch.net/#organization"
+          }
         },
         {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Changelog",
-          "item": "https://traffictorch.github.io/productivity-bond-model/changelog.html"
+          "@type": "SoftwareApplication",
+          "@id": "https://traffictorch.github.io/productivity-bond-model/changelog.html#software",
+          "name": "The Productivity Bond Model",
+          "description": "A sovereign debt simulation whose return is linked to measurable productivity gains (NPI), designed to replace perpetual-growth-dependent financing with productivity-linked prosperity.",
+          "applicationCategory": "Simulation",
+          "operatingSystem": "Linux, macOS, Windows",
+          "softwareVersion": "0.8.0",
+          "version": "0.8.0",
+          "datePublished": "2026-08-20",
+          "url": "https://github.com/traffictorch/productivity-bond-model",
+          "license": "https://opensource.org/licenses/MIT",
+          "citation": "https://doi.org/10.5281/zenodo.21970090",
+          "inLanguage": "en-US",
+          "author": {
+            "@type": "Person",
+            "@id": "https://yliacallan.github.io/#person",
+            "name": "Ylia Callan",
+            "url": "https://yliacallan.github.io/",
+            "jobTitle": "Researcher & Founder"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "@id": "https://traffictorch.net/#organization"
+          },
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://traffictorch.github.io/productivity-bond-model/changelog.html"
+          },
+          "about": {
+            "@type": "Thing",
+            "name": "Productivity Bond Model",
+            "description": "A sovereign debt instrument that aligns government financing with real productivity metrics rather than perpetual GDP growth."
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://traffictorch.github.io/productivity-bond-model/changelog.html#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://traffictorch.github.io/productivity-bond-model/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Changelog",
+              "item": "https://traffictorch.github.io/productivity-bond-model/changelog.html"
+            }
+          ]
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://traffictorch.net/#organization",
+          "name": "Traffic Torch",
+          "url": "https://traffictorch.net",
+          "description": "Research initiative exploring innovative economic and financial models.",
+          "logo": "https://traffictorch.github.io/productivity-bond-model/icon-512.png"
         }
       ]
-    },
-    {
-      "@type": "Organization",
-      "@id": "https://traffictorch.net/#organization",
-      "name": "Traffic Torch",
-      "url": "https://traffictorch.net",
-      "description": "Research initiative exploring innovative economic and financial models.",
-      "logo": "https://traffictorch.github.io/productivity-bond-model/icon-512.png"
     }
-  ]
-}
-</script>
+  </script>
 </head>
 <body>
 
-  <!-- ====== NAVIGATION PLACEHOLDER ====== -->
-  <div id="nav-placeholder" style="display: contents;"></div>
+  <!-- ====== NAVIGATION (inlined) ====== -->
+  <nav class="sticky-nav no-print" id="mainNav">
+    <div class="nav-left">
+      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-pressed="false">
+        <span id="themeIcon">🌙</span>
+      </button>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">🏠 Home</a></li>
+      <li class="dropdown">
+        <span class="dropdown-toggle">About ▼</span>
+        <ul class="dropdown-menu">
+          <li><a href="news.html">News</a></li>
+          <li><a href="about.html">Traffic Torch</a></li>
+          <li><a href="changelog.html">Change Log</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <span class="dropdown-toggle">Abstract ▼</span>
+        <ul class="dropdown-menu">
+          <li><a href="index.html#abstract">The Abstract</a></li>
+          <li><a href="index.html#problem-visualized">The Problem</a></li>
+          <li><a href="index.html#wellbeing">Wellbeing</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <span class="dropdown-toggle">PBM ▼</span>
+        <ul class="dropdown-menu">
+          <li><a href="index.html#model-definition">Model</a></li>
+          <li><a href="index.html#mechanism">Mechanism</a></li>
+          <li><a href="index.html#glossary">Glossary</a></li>
+          <li><a href="index.html#limitations">Limitations</a></li>
+          <li><a href="index.html#related">Related</a></li>
+          <li><a href="index.html#faq">FAQ</a></li>
+          <li><a href="index.html#citation">Cite</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <span class="dropdown-toggle">Simulation ▼</span>
+        <ul class="dropdown-menu">
+          <li><a href="index.html#simulator">Live Simulator</a></li>
+          <li><a href="index.html#results-data">Results</a></li>
+          <li><a href="index.html#sensitivity">Sensitivity</a></li>
+          <li><a href="index.html#adoption">Scenarios</a></li>
+          <li><a href="index.html#implement">Implementation</a></li>
+        </ul>
+      </li>
+      <li><a href="book.html">Books</a></li>
+      <li><a href="index.html#learn">Learn 💸</a></li>
+    </ul>
+  </nav>
 
   <!-- ====== MAIN CONTENT ====== -->
   <main id="main-content">
 
-    <!-- HERO -->
+    <!-- HERO – no fade classes -->
     <section id="hero" class="container hero" style="min-height:80vh; display:flex; align-items:center; padding:4rem 6px 2rem;">
       <div>
-        <span class="badge-glow fade-step delay-1">📘 Canonical Reference</span>
-        <span class="badge-glow badge-version fade-step delay-1" style="margin-left:0.5rem;">v0.8.0</span>
-        <h1 class="text-gradient fade-step delay-2" style="font-size:clamp(3rem,12vw,6rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">
+        <span class="badge-glow" style="margin-bottom:0.5rem;">📘 Canonical Reference</span>
+        <span class="badge-glow badge-version" style="margin-left:0.5rem;">v0.8.0</span>
+        <h1 class="text-gradient" style="font-size:clamp(3rem,12vw,6rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">
           The Productivity<br />Bond Model
         </h1>
-        <p class="fade-step delay-3" style="font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:300; opacity:0.7; max-width:640px; margin:1rem 0 2rem;">
+        <p style="font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:300; opacity:0.7; max-width:640px; margin:1rem 0 2rem;">
           Changelog &amp; version history. See the <a href="index.html#abstract" style="color:#059669; text-decoration:underline;">full model</a>.
         </p>
-        <div class="fade-step delay-3" style="display:flex; flex-wrap:wrap; gap:1rem; align-items:center;">
+        <div style="display:flex; flex-wrap:wrap; gap:1rem; align-items:center;">
           <a href="index.html#simulator" class="btn-primary">💸 Run Live Simulation</a>
           <a href="index.html#citation" class="btn-secondary">📖 Cite This Model</a>
           <button class="share-btn" id="nativeShareBtn">📤 Share (Native)</button>
@@ -162,7 +410,7 @@
         </p>
 
         <!-- Changelog content placeholder -->
-        <div id="changelog-content" style="margin-top:1.5rem;">
+        <div id="changelog-content" class="changelog-content" style="margin-top:1.5rem;">
           <p style="color:var(--text-muted);">Loading changelog from GitHub...</p>
         </div>
 
@@ -173,7 +421,7 @@
       </div>
     </section>
 
-    <!-- ====== LEARN SECTION (added) ====== -->
+    <!-- ====== LEARN SECTION ====== -->
     <section id="learn" class="container section-spacing" style="padding-top:0;">
       <div class="glass-card" style="border-color:rgba(251,191,36,0.2);">
         <span class="badge-glow" style="background:rgba(251,191,36,0.15); color:#fbbf24; border-color:rgba(251,191,36,0.15); margin-bottom:0.8rem;">📖 Learn</span>
@@ -187,34 +435,68 @@
           <a href="https://play.google.com/store/audiobooks/details/Ylia_Callan_The_Infinite_Debt_Problem?id=AQAAAED6F3ZXnM" target="_blank" rel="noopener noreferrer" class="btn-secondary">🎧 Google Audiobook</a>
           <button class="btn-secondary" disabled title="Coming soon">🍏 Apple Audiobook (Coming Soon)</button>
         </div>
-      <!-- Share Buttons -->
-      <div style="margin-top:2rem; padding-top:1.5rem; text-align:center; border-top:1px solid var(--border-divider);">
-        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.75rem;">
-          <strong style="font-size:1.1rem; font-weight:600; color:var(--text-secondary); letter-spacing:0.02em;">Share?</strong>
-			<div class="a2a_kit a2a_kit_size_32 a2a_default_style">
-			<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
-			<a class="a2a_button_facebook_messenger"></a>
-			<a class="a2a_button_mastodon"></a>
-			<a class="a2a_button_email"></a>
-			<a class="a2a_button_pinterest"></a>
-			<a class="a2a_button_reddit"></a>
-			<a class="a2a_button_copy_link"></a>
-		    </div>
+        <!-- Share Buttons -->
+        <div style="margin-top:2rem; padding-top:1.5rem; text-align:center; border-top:1px solid var(--border-divider);">
+          <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.75rem;">
+            <strong style="font-size:1.1rem; font-weight:600; color:var(--text-secondary); letter-spacing:0.02em;">Share?</strong>
+            <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+              <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+              <a class="a2a_button_facebook_messenger"></a>
+              <a class="a2a_button_mastodon"></a>
+              <a class="a2a_button_email"></a>
+              <a class="a2a_button_pinterest"></a>
+              <a class="a2a_button_reddit"></a>
+              <a class="a2a_button_copy_link"></a>
+            </div>
+          </div>
         </div>
-      </div>
-      <script defer src="https://static.addtoany.com/menu/page.js"></script>
+        <script defer src="https://static.addtoany.com/menu/page.js"></script>
       </div>
     </section>
 
   </main>
 
-  <!-- ====== PWA INSTALL BUTTON & IOS MODAL ====== -->
-  <button id="pwaInstallBtn" class="pwa-install-btn">
+  <!-- ====== FLOATING RETURN TO TOP ====== -->
+  <button class="floating-return-top" id="floatingReturnTop" aria-label="Return to top">⬆ Top</button>
+
+  <!-- ====== FOOTER (inlined) ====== -->
+  <footer class="footer">
+    <div class="container">
+      <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1rem 1.5rem; margin-bottom:1.5rem; font-size:0.85rem;">
+        <a href="index.html" style="color:var(--text-muted); text-decoration:none;">🏠 Home</a>
+        <a href="news.html" style="color:var(--text-muted); text-decoration:none;">News</a>
+        <a href="about.html" style="color:var(--text-muted); text-decoration:none;">About</a>
+        <a href="book.html" style="color:var(--text-muted); text-decoration:none;">Book</a>
+        <a href="changelog.html" style="color:var(--text-muted); text-decoration:none;">Changelog</a>
+        <a href="privacy.html" style="color:var(--text-muted); text-decoration:none;">Privacy</a>
+        <a href="terms.html" style="color:var(--text-muted); text-decoration:none;">Terms</a>
+        <a href="contact.html" style="color:var(--text-muted); text-decoration:none;">Contact</a>
+        <a href="index.html#simulator" style="color:var(--text-muted); text-decoration:none;">Simulator</a>
+        <a href="index.html#learn" style="color:var(--text-muted); text-decoration:none;">Learn 💸</a>
+      </div>
+      <p>
+        © 2026 <a href="https://traffictorch.net">Traffic Torch</a> ·
+        <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> ·
+        Version 0.8.0 ·
+        <a href="https://zenodo.org/records/21970090" target="_blank" rel="external noopener">Simulation Code (Zenodo)</a> ·
+        <button class="share-btn" style="background:transparent; border:none; color:#4f46e5; padding:0; font-size:0.85rem; cursor:pointer;">📤 Share</button>
+      </p>
+      <p style="font-size:0.7rem; margin-top:0.3rem;">
+        Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI · <span id="last-updated"></span>
+      </p>
+      <p style="font-size:0.65rem; margin-top:0.5rem; color:var(--text-muted); opacity:0.7;">
+        📌 v0.8.0 – feat: Endogenous debt feedback loop implemented - reveals 2.5pp lower distress for Productivity.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ====== PWA INSTALL BUTTON & IOS MODAL (hidden by default) ====== -->
+  <button id="pwaInstallBtn" class="pwa-install-btn" style="display:none;">
     <span class="icon">📱</span>
     <span class="btn-text">Install Apps</span>
     <span class="icon">💻</span>
   </button>
-  <div id="pwaIosOverlay" class="pwa-ios-overlay">
+  <div id="pwaIosOverlay" class="pwa-ios-overlay" style="display:none;">
     <div class="pwa-ios-modal">
       <h3>Install on iPhone</h3>
       <p>To add this app to your home screen:</p>
@@ -224,12 +506,20 @@
     </div>
   </div>
 
-  <!-- ====== FOOTER PLACEHOLDER ====== -->
-  <div id="footer-placeholder"></div>
+  <!-- ====== SERVICE WORKER ====== -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/productivity-bond-model/sw.js')
+        .then(r => console.log('SW registered:', r))
+        .catch(e => console.log('SW failed:', e));
+    }
+  </script>
 
-  <!-- ====== SCRIPTS ====== -->
-  <script src="js/share.js" defer></script>
-  <script src="js/main.js" defer></script>
+  <!-- ====== CORE JS (shared) ====== -->
+  <script src="js/core.min.js" defer></script>
+
+  <!-- ====== MARKED.JS (for changelog parsing) – load async ====== -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
 
   <!-- ====== CHANGELOG FETCHER ====== -->
   <script>
@@ -237,30 +527,30 @@
       const container = document.getElementById('changelog-content');
       if (!container) return;
 
-      // Replace with your actual CHANGELOG.md raw URL
       const RAW_URL = 'https://raw.githubusercontent.com/traffictorch/productivity-bond-model/main/CHANGELOG.md';
+
+      function renderMarkdown(markdown) {
+        if (typeof marked !== 'undefined' && typeof marked.parse === 'function') {
+          container.innerHTML = marked.parse(markdown);
+        } else {
+          // Fallback: plain text
+          const html = markdown
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .split('\n')
+            .map(line => line.trim() ? line : '<br>')
+            .join('\n');
+          container.innerHTML = '<pre style="white-space:pre-wrap; word-wrap:break-word; font-family:inherit; color:var(--text-body); background:var(--bg-code); padding:1rem; border-radius:0.8rem; border-left:3px solid #a78bfa;">' + html + '</pre>';
+        }
+      }
 
       fetch(RAW_URL)
         .then(res => {
           if (!res.ok) throw new Error('Changelog not found (HTTP ' + res.status + ')');
           return res.text();
         })
-        .then(markdown => {
-          // Check if marked is available (loaded via CDN)
-          if (typeof marked !== 'undefined' && typeof marked.parse === 'function') {
-            container.innerHTML = marked.parse(markdown);
-          } else {
-            // Fallback: plain text with <br> for newlines
-            const html = markdown
-              .replace(/&/g, '&amp;')
-              .replace(/</g, '&lt;')
-              .replace(/>/g, '&gt;')
-              .split('\n')
-              .map(line => line.trim() ? line : '<br>')
-              .join('\n');
-            container.innerHTML = '<pre style="white-space:pre-wrap; word-wrap:break-word; font-family:inherit; color:var(--text-body); background:var(--bg-code); padding:1rem; border-radius:0.8rem; border-left:3px solid #a78bfa;">' + html + '</pre>';
-          }
-        })
+        .then(markdown => renderMarkdown(markdown))
         .catch(err => {
           container.innerHTML = `
             <div style="background:rgba(248,113,113,0.1); border-left:4px solid #f87171; padding:1rem; border-radius:0.8rem;">
@@ -276,44 +566,10 @@
     })();
   </script>
 
-  <!-- ====== COMPONENT LOADER ====== -->
+  <!-- ====== FADE‑IN TRIGGER ====== -->
   <script>
-    (function loadComponents() {
-      const navPlaceholder = document.getElementById('nav-placeholder');
-      const footerPlaceholder = document.getElementById('footer-placeholder');
-
-      function fetchAndInsert(url, target) {
-        if (!target) return;
-        fetch(url)
-          .then(res => {
-            if (!res.ok) throw new Error('Failed to load ' + url);
-            return res.text();
-          })
-          .then(html => {
-            target.innerHTML = html;
-            // Re‑initialise UI after nav is injected
-            if (typeof window.initUI === 'function') {
-              requestAnimationFrame(() => window.initUI());
-            } else {
-              console.warn('window.initUI not ready – retrying...');
-              let attempts = 0;
-              const waitForInit = setInterval(() => {
-                if (typeof window.initUI === 'function') {
-                  window.initUI();
-                  clearInterval(waitForInit);
-                } else if (++attempts > 20) {
-                  clearInterval(waitForInit);
-                  console.error('window.initUI never became available.');
-                }
-              }, 100);
-            }
-          })
-          .catch(err => console.warn('Could not load component:', err));
-      }
-
-      fetchAndInsert('nav.html', navPlaceholder);
-      fetchAndInsert('footer.html', footerPlaceholder);
-    })();
+    document.documentElement.classList.add('loaded');
   </script>
+
 </body>
 </html>
