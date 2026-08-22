@@ -1162,17 +1162,21 @@
   </div>
 </footer>
 
-<!-- ====== PWA INSTALL BUTTON & IOS MODAL ====== -->
-<button id="pwaInstallBtn" class="pwa-install-btn" style="display:none;">...</button>
-<div id="pwaIosOverlay" class="pwa-ios-overlay" style="display:none;">
-  <div class="pwa-ios-modal">
-    <h3>Install on iPhone</h3>
-    <p>To add this app to your home screen:</p>
-    <div class="step"><span>1.</span><span class="step-icon">⬆️</span><span>In <strong>Safari</strong> tap the <strong>Share</strong> button at the bottom.</span></div>
-    <div class="step"><span>2.</span><span class="step-icon">➕</span><span>Scroll down and tap <strong>"Add to Home Screen"</strong>.</span></div>
-    <button id="pwaCloseIosModal" class="close-btn">Got it</button>
+  <!-- ====== PWA INSTALL BUTTON & IOS MODAL ====== -->
+  <button id="pwaInstallBtn" class="pwa-install-btn">
+    <span class="icon">📱</span>
+    <span class="btn-text">Install Apps</span>
+    <span class="icon">💻</span>
+  </button>
+  <div id="pwaIosOverlay" class="pwa-ios-overlay">
+    <div class="pwa-ios-modal">
+      <h3>Install on iPhone</h3>
+      <p>To add this app to your home screen:</p>
+      <div class="step"><span>1.</span><span class="step-icon">⬆️</span><span>In <strong>Safari</strong> tap the <strong>Share</strong> button at the bottom.</span></div>
+      <div class="step"><span>2.</span><span class="step-icon">➕</span><span>Scroll down and tap <strong>"Add to Home Screen"</strong>.</span></div>
+      <button id="pwaCloseIosModal" class="close-btn">Got it</button>
+    </div>
   </div>
-</div>
 
 <!-- ====== SERVICE WORKER ====== -->
 <script>
