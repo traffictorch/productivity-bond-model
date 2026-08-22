@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <!-- Primary Meta -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🧰 PBM Productivity Lab | Traffic Torch</title>
+  <meta name="description" content="12 interactive tools to diagnose, simulate, and fix your Infinite Debt. Calculate your productivity debt, find your harmony zone, and build civic resilience." />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/tools.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="PBM Productivity Lab – 12 Tools to Fix Your Infinite Debt" />
+  <meta property="og:description" content="Interactive calculators for the Productivity Bond Model: Debt Assessor, Harmony Zone, Compound Simulator, and more." />
+  <meta property="og:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.webp" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://traffictorch.github.io/productivity-bond-model/tools.html" />
+  <meta property="og:site_name" content="The Productivity Bond Model" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PBM Productivity Lab – 12 Tools to Fix Your Infinite Debt" />
+  <meta name="twitter:description" content="Interactive calculators for the Productivity Bond Model." />
+  <meta name="twitter:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.webp" />
+
+  <!-- PWA / Icons -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="icon-512.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" media="print" onload="this.media='all'" crossorigin="anonymous" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" crossorigin="anonymous" /></noscript>
+
+  <!-- Preconnect for AddToAny -->
+  <link rel="preconnect" href="https://static.addtoany.com" />
+
+  <!-- ===== INLINE THEME SCRIPT ===== -->
+  <script>
+    (function() {
+      const stored = localStorage.getItem('theme');
+      if (stored) {
+        document.documentElement.setAttribute('data-theme', stored);
+      } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+
+  <!-- ===== CRITICAL CSS (inlined – same as about.html) ===== -->
+  <style>
+    html {
+      opacity: 0;
+      transition: opacity 0.12s ease;
+    }
+    html.loaded { opacity: 1; }
+
+    :root {
+      --bg-body: #05060a;
+      --bg-card: rgba(12,15,25,0.65);
+      --bg-glass: rgba(12,15,25,0.65);
+      --btn-primary-bg: linear-gradient(135deg,#4f46e5,#7c3aed);
+      --btn-primary-text: #fff;
+      --btn-secondary-bg: rgba(255,255,255,0.06);
+      --btn-secondary-border: rgba(255,255,255,0.15);
+      --btn-secondary-text: #eef2f8;
+      --text-primary: #eef2f8;
+      --text-secondary: #c7d2fe;
+      --text-muted: #a5b4fc;
+      --border-divider: rgba(255,255,255,0.04);
+      --bg-input: rgba(255,255,255,0.04);
+      --bar-conv: #4b5563;
+      --bar-ilb: #3b82f6;
+      --bar-gdp: #8b5cf6;
+      --bar-prod: #a78bfa;
+      --bar-hybrid: #f59e0b;
+    }
+    [data-theme="light"] {
+      --bg-body: #f0f2f8;
+      --bg-card: rgba(255,255,255,0.85);
+      --bg-glass: rgba(255,255,255,0.75);
+      --btn-secondary-bg: rgba(0,0,0,0.04);
+      --btn-secondary-border: rgba(0,0,0,0.12);
+      --btn-secondary-text: #0f111a;
+      --text-primary: #0f111a;
+      --text-secondary: #2d2f3e;
+      --text-muted: #4a4a6a;
+      --border-divider: rgba(0,0,0,0.06);
+      --bg-input: rgba(0,0,0,0.04);
+      --bar-conv: #9ca3af;
+      --bar-ilb: #60a5fa;
+      --bar-gdp: #a78bfa;
+      --bar-prod: #7c3aed;
+      --bar-hybrid: #f59e0b;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      font-family:'Inter',system-ui,-apple-system,sans-serif;
+      background:var(--bg-body);
+      color:var(--text-primary);
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+    }
+    .container { max-width:1280px; margin:0 auto; padding:0 1.5rem; }
+    .glass-card {
+      background:var(--bg-glass);
+      backdrop-filter:blur(16px);
+      border:1px solid rgba(255,255,255,0.06);
+      border-radius:2.5rem;
+      padding:2.5rem 2rem;
+      box-shadow:0 30px 60px -20px rgba(0,0,0,0.8);
+      transition:border-color 0.3s, box-shadow 0.3s;
+    }
+    .text-gradient {
+      background:linear-gradient(135deg,#4f46e5,#a78bfa,#f472b6);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .badge-glow {
+      display:inline-block;
+      background:rgba(79,70,229,0.15);
+      color:var(--text-secondary);
+      font-size:0.7rem;
+      font-weight:700;
+      padding:0.3rem 1rem;
+      border-radius:60px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      border:1px solid rgba(79,70,229,0.15);
+    }
+    .btn-primary {
+      display:inline-block;
+      background:var(--btn-primary-bg);
+      color:var(--btn-primary-text);
+      font-weight:600;
+      padding:0.8rem 2.2rem;
+      border-radius:60px;
+      border:none;
+      cursor:pointer;
+      transition:0.2s;
+      text-decoration:none;
+      text-align:center;
+      box-shadow:0 4px 20px rgba(79,70,229,0.4);
+    }
+    .btn-primary:hover { background:#4338ca; transform:scale(1.02); }
+    .btn-secondary {
+      display:inline-block;
+      background:var(--btn-secondary-bg);
+      color:var(--btn-secondary-text);
+      font-weight:500;
+      padding:0.8rem 2.2rem;
+      border-radius:60px;
+      border:1px solid var(--btn-secondary-border);
+      text-decoration:none;
+      transition:0.2s;
+      cursor:pointer;
+      text-align:center;
+    }
+    .btn-secondary:hover { background:rgba(255,255,255,0.12); }
+    .share-btn {
+      background:var(--btn-secondary-bg);
+      border:1px solid var(--btn-secondary-border);
+      color:var(--btn-secondary-text);
+      padding:0.8rem 2.2rem;
+      font-weight:600;
+      font-size:0.9rem;
+      border-radius:60px;
+      cursor:pointer;
+      transition:0.2s;
+      font-family:inherit;
+      display:inline-block;
+      text-align:center;
+    }
+    .share-btn:hover { background:rgba(255,255,255,0.15); transform:scale(1.02); }
+
+    .hero { min-height:80vh; display:flex; align-items:center; padding:4rem 6px 2rem; background:transparent; }
+    .section-spacing { padding:6rem 0; }
+    .grid-2col { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+    @media (max-width:768px) {
+      .grid-2col { grid-template-columns:1fr; }
+      .glass-card { padding:1.5rem 1rem; border-radius:1.5rem; }
+      .hero { min-height:60vh; padding:2rem 0; }
+    }
+    .sticky-nav { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 1.5rem; background:var(--bg-glass); backdrop-filter:blur(12px); border-bottom:1px solid var(--border-divider); flex-wrap:wrap; }
+    .nav-left { display:flex; align-items:center; gap:0.8rem; }
+    .nav-links { display:flex; gap:0.4rem; list-style:none; align-items:center; flex-wrap:wrap; }
+    .hamburger { display:none; flex-direction:column; cursor:pointer; background:transparent; border:none; padding:0.3rem; gap:5px; }
+    .hamburger span { display:block; width:26px; height:3px; background:var(--text-primary); border-radius:3px; }
+    .theme-toggle { background:transparent; border:1px solid var(--border-divider); border-radius:40px; padding:0.2rem 0.6rem; font-size:1.1rem; cursor:pointer; color:var(--text-primary); }
+    .dropdown { position:relative; }
+    .dropdown-toggle { cursor:pointer; }
+    .dropdown-menu { display:none; position:absolute; top:100%; left:0; background:var(--bg-body); border:1px solid var(--border-divider); border-radius:0.8rem; padding:0.5rem 0; min-width:200px; list-style:none; box-shadow:0 20px 40px rgba(0,0,0,0.3); z-index:200; }
+    .dropdown-menu a { display:block; padding:0.4rem 1.2rem; color:var(--text-primary); text-decoration:none; font-size:0.9rem; }
+    .dropdown-menu a:hover { background:var(--bg-input); }
+    @media (min-width:769px) { .dropdown:hover .dropdown-menu { display:block; } }
+    @media (max-width:768px) {
+      .hamburger { display:flex; }
+      .nav-links { display:none; flex-direction:column; width:100%; background:var(--bg-body); padding:0.5rem 0; margin-top:0.5rem; border-top:1px solid var(--border-divider); }
+      .nav-links.open { display:flex; }
+      .dropdown-menu { position:static; background:transparent; border:none; box-shadow:none; padding-left:1.5rem; }
+      .nav-links .dropdown.open .dropdown-menu { display:block; }
+    }
+    .floating-return-top { position:fixed; bottom:7rem; right:2rem; z-index:9998; display:none; background:rgba(0,255,255,0.12); backdrop-filter:blur(8px); border:1px solid rgba(0,255,255,0.2); border-radius:60px; padding:0.7rem 1.2rem; color:#17cfcf; font-weight:600; font-size:0.9rem; cursor:pointer; transition:0.3s; font-family:'Inter',system-ui; }
+    @media (min-width:768px) { .floating-return-top { display:flex; } }
+
+    /* Tools‑specific styles */
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-divider);
+      padding-bottom: 0.75rem;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.4rem 0.9rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-family: inherit;
+    }
+    .tab-btn:hover {
+      color: var(--text-primary);
+      background: var(--bg-input);
+    }
+    .tab-btn.active {
+      background: rgba(79,70,229,0.2);
+      color: #b388ff;
+      box-shadow: 0 0 0 1px rgba(79,70,229,0.3);
+    }
+    .tool-panel {
+      display: none;
+      animation: fade 0.2s ease;
+    }
+    .tool-panel.active {
+      display: block;
+    }
+    @keyframes fade {
+      0% { opacity: 0.4; transform: translateY(4px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+    .input-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 2rem;
+      margin-bottom: 1.5rem;
+      background: var(--bg-input);
+      padding: 1.2rem 1.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-divider);
+    }
+    .input-group label {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      gap: 0.3rem;
+      flex: 1 1 140px;
+    }
+    .input-group input[type="number"],
+    .input-group input[type="range"] {
+      background: var(--bg-body);
+      border: 1px solid var(--border-divider);
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      color: var(--text-primary);
+      font-weight: 500;
+      width: 100%;
+      font-family: inherit;
+    }
+    .input-group input[type="range"] {
+      padding: 0;
+      accent-color: #4f46e5;
+    }
+    .result-box {
+      background: var(--bg-input);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border-left: 4px solid #4f46e5;
+      margin-top: 1rem;
+    }
+    .result-box .stat {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .result-box .stat span {
+      color: #4f46e5;
+    }
+    .result-box .sub-stat {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    .risk-low { color: #69db7c; }
+    .risk-med { color: #ffd43b; }
+    .risk-high { color: #ff6b6b; }
+    .footer {
+      margin-top: 4rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border-divider);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    .footer a { color: var(--text-secondary); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+    .breadcrumb { font-size:0.85rem; color:var(--text-muted); display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap; margin-bottom:0.5rem; }
+    .breadcrumb a { color:var(--text-muted); text-decoration:none; }
+    .breadcrumb a:hover { color:var(--text-primary); }
+  </style>
+
+  <!-- ===== CORE CSS (non‑blocking) ===== -->
+  <link rel="stylesheet" href="css/core.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="css/core.min.css"></noscript>
+
+  <!-- ===== GA4 (deferred) ===== -->
+  <script src="js/ga4.js" defer></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://traffictorch.github.io/productivity-bond-model/#website",
+          "url": "https://traffictorch.github.io/productivity-bond-model/",
+          "name": "The Productivity Bond Model",
+          "description": "A sovereign debt instrument designed to replace perpetual-growth-dependent financing with productivity-linked prosperity.",
+          "inLanguage": "en-US",
+          "publisher": {
+            "@type": "Organization",
+            "@id": "https://traffictorch.net/#organization"
+          }
+        },
+        {
+          "@type": "CollectionPage",
+          "@id": "https://traffictorch.github.io/productivity-bond-model/tools.html#collectionpage",
+          "url": "https://traffictorch.github.io/productivity-bond-model/tools.html",
+          "name": "PBM Productivity Lab – 12 Tools to Fix Your Infinite Debt",
+          "description": "Interactive calculators for the Productivity Bond Model: Debt Assessor, Harmony Zone, Compound Simulator, and more.",
+          "inLanguage": "en-US",
+          "dateModified": "2026-08-23",
+          "about": {
+            "@type": "Thing",
+            "name": "Productivity Bond Model Tools",
+            "description": "A suite of 12 interactive web tools for diagnosing productivity debt, simulating compound interest, measuring civic resilience, and more."
+          },
+          "publisher": {
+            "@type": "Organization",
+            "@id": "https://traffictorch.net/#organization"
+          },
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://traffictorch.github.io/productivity-bond-model/tools.html"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://traffictorch.github.io/productivity-bond-model/tools.html#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://traffictorch.github.io/productivity-bond-model/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Tools",
+              "item": "https://traffictorch.github.io/productivity-bond-model/tools.html"
+            }
+          ]
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://traffictorch.net/#organization",
+          "name": "Traffic Torch",
+          "url": "https://traffictorch.net",
+          "description": "Research initiative exploring innovative economic and financial models.",
+          "logo": "https://traffictorch.github.io/productivity-bond-model/icon-512.png"
+        }
+      ]
+    }
+  </script>
+</head>
+<body>
+
+<!-- ====== NAVIGATION ====== -->
+<nav class="sticky-nav no-print" id="mainNav">
+  <div class="nav-left">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-pressed="false">
+      <span id="themeIcon">🌙</span>
+    </button>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">🏠 Home</a></li>
+    <li class="dropdown">
+      <span class="dropdown-toggle">Tools ▼</span>
+      <ul class="dropdown-menu">
+        <li><a href="tools.html#tab1">1. Debt Assessor</a></li>
+        <li><a href="tools.html#tab2">2. Harmony Zone</a></li>
+        <li><a href="tools.html#tab3">3. Compound Simulator</a></li>
+        <li><a href="tools.html#tab4">4. Happinessometer</a></li>
+        <li><a href="tools.html#tab5">5. Resilience Score</a></li>
+        <li><a href="tools.html#tab6">6. Opportunity Translator</a></li>
+        <li><a href="tools.html#tab7">7. Stability Index</a></li>
+        <li><a href="tools.html#tab8">8. Sustainable Range</a></li>
+        <li><a href="tools.html#tab9">9. Weekly Time Log</a></li>
+        <li><a href="tools.html#tab10">10. Shock Simulator</a></li>
+        <li><a href="tools.html#tab11">11. Correlation Meter</a></li>
+        <li><a href="tools.html#tab12">12. Task ROI</a></li>
+      </ul>
+    </li>
+    <li class="dropdown">
+      <span class="dropdown-toggle">About ▼</span>
+      <ul class="dropdown-menu">
+        <li><a href="news.html">News</a></li>
+        <li><a href="about.html">Traffic Torch</a></li>
+        <li><a href="changelog.html">Change Log</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </li>
+    <li class="dropdown">
+      <span class="dropdown-toggle">Abstract ▼</span>
+      <ul class="dropdown-menu">
+        <li><a href="index.html#abstract">The Abstract</a></li>
+        <li><a href="index.html#problem-visualized">The Problem</a></li>
+        <li><a href="index.html#wellbeing">Wellbeing</a></li>
+      </ul>
+    </li>
+    <li class="dropdown">
+      <span class="dropdown-toggle">PBM ▼</span>
+      <ul class="dropdown-menu">
+        <li><a href="index.html#model-definition">Model</a></li>
+        <li><a href="index.html#mechanism">Mechanism</a></li>
+        <li><a href="index.html#glossary">Glossary</a></li>
+        <li><a href="index.html#limitations">Limitations</a></li>
+        <li><a href="index.html#related">Related</a></li>
+        <li><a href="index.html#faq">FAQ</a></li>
+        <li><a href="index.html#citation">Cite</a></li>
+      </ul>
+    </li>
+    <li class="dropdown">
+      <span class="dropdown-toggle">Simulation ▼</span>
+      <ul class="dropdown-menu">
+        <li><a href="index.html#simulator">Live Simulator</a></li>
+        <li><a href="index.html#results-data">Results</a></li>
+        <li><a href="index.html#sensitivity">Sensitivity</a></li>
+        <li><a href="index.html#adoption">Scenarios</a></li>
+        <li><a href="index.html#implement">Implementation</a></li>
+      </ul>
+    </li>
+    <li><a href="book.html">Books</a></li>
+    <li><a href="tools.html" style="color:#b388ff;">🧰 Tools</a></li>
+    <li><a href="index.html#learn">Learn 💸</a></li>
+  </ul>
+</nav>
+
+<!-- ====== MAIN CONTENT ====== -->
+<main id="main-content">
+
+  <!-- HERO -->
+  <section id="hero" class="container hero" style="min-height:80vh; display:flex; align-items:center; padding:4rem 6px 2rem;">
+    <div>
+      <span class="badge-glow" style="margin-bottom:0.5rem;">🧪 Interactive Lab</span>
+      <span class="badge-glow badge-version" style="margin-left:0.5rem;">v0.1.0</span>
+      <h1 class="text-gradient" style="font-size:clamp(2.5rem,8vw,4rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">
+        PBM Productivity Lab
+      </h1>
+      <p style="font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:300; opacity:0.8; max-width:600px; margin:0.8rem 0 1.5rem; color:var(--text-secondary);">
+        12 tools to diagnose, simulate, and fix your Infinite Debt.
+      </p>
+      <div style="display:flex; flex-wrap:wrap; gap:0.8rem; align-items:center;">
+        <a href="#tab1" class="btn-primary" style="padding:0.6rem 1.5rem; font-size:0.95rem;">📉 Start with Debt</a>
+        <a href="#tab2" class="btn-secondary" style="padding:0.6rem 1.5rem; font-size:0.95rem;">⚖️ Find Harmony</a>
+        <button class="share-btn" id="nativeShareBtn" style="padding:0.6rem 1.5rem; font-size:0.95rem;">📤 Share</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BREADCRUMB -->
+  <div class="container" style="padding-top:0.8rem; padding-bottom:0;">
+    <nav class="breadcrumb">
+      <a href="index.html">🏠 Home</a>
+      <span style="opacity:0.5;">/</span>
+      <span style="color:var(--text-primary); font-weight:500;">Productivity Lab</span>
+    </nav>
+  </div>
+
+  <!-- TOOLKIT SECTION -->
+  <section id="tools" class="container section-spacing" style="padding-top:1rem;">
+    <div class="glass-card">
+
+      <!-- TABS -->
+      <div class="tabs" id="tabHeaders">
+        <button class="tab-btn active" data-tab="tab1" onclick="switchTab('tab1')">1. Debt</button>
+        <button class="tab-btn" data-tab="tab2" onclick="switchTab('tab2')">2. Harmony</button>
+        <button class="tab-btn" data-tab="tab3" onclick="switchTab('tab3')">3. Compound</button>
+        <button class="tab-btn" data-tab="tab4" onclick="switchTab('tab4')">4. Happiness</button>
+        <button class="tab-btn" data-tab="tab5" onclick="switchTab('tab5')">5. Resilience</button>
+        <button class="tab-btn" data-tab="tab6" onclick="switchTab('tab6')">6. Translator</button>
+        <button class="tab-btn" data-tab="tab7" onclick="switchTab('tab7')">7. Stability</button>
+        <button class="tab-btn" data-tab="tab8" onclick="switchTab('tab8')">8. Range</button>
+        <button class="tab-btn" data-tab="tab9" onclick="switchTab('tab9')">9. Time Log</button>
+        <button class="tab-btn" data-tab="tab10" onclick="switchTab('tab10')">10. Shock</button>
+        <button class="tab-btn" data-tab="tab11" onclick="switchTab('tab11')">11. Correlation</button>
+        <button class="tab-btn" data-tab="tab12" onclick="switchTab('tab12')">12. Task ROI</button>
+      </div>
+
+      <!-- ========== TOOL 1: DEBT ASSESSOR ========== -->
+      <div id="tab1" class="tool-panel active">
+        <h2 style="font-size:1.5rem; font-weight:600; color:var(--text-primary); margin-bottom:0.3rem;">📉 Core Debt Assessor</h2>
+        <p class="desc">Calculate the exact dollar amount your procrastination is costing you annually.</p>
+        <div class="input-group">
+          <label>Hourly Rate ($) <input type="number" id="hourlyRate" value="35" step="1" /></label>
+          <label>Wasted Hours / Day <input type="number" id="wastedHours" value="2.0" step="0.1" /></label>
+          <label>Work Days / Week <input type="number" id="workDays" value="5" step="1" /></label>
+        </div>
+        <button class="btn-primary" onclick="calculateDebt()">💸 Calculate My Debt</button>
+        <div id="debtResult" class="result-box">
+          <div class="stat">$<span id="annualDebt">0</span></div>
+          <div class="sub-stat">Annual loss · <span id="debtHours">0</span> hours wasted (≈ <span id="debtDays">0</span> full work days).</div>
+        </div>
+      </div>
+
+      <!-- ========== TOOL 2: HARMONY ZONE ========== -->
+      <div id="tab2" class="tool-panel">
+        <h2 style="font-size:1.5rem; font-weight:600; color:var(--text-primary); margin-bottom:0.3rem;">⚖️ Harmony Zone Finder</h2>
+        <p class="desc">Measure your distance from the ideal productivity rate (~3%).</p>
+        <div class="input-group">
+          <label>Current Productivity Rate (%) <input type="number" id="prodRate" value="3.8" step="0.1" /></label>
+          <label>Happiness Level (1-10) <input type="number" id="happinessLevel" value="6" step="1" min="1" max="10" /></label>
+        </div>
+        <button class="btn-primary" onclick="calculateHarmony()">🌀 Find Harmony</button>
+        <div id="harmonyResult" class="result-box">
+          <div class="stat">Harmony Score: <span id="harmonyScore">—</span></div>
+          <div class="sub-stat" id="harmonyInterpretation">Enter your rates above.</div>
+          <div class="sub-stat" style="margin-top:0.5rem;">Stability: <span id="stabilityScore" class="risk-med">—</span></div>
+        </div>
+      </div>
+
+      <!-- ========== TOOLS 3-12: SCAFFOLDS ========== -->
+      <div id="tab3" class="tool-panel"><h2 style="font-size:1.3rem; font-weight:600; color:var(--text-primary);">📈 Compound Simulator</h2><p class="desc">See your debt compound over 10 years.</p><div class="result-box"><div class="sub-stat">🛠 Under construction — drop your JS logic here.</div></div></div>
+      <div id="tab4" class="tool-panel"><h2 style="font-size:1.3rem; font-weight:600; color:var(--text-primary);">😊 Happinessometer</h2><p class="desc">Composite gauge of your civic wellbeing.</p><div class="result-box"><div class="sub-stat">🛠 Under construction.</div></div></div>
+      <div id="tab5" class="tool-panel"><h2 style="font-size:1.3rem; font-weight:600; color:var(--text-primary);">🛡️ Civic Resilience Score</h2><p class="desc">Combines bond strength, happiness &amp; productivity.</p><div class="result-box"><div class="sub-stat">🛠 Under construction.</div></div></div>
+      <div id="tab6" class="tool-panel"><h2 style="font-size:1.3rem; font-weight:600; color:var(--text-primary);">🏝️ Opportunity Translator</h2><p class="desc">What could you buy with your recovered time?</p><div class="result-box"><div class="sub-stat">🛠 Under construction.</div></div></div>
+      <div id="tab7" class="tool-panel"><h2 style="font-size:1.3rem; font-weight:600; color:var(--text-primary);">📊 Bond Stability Index</h2><p class="desc">Volatility &amp; risk class for your productivity bond.</p><div class="result-box"><div class="sub-stat">🛠 Under construction.</div></div></div>
+      <div id="tab8" class="tool-panel"><h2 style="font-size:1.3rem; font-weight:600; color:var(--text-primary);">🌿 Sustainable Range</h2><p class="desc">Safe productivity window to avoid burnout.</p><div class="result-box"><div class="sub-stat">🛠 Under construction.</div></div></div>
+      <div id="tab9" class="tool-panel"><h2 style="font-size:1.3rem; font-weight:600; color:var(--text-primary);">📅 Weekly Time Log</h2><p class="desc">Daily tracker stored in your browser.</p><div class="result-box"><div class="sub-stat">🛠 Under construction.</div></div></div>
+      <div id="tab10" class="tool-panel"><h2 style="font-size:1.3rem; font-weight:600; color:var(--text-primary);">⚡ Shock Simulator</h2><p class="desc">Simulate sudden productivity spikes/drops.</p><div class="result-box"><div class="sub-stat">🛠 Under construction.</div></div></div>
+      <div id="tab11" class="tool-panel"><h2 style="font-size:1.3rem; font-weight:600; color:var(--text-primary);">🔗 Correlation Meter</h2><p class="desc">Pearson correlation between bond &amp; happiness.</p><div class="result-box"><div class="sub-stat">🛠 Under construction.</div></div></div>
+      <div id="tab12" class="tool-panel"><h2 style="font-size:1.3rem; font-weight:600; color:var(--text-primary);">🧾 Task ROI Calculator</h2><p class="desc">Micro‑decision maker for specific tasks.</p><div class="result-box"><div class="sub-stat">🛠 Under construction.</div></div></div>
+
+      <!-- SHARE SECTION (matching about.html) -->
+      <div style="margin-top:2.5rem; padding-top:1.5rem; text-align:center; border-top:1px solid var(--border-divider);">
+        <div style="display:flex; flex-direction:column; align-items:center; gap:0.75rem;">
+          <strong style="font-size:1.1rem; font-weight:600; color:var(--text-secondary);">Share this toolkit?</strong>
+          <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+            <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+            <a class="a2a_button_facebook_messenger"></a>
+            <a class="a2a_button_mastodon"></a>
+            <a class="a2a_button_email"></a>
+            <a class="a2a_button_reddit"></a>
+            <a class="a2a_button_copy_link"></a>
+          </div>
+        </div>
+      </div>
+      <script defer src="https://static.addtoany.com/menu/page.js"></script>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ====== FLOATING RETURN TO TOP ====== -->
+<button class="floating-return-top" id="floatingReturnTop" aria-label="Return to top">⬆ Top</button>
+
+<!-- ====== FOOTER (matching about.html) ====== -->
+<footer class="footer">
+  <div class="container">
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1rem 1.5rem; margin-bottom:1.5rem; font-size:0.85rem;">
+      <a href="index.html">🏠 Home</a>
+      <a href="news.html">News</a>
+      <a href="about.html">About</a>
+      <a href="book.html">Book</a>
+      <a href="tools.html" style="color:#b388ff;">🧰 Tools</a>
+      <a href="changelog.html">Changelog</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="contact.html">Contact</a>
+      <a href="index.html#simulator">Simulator</a>
+      <a href="index.html#learn">Learn 💸</a>
+    </div>
+    <p>
+      © 2026 <a href="https://traffictorch.net">Traffic Torch</a> ·
+      <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> ·
+      Version 0.8.0 ·
+      <a href="https://zenodo.org/records/21970090" target="_blank" rel="external noopener">Simulation Code (Zenodo)</a> ·
+      <button class="share-btn" style="background:transparent; border:none; color:#4f46e5; padding:0; font-size:0.85rem; cursor:pointer;">📤 Share</button>
+    </p>
+    <p style="font-size:0.7rem; margin-top:0.3rem;">
+      Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI · <span id="last-updated"></span>
+    </p>
+    <p style="font-size:0.65rem; margin-top:0.5rem; color:var(--text-muted); opacity:0.7;">
+      📌 v0.8.0 – feat: Endogenous debt feedback loop implemented - reveals 2.5pp lower distress for Productivity.
+    </p>
+  </div>
+</footer>
+
+<!-- ====== PWA INSTALL BUTTON & IOS MODAL ====== -->
+<button id="pwaInstallBtn" class="pwa-install-btn">
+  <span class="icon">📱</span>
+  <span class="btn-text">Install Apps</span>
+  <span class="icon">💻</span>
+</button>
+<div id="pwaIosOverlay" class="pwa-ios-overlay">
+  <div class="pwa-ios-modal">
+    <h3>Install on iPhone</h3>
+    <p>To add this app to your home screen:</p>
+    <div class="step"><span>1.</span><span class="step-icon">⬆️</span><span>In <strong>Safari</strong> tap the <strong>Share</strong> button at the bottom.</span></div>
+    <div class="step"><span>2.</span><span class="step-icon">➕</span><span>Scroll down and tap <strong>"Add to Home Screen"</strong>.</span></div>
+    <button id="pwaCloseIosModal" class="close-btn">Got it</button>
+  </div>
+</div>
+
+<!-- ====== SERVICE WORKER ====== -->
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/productivity-bond-model/sw.js')
+      .then(r => console.log('SW registered:', r))
+      .catch(e => console.log('SW failed:', e));
+  }
+</script>
+
+<!-- ====== CORE JS (shared) ====== -->
+<script src="js/core.min.js" defer></script>
+
+<!-- ====== FADE‑IN TRIGGER ====== -->
+<script>
+  document.documentElement.classList.add('loaded');
+</script>
+
+<!-- ====== TOOLS‑SPECIFIC JAVASCRIPT ====== -->
+<script>
+  // ============================
+  // 0. HASH-BASED ROUTING
+  // ============================
+  function switchTab(tabId) {
+    window.location.hash = tabId;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+    const activeBtn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+    if (activeBtn) activeBtn.classList.add('active');
+    const panel = document.getElementById(tabId);
+    if (panel) panel.classList.add('active');
+  }
+
+  function handleHash() {
+    const hash = window.location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) {
+      switchTab(hash);
+    } else {
+      switchTab('tab1');
+    }
+  }
+
+  window.addEventListener('hashchange', handleHash);
+  window.addEventListener('load', handleHash);
+
+  // ============================
+  // 1. SHARED STATE
+  // ============================
+  const state = {
+    hourlyRate: 35,
+    wastedHours: 2.0,
+    workDays: 5,
+    prodRate: 3.8,
+    happiness: 6
+  };
+
+  document.getElementById('hourlyRate').addEventListener('input', (e) => state.hourlyRate = parseFloat(e.target.value) || 0);
+  document.getElementById('wastedHours').addEventListener('input', (e) => state.wastedHours = parseFloat(e.target.value) || 0);
+  document.getElementById('workDays').addEventListener('input', (e) => state.workDays = parseFloat(e.target.value) || 0);
+  document.getElementById('prodRate').addEventListener('input', (e) => state.prodRate = parseFloat(e.target.value) || 0);
+  document.getElementById('happinessLevel').addEventListener('input', (e) => state.happiness = parseFloat(e.target.value) || 0);
+
+  // ============================
+  // 2. TOOL 1: DEBT ASSESSOR
+  // ============================
+  function calculateDebt() {
+    const h = state.hourlyRate;
+    const w = state.wastedHours;
+    const d = state.workDays;
+    const weeks = 48;
+    const annual = h * w * d * weeks;
+    const hoursLost = w * d * weeks;
+    const daysLost = (hoursLost / 8).toFixed(1);
+
+    document.getElementById('annualDebt').textContent = annual.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    document.getElementById('debtHours').textContent = hoursLost.toFixed(0);
+    document.getElementById('debtDays').textContent = daysLost;
+  }
+
+  // ============================
+  // 3. TOOL 2: HARMONY ZONE
+  // ============================
+  function calculateHarmony() {
+    const g = state.prodRate;
+    const h = state.happiness;
+
+    let score = 100 - Math.abs(g - 3) * 12;
+    score = Math.min(100, Math.max(0, score));
+
+    let stabilityText = 'Medium';
+    let stabilityClass = 'risk-med';
+    if (h > 7 && score > 70) {
+      stabilityText = 'High';
+      stabilityClass = 'risk-low';
+    } else if (h < 4 || score < 40) {
+      stabilityText = 'Low';
+      stabilityClass = 'risk-high';
+    }
+
+    let interpretation = '';
+    if (score > 80) {
+      interpretation = '✅ You are in the golden harmony zone! Happiness is rising.';
+    } else if (score > 50) {
+      interpretation = '📈 Approaching harmony. Slight productivity tweaks needed.';
+    } else {
+      interpretation = '⚠️ Far from harmony. Consider reducing workload or addressing burnout.';
+    }
+
+    document.getElementById('harmonyScore').textContent = score.toFixed(1) + '%';
+    document.getElementById('harmonyInterpretation').textContent = interpretation;
+    document.getElementById('stabilityScore').textContent = stabilityText;
+    document.getElementById('stabilityScore').className = `sub-stat ${stabilityClass}`;
+  }
+
+  // Auto-calculate on load
+  window.addEventListener('load', function() {
+    calculateDebt();
+    calculateHarmony();
+  });
+
+  // ============================
+  // 4. NAV / THEME TOGGLES (matching about.html)
+  // ============================
+  document.getElementById('themeToggle')?.addEventListener('click', function() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    document.getElementById('themeIcon').textContent = next === 'dark' ? '🌙' : '☀️';
+  });
+
+  document.getElementById('hamburgerBtn')?.addEventListener('click', function() {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+
+  document.querySelectorAll('.dropdown-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+
+  const initTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+  document.getElementById('themeIcon').textContent = initTheme === 'dark' ? '🌙' : '☀️';
+</script>
+
+</body>
+</html>
