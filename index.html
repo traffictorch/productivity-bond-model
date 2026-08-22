@@ -213,6 +213,29 @@
     .accordion-toggle.open .arrow { transform:rotate(180deg); }
     .accordion-content { max-height:0; overflow:hidden; transition:max-height 0.4s ease,padding 0.3s ease; padding:0 0.2rem; }
     .accordion-content.open { max-height:800px; padding:0.8rem 0.2rem 0; }
+    
+    /* === MOBILE OVERFLOW FIX (all in one) === */
+@media (max-width: 640px) {
+  .table-wrap { overflow-x: auto !important; -webkit-overflow-scrolling: touch; max-width: 100% !important; }
+  table.data-table { font-size: 0.7rem !important; min-width: 600px !important; width: auto !important; }
+  table.data-table th, table.data-table td { padding: 0.3rem 0.4rem !important; white-space: nowrap !important; }
+  #wellbeing .sim-grid { grid-template-columns: 1fr !important; }
+  #wellbeing .plot-container { max-width: 100% !important; overflow: hidden !important; }
+  .sim-grid { grid-template-columns: 1fr !important; }
+  .slider-group label { font-size: 0.75rem !important; flex-wrap: wrap !important; }
+  .metric-box .number { font-size: 1.4rem !important; }
+  .headline-metrics { grid-template-columns: 1fr 1fr !important; gap: 0.5rem !important; }
+  .headline-metrics .metric-card .big-number { font-size: 1.6rem !important; }
+  .live-table .table-row { font-size: 0.65rem !important; gap: 0.2rem !important; }
+  .scenario-grid { grid-template-columns: 1fr !important; }
+  .grid-2col { grid-template-columns: 1fr !important; }
+  .variables-grid { grid-template-columns: 1fr !important; }
+  .chart-grid { grid-template-columns: 1fr !important; }
+  .bar-chart-wrap { max-height: 170px !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+  .bar-chart { min-width: 400px !important; height: 130px !important; gap: 4px !important; }
+  .bar-item .bar-val { font-size: 0.7rem !important; }
+  .bar-item .bar { max-width: 32px !important; max-height: 90px !important; }
+}
 
     /* Rest of the styles are in core.min.css and home.css */
   </style>
