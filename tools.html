@@ -5,14 +5,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>🧰 PBM Productivity Lab | Traffic Torch</title>
-  <meta name="description" content="12 interactive tools to diagnose, simulate, and fix your Infinite Debt. Calculate your productivity debt, find your harmony zone, and build civic resilience." />
+  <meta name="description" content="9 interactive tools to diagnose, simulate, and fix your Infinite Debt. Calculate your productivity debt, find your harmony zone, and build civic resilience." />
   <meta name="robots" content="index, follow" />
 
   <!-- Canonical -->
   <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/tools.html" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="PBM Productivity Lab – 12 Tools to Fix Your Infinite Debt" />
+  <meta property="og:title" content="PBM Productivity Lab – 9 Tools to Fix Your Infinite Debt" />
   <meta property="og:description" content="Interactive calculators for the Productivity Bond Model: Debt Assessor, Harmony Zone, Compound Simulator, and more." />
   <meta property="og:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.webp" />
   <meta property="og:type" content="website" />
@@ -21,7 +21,7 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="PBM Productivity Lab – 12 Tools to Fix Your Infinite Debt" />
+  <meta name="twitter:title" content="PBM Productivity Lab – 9 Tools to Fix Your Infinite Debt" />
   <meta name="twitter:description" content="Interactive calculators for the Productivity Bond Model." />
   <meta name="twitter:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.webp" />
 
@@ -37,7 +37,10 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" media="print" onload="this.media='all'" crossorigin="anonymous" />
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" crossorigin="anonymous" /></noscript>
 
-  <!-- Preconnect for AddToAny -->
+  <!-- Chart.js for Tool 3 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+
+  <!-- Preconnect -->
   <link rel="preconnect" href="https://static.addtoany.com" />
 
   <!-- ===== INLINE THEME SCRIPT ===== -->
@@ -52,17 +55,12 @@
     })();
   </script>
 
-  <!-- ===== CRITICAL CSS (inlined – same as about.html) ===== -->
+  <!-- ===== CRITICAL CSS (matching about.html) ===== -->
   <style>
-    html {
-      opacity: 0;
-      transition: opacity 0.12s ease;
-    }
+    html { opacity: 0; transition: opacity 0.12s ease; }
     html.loaded { opacity: 1; }
-
     :root {
       --bg-body: #05060a;
-      --bg-card: rgba(12,15,25,0.65);
       --bg-glass: rgba(12,15,25,0.65);
       --btn-primary-bg: linear-gradient(135deg,#4f46e5,#7c3aed);
       --btn-primary-text: #fff;
@@ -74,15 +72,9 @@
       --text-muted: #a5b4fc;
       --border-divider: rgba(255,255,255,0.04);
       --bg-input: rgba(255,255,255,0.04);
-      --bar-conv: #4b5563;
-      --bar-ilb: #3b82f6;
-      --bar-gdp: #8b5cf6;
-      --bar-prod: #a78bfa;
-      --bar-hybrid: #f59e0b;
     }
     [data-theme="light"] {
       --bg-body: #f0f2f8;
-      --bg-card: rgba(255,255,255,0.85);
       --bg-glass: rgba(255,255,255,0.75);
       --btn-secondary-bg: rgba(0,0,0,0.04);
       --btn-secondary-border: rgba(0,0,0,0.12);
@@ -92,11 +84,6 @@
       --text-muted: #4a4a6a;
       --border-divider: rgba(0,0,0,0.06);
       --bg-input: rgba(0,0,0,0.04);
-      --bar-conv: #9ca3af;
-      --bar-ilb: #60a5fa;
-      --bar-gdp: #a78bfa;
-      --bar-prod: #7c3aed;
-      --bar-hybrid: #f59e0b;
     }
     * { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior:smooth; }
@@ -182,9 +169,7 @@
 
     .hero { min-height:80vh; display:flex; align-items:center; padding:4rem 6px 2rem; background:transparent; }
     .section-spacing { padding:6rem 0; }
-    .grid-2col { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
     @media (max-width:768px) {
-      .grid-2col { grid-template-columns:1fr; }
       .glass-card { padding:1.5rem 1rem; border-radius:1.5rem; }
       .hero { min-height:60vh; padding:2rem 0; }
     }
@@ -205,134 +190,49 @@
       .nav-links { display:none; flex-direction:column; width:100%; background:var(--bg-body); padding:0.5rem 0; margin-top:0.5rem; border-top:1px solid var(--border-divider); }
       .nav-links.open { display:flex; }
       .dropdown-menu { position:static; background:transparent; border:none; box-shadow:none; padding-left:1.5rem; }
-      .nav-links .dropdown.open .dropdown-menu { display:block; }
     }
     .floating-return-top { position:fixed; bottom:7rem; right:2rem; z-index:9998; display:none; background:rgba(0,255,255,0.12); backdrop-filter:blur(8px); border:1px solid rgba(0,255,255,0.2); border-radius:60px; padding:0.7rem 1.2rem; color:#17cfcf; font-weight:600; font-size:0.9rem; cursor:pointer; transition:0.3s; font-family:'Inter',system-ui; }
     @media (min-width:768px) { .floating-return-top { display:flex; } }
 
-    /* Tools‑specific styles */
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border-divider);
-      padding-bottom: 0.75rem;
-    }
-    .tab-btn {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 0.4rem 0.9rem;
-      border-radius: 40px;
-      cursor: pointer;
-      transition: 0.2s;
-      font-family: inherit;
-    }
-    .tab-btn:hover {
-      color: var(--text-primary);
-      background: var(--bg-input);
-    }
-    .tab-btn.active {
-      background: rgba(79,70,229,0.2);
-      color: #b388ff;
-      box-shadow: 0 0 0 1px rgba(79,70,229,0.3);
-    }
-    .tool-panel {
-      display: none;
-      animation: fade 0.2s ease;
-    }
-    .tool-panel.active {
-      display: block;
-    }
-    @keyframes fade {
-      0% { opacity: 0.4; transform: translateY(4px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    .desc {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-bottom: 1.5rem;
-    }
-    .input-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem 2rem;
-      margin-bottom: 1.5rem;
-      background: var(--bg-input);
-      padding: 1.2rem 1.5rem;
-      border-radius: 12px;
-      border: 1px solid var(--border-divider);
-    }
-    .input-group label {
-      display: flex;
-      flex-direction: column;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--text-muted);
-      gap: 0.3rem;
-      flex: 1 1 140px;
-    }
-    .input-group input[type="number"],
-    .input-group input[type="range"] {
-      background: var(--bg-body);
-      border: 1px solid var(--border-divider);
-      border-radius: 8px;
-      padding: 0.5rem 0.75rem;
-      color: var(--text-primary);
-      font-weight: 500;
-      width: 100%;
-      font-family: inherit;
-    }
-    .input-group input[type="range"] {
-      padding: 0;
-      accent-color: #4f46e5;
-    }
-    .result-box {
-      background: var(--bg-input);
-      border-radius: 12px;
-      padding: 1.5rem;
-      border-left: 4px solid #4f46e5;
-      margin-top: 1rem;
-    }
-    .result-box .stat {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-    .result-box .stat span {
-      color: #4f46e5;
-    }
-    .result-box .sub-stat {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-    .risk-low { color: #69db7c; }
-    .risk-med { color: #ffd43b; }
-    .risk-high { color: #ff6b6b; }
-    .footer {
-      margin-top: 4rem;
-      padding: 2rem 0;
-      border-top: 1px solid var(--border-divider);
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-    .footer a { color: var(--text-secondary); text-decoration: none; }
-    .footer a:hover { text-decoration: underline; }
+    /* Tools-specific */
+    .tabs { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:1.5rem; border-bottom:1px solid var(--border-divider); padding-bottom:0.75rem; }
+    .tab-btn { background:none; border:none; color:var(--text-muted); font-size:0.8rem; font-weight:600; padding:0.4rem 0.9rem; border-radius:40px; cursor:pointer; transition:0.2s; font-family:inherit; }
+    .tab-btn:hover { color:var(--text-primary); background:var(--bg-input); }
+    .tab-btn.active { background:rgba(79,70,229,0.2); color:#b388ff; box-shadow:0 0 0 1px rgba(79,70,229,0.3); }
+    .tool-panel { display:none; animation:fade 0.2s ease; }
+    .tool-panel.active { display:block; }
+    @keyframes fade { 0%{opacity:0.4;transform:translateY(4px)} 100%{opacity:1;transform:translateY(0)} }
+    .desc { color:var(--text-muted); font-size:0.95rem; margin-bottom:1.5rem; }
+    .input-group { display:flex; flex-wrap:wrap; gap:1rem 2rem; margin-bottom:1.5rem; background:var(--bg-input); padding:1.2rem 1.5rem; border-radius:12px; border:1px solid var(--border-divider); }
+    .input-group label { display:flex; flex-direction:column; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-muted); gap:0.3rem; flex:1 1 140px; }
+    .input-group input[type="number"], .input-group input[type="range"] { background:var(--bg-body); border:1px solid var(--border-divider); border-radius:8px; padding:0.5rem 0.75rem; color:var(--text-primary); font-weight:500; width:100%; font-family:inherit; }
+    .input-group input[type="range"] { padding:0; accent-color:#4f46e5; }
+    .result-box { background:var(--bg-input); border-radius:12px; padding:1.5rem; border-left:4px solid #4f46e5; margin-top:1rem; }
+    .result-box .stat { font-size:2rem; font-weight:700; color:var(--text-primary); }
+    .result-box .stat span { color:#4f46e5; }
+    .result-box .sub-stat { color:var(--text-muted); font-size:0.9rem; }
+    .risk-low { color:#69db7c; }
+    .risk-med { color:#ffd43b; }
+    .risk-high { color:#ff6b6b; }
+    .footer { margin-top:4rem; padding:2rem 0; border-top:1px solid var(--border-divider); text-align:center; color:var(--text-muted); font-size:0.85rem; }
+    .footer a { color:var(--text-secondary); text-decoration:none; }
+    .footer a:hover { text-decoration:underline; }
     .breadcrumb { font-size:0.85rem; color:var(--text-muted); display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap; margin-bottom:0.5rem; }
     .breadcrumb a { color:var(--text-muted); text-decoration:none; }
     .breadcrumb a:hover { color:var(--text-primary); }
+    .chart-container { max-height:300px; margin:1rem 0; }
+    .grid-2col { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    @media (max-width:768px) { .grid-2col { grid-template-columns:1fr; } }
+    .log-entry { display:flex; gap:0.5rem; align-items:center; margin:0.3rem 0; }
+    .log-entry label { flex:1; font-size:0.9rem; }
+    .log-entry input { width:70px; padding:0.3rem; border-radius:6px; border:1px solid var(--border-divider); background:var(--bg-body); color:var(--text-primary); }
   </style>
 
-  <!-- ===== CORE CSS (non‑blocking) ===== -->
+  <!-- CORE CSS -->
   <link rel="stylesheet" href="css/core.min.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="css/core.min.css"></noscript>
 
-  <!-- ===== GA4 (deferred) ===== -->
+  <!-- GA4 -->
   <script src="js/ga4.js" defer></script>
 
   <!-- Structured Data -->
@@ -341,55 +241,21 @@
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "WebSite",
-          "@id": "https://traffictorch.github.io/productivity-bond-model/#website",
-          "url": "https://traffictorch.github.io/productivity-bond-model/",
-          "name": "The Productivity Bond Model",
-          "description": "A sovereign debt instrument designed to replace perpetual-growth-dependent financing with productivity-linked prosperity.",
-          "inLanguage": "en-US",
-          "publisher": {
-            "@type": "Organization",
-            "@id": "https://traffictorch.net/#organization"
-          }
-        },
-        {
           "@type": "CollectionPage",
           "@id": "https://traffictorch.github.io/productivity-bond-model/tools.html#collectionpage",
           "url": "https://traffictorch.github.io/productivity-bond-model/tools.html",
-          "name": "PBM Productivity Lab – 12 Tools to Fix Your Infinite Debt",
-          "description": "Interactive calculators for the Productivity Bond Model: Debt Assessor, Harmony Zone, Compound Simulator, and more.",
+          "name": "PBM Productivity Lab – 9 Tools to Fix Your Infinite Debt",
+          "description": "Interactive calculators for the Productivity Bond Model.",
           "inLanguage": "en-US",
           "dateModified": "2026-08-23",
-          "about": {
-            "@type": "Thing",
-            "name": "Productivity Bond Model Tools",
-            "description": "A suite of 12 interactive web tools for diagnosing productivity debt, simulating compound interest, measuring civic resilience, and more."
-          },
-          "publisher": {
-            "@type": "Organization",
-            "@id": "https://traffictorch.net/#organization"
-          },
-          "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "https://traffictorch.github.io/productivity-bond-model/tools.html"
-          }
+          "publisher": { "@type": "Organization", "@id": "https://traffictorch.net/#organization" }
         },
         {
           "@type": "BreadcrumbList",
           "@id": "https://traffictorch.github.io/productivity-bond-model/tools.html#breadcrumb",
           "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://traffictorch.github.io/productivity-bond-model/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "Tools",
-              "item": "https://traffictorch.github.io/productivity-bond-model/tools.html"
-            }
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://traffictorch.github.io/productivity-bond-model/" },
+            { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://traffictorch.github.io/productivity-bond-model/tools.html" }
           ]
         },
         {
@@ -397,7 +263,6 @@
           "@id": "https://traffictorch.net/#organization",
           "name": "Traffic Torch",
           "url": "https://traffictorch.net",
-          "description": "Research initiative exploring innovative economic and financial models.",
           "logo": "https://traffictorch.github.io/productivity-bond-model/icon-512.png"
         }
       ]
@@ -423,15 +288,12 @@
       <ul class="dropdown-menu">
         <li><a href="tools.html#tab1">1. Debt Assessor</a></li>
         <li><a href="tools.html#tab2">2. Harmony Zone</a></li>
-        <li><a href="tools.html#tab3">3. Compound Simulator</a></li>
-        <li><a href="tools.html#tab4">4. Happinessometer</a></li>
-        <li><a href="tools.html#tab5">5. Resilience Score</a></li>
-        <li><a href="tools.html#tab6">6. Opportunity Translator</a></li>
-        <li><a href="tools.html#tab7">7. Stability Index</a></li>
-        <li><a href="tools.html#tab8">8. Sustainable Range</a></li>
-        <li><a href="tools.html#tab9">9. Weekly Time Log</a></li>
-        <li><a href="tools.html#tab10">10. Shock Simulator</a></li>
-        <li><a href="tools.html#tab11">11. Correlation Meter</a></li>
+        <li><a href="tools.html#tab3">3. Compound</a></li>
+        <li><a href="tools.html#tab4">4. Happiness</a></li>
+        <li><a href="tools.html#tab6">6. Translator</a></li>
+        <li><a href="tools.html#tab7">7. Stability</a></li>
+        <li><a href="tools.html#tab8">8. Range</a></li>
+        <li><a href="tools.html#tab9">9. Time Log</a></li>
         <li><a href="tools.html#tab12">12. Task ROI</a></li>
       </ul>
     </li>
@@ -486,19 +348,19 @@
 <main id="main-content">
 
   <!-- HERO -->
-  <section id="hero" class="container hero" style="min-height:80vh; display:flex; align-items:center; padding:4rem 6px 2rem;">
+  <section id="hero" class="container hero">
     <div>
       <span class="badge-glow" style="margin-bottom:0.5rem;">🧪 Interactive Lab</span>
-      <span class="badge-glow badge-version" style="margin-left:0.5rem;">v0.1.0</span>
+      <span class="badge-glow badge-version" style="margin-left:0.5rem;">v0.2.0</span>
       <h1 class="text-gradient" style="font-size:clamp(2.5rem,8vw,4rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">
         PBM Productivity Lab
       </h1>
       <p style="font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:300; opacity:0.8; max-width:600px; margin:0.8rem 0 1.5rem; color:var(--text-secondary);">
-        12 tools to diagnose, simulate, and fix your Infinite Debt.
+        9 tools to diagnose, simulate, and fix your Infinite Debt.
       </p>
       <div style="display:flex; flex-wrap:wrap; gap:0.8rem; align-items:center;">
         <a href="#tab1" class="btn-primary" style="padding:0.6rem 1.5rem; font-size:0.95rem;">📉 Start with Debt</a>
-        <a href="#tab2" class="btn-secondary" style="padding:0.6rem 1.5rem; font-size:0.95rem;">⚖️ Find Harmony</a>
+        <a href="#tab3" class="btn-secondary" style="padding:0.6rem 1.5rem; font-size:0.95rem;">📈 See the Curve</a>
         <button class="share-btn" id="nativeShareBtn" style="padding:0.6rem 1.5rem; font-size:0.95rem;">📤 Share</button>
       </div>
     </div>
@@ -517,19 +379,16 @@
   <section id="tools" class="container section-spacing" style="padding-top:1rem;">
     <div class="glass-card">
 
-      <!-- TABS -->
+      <!-- TABS (9 tools) -->
       <div class="tabs" id="tabHeaders">
         <button class="tab-btn active" data-tab="tab1" onclick="switchTab('tab1')">1. Debt</button>
         <button class="tab-btn" data-tab="tab2" onclick="switchTab('tab2')">2. Harmony</button>
         <button class="tab-btn" data-tab="tab3" onclick="switchTab('tab3')">3. Compound</button>
         <button class="tab-btn" data-tab="tab4" onclick="switchTab('tab4')">4. Happiness</button>
-        <button class="tab-btn" data-tab="tab5" onclick="switchTab('tab5')">5. Resilience</button>
         <button class="tab-btn" data-tab="tab6" onclick="switchTab('tab6')">6. Translator</button>
         <button class="tab-btn" data-tab="tab7" onclick="switchTab('tab7')">7. Stability</button>
         <button class="tab-btn" data-tab="tab8" onclick="switchTab('tab8')">8. Range</button>
         <button class="tab-btn" data-tab="tab9" onclick="switchTab('tab9')">9. Time Log</button>
-        <button class="tab-btn" data-tab="tab10" onclick="switchTab('tab10')">10. Shock</button>
-        <button class="tab-btn" data-tab="tab11" onclick="switchTab('tab11')">11. Correlation</button>
         <button class="tab-btn" data-tab="tab12" onclick="switchTab('tab12')">12. Task ROI</button>
       </div>
 
@@ -565,19 +424,130 @@
         </div>
       </div>
 
-      <!-- ========== TOOLS 3-12: SCAFFOLDS ========== -->
-      <div id="tab3" class="tool-panel"><h2 style="font-size:1.3rem; font-weight:600; color:var(--text-primary);">📈 Compound Simulator</h2><p class="desc">See your debt compound over 10 years.</p><div class="result-box"><div class="sub-stat">🛠 Under construction — drop your JS logic here.</div></div></div>
-      <div id="tab4" class="tool-panel"><h2 style="font-size:1.3rem; font-weight:600; color:var(--text-primary);">😊 Happinessometer</h2><p class="desc">Composite gauge of your civic wellbeing.</p><div class="result-box"><div class="sub-stat">🛠 Under construction.</div></div></div>
-      <div id="tab5" class="tool-panel"><h2 style="font-size:1.3rem; font-weight:600; color:var(--text-primary);">🛡️ Civic Resilience Score</h2><p class="desc">Combines bond strength, happiness &amp; productivity.</p><div class="result-box"><div class="sub-stat">🛠 Under construction.</div></div></div>
-      <div id="tab6" class="tool-panel"><h2 style="font-size:1.3rem; font-weight:600; color:var(--text-primary);">🏝️ Opportunity Translator</h2><p class="desc">What could you buy with your recovered time?</p><div class="result-box"><div class="sub-stat">🛠 Under construction.</div></div></div>
-      <div id="tab7" class="tool-panel"><h2 style="font-size:1.3rem; font-weight:600; color:var(--text-primary);">📊 Bond Stability Index</h2><p class="desc">Volatility &amp; risk class for your productivity bond.</p><div class="result-box"><div class="sub-stat">🛠 Under construction.</div></div></div>
-      <div id="tab8" class="tool-panel"><h2 style="font-size:1.3rem; font-weight:600; color:var(--text-primary);">🌿 Sustainable Range</h2><p class="desc">Safe productivity window to avoid burnout.</p><div class="result-box"><div class="sub-stat">🛠 Under construction.</div></div></div>
-      <div id="tab9" class="tool-panel"><h2 style="font-size:1.3rem; font-weight:600; color:var(--text-primary);">📅 Weekly Time Log</h2><p class="desc">Daily tracker stored in your browser.</p><div class="result-box"><div class="sub-stat">🛠 Under construction.</div></div></div>
-      <div id="tab10" class="tool-panel"><h2 style="font-size:1.3rem; font-weight:600; color:var(--text-primary);">⚡ Shock Simulator</h2><p class="desc">Simulate sudden productivity spikes/drops.</p><div class="result-box"><div class="sub-stat">🛠 Under construction.</div></div></div>
-      <div id="tab11" class="tool-panel"><h2 style="font-size:1.3rem; font-weight:600; color:var(--text-primary);">🔗 Correlation Meter</h2><p class="desc">Pearson correlation between bond &amp; happiness.</p><div class="result-box"><div class="sub-stat">🛠 Under construction.</div></div></div>
-      <div id="tab12" class="tool-panel"><h2 style="font-size:1.3rem; font-weight:600; color:var(--text-primary);">🧾 Task ROI Calculator</h2><p class="desc">Micro‑decision maker for specific tasks.</p><div class="result-box"><div class="sub-stat">🛠 Under construction.</div></div></div>
+      <!-- ========== TOOL 3: COMPOUND SIMULATOR (BUILT) ========== -->
+      <div id="tab3" class="tool-panel">
+        <h2 style="font-size:1.5rem; font-weight:600; color:var(--text-primary); margin-bottom:0.3rem;">📈 Compound Simulator</h2>
+        <p class="desc">See your productivity debt compound like interest over 10 years.</p>
+        <div class="input-group">
+          <label>Annual Debt ($) <input type="number" id="compoundBase" value="13000" step="100" /></label>
+          <label>Interest Rate (%) <input type="range" id="compoundRate" min="5" max="20" value="10" step="0.5" oninput="document.getElementById('rateDisplay').textContent=this.value+'%'" /> <span id="rateDisplay">10%</span></label>
+          <label>Years <input type="range" id="compoundYears" min="5" max="20" value="10" step="1" oninput="document.getElementById('yearsDisplay').textContent=this.value" /> <span id="yearsDisplay">10</span></label>
+        </div>
+        <button class="btn-primary" onclick="runCompound()">📊 Simulate</button>
+        <div id="compoundResult" class="result-box">
+          <div class="stat">Total Debt: $<span id="totalDebt">0</span></div>
+          <div class="sub-stat">Over <span id="compoundYearsOut">10</span> years · Final annual loss: $<span id="finalAnnual">0</span></div>
+          <div class="chart-container"><canvas id="compoundChart" width="400" height="200"></canvas></div>
+        </div>
+      </div>
 
-      <!-- SHARE SECTION (matching about.html) -->
+      <!-- ========== TOOL 4: HAPPINESSOMETER (with Resilience merged) ========== -->
+      <div id="tab4" class="tool-panel">
+        <h2 style="font-size:1.5rem; font-weight:600; color:var(--text-primary); margin-bottom:0.3rem;">😊 Happinessometer</h2>
+        <p class="desc">Composite gauge of your civic wellbeing, including resilience.</p>
+        <div class="input-group">
+          <label>Happiness (1-10) <input type="number" id="hapHappiness" value="7" min="1" max="10" step="1" /></label>
+          <label>Productivity Rate (%) <input type="number" id="hapProd" value="3.2" step="0.1" /></label>
+          <label>Bond Stability (0-100) <input type="number" id="hapStability" value="75" min="0" max="100" step="1" /></label>
+        </div>
+        <button class="btn-primary" onclick="calculateHappinessometer()">🎯 Gauge My Wellbeing</button>
+        <div id="hapResult" class="result-box">
+          <div class="stat">Score: <span id="hapScore">—</span>/100</div>
+          <div class="sub-stat" id="hapInterpretation">Enter your values above.</div>
+          <div class="sub-stat" style="margin-top:0.5rem;">🛡️ Resilience Tier: <span id="hapResilience" class="risk-med">—</span></div>
+          <div class="sub-stat" style="font-size:0.85rem;" id="hapWeakness"></div>
+        </div>
+      </div>
+
+      <!-- ========== TOOL 6: OPPORTUNITY TRANSLATOR (BUILT) ========== -->
+      <div id="tab6" class="tool-panel">
+        <h2 style="font-size:1.5rem; font-weight:600; color:var(--text-primary); margin-bottom:0.3rem;">🏝️ Opportunity Translator</h2>
+        <p class="desc">What could you buy with your recovered time and money?</p>
+        <div class="input-group">
+          <label>Annual Debt ($) <input type="number" id="transDebt" value="13000" step="100" /></label>
+        </div>
+        <button class="btn-primary" onclick="translateOpportunity()">🌍 Translate</button>
+        <div id="transResult" class="result-box">
+          <div class="grid-2col">
+            <div><span class="sub-stat">🚗 Tesla Model 3</span><br><strong id="transTesla">0</strong> years</div>
+            <div><span class="sub-stat">✈️ European Vacation ($5k)</span><br><strong id="transVacation">0</strong> years</div>
+            <div><span class="sub-stat">🏠 House Deposit ($60k)</span><br><strong id="transHouse">0</strong> years</div>
+            <div><span class="sub-stat">📚 24 Books ($500)</span><br><strong id="transBooks">0</strong> years</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== TOOL 7: STABILITY INDEX ========== -->
+      <div id="tab7" class="tool-panel">
+        <h2 style="font-size:1.5rem; font-weight:600; color:var(--text-primary); margin-bottom:0.3rem;">📊 Bond Stability Index</h2>
+        <p class="desc">Assess the risk class of your productivity bond.</p>
+        <div class="input-group">
+          <label>Volatility (Std Dev) <input type="number" id="stabVol" value="1.2" step="0.1" /></label>
+          <label>Happiness Trend (1-10) <input type="number" id="stabTrend" value="6" min="1" max="10" step="1" /></label>
+        </div>
+        <button class="btn-primary" onclick="calculateStability()">📊 Rate My Bond</button>
+        <div id="stabResult" class="result-box">
+          <div class="stat">Score: <span id="stabScore">—</span>/100</div>
+          <div class="sub-stat">Risk Class: <span id="stabRisk" class="risk-med">—</span></div>
+          <div class="sub-stat" id="stabInterpretation"></div>
+        </div>
+      </div>
+
+      <!-- ========== TOOL 8: SUSTAINABLE RANGE ========== -->
+      <div id="tab8" class="tool-panel">
+        <h2 style="font-size:1.5rem; font-weight:600; color:var(--text-primary); margin-bottom:0.3rem;">🌿 Sustainable Range</h2>
+        <p class="desc">Find your safe productivity window to avoid burnout.</p>
+        <div class="input-group">
+          <label>Happiness (1-10) <input type="number" id="rangeHap" value="6" min="1" max="10" step="1" /></label>
+          <label>Current Productivity (%) <input type="number" id="rangeProd" value="3.5" step="0.1" /></label>
+        </div>
+        <button class="btn-primary" onclick="calculateRange()">🌿 Get Your Range</button>
+        <div id="rangeResult" class="result-box">
+          <div class="stat">Safe Range: <span id="rangeLow">—</span>% – <span id="rangeHigh">—</span>%</div>
+          <div class="sub-stat" id="rangeStatus">Enter values above.</div>
+          <div class="sub-stat" style="margin-top:0.3rem;">🔥 Burnout Risk: <span id="rangeBurnout" class="risk-med">—</span></div>
+        </div>
+      </div>
+
+      <!-- ========== TOOL 9: WEEKLY TIME LOG (BUILT) ========== -->
+      <div id="tab9" class="tool-panel">
+        <h2 style="font-size:1.5rem; font-weight:600; color:var(--text-primary); margin-bottom:0.3rem;">📅 Weekly Time Log</h2>
+        <p class="desc">Track your wasted hours daily. Data saves to your browser.</p>
+        <div style="background:var(--bg-input); border-radius:12px; padding:1rem; margin-bottom:1rem;">
+          <div class="log-entry"><label>Monday</label><input type="number" id="logMon" value="2" step="0.5" /></div>
+          <div class="log-entry"><label>Tuesday</label><input type="number" id="logTue" value="1.5" step="0.5" /></div>
+          <div class="log-entry"><label>Wednesday</label><input type="number" id="logWed" value="2.5" step="0.5" /></div>
+          <div class="log-entry"><label>Thursday</label><input type="number" id="logThu" value="1.8" step="0.5" /></div>
+          <div class="log-entry"><label>Friday</label><input type="number" id="logFri" value="3" step="0.5" /></div>
+          <div class="log-entry"><label>Saturday</label><input type="number" id="logSat" value="1" step="0.5" /></div>
+          <div class="log-entry"><label>Sunday</label><input type="number" id="logSun" value="0.5" step="0.5" /></div>
+        </div>
+        <button class="btn-primary" onclick="saveLog()">💾 Save Week</button>
+        <div id="logResult" class="result-box">
+          <div class="stat">Total Wasted: <span id="logTotal">0</span> hrs</div>
+          <div class="sub-stat">This week's cost (at $35/hr): $<span id="logCost">0</span></div>
+          <div class="sub-stat" style="margin-top:0.3rem;">📈 Compared to last week: <span id="logDiff">—</span></div>
+        </div>
+      </div>
+
+      <!-- ========== TOOL 12: TASK ROI (BUILT) ========== -->
+      <div id="tab12" class="tool-panel">
+        <h2 style="font-size:1.5rem; font-weight:600; color:var(--text-primary); margin-bottom:0.3rem;">🧾 Task ROI Calculator</h2>
+        <p class="desc">Micro-decision maker: see the hidden cost of procrastinating on a specific task.</p>
+        <div class="input-group">
+          <label>Task Value ($) <input type="number" id="taskValue" value="500" step="10" /></label>
+          <label>Hours to Complete <input type="number" id="taskHours" value="4" step="0.5" /></label>
+          <label>Days Delayed <input type="number" id="taskDelay" value="3" step="1" /></label>
+        </div>
+        <button class="btn-primary" onclick="calculateTaskROI()">🧾 Calculate</button>
+        <div id="taskResult" class="result-box">
+          <div class="stat">Mental Overhead: $<span id="taskCost">0</span></div>
+          <div class="sub-stat" id="taskInterpretation">Enter your task details above.</div>
+          <div class="sub-stat" style="margin-top:0.3rem;">💡 <span id="taskAdvice">—</span></div>
+        </div>
+      </div>
+
+      <!-- SHARE SECTION -->
       <div style="margin-top:2.5rem; padding-top:1.5rem; text-align:center; border-top:1px solid var(--border-divider);">
         <div style="display:flex; flex-direction:column; align-items:center; gap:0.75rem;">
           <strong style="font-size:1.1rem; font-weight:600; color:var(--text-secondary);">Share this toolkit?</strong>
@@ -601,7 +571,7 @@
 <!-- ====== FLOATING RETURN TO TOP ====== -->
 <button class="floating-return-top" id="floatingReturnTop" aria-label="Return to top">⬆ Top</button>
 
-<!-- ====== FOOTER (matching about.html) ====== -->
+<!-- ====== FOOTER ====== -->
 <footer class="footer">
   <div class="container">
     <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1rem 1.5rem; margin-bottom:1.5rem; font-size:0.85rem;">
@@ -628,7 +598,7 @@
       Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI · <span id="last-updated"></span>
     </p>
     <p style="font-size:0.65rem; margin-top:0.5rem; color:var(--text-muted); opacity:0.7;">
-      📌 v0.8.0 – feat: Endogenous debt feedback loop implemented - reveals 2.5pp lower distress for Productivity.
+      📌 v0.2.0 – Refactored 12 → 9 tools. Compound Simulator + Opportunity Translator + Time Log built.
     </p>
   </div>
 </footer>
@@ -658,18 +628,18 @@
   }
 </script>
 
-<!-- ====== CORE JS (shared) ====== -->
+<!-- ====== CORE JS ====== -->
 <script src="js/core.min.js" defer></script>
 
-<!-- ====== FADE‑IN TRIGGER ====== -->
+<!-- ====== FADE-IN TRIGGER ====== -->
 <script>
   document.documentElement.classList.add('loaded');
 </script>
 
-<!-- ====== TOOLS‑SPECIFIC JAVASCRIPT ====== -->
+<!-- ====== ALL TOOL LOGIC ====== -->
 <script>
   // ============================
-  // 0. HASH-BASED ROUTING
+  // 0. HASH ROUTING
   // ============================
   function switchTab(tabId) {
     window.location.hash = tabId;
@@ -679,98 +649,257 @@
     if (activeBtn) activeBtn.classList.add('active');
     const panel = document.getElementById(tabId);
     if (panel) panel.classList.add('active');
+    if (tabId === 'tab3') setTimeout(runCompound, 300);
   }
 
   function handleHash() {
     const hash = window.location.hash.replace('#', '');
-    if (hash && document.getElementById(hash)) {
-      switchTab(hash);
-    } else {
-      switchTab('tab1');
-    }
+    if (hash && document.getElementById(hash)) switchTab(hash);
+    else switchTab('tab1');
   }
-
   window.addEventListener('hashchange', handleHash);
   window.addEventListener('load', handleHash);
 
   // ============================
-  // 1. SHARED STATE
+  // 1. DEBT ASSESSOR (Tool 1)
   // ============================
-  const state = {
-    hourlyRate: 35,
-    wastedHours: 2.0,
-    workDays: 5,
-    prodRate: 3.8,
-    happiness: 6
-  };
-
+  const state = { hourlyRate: 35, wastedHours: 2.0, workDays: 5, prodRate: 3.8, happiness: 6 };
   document.getElementById('hourlyRate').addEventListener('input', (e) => state.hourlyRate = parseFloat(e.target.value) || 0);
   document.getElementById('wastedHours').addEventListener('input', (e) => state.wastedHours = parseFloat(e.target.value) || 0);
   document.getElementById('workDays').addEventListener('input', (e) => state.workDays = parseFloat(e.target.value) || 0);
   document.getElementById('prodRate').addEventListener('input', (e) => state.prodRate = parseFloat(e.target.value) || 0);
   document.getElementById('happinessLevel').addEventListener('input', (e) => state.happiness = parseFloat(e.target.value) || 0);
 
-  // ============================
-  // 2. TOOL 1: DEBT ASSESSOR
-  // ============================
   function calculateDebt() {
-    const h = state.hourlyRate;
-    const w = state.wastedHours;
-    const d = state.workDays;
-    const weeks = 48;
+    const h = state.hourlyRate, w = state.wastedHours, d = state.workDays, weeks = 48;
     const annual = h * w * d * weeks;
     const hoursLost = w * d * weeks;
     const daysLost = (hoursLost / 8).toFixed(1);
-
     document.getElementById('annualDebt').textContent = annual.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     document.getElementById('debtHours').textContent = hoursLost.toFixed(0);
     document.getElementById('debtDays').textContent = daysLost;
+    // Auto-sync to Tool 3 & 6
+    document.getElementById('compoundBase').value = Math.round(annual);
+    document.getElementById('transDebt').value = Math.round(annual);
   }
 
   // ============================
-  // 3. TOOL 2: HARMONY ZONE
+  // 2. HARMONY ZONE (Tool 2)
   // ============================
+  document.getElementById('prodRate').addEventListener('input', () => calculateHarmony());
+  document.getElementById('happinessLevel').addEventListener('input', () => calculateHarmony());
+
   function calculateHarmony() {
-    const g = state.prodRate;
-    const h = state.happiness;
-
-    let score = 100 - Math.abs(g - 3) * 12;
-    score = Math.min(100, Math.max(0, score));
-
-    let stabilityText = 'Medium';
-    let stabilityClass = 'risk-med';
-    if (h > 7 && score > 70) {
-      stabilityText = 'High';
-      stabilityClass = 'risk-low';
-    } else if (h < 4 || score < 40) {
-      stabilityText = 'Low';
-      stabilityClass = 'risk-high';
-    }
-
-    let interpretation = '';
-    if (score > 80) {
-      interpretation = '✅ You are in the golden harmony zone! Happiness is rising.';
-    } else if (score > 50) {
-      interpretation = '📈 Approaching harmony. Slight productivity tweaks needed.';
-    } else {
-      interpretation = '⚠️ Far from harmony. Consider reducing workload or addressing burnout.';
-    }
-
+    const g = state.prodRate, h = state.happiness;
+    let score = Math.min(100, Math.max(0, 100 - Math.abs(g - 3) * 12));
+    let stabilityText = 'Medium', stabilityClass = 'risk-med';
+    if (h > 7 && score > 70) { stabilityText = 'High'; stabilityClass = 'risk-low'; }
+    else if (h < 4 || score < 40) { stabilityText = 'Low'; stabilityClass = 'risk-high'; }
+    let interpretation = score > 80 ? '✅ Golden harmony zone!' : score > 50 ? '📈 Approaching harmony.' : '⚠️ Far from harmony.';
     document.getElementById('harmonyScore').textContent = score.toFixed(1) + '%';
     document.getElementById('harmonyInterpretation').textContent = interpretation;
     document.getElementById('stabilityScore').textContent = stabilityText;
     document.getElementById('stabilityScore').className = `sub-stat ${stabilityClass}`;
   }
 
-  // Auto-calculate on load
-  window.addEventListener('load', function() {
-    calculateDebt();
-    calculateHarmony();
+  // ============================
+  // 3. COMPOUND SIMULATOR (Tool 3)
+  // ============================
+  let compoundChartInstance = null;
+
+  function runCompound() {
+    const base = parseFloat(document.getElementById('compoundBase').value) || 0;
+    const rate = parseFloat(document.getElementById('compoundRate').value) / 100;
+    const years = parseInt(document.getElementById('compoundYears').value) || 10;
+
+    let data = [], cumulative = 0, annualValues = [];
+    for (let i = 1; i <= years; i++) {
+      const val = base * Math.pow(1 + rate, i);
+      annualValues.push(val);
+      cumulative += val;
+      data.push({ year: i, annual: val, cumulative: cumulative });
+    }
+
+    document.getElementById('totalDebt').textContent = cumulative.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    document.getElementById('finalAnnual').textContent = annualValues[annualValues.length - 1].toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    document.getElementById('compoundYearsOut').textContent = years;
+
+    const ctx = document.getElementById('compoundChart').getContext('2d');
+    if (compoundChartInstance) compoundChartInstance.destroy();
+
+    const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+    const textColor = theme === 'dark' ? '#eef2f8' : '#0f111a';
+    const gridColor = theme === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+
+    compoundChartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: data.map(d => d.year),
+        datasets: [
+          { label: 'Annual Loss', data: data.map(d => d.annual), borderColor: '#4f46e5', backgroundColor: 'rgba(79,70,229,0.1)', fill: true, tension: 0.3 },
+          { label: 'Cumulative Debt', data: data.map(d => d.cumulative), borderColor: '#f59e0b', borderDash: [5, 5], fill: false, tension: 0.3 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: { legend: { labels: { color: textColor } } },
+        scales: {
+          x: { grid: { color: gridColor }, ticks: { color: textColor } },
+          y: { grid: { color: gridColor }, ticks: { color: textColor, callback: v => '$' + v.toLocaleString() } }
+        }
+      }
+    });
+  }
+
+  document.getElementById('compoundRate').addEventListener('input', () => runCompound());
+  document.getElementById('compoundYears').addEventListener('input', () => runCompound());
+
+  // ============================
+  // 4. HAPPINESSOMETER + RESILIENCE (Tool 4)
+  // ============================
+  function calculateHappinessometer() {
+    const hap = parseFloat(document.getElementById('hapHappiness').value) || 0;
+    const prod = parseFloat(document.getElementById('hapProd').value) || 3;
+    const stab = parseFloat(document.getElementById('hapStability').value) || 50;
+
+    const prodScore = Math.max(0, 100 - Math.abs(prod - 3) * 15);
+    const hapScore = hap * 10;
+    const total = Math.min(100, Math.round((hapScore * 0.5) + (prodScore * 0.25) + (stab * 0.25)));
+
+    let interpretation = total > 80 ? '🌟 Thriving! High wellbeing.' : total > 55 ? '📈 Stable, room to grow.' : '⚠️ Low wellbeing. Address burnout.';
+    let resilience = total > 75 ? 'High' : total > 50 ? 'Moderate' : 'Low';
+    let resClass = total > 75 ? 'risk-low' : total > 50 ? 'risk-med' : 'risk-high';
+    let weakness = total > 75 ? 'None — you are balanced.' : (hap < 6 ? 'Happiness is your weak link.' : 'Productivity alignment needs work.');
+
+    document.getElementById('hapScore').textContent = total;
+    document.getElementById('hapInterpretation').textContent = interpretation;
+    document.getElementById('hapResilience').textContent = resilience;
+    document.getElementById('hapResilience').className = `sub-stat ${resClass}`;
+    document.getElementById('hapWeakness').textContent = '🔍 ' + weakness;
+  }
+
+  // ============================
+  // 6. OPPORTUNITY TRANSLATOR (Tool 6)
+  // ============================
+  function translateOpportunity() {
+    const debt = parseFloat(document.getElementById('transDebt').value) || 0;
+    if (debt <= 0) return;
+    document.getElementById('transTesla').textContent = (45000 / debt).toFixed(1);
+    document.getElementById('transVacation').textContent = (5000 / debt).toFixed(1);
+    document.getElementById('transHouse').textContent = (60000 / debt).toFixed(1);
+    document.getElementById('transBooks').textContent = (500 / debt).toFixed(1);
+  }
+
+  // ============================
+  // 7. STABILITY INDEX (Tool 7)
+  // ============================
+  function calculateStability() {
+    const vol = parseFloat(document.getElementById('stabVol').value) || 0;
+    const trend = parseFloat(document.getElementById('stabTrend').value) || 5;
+    const score = Math.min(100, Math.max(0, 100 - (vol * 15) + (trend * 3)));
+    let risk = score > 70 ? 'Low' : score > 40 ? 'Medium' : 'High';
+    let riskClass = score > 70 ? 'risk-low' : score > 40 ? 'risk-med' : 'risk-high';
+    let interp = score > 70 ? '✅ Stable bond. Low default risk.' : score > 40 ? '⚠️ Moderate volatility. Monitor trends.' : '🚨 High risk. Bond fragility detected.';
+    document.getElementById('stabScore').textContent = Math.round(score);
+    document.getElementById('stabRisk').textContent = risk;
+    document.getElementById('stabRisk').className = `sub-stat ${riskClass}`;
+    document.getElementById('stabInterpretation').textContent = interp;
+  }
+
+  // ============================
+  // 8. SUSTAINABLE RANGE (Tool 8)
+  // ============================
+  function calculateRange() {
+    const hap = parseFloat(document.getElementById('rangeHap').value) || 5;
+    const prod = parseFloat(document.getElementById('rangeProd').value) || 3;
+    let low = 1.5, high = 4.5;
+    if (hap < 4) { low = 1.0; high = 3.0; }
+    else if (hap > 7) { low = 2.0; high = 5.5; }
+    let within = (prod >= low && prod <= high) ? '✅ You are within the safe zone!' : '⚠️ You are outside the sustainable range.';
+    let burnout = (prod > high) ? 'High' : (prod < low) ? 'Low (stagnation risk)' : 'Moderate';
+    let burnClass = burnout === 'High' ? 'risk-high' : burnout === 'Low (stagnation risk)' ? 'risk-low' : 'risk-med';
+    document.getElementById('rangeLow').textContent = low.toFixed(1);
+    document.getElementById('rangeHigh').textContent = high.toFixed(1);
+    document.getElementById('rangeStatus').textContent = within;
+    document.getElementById('rangeBurnout').textContent = burnout;
+    document.getElementById('rangeBurnout').className = `sub-stat ${burnClass}`;
+  }
+
+  // ============================
+  // 9. WEEKLY TIME LOG (Tool 9)
+  // ============================
+  function saveLog() {
+    const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    const ids = ['logMon','logTue','logWed','logThu','logFri','logSat','logSun'];
+    let total = 0;
+    let logData = {};
+    ids.forEach((id, i) => {
+      const val = parseFloat(document.getElementById(id).value) || 0;
+      total += val;
+      logData[days[i]] = val;
+    });
+    localStorage.setItem('pbmWeekLog', JSON.stringify(logData));
+    localStorage.setItem('pbmWeekTotal', total.toString());
+    document.getElementById('logTotal').textContent = total.toFixed(1);
+    document.getElementById('logCost').textContent = (total * 35).toFixed(2);
+
+    const prev = parseFloat(localStorage.getItem('pbmPrevWeekTotal') || '0');
+    if (prev > 0) {
+      const diff = total - prev;
+      document.getElementById('logDiff').textContent = diff > 0 ? `⚠️ +${diff.toFixed(1)} hrs worse` : `✅ ${Math.abs(diff).toFixed(1)} hrs better!`;
+    } else {
+      document.getElementById('logDiff').textContent = 'First week logged!';
+    }
+    localStorage.setItem('pbmPrevWeekTotal', total.toString());
+  }
+
+  // Load saved log on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    const saved = localStorage.getItem('pbmWeekLog');
+    if (saved) {
+      try {
+        const data = JSON.parse(saved);
+        const ids = ['logMon','logTue','logWed','logThu','logFri','logSat','logSun'];
+        const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+        ids.forEach((id, i) => {
+          if (data[days[i]] !== undefined) document.getElementById(id).value = data[days[i]];
+        });
+        saveLog();
+      } catch(e) {}
+    }
   });
 
   // ============================
-  // 4. NAV / THEME TOGGLES (matching about.html)
+  // 12. TASK ROI (Tool 12)
   // ============================
+  function calculateTaskROI() {
+    const value = parseFloat(document.getElementById('taskValue').value) || 0;
+    const hours = parseFloat(document.getElementById('taskHours').value) || 1;
+    const delay = parseFloat(document.getElementById('taskDelay').value) || 0;
+    const overhead = delay * (value / (hours * 8)) * 1.2;
+    const cost = Math.round(overhead * 100) / 100;
+    document.getElementById('taskCost').textContent = cost.toFixed(2);
+    let advice = cost > 50 ? '🚨 Significant cost! Do it NOW to save mental overhead.' : '💡 Small cost. Still, doing it now saves stress.';
+    document.getElementById('taskInterpretation').textContent = `Procrastinating ${delay} days on a $${value} task adds ~$${cost.toFixed(2)} in mental stress.`;
+    document.getElementById('taskAdvice').textContent = advice;
+  }
+
+  // ============================
+  // AUTO-RUN ON LOAD
+  // ============================
+  window.addEventListener('load', function() {
+    calculateDebt();
+    calculateHarmony();
+    setTimeout(runCompound, 400);
+    translateOpportunity();
+    calculateStability();
+    calculateRange();
+    calculateHappinessometer();
+    calculateTaskROI();
+  });
+
+  // Theme toggle + Hamburger (matching about.html)
   document.getElementById('themeToggle')?.addEventListener('click', function() {
     const html = document.documentElement;
     const current = html.getAttribute('data-theme');
@@ -778,6 +907,8 @@
     html.setAttribute('data-theme', next);
     localStorage.setItem('theme', next);
     document.getElementById('themeIcon').textContent = next === 'dark' ? '🌙' : '☀️';
+    // Redraw chart if visible
+    if (document.getElementById('tab3').classList.contains('active')) setTimeout(runCompound, 100);
   });
 
   document.getElementById('hamburgerBtn')?.addEventListener('click', function() {
@@ -785,9 +916,7 @@
   });
 
   document.querySelectorAll('.dropdown-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-      document.getElementById('navLinks').classList.remove('open');
-    });
+    link.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
   });
 
   const initTheme = document.documentElement.getAttribute('data-theme') || 'dark';
