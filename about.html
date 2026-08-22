@@ -386,14 +386,14 @@
 <!-- ====== MAIN CONTENT ====== -->
 <main id="main-content">
   <!-- HERO – no fade classes -->
-  <section id="hero" class="container hero" style="min-height:80vh; display:flex; align-items:center; padding:4rem 1rem; background:transparent;">
+    <section id="hero" class="container hero" style="min-height:80vh; display:flex; align-items:center; padding:4rem 6px 2rem;">
     <div>
       <span class="badge-glow" style="margin-bottom:0.5rem;">📘 Canonical Reference</span>
       <span class="badge-glow badge-version" style="margin-left:0.5rem;">v0.8.0</span>
-      <h1 class="text-gradient" style="font-size:clamp(2.5rem,10vw,5rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">
-        The Productivity<br />Bond Model
-      </h1>
-      <p style="font-size:clamp(1rem,2vw,1.5rem); font-weight:300; opacity:0.8; max-width:600px; margin:0.8rem 0 1.5rem; color:var(--text-secondary);">
+        <h1 class="text-gradient" style="font-size:clamp(2.5rem,8vw,4rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">
+          The Productivity<br />Bond Model
+        </h1>
+      <p style="font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:300; opacity:0.8; max-width:600px; margin:0.8rem 0 1.5rem; color:var(--text-secondary);">
         About the model, the author, and the vision. See the <a href="index.html#abstract" style="color:#059669; text-decoration:underline;">full model</a>.
       </p>
       <div style="display:flex; flex-wrap:wrap; gap:0.8rem; align-items:center;">
@@ -446,17 +446,24 @@
         The model was developed as part of the <a href="https://traffictorch.net" target="_blank" rel="noopener noreferrer" style="color:#4f46e5;">Traffic Torch</a> research initiative. It draws on decades of economic theory, including Piketty's <em>r &gt; g</em>, planetary boundaries, state‑contingent debt instruments, and common‑pool resource governance. The result is a practical, market‑based solution that turns the financial system from a driver of instability into a stabilising force.
       </p>
 
-      <h3 style="font-size:clamp(1.1rem,2vw,1.3rem); font-weight:600; margin-top:1.8rem; margin-bottom:0.5rem; color:var(--text-primary);">Author</h3>
-      <div class="about-author">
-        <div class="author-avatar" style="flex-shrink:0; text-align:center;">
-          <div style="width:100px; height:100px; border-radius:50%; background:var(--bg-metric); border:2px solid #4f46e5; display:flex; align-items:center; justify-content:center; font-size:2.8rem; margin:0 auto;">👨‍💻</div>
-        </div>
-        <div class="author-bio" style="flex:1; min-width:200px;">
-          <p style="color:var(--text-body); line-height:1.7; font-size:clamp(0.9rem,1.1vw,1rem); margin:0;">
-            <a href="https://yliacallan.github.io/" target="_blank" rel="noopener noreferrer" style="color:#4f46e5;">Ylia Callan</a> is an independent researcher and systems thinker focused on incentive design, ecological economics, and institutional innovation. He is the author of <em>The Infinite Debt Problem</em> and the lead architect of the Productivity Bond Model. <strong>His</strong> work bridges finance, ecology, and public policy to create a resilient, prosperous future.
-          </p>
-        </div>
-      </div>
+   <h3 style="font-size:clamp(1.1rem,2vw,1.3rem); font-weight:600; margin-top:1.8rem; margin-bottom:0.5rem; color:var(--text-primary);">Author</h3>
+<div class="about-author" style="display:flex; gap:1.5rem; align-items:flex-start; flex-wrap:wrap;">
+  
+  <!-- Fixed Avatar Container -->
+  <div class="author-avatar" style="flex-shrink:0; width:100px; height:100px; display:flex; align-items:center; justify-content:center;">
+    <div style="width:100px; height:100px; border-radius:50%; background:var(--bg-metric); border:2px solid #4f46e5; display:flex; align-items:center; justify-content:center; font-size:2.8rem; position:relative;">
+      <span style="position:absolute; opacity:0.7; z-index:1;">💸</span>
+      <span style="position:absolute; font-size:2rem; padding-top:10px; z-index:2;">♾️</span>
+    </div>
+  </div>
+  
+  <!-- Bio Column -->
+  <div class="author-bio" style="flex:1; min-width:200px;">
+    <p style="color:var(--text-body); line-height:1.7; font-size:clamp(0.9rem,1.1vw,1rem); margin:0;">
+      <a href="https://yliacallan.github.io/" target="_blank" rel="noopener noreferrer" style="color:#4f46e5;">Ylia Callan</a> is an independent researcher and systems thinker focused on incentive design, ecological economics, and institutional innovation. He is the author of <em>The Infinite Debt Problem</em> and the lead architect of the Productivity Bond Model. <strong>His</strong> work bridges finance, ecology, and public policy to create a resilient, prosperous future.
+    </p>
+  </div>
+</div>
 
       <h3 style="font-size:clamp(1.1rem,2vw,1.3rem); font-weight:600; margin-top:1.8rem; margin-bottom:0.5rem; color:var(--text-primary);">Research Philosophy</h3>
       <p style="color:var(--text-body); line-height:1.7; font-size:clamp(0.9rem,1.1vw,1rem);">
