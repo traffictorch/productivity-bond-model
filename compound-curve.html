@@ -17,493 +17,92 @@
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="favicon.ico" />
   <link rel="apple-touch-icon" href="icon-512.png" />
+
+  <!-- ===== FONTS (synchronous – no FOUT) ===== -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" media="print" onload="this.media='all'" crossorigin="anonymous" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" crossorigin="anonymous" /></noscript>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
-  <link rel="preconnect" href="https://static.addtoany.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=block" crossorigin="anonymous" />
 
+  <!-- ===== CORE CSS (synchronous – no FOUC) ===== -->
+  <link rel="stylesheet" href="css/core.min.css" />
+
+  <!-- ===== TOOL‑SPECIFIC OVERRIDES ===== -->
   <style>
-    /* --- Reset, Theme, Background --- */
+    /* Safety net: hide until fully loaded, then fade in */
     html { opacity: 0; transition: opacity 0.12s ease; }
     html.loaded { opacity: 1; }
 
-    :root {
-      --bg-body: #05060a;
-      --bg-card: rgba(12,15,25,0.65);
-      --bg-glass: rgba(12,15,25,0.65);
-      --bg-nav: rgba(5,6,10,0.35);
-      --bg-input: rgba(255,255,255,0.06);
-      --bg-var: rgba(0,0,0,0.25);
-      --bg-metric: rgba(0,0,0,0.3);
-      --bg-code: rgba(0,0,0,0.5);
-      --bg-scenario: rgba(0,0,0,0.25);
-      --bg-faq: rgba(0,0,0,0.15);
-      --bg-tooltip: #1a1f2e;
-      --btn-primary-bg: linear-gradient(135deg,#4f46e5,#7c3aed);
-      --btn-primary-text: #fff;
-      --btn-secondary-bg: rgba(255,255,255,0.06);
-      --btn-secondary-border: rgba(255,255,255,0.15);
-      --btn-secondary-text: #eef2f8;
-      --text-primary: #eef2f8;
-      --text-secondary: #c7d2fe;
-      --text-muted: #a5b4fc;
-      --text-body: #c7d2fe;
-      --border-divider: rgba(255,255,255,0.04);
-      --border-card: rgba(255,255,255,0.06);
-      --border-input: rgba(255,255,255,0.1);
-      --border-table: rgba(255,255,255,0.08);
-      --shadow-card: 0 30px 60px -20px rgba(0,0,0,0.8);
-      --shadow-glow: 0 30px 60px -20px rgba(79,70,229,0.15);
-      --orb1: rgba(79,70,229,0.15);
-      --orb2: rgba(236,72,153,0.10);
-      --orb3: rgba(16,185,129,0.08);
-      --color-safe: #69db7c;
-      --color-burnout: #ff6b6b;
-      --color-stagnant: #4dabf7;
-      --bar-conv: #4b5563;
-      --bar-ilb: #3b82f6;
-      --bar-gdp: #8b5cf6;
-      --bar-prod: #a78bfa;
-      --bar-hybrid: #f59e0b;
-    }
-    [data-theme="light"] {
-      --bg-body: #f0f2f8;
-      --bg-card: rgba(255,255,255,0.85);
-      --bg-glass: rgba(255,255,255,0.75);
-      --bg-nav: rgba(255,255,255,0.50);
-      --bg-input: rgba(0,0,0,0.04);
-      --bg-var: rgba(0,0,0,0.04);
-      --bg-metric: rgba(0,0,0,0.06);
-      --bg-code: rgba(0,0,0,0.05);
-      --bg-scenario: rgba(0,0,0,0.04);
-      --bg-faq: rgba(0,0,0,0.04);
-      --bg-tooltip: #f0f2f8;
-      --btn-secondary-bg: rgba(0,0,0,0.04);
-      --btn-secondary-border: rgba(0,0,0,0.12);
-      --btn-secondary-text: #0f111a;
-      --text-primary: #0f111a;
-      --text-secondary: #2d2f3e;
-      --text-muted: #4a4a6a;
-      --text-body: #2d2f3e;
-      --border-divider: rgba(0,0,0,0.06);
-      --border-card: rgba(0,0,0,0.08);
-      --border-input: rgba(0,0,0,0.1);
-      --border-table: rgba(0,0,0,0.08);
-      --shadow-card: 0 30px 60px -20px rgba(0,0,0,0.15);
-      --shadow-glow: 0 30px 60px -20px rgba(79,70,229,0.08);
-      --orb1: rgba(79,70,229,0.06);
-      --orb2: rgba(236,72,153,0.05);
-      --orb3: rgba(16,185,129,0.04);
-      --color-safe: #2b8a3e;
-      --color-burnout: #e03131;
-      --color-stagnant: #1971c2;
-      --bar-conv: #9ca3af;
-      --bar-ilb: #60a5fa;
-      --bar-gdp: #a78bfa;
-      --bar-prod: #7c3aed;
-      --bar-hybrid: #f59e0b;
-    }
-
-    * { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
-
-    body {
-      font-family:'Inter',system-ui,-apple-system,sans-serif;
-      background:var(--bg-body);
-      color:var(--text-primary);
-      line-height:1.6;
-      -webkit-font-smoothing:antialiased;
-      background-image:
-        radial-gradient(circle at 20% 30%, var(--orb1) 0%, transparent 60%),
-        radial-gradient(circle at 80% 70%, var(--orb2) 0%, transparent 60%),
-        radial-gradient(circle at 40% 80%, var(--orb3) 0%, transparent 60%);
-      background-attachment: fixed;
-      animation: gradientShift 20s ease-in-out infinite alternate;
-      min-height: 100vh;
-      position: relative;
-    }
-
-    @keyframes gradientShift {
-      0% { background-position: 0% 0%; }
-      100% { background-position: 100% 100%; }
-    }
-
-    .orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(100px);
-      z-index: 0;
-      pointer-events: none;
-    }
-    .orb-1 { width: 40vw; height: 40vw; top: -10vh; left: -10vw; background: var(--orb1); animation: floatOrb 25s infinite alternate ease-in-out; }
-    .orb-2 { width: 35vw; height: 35vw; bottom: -15vh; right: -10vw; background: var(--orb2); animation: floatOrb 30s infinite alternate-reverse ease-in-out; }
-    .orb-3 { width: 25vw; height: 25vw; top: 40vh; right: 20vw; background: var(--orb3); animation: floatOrb 20s infinite alternate ease-in-out; }
-    @keyframes floatOrb {
-      0% { transform: translate(0,0) scale(1); }
-      100% { transform: translate(80px,-60px) scale(1.2); }
-    }
-
-    .container, .sticky-nav, .footer, .floating-return-top, .pwa-install-btn {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* --- Reusable Components --- */
-    .container { max-width:1280px; margin:0 auto; padding:0 1.5rem; }
-    .glass-card {
-      background:var(--bg-card);
-      backdrop-filter:blur(16px) saturate(1.4);
-      -webkit-backdrop-filter:blur(16px) saturate(1.4);
-      border:1px solid var(--border-card);
-      border-radius:2.5rem;
-      padding:2.5rem 2rem;
-      box-shadow:var(--shadow-card);
-      transition:border-color .3s,box-shadow .3s,background .3s;
-    }
-    .glass-card:hover {
-      border-color:rgba(79,70,229,0.2);
-      box-shadow:var(--shadow-glow);
-    }
-    .text-gradient {
-      background:linear-gradient(135deg,#4f46e5,#a78bfa,#f472b6);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      background-clip:text;
-    }
-    .badge-glow {
-      display:inline-block;
-      background:rgba(79,70,229,0.15);
-      color:var(--text-secondary);
-      font-size:0.7rem;
-      font-weight:700;
-      padding:0.3rem 1rem;
-      border-radius:60px;
-      letter-spacing:0.08em;
-      text-transform:uppercase;
-      border:1px solid rgba(79,70,229,0.15);
-    }
-    .btn-primary {
-      display:inline-block;
-      background:var(--btn-primary-bg);
-      color:var(--btn-primary-text);
-      font-weight:600;
-      padding:0.8rem 2.2rem;
-      border-radius:60px;
-      border:none;
-      cursor:pointer;
-      transition:0.2s;
-      text-decoration:none;
-      text-align:center;
-      box-shadow:0 4px 20px rgba(79,70,229,0.4);
-    }
-    .btn-primary:hover { background:#4338ca; transform:scale(1.02); }
-    .btn-secondary {
-      display:inline-block;
-      background:var(--btn-secondary-bg);
-      color:var(--btn-secondary-text);
-      font-weight:500;
-      padding:0.8rem 2.2rem;
-      border-radius:60px;
-      border:1px solid var(--btn-secondary-border);
-      text-decoration:none;
-      transition:0.2s;
-      cursor:pointer;
-      text-align:center;
-    }
-    .btn-secondary:hover { background:rgba(255,255,255,0.12); }
-    .share-btn {
-      background:var(--btn-secondary-bg);
-      border:1px solid var(--btn-secondary-border);
-      color:var(--btn-secondary-text);
-      padding:0.8rem 2.2rem;
-      font-weight:600;
-      font-size:0.9rem;
-      border-radius:60px;
-      cursor:pointer;
-      transition:0.2s;
-      font-family:inherit;
-      display:inline-block;
-      text-align:center;
-    }
-    .share-btn:hover { background:rgba(255,255,255,0.15); transform:scale(1.02); }
-    .hero { min-height:60vh; display:flex; align-items:center; padding:2rem 6px 1rem; background:transparent; }
+    .hero { min-height:20vh; padding:1rem 0; }
     .section-spacing { padding:3rem 0; }
-    @media (max-width:768px) {
-      .glass-card { padding:1.5rem 1rem; border-radius:1.5rem; }
-      .hero { min-height:40vh; padding:1rem 0; }
-    }
 
-    /* ===== NAVIGATION – FIXED ===== */
-    .sticky-nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--bg-nav);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border-divider);
-      padding: .5rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
+    .input-group {
+      display:flex; flex-wrap:wrap; gap:1rem 2rem; margin-bottom:1.5rem;
+      background:var(--bg-input); padding:1.2rem 1.5rem;
+      border-radius:12px; border:1px solid var(--border-divider);
     }
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: .8rem;
+    .input-group label {
+      display:flex; flex-direction:column;
+      font-size:0.75rem; text-transform:uppercase; letter-spacing:0.04em;
+      color:var(--text-muted); gap:0.3rem; flex:1 1 140px;
     }
-    .nav-links {
-      display: flex;
-      gap: .4rem;
-      flex-wrap: wrap;
-      list-style: none;
-      font-size: 1rem;
-      font-weight: 260;
-      margin: 0;
-      padding: 0;
-    }
-    .nav-links a {
-      color: var(--text-primary);
-      text-decoration: none;
-      padding: .3rem .2rem;
-      border-bottom: 2px solid transparent;
-      transition: border-color .2s,color .2s;
-      white-space: nowrap;
-    }
-    .nav-links a:hover {
-      border-color: #4f46e5;
-    }
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-      background: transparent;
-      border: none;
-      padding: .3rem;
-      gap: 5px;
-    }
-    .hamburger span {
-      display: block;
-      width: 26px;
-      height: 3px;
-      background: var(--text-primary);
-      border-radius: 3px;
-      transition: .25s ease;
-    }
-    .hamburger.open span:nth-child(1) {
-      transform: translateY(8px) rotate(45deg);
-    }
-    .hamburger.open span:nth-child(2) {
-      opacity: 0;
-    }
-    .hamburger.open span:nth-child(3) {
-      transform: translateY(-8px) rotate(-45deg);
-    }
-    .theme-toggle {
-      background: transparent;
-      border: 1px solid var(--border-input);
-      border-radius: 40px;
-      padding: .2rem .6rem;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: .2s;
-      color: var(--text-primary);
-      line-height: 1.4;
-    }
-    .theme-toggle:hover {
-      background: var(--bg-input);
-      transform: scale(1.05);
-    }
-    .nav-links .dropdown {
-      position: relative;
-    }
-    .nav-links .dropdown-toggle {
-      cursor: pointer;
-    }
-    .nav-links .dropdown-menu {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: var(--bg-nav);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--border-divider);
-      border-radius: .8rem;
-      padding: .5rem 0;
-      min-width: 200px;
-      list-style: none;
-      box-shadow: var(--shadow-card);
-      z-index: 200;
-    }
-    .nav-links .dropdown-menu li {
-      padding: 0;
-    }
-    .nav-links .dropdown-menu a {
-      display: block;
-      padding: .4rem 1.2rem;
-      color: var(--text-primary);
-      text-decoration: none;
-      border-bottom: none;
-      white-space: nowrap;
-      font-weight: 400;
-      font-size: .8rem;
-      transition: background .2s;
-    }
-    .nav-links .dropdown-menu a:hover {
-      background: var(--bg-input);
-      border-radius: .3rem;
-    }
-    @media (min-width: 769px) {
-      .nav-links .dropdown:hover .dropdown-menu {
-        display: block;
-      }
-    }
-    @media (max-width: 768px) {
-      .sticky-nav {
-        padding: .6rem 1rem;
-      }
-      .hamburger {
-        display: flex !important;
-      }
-      .nav-links {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        background: var(--bg-nav);
-        backdrop-filter: blur(12px);
-        padding: .5rem 0;
-        margin-top: .5rem;
-        border-top: 1px solid var(--border-divider);
-        max-height: 70vh;
-        overflow-y: auto;
-      }
-      .nav-links.open {
-        display: flex;
-      }
-      .nav-links > li {
-        width: 100%;
-        padding: 0;
-        border-bottom: 1px solid var(--border-divider);
-      }
-      .nav-links > li:last-child {
-        border-bottom: none;
-      }
-      .nav-links > li > a,
-      .nav-links > li > .dropdown-toggle,
-      .nav-links .dropdown-link {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        padding: .6rem 1rem;
-        color: var(--text-primary);
-        font-size: 1rem;
-        font-weight: 500;
-        text-decoration: none;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-      }
-      .nav-links .dropdown-menu {
-        display: block;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.25s ease;
-        padding: 0 0 0 1.5rem;
-        background: transparent;
-        border: none;
-        box-shadow: none;
-        position: static;
-        min-width: auto;
-      }
-      .nav-links .dropdown.open .dropdown-menu {
-        max-height: 400px;
-        padding-top: .3rem;
-        padding-bottom: .3rem;
-      }
-      .nav-links .dropdown-menu a {
-        padding: .4rem 1rem;
-        font-size: .9rem;
-        white-space: normal;
-      }
-      .theme-toggle {
-        font-size: 1rem;
-        padding: .1rem .5rem;
-      }
-      .mobile-home {
-        display: block !important;
-      }
-    }
-    .mobile-home {
-      display: none;
-    }
-
-    .floating-return-top {
-      position:fixed;
-      bottom:7rem;
-      right:2rem;
-      z-index:9998;
-      display:flex;
-      background:rgba(0,255,255,0.12);
-      backdrop-filter:blur(8px);
-      border:1px solid rgba(0,255,255,0.2);
-      border-radius:60px;
-      padding:0.7rem 1.2rem;
-      color:#17cfcf;
-      font-weight:600;
-      font-size:0.9rem;
-      cursor:pointer;
-      transition:0.3s;
-      font-family:'Inter',system-ui;
-    }
-    .floating-return-top:hover { background:rgba(0,255,255,0.25); transform:scale(1.05); }
-
-    .hero-tabs { display:flex; flex-wrap:wrap; gap:0.6rem; align-items:center; margin-bottom:0.8rem; }
-    .hero-tab-btn {
-      background:none;
+    .input-group input[type="number"],
+    .input-group input[type="range"] {
+      background:var(--bg-body);
       border:1px solid var(--border-divider);
-      color:var(--text-muted);
-      font-size:0.9rem;
-      font-weight:600;
-      padding:0.5rem 1.2rem;
-      border-radius:40px;
-      cursor:pointer;
-      transition:0.2s;
+      border-radius:8px;
+      padding:0.5rem 0.75rem;
+      color:var(--text-primary);
+      font-weight:500;
+      width:100%;
       font-family:inherit;
     }
-    .hero-tab-btn:hover { color:var(--text-primary); background:var(--bg-input); border-color:var(--text-muted); }
-    .hero-tab-btn.active { background:rgba(79,70,229,0.2); color:#b388ff; border-color:rgba(79,70,229,0.4); }
-
-    .tool-panel { display:none; animation:fade 0.2s ease; }
-    .tool-panel.active { display:block; }
-    @keyframes fade { 0%{opacity:0.4;transform:translateY(4px)} 100%{opacity:1;transform:translateY(0)} }
-    .desc { color:var(--text-muted); font-size:0.95rem; margin-bottom:1.5rem; }
-    .help-text { display:block; font-size:0.7rem; color:var(--text-muted); opacity:0.7; margin-top:0.2rem; font-weight:400; text-transform:none; letter-spacing:0; }
-    .input-group { display:flex; flex-wrap:wrap; gap:1rem 2rem; margin-bottom:1.5rem; background:var(--bg-input); padding:1.2rem 1.5rem; border-radius:12px; border:1px solid var(--border-divider); }
-    .input-group label { display:flex; flex-direction:column; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-muted); gap:0.3rem; flex:1 1 140px; }
-    .input-group input[type="number"], .input-group input[type="range"] { background:var(--bg-body); border:1px solid var(--border-divider); border-radius:8px; padding:0.5rem 0.75rem; color:var(--text-primary); font-weight:500; width:100%; font-family:inherit; }
     .input-group input[type="range"] { padding:0; accent-color:#4f46e5; }
 
-    .result-box { background:var(--bg-input); border-radius:12px; padding:1.5rem; border-left:4px solid #4f46e5; margin-top:1rem; }
+    .result-box {
+      background:var(--bg-input);
+      border-radius:12px;
+      padding:1.5rem;
+      border-left:4px solid #4f46e5;
+      margin-top:1rem;
+    }
     .result-box .stat { font-size:2rem; font-weight:700; color:var(--text-primary); }
     .result-box .stat span { color:#4f46e5; }
     .result-box .sub-stat { color:var(--text-muted); font-size:0.9rem; }
     .risk-low { color:var(--color-safe); font-weight:600; }
     .risk-med { color:#ffd43b; font-weight:600; }
     .risk-high { color:var(--color-burnout); font-weight:600; }
-    .footer { margin-top:4rem; padding:2rem 0; border-top:1px solid var(--border-divider); text-align:center; color:var(--text-muted); font-size:0.85rem; }
-    .footer a { color:var(--text-secondary); text-decoration:none; }
-    .footer a:hover { text-decoration:underline; }
-    .breadcrumb { font-size:0.85rem; color:var(--text-muted); display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap; margin-bottom:0.5rem; }
-    .breadcrumb a { color:var(--text-muted); text-decoration:none; }
-    .breadcrumb a:hover { color:var(--text-primary); }
+
     .chart-container { max-height:300px; margin:1rem 0; }
-    .grid-2col { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-    @media (max-width:768px) { .grid-2col { grid-template-columns:1fr; } }
+
+    .prescription-box {
+      background: var(--bg-body);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-left: 4px solid #f59e0b;
+    }
+    .prescription-box .label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700; }
+    .prescription-box .solution { color: #f59e0b; font-weight: 600; margin-top: 0.2rem; }
+    .prescription-box .action { color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.2rem; }
+
+    .ai-power-wrapper { margin-top: 1.5rem; }
+    .ai-power-wrapper .glass-card { padding: 1.2rem 1.5rem; border-color: rgba(167,139,250,0.3); }
+    .ai-output {
+      margin-top: 0.8rem;
+      padding: 0.8rem 1.2rem;
+      background: var(--bg-body);
+      border-radius: 0.8rem;
+      border-left: 4px solid #a78bfa;
+      min-height: 50px;
+      font-size: 0.9rem;
+      color: var(--text-body);
+    }
+    .ai-output .summary { color: var(--text-primary); font-weight: 500; margin-bottom: 0.3rem; }
+    .ai-output .advice { color: var(--text-secondary); }
+    .ai-output .placeholder { opacity: 0.5; }
+
+    .ask-ai-section { margin-top:1rem; border-top:1px solid var(--border-divider); padding-top:1rem; }
+    .ask-ai-section label { font-weight:600; display:block; margin-bottom:0.3rem; }
 
     .accordion-toggle {
       cursor: pointer;
@@ -531,90 +130,17 @@
     }
     .accordion-content.open { max-height: 600px; padding: 0.2rem 1rem 1rem 1rem; }
 
-    .prescription-box {
-      background: var(--bg-body);
-      border-radius: 10px;
-      padding: 1rem;
-      margin-top: 1rem;
-      border-left: 4px solid #f59e0b;
-    }
-    .prescription-box .label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700; }
-    .prescription-box .solution { color: #f59e0b; font-weight: 600; margin-top: 0.2rem; }
-    .prescription-box .action { color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.2rem; }
-
-    .ai-power-wrapper { margin-top: 1.5rem; }
-    .ai-power-wrapper .glass-card { padding: 1.2rem 1.5rem; border-color: rgba(167,139,250,0.3); }
-    .ai-output { margin-top: 0.8rem; padding: 0.8rem 1.2rem; background: var(--bg-body); border-radius: 0.8rem; border-left: 4px solid #a78bfa; min-height: 50px; font-size: 0.9rem; color: var(--text-body); }
-    .ai-output .summary { color: var(--text-primary); font-weight: 500; margin-bottom: 0.3rem; }
-    .ai-output .advice { color: var(--text-secondary); }
-    .ai-output .placeholder { opacity: 0.5; }
-
-    .ask-ai-section { margin-top:1rem; border-top:1px solid var(--border-divider); padding-top:1rem; }
-    .ask-ai-section label { font-weight:600; display:block; margin-bottom:0.3rem; }
-
-    .pwa-ios-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(4px);
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
-    }
-    .pwa-ios-overlay.active { display: flex; }
-    .pwa-ios-modal {
-      background: var(--bg-body);
-      border: 1px solid var(--border-divider);
-      padding: 2rem 1.5rem;
-      border-radius: 1.5rem;
-      max-width: 340px;
-      width: 90%;
-      text-align: center;
-      box-shadow: 0 30px 60px -20px rgba(0,0,0,0.8);
-    }
-    .pwa-ios-modal h3 { color: var(--text-primary); font-size: 1.3rem; margin-bottom: 0.5rem; }
-    .pwa-ios-modal p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; }
-    .pwa-ios-modal .step { display:flex; align-items:center; justify-content:center; gap:0.5rem; margin:0.8rem 0; font-size:0.9rem; color:var(--text-primary); }
-    .pwa-ios-modal .step-icon { background:var(--bg-input); padding:0.2rem 0.8rem; border-radius:6px; font-size:1.2rem; }
-    .pwa-ios-modal .close-btn { margin-top:1rem; padding:0.6rem 2rem; background:#4f46e5; color:#fff; border:none; border-radius:40px; font-size:1rem; font-weight:600; cursor:pointer; transition:0.2s; }
-    .pwa-ios-modal .close-btn:hover { background:#4338ca; transform:scale(1.02); }
-
-    .pwa-install-btn {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      z-index: 9999;
-      display: none;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.6rem 1.2rem;
-      background: rgba(79,70,229,0.2);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(79,70,229,0.4);
-      border-radius: 60px;
-      color: var(--text-primary);
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      box-shadow: 0 4px 20px rgba(79,70,229,0.2);
-      transition: 0.2s;
-    }
-    .pwa-install-btn:hover { background: rgba(79,70,229,0.35); transform: scale(1.05); }
-    .pwa-install-btn .icon { font-size: 1.3rem; }
-    @media (max-width:640px) {
-      .pwa-install-btn { bottom:1rem; right:1rem; padding:0.4rem 1rem; font-size:0.8rem; }
-      .pwa-install-btn .icon { font-size:1rem; }
+    /* Fix: hide return-to-top on mobile */
+    @media (max-width: 768px) {
+      .floating-return-top { display: none !important; }
     }
   </style>
 
-  <!-- Floating Orbs -->
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
+  <!-- ===== CHART.JS (deferred) ===== -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+
+  <!-- ===== GA4 (deferred) ===== -->
+  <script src="js/ga4.js" defer></script>
 
   <!-- FAQ Schema -->
   <script type="application/ld+json">
@@ -633,7 +159,12 @@
 </head>
 <body>
 
-<!-- ===== NAV (identical to about.html) ===== -->
+<!-- ===== Floating Orbs ===== -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- ===== NAV ===== -->
 <nav class="sticky-nav no-print" id="mainNav">
   <div class="nav-left">
     <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
@@ -644,10 +175,10 @@
     <li class="dropdown">
       <span class="dropdown-toggle">🧰 Tools ▼</span>
       <ul class="dropdown-menu">
-          <li><a href="tools.html">🧰 All Tools</a></li>
-          <li><a href="wellbeing-index.html">🌿 Wellbeing Index</a></li>
-          <li><a href="debt-reality.html">💳 Debt Reality</a></li>
-          <li><a href="compound-curve.html">📈 Compound Curve</a></li>
+        <li><a href="tools.html">🧰 All Tools</a></li>
+        <li><a href="wellbeing-index.html">🌿 Wellbeing Index</a></li>
+        <li><a href="debt-reality.html">💳 Debt Reality</a></li>
+        <li><a href="compound-curve.html">📈 Compound Curve</a></li>
       </ul>
     </li>
     <li class="dropdown"><span class="dropdown-toggle">About ▼</span><ul class="dropdown-menu"><li><a href="news.html">News</a></li><li><a href="about.html">Traffic Torch</a></li><li><a href="changelog.html">Change Log</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="contact.html">Contact</a></li></ul></li>
@@ -659,193 +190,184 @@
   </ul>
 </nav>
 
-  <main>
-    <!-- ===== BREADCRUMB ===== -->
-    <div class="container" style="padding-top:1.5rem; padding-bottom:0;">
-      <nav class="breadcrumb">
-        <a href="index.html">🏠 Home</a><span style="opacity:0.5;">/</span>
-        <a href="tools.html">🧰 Tools</a><span style="opacity:0.5;">/</span>
-        <span style="color:var(--text-primary); font-weight:500;">Compound Curve</span>
-      </nav>
+<main>
+  <!-- ===== BREADCRUMB ===== -->
+  <div class="container" style="padding-top:1.5rem; padding-bottom:0;">
+    <nav class="breadcrumb">
+      <a href="index.html">🏠 Home</a><span style="opacity:0.5;">/</span>
+      <a href="tools.html">🧰 Tools</a><span style="opacity:0.5;">/</span>
+      <span style="color:var(--text-primary); font-weight:500;">Compound Curve</span>
+    </nav>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section class="container hero">
+    <div>
+      <span class="badge-glow" style="margin-bottom:0.5rem;">📈 Interactive Tool</span>
+      <h1 class="text-gradient" style="font-size:clamp(2.8rem,6vw,4rem); font-weight:800; letter-spacing:-0.03em; line-height:1.1;">Compound Curve</h1>
+      <p style="font-size:clamp(1.2rem,2vw,1.6rem); font-weight:300; opacity:0.8; max-width:650px; margin:0.5rem 0 1.5rem; color:var(--text-secondary);">
+        See how your debt compounds over time — and how small changes bend the curve.
+      </p>
     </div>
+  </section>
 
-    <!-- ===== HERO ===== -->
-    <section class="container hero" style="min-height:20vh; padding:1rem 0;">
-      <div>
-        <span class="badge-glow" style="margin-bottom:0.5rem;">📈 Interactive Tool</span>
-        <h1 class="text-gradient" style="font-size:clamp(2.8rem,6vw,4rem); font-weight:800; letter-spacing:-0.03em; line-height:1.1;">Compound Curve</h1>
-        <p style="font-size:clamp(1.2rem,2vw,1.6rem); font-weight:300; opacity:0.8; max-width:650px; margin:0.5rem 0 1.5rem; color:var(--text-secondary);">
-          See how your debt compounds over time — and how small changes bend the curve.
-        </p>
-      </div>
-    </section>
+  <!-- ===== TOOL ===== -->
+  <section class="container section-spacing" style="padding-top:0.5rem;">
+    <div class="glass-card">
+      <p class="desc" style="color:var(--text-muted); font-size:0.95rem; margin-bottom:1.5rem;">
+        Enter your numbers and click <strong>Project the Future</strong> to see the compounding effect.
+      </p>
 
-    <!-- ===== TOOL ===== -->
-    <section class="container section-spacing" style="padding-top:0.5rem;">
-      <div class="glass-card">
-        <p class="desc">Enter your numbers and click <strong>Project the Future</strong> to see the compounding effect.</p>
-
-        <!-- Accordion: What do these terms mean? -->
-        <div style="background:var(--bg-input); border-radius:12px; padding:0.2rem 0.2rem; margin-bottom:1.5rem; border:1px solid var(--border-divider);">
-          <div class="accordion-item">
-            <div class="accordion-toggle"><span>📖 What do these terms mean?</span><span class="arrow">▼</span></div>
-            <div class="accordion-content">
-              <div style="padding:0.5rem 0;">
-                <div style="margin-bottom:0.6rem;"><strong style="color:var(--text-primary);">Annual Debt</strong> — The yearly financial loss from your productivity or spending leak. This is the amount you want to reduce.</div>
-                <div style="margin-bottom:0.6rem;"><strong style="color:var(--text-primary);">Growth Rate</strong> — The annual percentage increase in your debt. Even 10% can double your debt in ~7 years.</div>
-                <div style="margin-bottom:0.6rem;"><strong style="color:var(--text-primary);">Years</strong> — The time horizon you want to project into the future. 10 years shows the true cost of inaction.</div>
-                <div><strong style="color:var(--text-primary);">Reduction</strong> — The amount you can cut from your annual leak. Small cuts compound into huge savings over time.</div>
-              </div>
+      <!-- Accordion -->
+      <div style="background:var(--bg-input); border-radius:12px; padding:0.2rem 0.2rem; margin-bottom:1.5rem; border:1px solid var(--border-divider);">
+        <div class="accordion-item">
+          <div class="accordion-toggle"><span>📖 What do these terms mean?</span><span class="arrow">▼</span></div>
+          <div class="accordion-content">
+            <div style="padding:0.5rem 0;">
+              <div style="margin-bottom:0.6rem;"><strong style="color:var(--text-primary);">Annual Debt</strong> — The yearly financial loss from your productivity or spending leak. This is the amount you want to reduce.</div>
+              <div style="margin-bottom:0.6rem;"><strong style="color:var(--text-primary);">Growth Rate</strong> — The annual percentage increase in your debt. Even 10% can double your debt in ~7 years.</div>
+              <div style="margin-bottom:0.6rem;"><strong style="color:var(--text-primary);">Years</strong> — The time horizon you want to project into the future. 10 years shows the true cost of inaction.</div>
+              <div><strong style="color:var(--text-primary);">Reduction</strong> — The amount you can cut from your annual leak. Small cuts compound into huge savings over time.</div>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="input-group">
-          <label>💰 Annual Debt ($) <input type="number" id="compBase" value="13000" step="100" /></label>
-          <label>📈 Growth Rate (%) <input type="range" id="compRate" min="5" max="20" value="10" step="0.5" oninput="document.getElementById('compRateDisplay').textContent=this.value+'%'" /> <span id="compRateDisplay">10%</span></label>
-          <label>⏳ Years <input type="range" id="compYears" min="5" max="20" value="10" step="1" oninput="document.getElementById('compYearsDisplay').textContent=this.value" /> <span id="compYearsDisplay">10</span></label>
+      <div class="input-group">
+        <label>💰 Annual Debt ($) <input type="number" id="compBase" value="13000" step="100" /></label>
+        <label>📈 Growth Rate (%) <input type="range" id="compRate" min="5" max="20" value="10" step="0.5" oninput="document.getElementById('compRateDisplay').textContent=this.value+'%'" /> <span id="compRateDisplay">10%</span></label>
+        <label>⏳ Years <input type="range" id="compYears" min="5" max="20" value="10" step="1" oninput="document.getElementById('compYearsDisplay').textContent=this.value" /> <span id="compYearsDisplay">10</span></label>
+      </div>
+      <div style="background:var(--bg-input); border-radius:8px; padding:0.8rem 1rem; margin-bottom:1rem; border:1px solid var(--border-divider);">
+        <label style="display:flex; align-items:center; gap:0.5rem; font-size:0.8rem; color:var(--text-muted);">
+          🚀 Reduce Annual Debt by ($)
+          <input type="range" id="compReduction" min="0" max="5000" value="1000" step="100" oninput="document.getElementById('compReductionDisplay').textContent='$'+this.value; runCompoundCurve();" style="flex:1; min-width:100px;" />
+          <span id="compReductionDisplay" style="font-weight:700; color:#69db7c; min-width:60px;">$1000</span>
+        </label>
+      </div>
+      <button class="btn-primary" onclick="runCompoundCurve()">📊 Project the Future</button>
+      <div id="compResult" class="result-box">
+        <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:0.5rem;">
+          <div class="stat">💸 Total Debt: $<span id="compTotal">0</span></div>
+          <div class="stat" style="font-size:1.5rem; color:#ffd43b;">Final Year: $<span id="compFinal">0</span></div>
         </div>
-        <div style="background:var(--bg-input); border-radius:8px; padding:0.8rem 1rem; margin-bottom:1rem; border:1px solid var(--border-divider);">
-          <label style="display:flex; align-items:center; gap:0.5rem; font-size:0.8rem; color:var(--text-muted);">
-            🚀 Reduce Annual Debt by ($)
-            <input type="range" id="compReduction" min="0" max="5000" value="1000" step="100" oninput="document.getElementById('compReductionDisplay').textContent='$'+this.value; runCompoundCurve();" style="flex:1; min-width:100px;" />
-            <span id="compReductionDisplay" style="font-weight:700; color:#69db7c; min-width:60px;">$1000</span>
-          </label>
-        </div>
-        <button class="btn-primary" onclick="runCompoundCurve()">📊 Project the Future</button>
-        <div id="compResult" class="result-box">
-          <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:0.5rem;">
-            <div class="stat">💸 Total Debt: $<span id="compTotal">0</span></div>
-            <div class="stat" style="font-size:1.5rem; color:#ffd43b;">Final Year: $<span id="compFinal">0</span></div>
-          </div>
-          <div class="sub-stat">Over <span id="compYearsOut">10</span> years · Savings: <span id="compSavings" style="color:#69db7c;">$0</span></div>
-          <div class="chart-container"><canvas id="compChart" width="400" height="200"></canvas></div>
-          <div class="prescription-box">
-            <div class="label">🧠 Diagnosis & Prescription</div>
-            <div class="solution" id="compSolution">Your debt grows exponentially unless you intervene.</div>
-            <div class="action" id="compAction">Use the slider above to see how much you can save.</div>
-          </div>
-        </div>
-
-        <!-- AI Advisor (default) -->
-        <div class="ai-power-wrapper">
-          <div class="glass-card" style="border-color:rgba(167,139,250,0.3);">
-            <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap; margin-bottom:0.8rem;">
-              <span class="badge-glow" style="background:rgba(167,139,250,0.15); color:#a78bfa;">AI 🤖</span>
-              <h3 style="font-weight:700; font-size:1rem; margin:0; color:var(--text-primary);">Your Personal AI Advisor</h3>
-              <span style="font-size:0.65rem; color:var(--text-muted);">Powered by GLM/Llama</span>
-            </div>
-            <div style="display:flex; flex-wrap:wrap; gap:0.8rem; align-items:center;">
-              <button class="btn-primary" style="padding:0.4rem 1.5rem; font-size:0.85rem;" onclick="generateAI('compound')">🧠 Get Personalized Advice</button>
-              <span style="font-size:0.75rem; color:var(--text-muted);" id="ai-compound-status">Ready</span>
-            </div>
-            <div id="ai-compound-output" class="ai-output">
-              <span class="placeholder">Click "Get Personalized Advice" to receive a custom projection analysis.</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Ask AI -->
-        <div class="ask-ai-section">
-          <label for="ask-compound-input">💬 Ask a specific question about your projections</label>
-          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-            <input type="text" id="ask-compound-input" placeholder="e.g. What if I reduce my annual debt by $2,000?" style="flex:1; min-width:200px; background:var(--bg-body); border:1px solid var(--border-divider); border-radius:8px; padding:0.6rem 0.8rem; color:var(--text-primary); font-family:inherit;" />
-            <button class="btn-primary" style="padding:0.4rem 1.5rem; font-size:0.85rem;" onclick="askAI('compound')">Ask AI</button>
-          </div>
-          <div id="ask-compound-output" class="ai-output" style="margin-top:0.5rem;">
-            <span class="placeholder">Ask a question to get a specific answer.</span>
-          </div>
-          <span style="font-size:0.75rem; color:var(--text-muted);" id="ask-compound-status"></span>
+        <div class="sub-stat">Over <span id="compYearsOut">10</span> years · Savings: <span id="compSavings" style="color:#69db7c;">$0</span></div>
+        <div class="chart-container"><canvas id="compChart" width="400" height="200"></canvas></div>
+        <div class="prescription-box">
+          <div class="label">🧠 Diagnosis & Prescription</div>
+          <div class="solution" id="compSolution">Your debt grows exponentially unless you intervene.</div>
+          <div class="action" id="compAction">Use the slider above to see how much you can save.</div>
         </div>
       </div>
-    </section>
 
-    <!-- ===== FAQ ACCORDION ===== -->
-    <section class="container section-spacing" style="padding-top:0;">
-      <div class="glass-card">
-        <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:1rem;">Frequently Asked Questions</h2>
-        <div class="accordion-item">
-          <div class="accordion-toggle"><span>What is the Compound Curve tool?</span><span class="arrow">▼</span></div>
-          <div class="accordion-content"><p style="color:var(--text-secondary);">The Compound Curve tool projects how your annual debt grows over time due to compound interest. It shows the difference between taking action and doing nothing.</p></div>
-        </div>
-        <div class="accordion-item">
-          <div class="accordion-toggle"><span>How do I use the Compound Curve?</span><span class="arrow">▼</span></div>
-          <div class="accordion-content"><p style="color:var(--text-secondary);">Enter your annual debt, growth rate, time horizon, and the amount you can reduce annually. Click 'Project the Future' to see the chart and savings.</p></div>
-        </div>
-        <div class="accordion-item">
-          <div class="accordion-toggle"><span>What does the Growth Rate represent?</span><span class="arrow">▼</span></div>
-          <div class="accordion-content"><p style="color:var(--text-secondary);">The growth rate is the annual percentage increase in your debt. Even 10% can double your debt in ~7 years.</p></div>
-        </div>
-        <div class="accordion-item">
-          <div class="accordion-toggle"><span>How much can I save by reducing my annual debt?</span><span class="arrow">▼</span></div>
-          <div class="accordion-content"><p style="color:var(--text-secondary);">Small cuts compound into huge savings over time. The tool shows you exactly how much you save in the final year.</p></div>
-        </div>
-        <div class="accordion-item">
-          <div class="accordion-toggle"><span>Is the Compound Curve tool free?</span><span class="arrow">▼</span></div>
-          <div class="accordion-content"><p style="color:var(--text-secondary);">Yes, completely free and open source.</p></div>
+      <!-- AI Advisor -->
+      <div class="ai-power-wrapper">
+        <div class="glass-card" style="border-color:rgba(167,139,250,0.3);">
+          <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap; margin-bottom:0.8rem;">
+            <span class="badge-glow" style="background:rgba(167,139,250,0.15); color:#a78bfa;">AI 🤖</span>
+            <h3 style="font-weight:700; font-size:1rem; margin:0; color:var(--text-primary);">Your Personal AI Advisor</h3>
+            <span style="font-size:0.65rem; color:var(--text-muted);">Powered by GLM/Llama</span>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:0.8rem; align-items:center;">
+            <button class="btn-primary" style="padding:0.4rem 1.5rem; font-size:0.85rem;" onclick="generateAI()">🧠 Get Personalized Advice</button>
+            <span style="font-size:0.75rem; color:var(--text-muted);" id="ai-compound-status">Ready</span>
+          </div>
+          <div id="ai-compound-output" class="ai-output">
+            <span class="placeholder">Click "Get Personalized Advice" to receive a custom projection analysis.</span>
+          </div>
         </div>
       </div>
-    </section>
 
-    <!-- ===== NOSCRIPT ===== -->
-    <noscript>
-      <section class="container section-spacing" style="padding-top:0;">
-        <div class="glass-card" style="border-color:var(--color-burnout);">
-          <h2 style="font-size:1.5rem; font-weight:700; color:var(--color-burnout);">⚠️ JavaScript is disabled</h2>
-          <p style="color:var(--text-secondary);">
-            The Compound Curve tool requires JavaScript to display the interactive chart.
-            You can still calculate the future value manually using the formula:
-          </p>
-          <p style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
-            <strong>Future Value = Annual Debt × (1 + Growth Rate)<sup>Years</sup></strong>
-          </p>
-          <p style="color:var(--text-secondary);">
-            <strong>Example:</strong> Annual debt $13,000, growth 10%, 10 years → $13,000 × (1.10)<sup>10</sup> = $33,718.
-            If you reduce by $1,000/year → $12,000 × (1.10)<sup>10</sup> = $31,125 – a saving of $2,593.
-            <br /><em>For an interactive experience, please enable JavaScript.</em>
-          </p>
+      <!-- Ask AI -->
+      <div class="ask-ai-section">
+        <label for="ask-compound-input">💬 Ask a specific question about your projections</label>
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+          <input type="text" id="ask-compound-input" placeholder="e.g. What if I reduce my annual debt by $2,000?" style="flex:1; min-width:200px; background:var(--bg-body); border:1px solid var(--border-divider); border-radius:8px; padding:0.6rem 0.8rem; color:var(--text-primary); font-family:inherit;" />
+          <button class="btn-primary" style="padding:0.4rem 1.5rem; font-size:0.85rem;" onclick="askAI()">Ask AI</button>
         </div>
-      </section>
-    </noscript>
-
-    <!-- ===== LEARN / CTA ===== -->
-    <section class="container section-spacing" style="padding-top:0;">
-      <div class="glass-card" style="border-color:rgba(251,191,36,0.2); padding:1.5rem 1.2rem;">
-        <h2 style="font-size:clamp(1.4rem,2.5vw,1.8rem); font-weight:700; margin-bottom:0.5rem; color:var(--text-primary);">📖 Learn More About the Productivity Bond Model</h2>
-        <p style="color:var(--text-secondary); margin-bottom:1rem;">
-          This tool is part of the PBM framework. Discover the full theory, simulation, and implementation roadmap in the book.
-        </p>
-        <div style="display:flex; flex-wrap:wrap; gap:0.6rem;">
-          <a href="index.html#simulator" class="btn-primary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">💸 Run Live Simulation</a>
-          <a href="book.html" class="btn-secondary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">📘 Get the Book</a>
-          <a href="tools.html" class="btn-secondary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">🧰 All Tools</a>
+        <div id="ask-compound-output" class="ai-output" style="margin-top:0.5rem;">
+          <span class="placeholder">Ask a question to get a specific answer.</span>
         </div>
+        <span style="font-size:0.75rem; color:var(--text-muted);" id="ask-compound-status"></span>
       </div>
-    </section>
-  </main>
-
-  <!-- ===== FLOATING RETURN TO TOP ===== -->
-  <button class="floating-return-top" id="floatingReturnTop" aria-label="Return to top">⬆ Top</button>
-
-  <!-- ===== FOOTER ===== -->
-  <footer class="footer">
-    <div class="container">
-      <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1rem 1.5rem; margin-bottom:1.5rem; font-size:0.85rem;">
-        <a href="index.html">🏠 Home</a><a href="news.html">News</a><a href="about.html">About</a><a href="book.html">Book</a>
-        <a href="tools.html" style="color:#b388ff;">🧰 Tools</a><a href="changelog.html">Changelog</a><a href="privacy.html">Privacy</a>
-        <a href="terms.html">Terms</a><a href="contact.html">Contact</a><a href="index.html#simulator">Simulator</a><a href="index.html#learn">Learn 💸</a>
-      </div>
-      <p>© 2026 <a href="https://traffictorch.net">Traffic Torch</a> · <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> · Version 0.8.0</p>
-      <p style="font-size:0.7rem; margin-top:0.3rem;">Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI</p>
     </div>
-  </footer>
+  </section>
 
-  <!-- ===== PWA INSTALL BUTTON ===== -->
-  <button id="pwaInstallBtn" class="pwa-install-btn" style="display:none;">
+  <!-- ===== FAQ ACCORDION ===== -->
+  <section class="container section-spacing" style="padding-top:0;">
+    <div class="glass-card">
+      <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:1rem;">Frequently Asked Questions</h2>
+      <div class="accordion-item">
+        <div class="accordion-toggle"><span>What is the Compound Curve tool?</span><span class="arrow">▼</span></div>
+        <div class="accordion-content"><p style="color:var(--text-secondary);">The Compound Curve tool projects how your annual debt grows over time due to compound interest. It shows the difference between taking action and doing nothing.</p></div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-toggle"><span>How do I use the Compound Curve?</span><span class="arrow">▼</span></div>
+        <div class="accordion-content"><p style="color:var(--text-secondary);">Enter your annual debt, growth rate, time horizon, and the amount you can reduce annually. Click 'Project the Future' to see the chart and savings.</p></div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-toggle"><span>What does the Growth Rate represent?</span><span class="arrow">▼</span></div>
+        <div class="accordion-content"><p style="color:var(--text-secondary);">The growth rate is the annual percentage increase in your debt. Even 10% can double your debt in ~7 years.</p></div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-toggle"><span>How much can I save by reducing my annual debt?</span><span class="arrow">▼</span></div>
+        <div class="accordion-content"><p style="color:var(--text-secondary);">Small cuts compound into huge savings over time. The tool shows you exactly how much you save in the final year.</p></div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-toggle"><span>Is the Compound Curve tool free?</span><span class="arrow">▼</span></div>
+        <div class="accordion-content"><p style="color:var(--text-secondary);">Yes, completely free and open source.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== NOSCRIPT ===== -->
+  <noscript>
+    <section class="container section-spacing" style="padding-top:0;">
+      <div class="glass-card" style="border-color:var(--color-burnout);">
+        <h2 style="font-size:1.5rem; font-weight:700; color:var(--color-burnout);">⚠️ JavaScript is disabled</h2>
+        <p style="color:var(--text-secondary);">The Compound Curve tool requires JavaScript to display the interactive chart. You can still calculate the future value manually using the formula:</p>
+        <p style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;"><strong>Future Value = Annual Debt × (1 + Growth Rate)<sup>Years</sup></strong></p>
+        <p style="color:var(--text-secondary);"><strong>Example:</strong> Annual debt $13,000, growth 10%, 10 years → $13,000 × (1.10)<sup>10</sup> = $33,718. If you reduce by $1,000/year → $12,000 × (1.10)<sup>10</sup> = $31,125 – a saving of $2,593.<br /><em>For an interactive experience, please enable JavaScript.</em></p>
+      </div>
+    </section>
+  </noscript>
+
+  <!-- ===== LEARN / CTA ===== -->
+  <section class="container section-spacing" style="padding-top:0;">
+    <div class="glass-card" style="border-color:rgba(251,191,36,0.2); padding:1.5rem 1.2rem;">
+      <h2 style="font-size:clamp(1.4rem,2.5vw,1.8rem); font-weight:700; margin-bottom:0.5rem; color:var(--text-primary);">📖 Learn More About the Productivity Bond Model</h2>
+      <p style="color:var(--text-secondary); margin-bottom:1rem;">This tool is part of the PBM framework. Discover the full theory, simulation, and implementation roadmap in the book.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:0.6rem;">
+        <a href="index.html#simulator" class="btn-primary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">💸 Run Live Simulation</a>
+        <a href="book.html" class="btn-secondary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">📘 Get the Book</a>
+        <a href="tools.html" class="btn-secondary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">🧰 All Tools</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ===== FLOATING RETURN TO TOP ===== -->
+<button class="floating-return-top" id="floatingReturnTop" aria-label="Return to top">⬆ Top</button>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1rem 1.5rem; margin-bottom:1.5rem; font-size:0.85rem;">
+      <a href="index.html">🏠 Home</a><a href="news.html">News</a><a href="about.html">About</a><a href="book.html">Book</a>
+      <a href="tools.html" style="color:#b388ff;">🧰 Tools</a><a href="changelog.html">Changelog</a><a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a><a href="contact.html">Contact</a><a href="index.html#simulator">Simulator</a><a href="index.html#learn">Learn 💸</a>
+    </div>
+    <p>© 2026 <a href="https://traffictorch.net">Traffic Torch</a> · <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> · Version 0.8.0</p>
+    <p style="font-size:0.7rem; margin-top:0.3rem;">Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI</p>
+  </div>
+</footer>
+
+  <!-- ====== PWA INSTALL BUTTON & IOS MODAL ====== -->
+  <button id="pwaInstallBtn" class="pwa-install-btn">
     <span class="icon">📱</span>
-    <span class="btn-text">Install App</span>
+    <span class="btn-text">Install Apps</span>
+    <span class="icon">💻</span>
   </button>
-
   <div id="pwaIosOverlay" class="pwa-ios-overlay">
     <div class="pwa-ios-modal">
       <h3>Install on iPhone</h3>
@@ -856,287 +378,182 @@
     </div>
   </div>
 
-  <!-- ===== SCRIPTS ===== -->
-  <script>
-    // ---- Service Worker ----
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/productivity-bond-model/sw.js')
-        .then(r => console.log('SW registered:', r))
-        .catch(e => console.log('SW failed:', e));
+<!-- ===== SERVICE WORKER ===== -->
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/productivity-bond-model/sw.js')
+      .then(r => console.log('SW registered:', r))
+      .catch(e => console.log('SW failed:', e));
+  }
+</script>
+
+<!-- ===== CORE JS (deferred) ===== -->
+<script src="js/core.min.js" defer></script>
+
+<!-- ===== TOOL-SPECIFIC SCRIPTS ===== -->
+<script>
+  // Wait for everything to be ready before fading in
+  window.addEventListener('load', function() {
+    document.documentElement.classList.add('loaded');
+    setTimeout(runCompoundCurve, 300);
+  });
+
+  // ============================
+  // COMPOUND CURVE CALCULATION
+  // ============================
+  let compChartInstance = null;
+
+  function runCompoundCurve() {
+    const base = parseFloat(document.getElementById('compBase').value) || 0;
+    const rate = parseFloat(document.getElementById('compRate').value) / 100;
+    const years = parseInt(document.getElementById('compYears').value) || 10;
+    const reduction = parseFloat(document.getElementById('compReduction').value) || 0;
+
+    const reducedBase = Math.max(0, base - reduction);
+    let data = [];
+    let cum1 = 0, cum2 = 0;
+    for (let i = 1; i <= years; i++) {
+      const val1 = base * Math.pow(1 + rate, i);
+      const val2 = reducedBase * Math.pow(1 + rate, i);
+      cum1 += val1;
+      cum2 += val2;
+      data.push({ year: i, original: cum1, reduced: cum2 });
     }
 
-    // ============================================================
-    //  FIXED: Theme, Hamburger, Dropdowns, Accordion, PWA, Return Top
-    //  (identical to about.html behaviour)
-    // ============================================================
-    document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('compTotal').textContent = data[data.length-1].reduced.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    document.getElementById('compFinal').textContent = (base * Math.pow(1 + rate, years)).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    document.getElementById('compYearsOut').textContent = years;
+    const savings = data[data.length-1].original - data[data.length-1].reduced;
+    document.getElementById('compSavings').textContent = '$' + savings.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-      // ---- Theme toggle ----
-      const toggle = document.getElementById('themeToggle');
-      const icon = document.getElementById('themeIcon');
-      const stored = localStorage.getItem('theme');
-      if (stored) {
-        document.documentElement.setAttribute('data-theme', stored);
-        icon.textContent = stored === 'dark' ? '🌙' : '☀️';
-      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-        document.documentElement.setAttribute('data-theme', 'light');
-        icon.textContent = '☀️';
-      }
-      if (toggle) {
-        toggle.addEventListener('click', function() {
-          const current = document.documentElement.getAttribute('data-theme');
-          const next = current === 'dark' ? 'light' : 'dark';
-          document.documentElement.setAttribute('data-theme', next);
-          localStorage.setItem('theme', next);
-          icon.textContent = next === 'dark' ? '🌙' : '☀️';
-        });
-      }
+    const solution = document.getElementById('compSolution');
+    const action = document.getElementById('compAction');
+    if (reduction > 0) {
+      solution.textContent = `✅ You are taking action! Reducing by $${reduction.toLocaleString()} saves $${savings.toFixed(0).toLocaleString()}.`;
+      action.textContent = `Action: This is equivalent to cutting ${Math.round((reduction / (35 * 5 * 48)) * 100)}% of your daily waste.`;
+    } else {
+      solution.textContent = `⚠️ Your debt grows exponentially. At ${rate*100}%, it will ${(Math.pow(1+rate, years) > 2) ? 'more than double' : 'grow significantly'}.`;
+      action.textContent = `Action: Even a $500 reduction saves $${Math.round(base * Math.pow(1+rate, years) - (base-500) * Math.pow(1+rate, years)).toLocaleString()} in the final year.`;
+    }
 
-      // ---- Hamburger ----
-      const hamburger = document.getElementById('hamburgerBtn');
-      const navLinks = document.getElementById('navLinks');
-      if (hamburger && navLinks) {
-        hamburger.addEventListener('click', function(e) {
-          e.stopPropagation();
-          navLinks.classList.toggle('open');
-          hamburger.classList.toggle('open');
-        });
-        navLinks.querySelectorAll('a').forEach(function(link) {
-          link.addEventListener('click', function() {
-            navLinks.classList.remove('open');
-            hamburger.classList.remove('open');
-          });
-        });
-        document.addEventListener('click', function(e) {
-          if (!e.target.closest('.sticky-nav')) {
-            navLinks.classList.remove('open');
-            hamburger.classList.remove('open');
-          }
-        });
-      }
+    const ctx = document.getElementById('compChart').getContext('2d');
+    if (compChartInstance) compChartInstance.destroy();
 
-      // ---- Dropdown toggle (mobile) ----
-      document.querySelectorAll('.dropdown-toggle').forEach(function(toggle) {
-        toggle.addEventListener('click', function(e) {
-          e.preventDefault();
-          var parent = this.closest('.dropdown');
-          document.querySelectorAll('.dropdown.open').forEach(function(d) {
-            if (d !== parent) d.classList.remove('open');
-          });
-          parent.classList.toggle('open');
-        });
-      });
-      // Close dropdowns when clicking outside nav
-      document.addEventListener('click', function(e) {
-        if (!e.target.closest('.sticky-nav')) {
-          document.querySelectorAll('.dropdown.open').forEach(function(d) {
-            d.classList.remove('open');
-          });
+    const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+    const textColor = theme === 'dark' ? '#eef2f8' : '#0f111a';
+    const gridColor = theme === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+
+    compChartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: data.map(d => d.year),
+        datasets: [
+          { label: 'Current Path', data: data.map(d => d.original), borderColor: '#ff6b6b', fill: false, tension: 0.3, borderDash: [4, 4] },
+          { label: 'Optimized Path', data: data.map(d => d.reduced), borderColor: '#69db7c', fill: true, backgroundColor: 'rgba(105,219,124,0.1)', tension: 0.3 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: { legend: { labels: { color: textColor, boxWidth: 12, padding: 12, font: { size: 11 } } } },
+        scales: {
+          x: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 } } },
+          y: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 }, callback: v => '$' + v.toLocaleString() } }
         }
-      });
-
-      // ---- Accordion toggle ----
-      document.querySelectorAll('.accordion-item').forEach(function(item) {
-        var toggle = item.querySelector('.accordion-toggle');
-        var content = item.querySelector('.accordion-content');
-        if (toggle && content) {
-          toggle.addEventListener('click', function() {
-            this.classList.toggle('open');
-            content.classList.toggle('open');
-          });
-        }
-      });
-
-      // ---- Return to top ----
-      var returnTop = document.getElementById('floatingReturnTop');
-      if (returnTop) {
-        returnTop.addEventListener('click', function() {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-      }
-
-      // ---- PWA install (show on iOS immediately) ----
-      var installBtn = document.getElementById('pwaInstallBtn');
-      var isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-      if (installBtn) {
-        if (isIos) {
-          installBtn.style.display = 'flex';
-        } else {
-          setTimeout(function() {
-            installBtn.style.display = 'flex';
-          }, 12000);
-        }
-        installBtn.addEventListener('click', function() {
-          if (isIos) {
-            document.getElementById('pwaIosOverlay').classList.add('active');
-          }
-        });
-        document.getElementById('pwaCloseIosModal').addEventListener('click', function() {
-          document.getElementById('pwaIosOverlay').classList.remove('active');
-        });
       }
     });
+  }
 
-    // ============================================================
-    //  TOOL‑SPECIFIC FUNCTIONS (unchanged)
-    // ============================================================
-    let compChartInstance = null;
+  // ============================
+  // AI GENERATOR (Compound)
+  // ============================
+  async function generateAI() {
+    const status = document.getElementById('ai-compound-status');
+    const output = document.getElementById('ai-compound-output');
+    if (!status || !output) return;
 
-    function runCompoundCurve() {
-      const base = parseFloat(document.getElementById('compBase').value) || 0;
-      const rate = parseFloat(document.getElementById('compRate').value) / 100;
-      const years = parseInt(document.getElementById('compYears').value) || 10;
-      const reduction = parseFloat(document.getElementById('compReduction').value) || 0;
+    status.textContent = '⏳ Thinking...';
+    output.innerHTML = '<span style="opacity:0.6;">Generating your personalized advice...</span>';
 
-      const reducedBase = Math.max(0, base - reduction);
-      let data = [];
-      let cum1 = 0, cum2 = 0;
-      for (let i = 1; i <= years; i++) {
-        const val1 = base * Math.pow(1 + rate, i);
-        const val2 = reducedBase * Math.pow(1 + rate, i);
-        cum1 += val1;
-        cum2 += val2;
-        data.push({ year: i, original: cum1, reduced: cum2 });
-      }
+    const base = parseFloat(document.getElementById('compBase').value) || 0;
+    const ratePercent = parseFloat(document.getElementById('compRate').value) || 0;
+    const years = parseInt(document.getElementById('compYears').value) || 10;
+    const reduction = parseFloat(document.getElementById('compReduction').value) || 0;
 
-      document.getElementById('compTotal').textContent = data[data.length-1].reduced.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      document.getElementById('compFinal').textContent = (base * Math.pow(1 + rate, years)).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      document.getElementById('compYearsOut').textContent = years;
-      const savings = data[data.length-1].original - data[data.length-1].reduced;
-      document.getElementById('compSavings').textContent = '$' + savings.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    const rate = ratePercent / 100;
+    const reducedBase = Math.max(0, base - reduction);
 
-      const solution = document.getElementById('compSolution');
-      const action = document.getElementById('compAction');
-      if (reduction > 0) {
-        solution.textContent = `✅ You are taking action! Reducing by $${reduction.toLocaleString()} saves $${savings.toFixed(0).toLocaleString()}.`;
-        action.textContent = `Action: This is equivalent to cutting ${Math.round((reduction / (35 * 5 * 48)) * 100)}% of your daily waste.`;
-      } else {
-        solution.textContent = `⚠️ Your debt grows exponentially. At ${rate*100}%, it will ${(Math.pow(1+rate, years) > 2) ? 'more than double' : 'grow significantly'}.`;
-        action.textContent = `Action: Even a $500 reduction saves $${Math.round(base * Math.pow(1+rate, years) - (base-500) * Math.pow(1+rate, years)).toLocaleString()} in the final year.`;
-      }
+    const futureWithout = base * Math.pow(1 + rate, years);
+    const futureWith = reducedBase * Math.pow(1 + rate, years);
+    const savings = futureWithout - futureWith;
 
-      const ctx = document.getElementById('compChart').getContext('2d');
-      if (compChartInstance) compChartInstance.destroy();
+    let cumWithout = 0, cumWith = 0;
+    for (let i = 1; i <= years; i++) {
+      cumWithout += base * Math.pow(1 + rate, i);
+      cumWith += reducedBase * Math.pow(1 + rate, i);
+    }
+    const cumulativeSavings = cumWithout - cumWith;
 
-      const theme = document.documentElement.getAttribute('data-theme') || 'dark';
-      const textColor = theme === 'dark' ? '#eef2f8' : '#0f111a';
-      const gridColor = theme === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+    const data = { base, rate: ratePercent, years, reduction, futureWithout, futureWith, savings, cumulativeWithout: cumWithout, cumulativeWith: cumWith, cumulativeSavings };
 
-      compChartInstance = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: data.map(d => d.year),
-          datasets: [
-            { label: 'Current Path', data: data.map(d => d.original), borderColor: '#ff6b6b', fill: false, tension: 0.3, borderDash: [4, 4] },
-            { label: 'Optimized Path', data: data.map(d => d.reduced), borderColor: '#69db7c', fill: true, backgroundColor: 'rgba(105,219,124,0.1)', tension: 0.3 }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: true,
-          plugins: { legend: { labels: { color: textColor, boxWidth: 12, padding: 12, font: { size: 11 } } } },
-          scales: {
-            x: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 } } },
-            y: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 }, callback: v => '$' + v.toLocaleString() } }
-          }
-        }
+    try {
+      const response = await fetch('https://ai-compound.traffictorch.workers.dev', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
       });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const result = await response.json();
+      if (result.error) throw new Error(result.error);
+
+      let html = '';
+      if (result.summary) html += `<div class="summary">📌 ${result.summary}</div>`;
+      if (result.advice) html += `<div class="advice">✅ ${result.advice}</div>`;
+      if (!html) html = `<span style="opacity:0.6;">No advice received.</span>`;
+      output.innerHTML = html;
+      status.textContent = '✅ Done';
+    } catch (error) {
+      console.error('AI Error:', error);
+      output.innerHTML = `<span style="color: var(--color-burnout);">⚠️ Could not reach AI advisor. Please try again later. (${error.message})</span>`;
+      status.textContent = '❌ Error';
+    }
+  }
+
+  // ============================
+  // ASK AI (Compound)
+  // ============================
+  async function askAI() {
+    const input = document.getElementById('ask-compound-input');
+    const output = document.getElementById('ask-compound-output');
+    const status = document.getElementById('ask-compound-status');
+    if (!input || !output || !status) return;
+
+    const question = input.value.trim();
+    if (!question) {
+      output.innerHTML = '<span style="color:var(--color-burnout);">Please enter a question.</span>';
+      return;
     }
 
-    // ---- AI default (uses ai-compound) ----
-    async function generateAI(tool) {
-      if (tool !== 'compound') return;
-      const status = document.getElementById('ai-compound-status');
-      const output = document.getElementById('ai-compound-output');
-      if (!status || !output) return;
+    status.textContent = '⏳ Thinking...';
+    output.innerHTML = '<span style="opacity:0.6;">Generating answer...</span>';
 
-      status.textContent = '⏳ Thinking...';
-      output.innerHTML = '<span style="opacity:0.6;">Generating your personalized advice...</span>';
-
-      const base = parseFloat(document.getElementById('compBase').value) || 0;
-      const ratePercent = parseFloat(document.getElementById('compRate').value) || 0;
-      const years = parseInt(document.getElementById('compYears').value) || 10;
-      const reduction = parseFloat(document.getElementById('compReduction').value) || 0;
-
-      const rate = ratePercent / 100;
-      const reducedBase = Math.max(0, base - reduction);
-
-      const futureWithout = base * Math.pow(1 + rate, years);
-      const futureWith = reducedBase * Math.pow(1 + rate, years);
-      const savings = futureWithout - futureWith;
-
-      let cumWithout = 0, cumWith = 0;
-      for (let i = 1; i <= years; i++) {
-        cumWithout += base * Math.pow(1 + rate, i);
-        cumWith += reducedBase * Math.pow(1 + rate, i);
-      }
-      const cumulativeSavings = cumWithout - cumWith;
-
-      const data = { base, rate: ratePercent, years, reduction, futureWithout, futureWith, savings, cumulativeWithout: cumWithout, cumulativeWith: cumWith, cumulativeSavings };
-
-      try {
-        const response = await fetch('https://ai-compound.traffictorch.workers.dev', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const result = await response.json();
-        if (result.error) throw new Error(result.error);
-
-        let html = '';
-        if (result.summary) html += `<div class="summary">📌 ${result.summary}</div>`;
-        if (result.advice) html += `<div class="advice">✅ ${result.advice}</div>`;
-        if (!html) html = `<span style="opacity:0.6;">No advice received.</span>`;
-        output.innerHTML = html;
-        status.textContent = '✅ Done';
-      } catch (error) {
-        console.error('AI Error:', error);
-        output.innerHTML = `<span style="color: var(--color-burnout);">⚠️ Could not reach AI advisor. Please try again later. (${error.message})</span>`;
-        status.textContent = '❌ Error';
-      }
+    try {
+      const response = await fetch('https://ask-compound.traffictorch.workers.dev', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question })
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const result = await response.json();
+      let answer = result.answer || 'No answer provided.';
+      output.innerHTML = `<div class="advice">${answer}</div>`;
+      status.textContent = '✅ Done';
+    } catch (error) {
+      console.error('Ask AI Error:', error);
+      output.innerHTML = `<span style="color:var(--color-burnout);">⚠️ Error: ${error.message}</span>`;
+      status.textContent = '❌ Error';
     }
-
-    // ---- Ask AI (uses ask-compound) ----
-    async function askAI(tool) {
-      if (tool !== 'compound') return;
-      const input = document.getElementById('ask-compound-input');
-      const output = document.getElementById('ask-compound-output');
-      const status = document.getElementById('ask-compound-status');
-      if (!input || !output || !status) return;
-
-      const question = input.value.trim();
-      if (!question) {
-        output.innerHTML = '<span style="color:var(--color-burnout);">Please enter a question.</span>';
-        return;
-      }
-
-      status.textContent = '⏳ Thinking...';
-      output.innerHTML = '<span style="opacity:0.6;">Generating answer...</span>';
-
-      try {
-        const response = await fetch('https://ask-compound.traffictorch.workers.dev', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ question })
-        });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const result = await response.json();
-        let answer = result.answer || 'No answer provided.';
-        output.innerHTML = `<div class="advice">${answer}</div>`;
-        status.textContent = '✅ Done';
-      } catch (error) {
-        console.error('Ask AI Error:', error);
-        output.innerHTML = `<span style="color:var(--color-burnout);">⚠️ Error: ${error.message}</span>`;
-        status.textContent = '❌ Error';
-      }
-    }
-
-    // ---- Auto-run ----
-    window.addEventListener('load', function() {
-      setTimeout(runCompoundCurve, 400);
-      document.documentElement.classList.add('loaded');
-    });
-  </script>
+  }
+</script>
 </body>
 </html>
