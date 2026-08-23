@@ -31,8 +31,16 @@
 
     :root {
       --bg-body: #05060a;
+      --bg-card: rgba(12,15,25,0.65);
       --bg-glass: rgba(12,15,25,0.65);
-      --bg-input: rgba(255,255,255,0.04);
+      --bg-nav: rgba(5,6,10,0.35);
+      --bg-input: rgba(255,255,255,0.06);
+      --bg-var: rgba(0,0,0,0.25);
+      --bg-metric: rgba(0,0,0,0.3);
+      --bg-code: rgba(0,0,0,0.5);
+      --bg-scenario: rgba(0,0,0,0.25);
+      --bg-faq: rgba(0,0,0,0.15);
+      --bg-tooltip: #1a1f2e;
       --btn-primary-bg: linear-gradient(135deg,#4f46e5,#7c3aed);
       --btn-primary-text: #fff;
       --btn-secondary-bg: rgba(255,255,255,0.06);
@@ -41,31 +49,61 @@
       --text-primary: #eef2f8;
       --text-secondary: #c7d2fe;
       --text-muted: #a5b4fc;
+      --text-body: #c7d2fe;
       --border-divider: rgba(255,255,255,0.04);
-      --color-safe: #69db7c;
-      --color-burnout: #ff6b6b;
-      --color-stagnant: #4dabf7;
+      --border-card: rgba(255,255,255,0.06);
+      --border-input: rgba(255,255,255,0.1);
+      --border-table: rgba(255,255,255,0.08);
+      --shadow-card: 0 30px 60px -20px rgba(0,0,0,0.8);
+      --shadow-glow: 0 30px 60px -20px rgba(79,70,229,0.15);
       --orb1: rgba(79,70,229,0.15);
       --orb2: rgba(236,72,153,0.10);
       --orb3: rgba(16,185,129,0.08);
+      --color-safe: #69db7c;
+      --color-burnout: #ff6b6b;
+      --color-stagnant: #4dabf7;
+      --bar-conv: #4b5563;
+      --bar-ilb: #3b82f6;
+      --bar-gdp: #8b5cf6;
+      --bar-prod: #a78bfa;
+      --bar-hybrid: #f59e0b;
     }
     [data-theme="light"] {
       --bg-body: #f0f2f8;
+      --bg-card: rgba(255,255,255,0.85);
       --bg-glass: rgba(255,255,255,0.75);
+      --bg-nav: rgba(255,255,255,0.50);
       --bg-input: rgba(0,0,0,0.04);
+      --bg-var: rgba(0,0,0,0.04);
+      --bg-metric: rgba(0,0,0,0.06);
+      --bg-code: rgba(0,0,0,0.05);
+      --bg-scenario: rgba(0,0,0,0.04);
+      --bg-faq: rgba(0,0,0,0.04);
+      --bg-tooltip: #f0f2f8;
       --btn-secondary-bg: rgba(0,0,0,0.04);
       --btn-secondary-border: rgba(0,0,0,0.12);
       --btn-secondary-text: #0f111a;
       --text-primary: #0f111a;
       --text-secondary: #2d2f3e;
       --text-muted: #4a4a6a;
+      --text-body: #2d2f3e;
       --border-divider: rgba(0,0,0,0.06);
-      --color-safe: #2b8a3e;
-      --color-burnout: #e03131;
-      --color-stagnant: #1971c2;
+      --border-card: rgba(0,0,0,0.08);
+      --border-input: rgba(0,0,0,0.1);
+      --border-table: rgba(0,0,0,0.08);
+      --shadow-card: 0 30px 60px -20px rgba(0,0,0,0.15);
+      --shadow-glow: 0 30px 60px -20px rgba(79,70,229,0.08);
       --orb1: rgba(79,70,229,0.06);
       --orb2: rgba(236,72,153,0.05);
       --orb3: rgba(16,185,129,0.04);
+      --color-safe: #2b8a3e;
+      --color-burnout: #e03131;
+      --color-stagnant: #1971c2;
+      --bar-conv: #9ca3af;
+      --bar-ilb: #60a5fa;
+      --bar-gdp: #a78bfa;
+      --bar-prod: #7c3aed;
+      --bar-hybrid: #f59e0b;
     }
 
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -115,12 +153,18 @@
     /* --- Reusable Components --- */
     .container { max-width:1280px; margin:0 auto; padding:0 1.5rem; }
     .glass-card {
-      background:var(--bg-glass);
-      backdrop-filter:blur(16px);
-      border:1px solid rgba(255,255,255,0.06);
+      background:var(--bg-card);
+      backdrop-filter:blur(16px) saturate(1.4);
+      -webkit-backdrop-filter:blur(16px) saturate(1.4);
+      border:1px solid var(--border-card);
       border-radius:2.5rem;
       padding:2.5rem 2rem;
-      box-shadow:0 30px 60px -20px rgba(0,0,0,0.8);
+      box-shadow:var(--shadow-card);
+      transition:border-color .3s,box-shadow .3s,background .3s;
+    }
+    .glass-card:hover {
+      border-color:rgba(79,70,229,0.2);
+      box-shadow:var(--shadow-glow);
     }
     .text-gradient {
       background:linear-gradient(135deg,#4f46e5,#a78bfa,#f472b6);
@@ -191,80 +235,211 @@
       .hero { min-height:40vh; padding:1rem 0; }
     }
 
-    /* ===== NAVIGATION – FIXED STICKY WITH GLASS ===== */
+    /* ===== NAVIGATION – FIXED (identical to about.html) ===== */
     .sticky-nav {
       position: sticky;
       top: 0;
-      z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.5rem 1.5rem;
-      background: var(--bg-glass);
+      z-index: 100;
+      background: var(--bg-nav);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-divider);
+      padding: .5rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       flex-wrap: wrap;
-      transition: background 0.2s;
     }
-    .nav-left { display:flex; align-items:center; gap:0.8rem; }
-    .nav-links { display:flex; gap:0.4rem; list-style:none; align-items:center; flex-wrap:wrap; }
-    .hamburger { display:none; flex-direction:column; cursor:pointer; background:transparent; border:none; padding:0.3rem; gap:5px; }
-    .hamburger span { display:block; width:26px; height:3px; background:var(--text-primary); border-radius:3px; }
-    .theme-toggle { background:transparent; border:1px solid var(--border-divider); border-radius:40px; padding:0.2rem 0.6rem; font-size:1.1rem; cursor:pointer; color:var(--text-primary); }
-
-    .dropdown { position:relative; }
-    .dropdown-toggle { cursor:pointer; display:inline-block; padding:0.3rem 0.6rem; border-radius:6px; transition:background 0.15s; user-select:none; }
-    .dropdown-toggle:hover { background:var(--bg-input); }
-    .dropdown-menu {
-      display:none;
-      position:absolute;
-      top:100%;
-      left:0;
-      background:var(--bg-body);
-      border:1px solid var(--border-divider);
-      border-radius:0.8rem;
-      padding:0.5rem 0;
-      min-width:200px;
-      list-style:none;
-      box-shadow:0 20px 40px rgba(0,0,0,0.5);
-      z-index:9999;
-      padding-top:8px;
-      margin-top:-8px;
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
     }
-    .dropdown-menu::before {
-      content:'';
-      position:absolute;
-      top:-12px;
-      left:0;
-      right:0;
-      height:16px;
-      background:transparent;
-      pointer-events:none;
+    .nav-links {
+      display: flex;
+      gap: .4rem;
+      flex-wrap: wrap;
+      list-style: none;
+      font-size: 1rem;
+      font-weight: 260;
+      margin: 0;
+      padding: 0;
     }
-    .dropdown.hover .dropdown-menu,
-    .dropdown:hover .dropdown-menu { display:block; }
-    .dropdown-menu a {
-      display:block;
-      padding:0.4rem 1.2rem;
-      color:var(--text-primary);
-      text-decoration:none;
-      font-size:0.9rem;
-      transition:background 0.12s;
-      border-radius:4px;
-      margin:0 0.3rem;
+    .nav-links a {
+      color: var(--text-primary);
+      text-decoration: none;
+      padding: .3rem .2rem;
+      border-bottom: 2px solid transparent;
+      transition: border-color .2s,color .2s;
+      white-space: nowrap;
     }
-    .dropdown-menu a:hover { background:var(--bg-input); color:var(--text-secondary); }
-
-    @media (max-width:768px) {
-      .hamburger { display:flex; }
-      .nav-links { display:none; flex-direction:column; width:100%; background:var(--bg-body); padding:0.5rem 0; margin-top:0.5rem; border-top:1px solid var(--border-divider); }
-      .nav-links.open { display:flex; }
-      .dropdown { width:100%; }
-      .dropdown-menu { position:static; background:transparent; border:none; box-shadow:none; padding-left:1.5rem; padding-top:0; margin-top:0; display:block; max-height:0; overflow:hidden; transition:max-height 0.25s ease; }
-      .dropdown-menu::before { display:none; }
-      .dropdown.open .dropdown-menu { max-height:400px; display:block; }
-      .dropdown-toggle { display:block; padding:0.4rem 0.6rem; }
+    .nav-links a:hover {
+      border-color: #4f46e5;
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      padding: .3rem;
+      gap: 5px;
+    }
+    .hamburger span {
+      display: block;
+      width: 26px;
+      height: 3px;
+      background: var(--text-primary);
+      border-radius: 3px;
+      transition: .25s ease;
+    }
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--border-input);
+      border-radius: 40px;
+      padding: .2rem .6rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: .2s;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+    .theme-toggle:hover {
+      background: var(--bg-input);
+      transform: scale(1.05);
+    }
+    .nav-links .dropdown {
+      position: relative;
+    }
+    .nav-links .dropdown-toggle {
+      cursor: pointer;
+    }
+    .nav-links .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--bg-nav);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-divider);
+      border-radius: .8rem;
+      padding: .5rem 0;
+      min-width: 200px;
+      list-style: none;
+      box-shadow: var(--shadow-card);
+      z-index: 200;
+    }
+    .nav-links .dropdown-menu li {
+      padding: 0;
+    }
+    .nav-links .dropdown-menu a {
+      display: block;
+      padding: .4rem 1.2rem;
+      color: var(--text-primary);
+      text-decoration: none;
+      border-bottom: none;
+      white-space: nowrap;
+      font-weight: 400;
+      font-size: .8rem;
+      transition: background .2s;
+    }
+    .nav-links .dropdown-menu a:hover {
+      background: var(--bg-input);
+      border-radius: .3rem;
+    }
+    @media (min-width: 769px) {
+      .nav-links .dropdown:hover .dropdown-menu {
+        display: block;
+      }
+    }
+    @media (max-width: 768px) {
+      .sticky-nav {
+        padding: .6rem 1rem;
+      }
+      .hamburger {
+        display: flex !important;
+      }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: var(--bg-nav);
+        backdrop-filter: blur(12px);
+        padding: .5rem 0;
+        margin-top: .5rem;
+        border-top: 1px solid var(--border-divider);
+        max-height: 70vh;
+        overflow-y: auto;
+      }
+      .nav-links.open {
+        display: flex;
+      }
+      .nav-links > li {
+        width: 100%;
+        padding: 0;
+        border-bottom: 1px solid var(--border-divider);
+      }
+      .nav-links > li:last-child {
+        border-bottom: none;
+      }
+      .nav-links > li > a,
+      .nav-links > li > .dropdown-toggle,
+      .nav-links .dropdown-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: .6rem 1rem;
+        color: var(--text-primary);
+        font-size: 1rem;
+        font-weight: 500;
+        text-decoration: none;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+      }
+      .nav-links .dropdown-menu {
+        display: block;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.25s ease;
+        padding: 0 0 0 1.5rem;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        position: static;
+        min-width: auto;
+      }
+      .nav-links .dropdown.open .dropdown-menu {
+        max-height: 400px;
+        padding-top: .3rem;
+        padding-bottom: .3rem;
+      }
+      .nav-links .dropdown-menu a {
+        padding: .4rem 1rem;
+        font-size: .9rem;
+        white-space: normal;
+      }
+      .theme-toggle {
+        font-size: 1rem;
+        padding: .1rem .5rem;
+      }
+      .mobile-home {
+        display: block !important;
+      }
+    }
+    .mobile-home {
+      display: none;
     }
 
     .floating-return-top {
@@ -434,11 +609,12 @@
       .pwa-install-btn { bottom:1rem; right:1rem; padding:0.4rem 1rem; font-size:0.8rem; }
       .pwa-install-btn .icon { font-size:1rem; }
     }
-@media (max-width: 768px) {
-  .floating-return-top {
-    display: none !important;
-  }
-}
+
+    @media (max-width: 768px) {
+      .floating-return-top {
+        display: none !important;
+      }
+    }
   </style>
 
   <!-- Floating Orbs -->
@@ -463,7 +639,7 @@
 </head>
 <body>
 
-<!-- ===== NAV ===== -->
+<!-- ===== NAV (identical to about.html) ===== -->
 <nav class="sticky-nav no-print" id="mainNav">
   <div class="nav-left">
     <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
@@ -505,9 +681,6 @@
         <span class="badge-glow" style="margin-bottom:0.5rem;">💳 Interactive Tool</span>
         <h1 class="text-gradient" style="font-size:clamp(2.8rem,6vw,4rem); font-weight:800; letter-spacing:-0.03em; line-height:1.1;">Debt Reality</h1>
         <p style="font-size:clamp(1.2rem,2vw,1.6rem); font-weight:300; opacity:0.8; max-width:650px; margin:0.5rem 0 1.5rem; color:var(--text-secondary);">
-		🚧 Webpage Under Construction 🚧
-        </p>
-        <p style="font-size:clamp(1.2rem,2vw,1.6rem); font-weight:300; opacity:0.8; max-width:650px; margin:0.5rem 0 1.5rem; color:var(--text-secondary);">
           Diagnose your financial situation, see the true cost of debt, and get a personalized plan to freedom.
         </p>
       </div>
@@ -517,12 +690,9 @@
     <section class="container section-spacing" style="padding-top:0.5rem;">
       <div class="glass-card">
         <p class="desc">Enter your numbers below and click <strong>Diagnose My Debt</strong> to get an instant analysis.</p>
-        <p style="font-size:clamp(1.2rem,2vw,1.6rem); font-weight:300; opacity:0.8; max-width:650px; margin:0.5rem 0 1.5rem; color:var(--text-secondary);">
-		🚧 Webpage Under Construction 🚧
-        </p>
         <div class="input-group">
           <label>💰 Total Debt ($) <input type="number" id="debtTotal" value="25000" step="500" /></label>
-          <label>📊 Interest Rate (%) <input type="number" id="debtRate" value="18" step="0.5" /></label>
+          <label>📊 Interest Rate (%) <input type="number" id="debtRate" value="12" step="0.5" /></label>
           <label>💵 Monthly Payment ($) <input type="number" id="debtPayment" value="500" step="50" /></label>
           <label>🏦 Monthly Income ($) <input type="number" id="debtIncome" value="4500" step="100" /></label>
         </div>
@@ -625,9 +795,9 @@
             <li>Total interest = sum of all monthly interest payments.</li>
           </ol>
           <p style="color:var(--text-secondary); margin-top:0.5rem;">
-            <strong>Example:</strong> Debt $25,000, rate 18%, payment $500.
-            Monthly rate = 0.015. First month interest = $375, principal = $125, new balance = $24,875.
-            It will take about 96 months (8 years) and total interest ~$13,500.
+            <strong>Example:</strong> Debt $25,000, rate 12%, payment $500.
+            Monthly rate = 0.01. First month interest = $250, principal = $250, new balance = $24,750.
+            It will take about 66 months (5.5 years) and total interest ~$4,800.
             <br /><em>For an interactive experience, please enable JavaScript.</em>
           </p>
         </div>
@@ -691,8 +861,13 @@
         .catch(e => console.log('SW failed:', e));
     }
 
-    // ---- Theme toggle ----
+    // ============================================================
+    //  FIXED: Theme, Hamburger, Dropdowns, Accordion, PWA, Return Top
+    //  (identical to about.html behaviour)
+    // ============================================================
     document.addEventListener('DOMContentLoaded', function() {
+
+      // ---- Theme toggle ----
       const toggle = document.getElementById('themeToggle');
       const icon = document.getElementById('themeIcon');
       const stored = localStorage.getItem('theme');
@@ -722,7 +897,7 @@
           navLinks.classList.toggle('open');
           hamburger.classList.toggle('open');
         });
-        navLinks.querySelectorAll('a').forEach(link => {
+        navLinks.querySelectorAll('a').forEach(function(link) {
           link.addEventListener('click', function() {
             navLinks.classList.remove('open');
             hamburger.classList.remove('open');
@@ -736,18 +911,30 @@
         });
       }
 
-      // ---- Return to top ----
-      const returnTop = document.getElementById('floatingReturnTop');
-      if (returnTop) {
-        returnTop.addEventListener('click', function() {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+      // ---- Dropdown toggle (mobile) ----
+      document.querySelectorAll('.dropdown-toggle').forEach(function(toggle) {
+        toggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          var parent = this.closest('.dropdown');
+          document.querySelectorAll('.dropdown.open').forEach(function(d) {
+            if (d !== parent) d.classList.remove('open');
+          });
+          parent.classList.toggle('open');
         });
-      }
+      });
+      // Close dropdowns when clicking outside nav
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.sticky-nav')) {
+          document.querySelectorAll('.dropdown.open').forEach(function(d) {
+            d.classList.remove('open');
+          });
+        }
+      });
 
-      // ---- Accordion FAQ ----
-      document.querySelectorAll('.accordion-item').forEach(item => {
-        const toggle = item.querySelector('.accordion-toggle');
-        const content = item.querySelector('.accordion-content');
+      // ---- Accordion toggle ----
+      document.querySelectorAll('.accordion-item').forEach(function(item) {
+        var toggle = item.querySelector('.accordion-toggle');
+        var content = item.querySelector('.accordion-content');
         if (toggle && content) {
           toggle.addEventListener('click', function() {
             this.classList.toggle('open');
@@ -756,9 +943,17 @@
         }
       });
 
-      // ---- PWA install ----
-      const installBtn = document.getElementById('pwaInstallBtn');
-      const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      // ---- Return to top ----
+      var returnTop = document.getElementById('floatingReturnTop');
+      if (returnTop) {
+        returnTop.addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      // ---- PWA install (show on iOS immediately) ----
+      var installBtn = document.getElementById('pwaInstallBtn');
+      var isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
       if (installBtn) {
         if (isIos) {
           installBtn.style.display = 'flex';
@@ -778,7 +973,9 @@
       }
     });
 
-    // ---- Debt Reality Logic ----
+    // ============================================================
+    //  TOOL‑SPECIFIC FUNCTIONS (unchanged)
+    // ============================================================
     let debtChartInstance = null;
 
     function calculateDebtReality() {
@@ -791,21 +988,30 @@
       const monthlyRate = rate / 100 / 12;
       const totalPayment = payment + extra;
 
-      let months = 0;
-      let balance = debt;
-      let totalInterest = 0;
-      let history = [];
-      let maxMonths = 600;
-      while (balance > 0 && months < maxMonths) {
-        const interest = balance * monthlyRate;
-        totalInterest += interest;
-        const principal = Math.min(totalPayment - interest, balance);
-        balance -= principal;
-        months++;
-        history.push({ month: months, interestPaid: interest, principalPaid: principal, balance: Math.max(0, balance) });
+      function simulate(paymentAmount) {
+        let months = 0;
+        let balance = debt;
+        let totalInterest = 0;
+        let history = [];
+        const maxMonths = 600;
+        while (balance > 0 && months < maxMonths) {
+          const interest = balance * monthlyRate;
+          totalInterest += interest;
+          const principal = Math.min(paymentAmount - interest, balance);
+          balance -= principal;
+          months++;
+          history.push({ month: months, interestPaid: interest, principalPaid: principal, balance: Math.max(0, balance) });
+        }
+        if (balance <= 0 && months === 0) { months = 0; totalInterest = 0; }
+        return { months, totalInterest, history };
       }
 
-      if (months === 0) { months = 0; totalInterest = 0; }
+      const baseline = simulate(payment);
+      const withExtra = simulate(totalPayment);
+      const displayResult = withExtra.months > 0 ? withExtra : baseline;
+      const months = displayResult.months;
+      const totalInterest = displayResult.totalInterest;
+      const history = displayResult.history;
 
       const dti = (payment / income) * 100;
       document.getElementById('debtMonths').textContent = months;
@@ -816,39 +1022,31 @@
 
       if (debt === 0) {
         solution.textContent = '✅ You have no debt! You are financially free.';
-        action.textContent = 'Action: Focus on building your savings and investing.';
-      } else if (months === 0) {
+        action.textContent = 'Focus on building your savings and investing.';
+      } else if (baseline.months === 0 && payment > 0) {
         solution.textContent = '⚠️ Your monthly payment is too low to cover the interest. You are in a debt spiral.';
-        action.textContent = 'Action: Increase your payment immediately. Even $50 extra per month can stop the spiral.';
+        action.textContent = 'Increase your payment immediately. Even $50 extra per month can stop the spiral.';
       } else {
-        const years = (months / 12).toFixed(1);
+        const baselineYears = (baseline.months / 12).toFixed(1);
+        const withExtraYears = (withExtra.months / 12).toFixed(1);
+        const yearsSaved = (baseline.months - withExtra.months) / 12;
+        const interestSaved = baseline.totalInterest - withExtra.totalInterest;
+
         if (extra > 0) {
-          let accMonths = 0;
-          let accBalance = debt;
-          let accInterest = 0;
-          while (accBalance > 0 && accMonths < maxMonths) {
-            const interest = accBalance * monthlyRate;
-            accInterest += interest;
-            const principal = Math.min(totalPayment - interest, accBalance);
-            accBalance -= principal;
-            accMonths++;
-          }
-          const accYears = (accMonths / 12).toFixed(1);
-          const yearsSaved = (years - accYears).toFixed(1);
-          const interestSaved = Math.round(totalInterest - accInterest).toLocaleString();
-          solution.textContent = `💡 Your DTI is ${dti.toFixed(1)}%. You can save ${yearsSaved} years and $${interestSaved} in interest.`;
-          action.textContent = `Action: Increase payment to $${totalPayment.toFixed(0)} (extra $${extra}/mo). Freedom in ${accYears} years instead of ${years}.`;
+          solution.textContent = `💡 Your DTI is ${dti.toFixed(1)}%. By adding $${extra}/month, you save ${yearsSaved.toFixed(1)} years and $${interestSaved.toFixed(0)} in interest.`;
+          action.textContent = `Action: Increase payment to $${totalPayment.toFixed(0)} (extra $${extra}/mo). Freedom in ${withExtraYears} years instead of ${baselineYears}.`;
         } else {
           if (dti > 40) {
-            solution.textContent = `⚠️ Your DTI is ${dti.toFixed(1)}% (High). Solution: Consider debt consolidation.`;
-            action.textContent = `Action: Even $50/month extra saves you ${Math.round((years - (months - 12) / 12) * 10) / 10} years.`;
+            solution.textContent = `⚠️ Your DTI is ${dti.toFixed(1)}% (High). Consider debt consolidation.`;
+            action.textContent = `Even $50/month extra saves you about ${(yearsSaved > 0 ? yearsSaved.toFixed(1) : '0.5')} years.`;
           } else {
             solution.textContent = `✅ Your DTI is ${dti.toFixed(1)}%. You are on track.`;
-            action.textContent = `Action: A $50/month extra payment cuts your payoff time significantly.`;
+            action.textContent = `A $50/month extra payment cuts your payoff time significantly.`;
           }
         }
       }
 
+      // ---- Chart ----
       const ctx = document.getElementById('debtChart').getContext('2d');
       if (debtChartInstance) debtChartInstance.destroy();
 
@@ -898,12 +1096,39 @@
       status.textContent = '⏳ Thinking...';
       output.innerHTML = '<span style="opacity:0.6;">Generating your personalized advice...</span>';
 
+      const debt = parseFloat(document.getElementById('debtTotal').value) || 0;
+      const rate = parseFloat(document.getElementById('debtRate').value) || 0;
+      const payment = parseFloat(document.getElementById('debtPayment').value) || 1;
+      const income = parseFloat(document.getElementById('debtIncome').value) || 1;
+      const extra = parseFloat(document.getElementById('debtExtraSlider').value) || 0;
+
+      const monthlyRate = rate / 100 / 12;
+      const totalPayment = payment + extra;
+
+      function simulate(paymentAmount) {
+        let months = 0, balance = debt, totalInterest = 0;
+        const maxMonths = 600;
+        while (balance > 0 && months < maxMonths) {
+          const interest = balance * monthlyRate;
+          totalInterest += interest;
+          const principal = Math.min(paymentAmount - interest, balance);
+          balance -= principal;
+          months++;
+        }
+        return { months, totalInterest };
+      }
+
+      const baseline = simulate(payment);
+      const withExtra = simulate(totalPayment);
+      const dti = (payment / income) * 100;
+
       const data = {
-        debt: document.getElementById('debtTotal').value,
-        rate: document.getElementById('debtRate').value,
-        payment: document.getElementById('debtPayment').value,
-        income: document.getElementById('debtIncome').value,
-        extra: document.getElementById('debtExtraSlider').value
+        debt, rate, payment, income, extra,
+        baselineMonths: baseline.months,
+        baselineInterest: baseline.totalInterest,
+        withExtraMonths: withExtra.months,
+        withExtraInterest: withExtra.totalInterest,
+        dti
       };
 
       try {
@@ -968,14 +1193,6 @@
     window.addEventListener('load', function() {
       setTimeout(calculateDebtReality, 400);
       document.documentElement.classList.add('loaded');
-    });
-
-    // ---- Dropdown hover fix ----
-    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('.nav-links .dropdown').forEach(function(dropdown) {
-        dropdown.addEventListener('mouseenter', function() { this.classList.add('hover'); });
-        dropdown.addEventListener('mouseleave', function() { this.classList.remove('hover'); });
-      });
     });
   </script>
 </body>

@@ -31,8 +31,16 @@
 
     :root {
       --bg-body: #05060a;
+      --bg-card: rgba(12,15,25,0.65);
       --bg-glass: rgba(12,15,25,0.65);
-      --bg-input: rgba(255,255,255,0.04);
+      --bg-nav: rgba(5,6,10,0.35);
+      --bg-input: rgba(255,255,255,0.06);
+      --bg-var: rgba(0,0,0,0.25);
+      --bg-metric: rgba(0,0,0,0.3);
+      --bg-code: rgba(0,0,0,0.5);
+      --bg-scenario: rgba(0,0,0,0.25);
+      --bg-faq: rgba(0,0,0,0.15);
+      --bg-tooltip: #1a1f2e;
       --btn-primary-bg: linear-gradient(135deg,#4f46e5,#7c3aed);
       --btn-primary-text: #fff;
       --btn-secondary-bg: rgba(255,255,255,0.06);
@@ -41,31 +49,61 @@
       --text-primary: #eef2f8;
       --text-secondary: #c7d2fe;
       --text-muted: #a5b4fc;
+      --text-body: #c7d2fe;
       --border-divider: rgba(255,255,255,0.04);
-      --color-safe: #69db7c;
-      --color-burnout: #ff6b6b;
-      --color-stagnant: #4dabf7;
+      --border-card: rgba(255,255,255,0.06);
+      --border-input: rgba(255,255,255,0.1);
+      --border-table: rgba(255,255,255,0.08);
+      --shadow-card: 0 30px 60px -20px rgba(0,0,0,0.8);
+      --shadow-glow: 0 30px 60px -20px rgba(79,70,229,0.15);
       --orb1: rgba(79,70,229,0.15);
       --orb2: rgba(236,72,153,0.10);
       --orb3: rgba(16,185,129,0.08);
+      --color-safe: #69db7c;
+      --color-burnout: #ff6b6b;
+      --color-stagnant: #4dabf7;
+      --bar-conv: #4b5563;
+      --bar-ilb: #3b82f6;
+      --bar-gdp: #8b5cf6;
+      --bar-prod: #a78bfa;
+      --bar-hybrid: #f59e0b;
     }
     [data-theme="light"] {
       --bg-body: #f0f2f8;
+      --bg-card: rgba(255,255,255,0.85);
       --bg-glass: rgba(255,255,255,0.75);
+      --bg-nav: rgba(255,255,255,0.50);
       --bg-input: rgba(0,0,0,0.04);
+      --bg-var: rgba(0,0,0,0.04);
+      --bg-metric: rgba(0,0,0,0.06);
+      --bg-code: rgba(0,0,0,0.05);
+      --bg-scenario: rgba(0,0,0,0.04);
+      --bg-faq: rgba(0,0,0,0.04);
+      --bg-tooltip: #f0f2f8;
       --btn-secondary-bg: rgba(0,0,0,0.04);
       --btn-secondary-border: rgba(0,0,0,0.12);
       --btn-secondary-text: #0f111a;
       --text-primary: #0f111a;
       --text-secondary: #2d2f3e;
       --text-muted: #4a4a6a;
+      --text-body: #2d2f3e;
       --border-divider: rgba(0,0,0,0.06);
-      --color-safe: #2b8a3e;
-      --color-burnout: #e03131;
-      --color-stagnant: #1971c2;
+      --border-card: rgba(0,0,0,0.08);
+      --border-input: rgba(0,0,0,0.1);
+      --border-table: rgba(0,0,0,0.08);
+      --shadow-card: 0 30px 60px -20px rgba(0,0,0,0.15);
+      --shadow-glow: 0 30px 60px -20px rgba(79,70,229,0.08);
       --orb1: rgba(79,70,229,0.06);
       --orb2: rgba(236,72,153,0.05);
       --orb3: rgba(16,185,129,0.04);
+      --color-safe: #2b8a3e;
+      --color-burnout: #e03131;
+      --color-stagnant: #1971c2;
+      --bar-conv: #9ca3af;
+      --bar-ilb: #60a5fa;
+      --bar-gdp: #a78bfa;
+      --bar-prod: #7c3aed;
+      --bar-hybrid: #f59e0b;
     }
 
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -115,12 +153,18 @@
     /* --- Reusable Components --- */
     .container { max-width:1280px; margin:0 auto; padding:0 1.5rem; }
     .glass-card {
-      background:var(--bg-glass);
-      backdrop-filter:blur(16px);
-      border:1px solid rgba(255,255,255,0.06);
+      background:var(--bg-card);
+      backdrop-filter:blur(16px) saturate(1.4);
+      -webkit-backdrop-filter:blur(16px) saturate(1.4);
+      border:1px solid var(--border-card);
       border-radius:2.5rem;
       padding:2.5rem 2rem;
-      box-shadow:0 30px 60px -20px rgba(0,0,0,0.8);
+      box-shadow:var(--shadow-card);
+      transition:border-color .3s,box-shadow .3s,background .3s;
+    }
+    .glass-card:hover {
+      border-color:rgba(79,70,229,0.2);
+      box-shadow:var(--shadow-glow);
     }
     .text-gradient {
       background:linear-gradient(135deg,#4f46e5,#a78bfa,#f472b6);
@@ -191,80 +235,211 @@
       .hero { min-height:40vh; padding:1rem 0; }
     }
 
-    /* ===== NAVIGATION – FIXED STICKY WITH GLASS ===== */
+    /* ===== NAVIGATION – FIXED ===== */
     .sticky-nav {
       position: sticky;
       top: 0;
-      z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.5rem 1.5rem;
-      background: var(--bg-glass);
+      z-index: 100;
+      background: var(--bg-nav);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-divider);
+      padding: .5rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       flex-wrap: wrap;
-      transition: background 0.2s;
     }
-    .nav-left { display:flex; align-items:center; gap:0.8rem; }
-    .nav-links { display:flex; gap:0.4rem; list-style:none; align-items:center; flex-wrap:wrap; }
-    .hamburger { display:none; flex-direction:column; cursor:pointer; background:transparent; border:none; padding:0.3rem; gap:5px; }
-    .hamburger span { display:block; width:26px; height:3px; background:var(--text-primary); border-radius:3px; }
-    .theme-toggle { background:transparent; border:1px solid var(--border-divider); border-radius:40px; padding:0.2rem 0.6rem; font-size:1.1rem; cursor:pointer; color:var(--text-primary); }
-
-    .dropdown { position:relative; }
-    .dropdown-toggle { cursor:pointer; display:inline-block; padding:0.3rem 0.6rem; border-radius:6px; transition:background 0.15s; user-select:none; }
-    .dropdown-toggle:hover { background:var(--bg-input); }
-    .dropdown-menu {
-      display:none;
-      position:absolute;
-      top:100%;
-      left:0;
-      background:var(--bg-body);
-      border:1px solid var(--border-divider);
-      border-radius:0.8rem;
-      padding:0.5rem 0;
-      min-width:200px;
-      list-style:none;
-      box-shadow:0 20px 40px rgba(0,0,0,0.5);
-      z-index:9999;
-      padding-top:8px;
-      margin-top:-8px;
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
     }
-    .dropdown-menu::before {
-      content:'';
-      position:absolute;
-      top:-12px;
-      left:0;
-      right:0;
-      height:16px;
-      background:transparent;
-      pointer-events:none;
+    .nav-links {
+      display: flex;
+      gap: .4rem;
+      flex-wrap: wrap;
+      list-style: none;
+      font-size: 1rem;
+      font-weight: 260;
+      margin: 0;
+      padding: 0;
     }
-    .dropdown.hover .dropdown-menu,
-    .dropdown:hover .dropdown-menu { display:block; }
-    .dropdown-menu a {
-      display:block;
-      padding:0.4rem 1.2rem;
-      color:var(--text-primary);
-      text-decoration:none;
-      font-size:0.9rem;
-      transition:background 0.12s;
-      border-radius:4px;
-      margin:0 0.3rem;
+    .nav-links a {
+      color: var(--text-primary);
+      text-decoration: none;
+      padding: .3rem .2rem;
+      border-bottom: 2px solid transparent;
+      transition: border-color .2s,color .2s;
+      white-space: nowrap;
     }
-    .dropdown-menu a:hover { background:var(--bg-input); color:var(--text-secondary); }
-
-    @media (max-width:768px) {
-      .hamburger { display:flex; }
-      .nav-links { display:none; flex-direction:column; width:100%; background:var(--bg-body); padding:0.5rem 0; margin-top:0.5rem; border-top:1px solid var(--border-divider); }
-      .nav-links.open { display:flex; }
-      .dropdown { width:100%; }
-      .dropdown-menu { position:static; background:transparent; border:none; box-shadow:none; padding-left:1.5rem; padding-top:0; margin-top:0; display:block; max-height:0; overflow:hidden; transition:max-height 0.25s ease; }
-      .dropdown-menu::before { display:none; }
-      .dropdown.open .dropdown-menu { max-height:400px; display:block; }
-      .dropdown-toggle { display:block; padding:0.4rem 0.6rem; }
+    .nav-links a:hover {
+      border-color: #4f46e5;
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      padding: .3rem;
+      gap: 5px;
+    }
+    .hamburger span {
+      display: block;
+      width: 26px;
+      height: 3px;
+      background: var(--text-primary);
+      border-radius: 3px;
+      transition: .25s ease;
+    }
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--border-input);
+      border-radius: 40px;
+      padding: .2rem .6rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: .2s;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+    .theme-toggle:hover {
+      background: var(--bg-input);
+      transform: scale(1.05);
+    }
+    .nav-links .dropdown {
+      position: relative;
+    }
+    .nav-links .dropdown-toggle {
+      cursor: pointer;
+    }
+    .nav-links .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--bg-nav);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-divider);
+      border-radius: .8rem;
+      padding: .5rem 0;
+      min-width: 200px;
+      list-style: none;
+      box-shadow: var(--shadow-card);
+      z-index: 200;
+    }
+    .nav-links .dropdown-menu li {
+      padding: 0;
+    }
+    .nav-links .dropdown-menu a {
+      display: block;
+      padding: .4rem 1.2rem;
+      color: var(--text-primary);
+      text-decoration: none;
+      border-bottom: none;
+      white-space: nowrap;
+      font-weight: 400;
+      font-size: .8rem;
+      transition: background .2s;
+    }
+    .nav-links .dropdown-menu a:hover {
+      background: var(--bg-input);
+      border-radius: .3rem;
+    }
+    @media (min-width: 769px) {
+      .nav-links .dropdown:hover .dropdown-menu {
+        display: block;
+      }
+    }
+    @media (max-width: 768px) {
+      .sticky-nav {
+        padding: .6rem 1rem;
+      }
+      .hamburger {
+        display: flex !important;
+      }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: var(--bg-nav);
+        backdrop-filter: blur(12px);
+        padding: .5rem 0;
+        margin-top: .5rem;
+        border-top: 1px solid var(--border-divider);
+        max-height: 70vh;
+        overflow-y: auto;
+      }
+      .nav-links.open {
+        display: flex;
+      }
+      .nav-links > li {
+        width: 100%;
+        padding: 0;
+        border-bottom: 1px solid var(--border-divider);
+      }
+      .nav-links > li:last-child {
+        border-bottom: none;
+      }
+      .nav-links > li > a,
+      .nav-links > li > .dropdown-toggle,
+      .nav-links .dropdown-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: .6rem 1rem;
+        color: var(--text-primary);
+        font-size: 1rem;
+        font-weight: 500;
+        text-decoration: none;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+      }
+      .nav-links .dropdown-menu {
+        display: block;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.25s ease;
+        padding: 0 0 0 1.5rem;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        position: static;
+        min-width: auto;
+      }
+      .nav-links .dropdown.open .dropdown-menu {
+        max-height: 400px;
+        padding-top: .3rem;
+        padding-bottom: .3rem;
+      }
+      .nav-links .dropdown-menu a {
+        padding: .4rem 1rem;
+        font-size: .9rem;
+        white-space: normal;
+      }
+      .theme-toggle {
+        font-size: 1rem;
+        padding: .1rem .5rem;
+      }
+      .mobile-home {
+        display: block !important;
+      }
+    }
+    .mobile-home {
+      display: none;
     }
 
     .floating-return-top {
@@ -434,11 +609,6 @@
       .pwa-install-btn { bottom:1rem; right:1rem; padding:0.4rem 1rem; font-size:0.8rem; }
       .pwa-install-btn .icon { font-size:1rem; }
     }
-@media (max-width: 768px) {
-  .floating-return-top {
-    display: none !important;
-  }
-}
   </style>
 
   <!-- Floating Orbs -->
@@ -463,7 +633,7 @@
 </head>
 <body>
 
-<!-- ===== NAV ===== -->
+<!-- ===== NAV (identical to about.html) ===== -->
 <nav class="sticky-nav no-print" id="mainNav">
   <div class="nav-left">
     <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
@@ -505,9 +675,6 @@
         <span class="badge-glow" style="margin-bottom:0.5rem;">📈 Interactive Tool</span>
         <h1 class="text-gradient" style="font-size:clamp(2.8rem,6vw,4rem); font-weight:800; letter-spacing:-0.03em; line-height:1.1;">Compound Curve</h1>
         <p style="font-size:clamp(1.2rem,2vw,1.6rem); font-weight:300; opacity:0.8; max-width:650px; margin:0.5rem 0 1.5rem; color:var(--text-secondary);">
-		🚧 Webpage Under Construction 🚧
-        </p>
-        <p style="font-size:clamp(1.2rem,2vw,1.6rem); font-weight:300; opacity:0.8; max-width:650px; margin:0.5rem 0 1.5rem; color:var(--text-secondary);">
           See how your debt compounds over time — and how small changes bend the curve.
         </p>
       </div>
@@ -517,9 +684,22 @@
     <section class="container section-spacing" style="padding-top:0.5rem;">
       <div class="glass-card">
         <p class="desc">Enter your numbers and click <strong>Project the Future</strong> to see the compounding effect.</p>
-        <p style="font-size:clamp(1.2rem,2vw,1.6rem); font-weight:300; opacity:0.8; max-width:650px; margin:0.5rem 0 1.5rem; color:var(--text-secondary);">
-		🚧 Webpage Under Construction 🚧
-        </p>
+
+        <!-- Accordion: What do these terms mean? -->
+        <div style="background:var(--bg-input); border-radius:12px; padding:0.2rem 0.2rem; margin-bottom:1.5rem; border:1px solid var(--border-divider);">
+          <div class="accordion-item">
+            <div class="accordion-toggle"><span>📖 What do these terms mean?</span><span class="arrow">▼</span></div>
+            <div class="accordion-content">
+              <div style="padding:0.5rem 0;">
+                <div style="margin-bottom:0.6rem;"><strong style="color:var(--text-primary);">Annual Debt</strong> — The yearly financial loss from your productivity or spending leak. This is the amount you want to reduce.</div>
+                <div style="margin-bottom:0.6rem;"><strong style="color:var(--text-primary);">Growth Rate</strong> — The annual percentage increase in your debt. Even 10% can double your debt in ~7 years.</div>
+                <div style="margin-bottom:0.6rem;"><strong style="color:var(--text-primary);">Years</strong> — The time horizon you want to project into the future. 10 years shows the true cost of inaction.</div>
+                <div><strong style="color:var(--text-primary);">Reduction</strong> — The amount you can cut from your annual leak. Small cuts compound into huge savings over time.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="input-group">
           <label>💰 Annual Debt ($) <input type="number" id="compBase" value="13000" step="100" /></label>
           <label>📈 Growth Rate (%) <input type="range" id="compRate" min="5" max="20" value="10" step="0.5" oninput="document.getElementById('compRateDisplay').textContent=this.value+'%'" /> <span id="compRateDisplay">10%</span></label>
@@ -648,17 +828,158 @@
   <button class="floating-return-top" id="floatingReturnTop" aria-label="Return to top">⬆ Top</button>
 
   <!-- ===== FOOTER ===== -->
-  <footer class="footer">...</footer>
+  <footer class="footer">
+    <div class="container">
+      <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1rem 1.5rem; margin-bottom:1.5rem; font-size:0.85rem;">
+        <a href="index.html">🏠 Home</a><a href="news.html">News</a><a href="about.html">About</a><a href="book.html">Book</a>
+        <a href="tools.html" style="color:#b388ff;">🧰 Tools</a><a href="changelog.html">Changelog</a><a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a><a href="contact.html">Contact</a><a href="index.html#simulator">Simulator</a><a href="index.html#learn">Learn 💸</a>
+      </div>
+      <p>© 2026 <a href="https://traffictorch.net">Traffic Torch</a> · <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> · Version 0.8.0</p>
+      <p style="font-size:0.7rem; margin-top:0.3rem;">Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI</p>
+    </div>
+  </footer>
 
-  <!-- ===== PWA ===== -->
-  <button id="pwaInstallBtn" class="pwa-install-btn" style="display:none;">...</button>
-  <div id="pwaIosOverlay" class="pwa-ios-overlay">...</div>
+  <!-- ===== PWA INSTALL BUTTON ===== -->
+  <button id="pwaInstallBtn" class="pwa-install-btn" style="display:none;">
+    <span class="icon">📱</span>
+    <span class="btn-text">Install App</span>
+  </button>
 
+  <div id="pwaIosOverlay" class="pwa-ios-overlay">
+    <div class="pwa-ios-modal">
+      <h3>Install on iPhone</h3>
+      <p>To add this app to your home screen:</p>
+      <div class="step"><span>1.</span><span class="step-icon">⬆️</span><span>In <strong>Safari</strong> tap the <strong>Share</strong> button at the bottom.</span></div>
+      <div class="step"><span>2.</span><span class="step-icon">➕</span><span>Scroll down and tap <strong>"Add to Home Screen"</strong>.</span></div>
+      <button id="pwaCloseIosModal" class="close-btn">Got it</button>
+    </div>
+  </div>
+
+  <!-- ===== SCRIPTS ===== -->
   <script>
-    // ---- Same initialisation (theme, hamburger, accordion, PWA) ----
-    // (copied from the debt page but with compound-specific logic)
+    // ---- Service Worker ----
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/productivity-bond-model/sw.js')
+        .then(r => console.log('SW registered:', r))
+        .catch(e => console.log('SW failed:', e));
+    }
 
-    // ---- Compound Curve Logic ----
+    // ============================================================
+    //  FIXED: Theme, Hamburger, Dropdowns, Accordion, PWA, Return Top
+    //  (identical to about.html behaviour)
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', function() {
+
+      // ---- Theme toggle ----
+      const toggle = document.getElementById('themeToggle');
+      const icon = document.getElementById('themeIcon');
+      const stored = localStorage.getItem('theme');
+      if (stored) {
+        document.documentElement.setAttribute('data-theme', stored);
+        icon.textContent = stored === 'dark' ? '🌙' : '☀️';
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        document.documentElement.setAttribute('data-theme', 'light');
+        icon.textContent = '☀️';
+      }
+      if (toggle) {
+        toggle.addEventListener('click', function() {
+          const current = document.documentElement.getAttribute('data-theme');
+          const next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+          icon.textContent = next === 'dark' ? '🌙' : '☀️';
+        });
+      }
+
+      // ---- Hamburger ----
+      const hamburger = document.getElementById('hamburgerBtn');
+      const navLinks = document.getElementById('navLinks');
+      if (hamburger && navLinks) {
+        hamburger.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navLinks.classList.toggle('open');
+          hamburger.classList.toggle('open');
+        });
+        navLinks.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navLinks.classList.remove('open');
+            hamburger.classList.remove('open');
+          });
+        });
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('.sticky-nav')) {
+            navLinks.classList.remove('open');
+            hamburger.classList.remove('open');
+          }
+        });
+      }
+
+      // ---- Dropdown toggle (mobile) ----
+      document.querySelectorAll('.dropdown-toggle').forEach(function(toggle) {
+        toggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          var parent = this.closest('.dropdown');
+          document.querySelectorAll('.dropdown.open').forEach(function(d) {
+            if (d !== parent) d.classList.remove('open');
+          });
+          parent.classList.toggle('open');
+        });
+      });
+      // Close dropdowns when clicking outside nav
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.sticky-nav')) {
+          document.querySelectorAll('.dropdown.open').forEach(function(d) {
+            d.classList.remove('open');
+          });
+        }
+      });
+
+      // ---- Accordion toggle ----
+      document.querySelectorAll('.accordion-item').forEach(function(item) {
+        var toggle = item.querySelector('.accordion-toggle');
+        var content = item.querySelector('.accordion-content');
+        if (toggle && content) {
+          toggle.addEventListener('click', function() {
+            this.classList.toggle('open');
+            content.classList.toggle('open');
+          });
+        }
+      });
+
+      // ---- Return to top ----
+      var returnTop = document.getElementById('floatingReturnTop');
+      if (returnTop) {
+        returnTop.addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      // ---- PWA install (show on iOS immediately) ----
+      var installBtn = document.getElementById('pwaInstallBtn');
+      var isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      if (installBtn) {
+        if (isIos) {
+          installBtn.style.display = 'flex';
+        } else {
+          setTimeout(function() {
+            installBtn.style.display = 'flex';
+          }, 12000);
+        }
+        installBtn.addEventListener('click', function() {
+          if (isIos) {
+            document.getElementById('pwaIosOverlay').classList.add('active');
+          }
+        });
+        document.getElementById('pwaCloseIosModal').addEventListener('click', function() {
+          document.getElementById('pwaIosOverlay').classList.remove('active');
+        });
+      }
+    });
+
+    // ============================================================
+    //  TOOL‑SPECIFIC FUNCTIONS (unchanged)
+    // ============================================================
     let compChartInstance = null;
 
     function runCompoundCurve() {
@@ -687,7 +1008,6 @@
       const solution = document.getElementById('compSolution');
       const action = document.getElementById('compAction');
       if (reduction > 0) {
-        const savedYears = Math.round((years * (1 - (data[data.length-1].reduced / data[data.length-1].original))) * 10) / 10;
         solution.textContent = `✅ You are taking action! Reducing by $${reduction.toLocaleString()} saves $${savings.toFixed(0).toLocaleString()}.`;
         action.textContent = `Action: This is equivalent to cutting ${Math.round((reduction / (35 * 5 * 48)) * 100)}% of your daily waste.`;
       } else {
@@ -733,12 +1053,26 @@
       status.textContent = '⏳ Thinking...';
       output.innerHTML = '<span style="opacity:0.6;">Generating your personalized advice...</span>';
 
-      const data = {
-        base: document.getElementById('compBase').value,
-        rate: document.getElementById('compRate').value,
-        years: document.getElementById('compYears').value,
-        reduction: document.getElementById('compReduction').value
-      };
+      const base = parseFloat(document.getElementById('compBase').value) || 0;
+      const ratePercent = parseFloat(document.getElementById('compRate').value) || 0;
+      const years = parseInt(document.getElementById('compYears').value) || 10;
+      const reduction = parseFloat(document.getElementById('compReduction').value) || 0;
+
+      const rate = ratePercent / 100;
+      const reducedBase = Math.max(0, base - reduction);
+
+      const futureWithout = base * Math.pow(1 + rate, years);
+      const futureWith = reducedBase * Math.pow(1 + rate, years);
+      const savings = futureWithout - futureWith;
+
+      let cumWithout = 0, cumWith = 0;
+      for (let i = 1; i <= years; i++) {
+        cumWithout += base * Math.pow(1 + rate, i);
+        cumWith += reducedBase * Math.pow(1 + rate, i);
+      }
+      const cumulativeSavings = cumWithout - cumWith;
+
+      const data = { base, rate: ratePercent, years, reduction, futureWithout, futureWith, savings, cumulativeWithout: cumWithout, cumulativeWith: cumWith, cumulativeSavings };
 
       try {
         const response = await fetch('https://ai-compound.traffictorch.workers.dev', {
