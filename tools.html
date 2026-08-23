@@ -435,11 +435,33 @@
       .pwa-install-btn { bottom:1rem; right:1rem; padding:0.4rem 1rem; font-size:0.8rem; }
       .pwa-install-btn .icon { font-size:1rem; }
     }
-@media (max-width: 768px) {
-  .floating-return-top {
-    display: none !important;
-  }
-}
+    @media (max-width: 768px) {
+      .floating-return-top { display: none !important; }
+    }
+    /* Additional slider-specific tweaks */
+    .input-group input[type="range"] {
+      width: 100%;
+      accent-color: #4f46e5;
+      background: transparent;
+      cursor: pointer;
+    }
+    .range-value {
+      font-weight: 600;
+      color: var(--text-primary);
+      min-width: 2.5rem;
+      text-align: center;
+    }
+    #wellProjectionContainer {
+      min-height: 180px;
+      height: 200px;
+      max-height: 250px;
+    }
+    @media (max-width: 640px) {
+      #wellProjectionContainer {
+        height: 160px;
+        min-height: 140px;
+      }
+    }
   </style>
 
   <!-- Floating Orbs -->
@@ -508,10 +530,10 @@
     <li class="dropdown">
       <span class="dropdown-toggle">🧰 Tools ▼</span>
       <ul class="dropdown-menu">
-          <li><a href="tools.html">🧰 All Tools</a></li>
-          <li><a href="wellbeing-index.html">🌿 Wellbeing Index</a></li>
-          <li><a href="debt-reality.html">💳 Debt Reality</a></li>
-          <li><a href="compound-curve.html">📈 Compound Curve</a></li>
+        <li><a href="tools.html">🧰 All Tools</a></li>
+        <li><a href="wellbeing-index.html">🌿 Wellbeing Index</a></li>
+        <li><a href="debt-reality.html">💳 Debt Reality</a></li>
+        <li><a href="compound-curve.html">📈 Compound Curve</a></li>
       </ul>
     </li>
     <li class="dropdown"><span class="dropdown-toggle">About ▼</span><ul class="dropdown-menu"><li><a href="news.html">News</a></li><li><a href="about.html">Traffic Torch</a></li><li><a href="changelog.html">Change Log</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="contact.html">Contact</a></li></ul></li>
@@ -571,11 +593,36 @@
           </div>
         </div>
         <div class="input-group">
-          <label>💼 Work Hours/Day <input type="number" id="wellWork" value="8" step="0.5" /></label>
-          <label>📅 Days Worked/Week <input type="number" id="wellDays" value="5" step="1" min="1" max="7" /></label>
-          <label>😴 Sleep Hours/Night <input type="number" id="wellSleep" value="7" step="0.5" /></label>
-          <label>😊 Happiness (1-10) <input type="range" id="wellHappiness" min="1" max="10" value="6" step="1" oninput="document.getElementById('wellHappinessDisplay').textContent=this.value" /> <span id="wellHappinessDisplay">6</span></label>
-          <label>🌀 Chaos Level (1-10) <input type="range" id="wellChaos" min="1" max="10" value="5" step="1" oninput="document.getElementById('wellChaosDisplay').textContent=this.value" /> <span id="wellChaosDisplay">5</span></label>
+          <label>💼 Work Hours/Day
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <input type="range" id="wellWork" min="1" max="24" value="8" step="0.5" oninput="document.getElementById('wellWorkDisplay').textContent=this.value" />
+              <span id="wellWorkDisplay" class="range-value">8</span>
+            </div>
+          </label>
+          <label>📅 Days Worked/Week
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <input type="range" id="wellDays" min="1" max="7" value="5" step="1" oninput="document.getElementById('wellDaysDisplay').textContent=this.value" />
+              <span id="wellDaysDisplay" class="range-value">5</span>
+            </div>
+          </label>
+          <label>😴 Sleep Hours/Night
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <input type="range" id="wellSleep" min="1" max="24" value="7" step="0.5" oninput="document.getElementById('wellSleepDisplay').textContent=this.value" />
+              <span id="wellSleepDisplay" class="range-value">7</span>
+            </div>
+          </label>
+          <label>😊 Happiness (1-10)
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <input type="range" id="wellHappiness" min="1" max="10" value="6" step="1" oninput="document.getElementById('wellHappinessDisplay').textContent=this.value" />
+              <span id="wellHappinessDisplay" class="range-value">6</span>
+            </div>
+          </label>
+          <label>🌀 Chaos Level (1-10)
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <input type="range" id="wellChaos" min="1" max="10" value="5" step="1" oninput="document.getElementById('wellChaosDisplay').textContent=this.value" />
+              <span id="wellChaosDisplay" class="range-value">5</span>
+            </div>
+          </label>
         </div>
         <button class="btn-primary" onclick="calculateWellbeing()">🧘 Find My Balance</button>
         <div id="wellResult" class="result-box">
@@ -590,12 +637,14 @@
               <span style="font-size:0.9rem; font-weight:600; color:var(--text-primary);">📊 10‑Year Projection</span>
               <span style="font-size:0.7rem; color:var(--text-muted);">Based on your current habits</span>
             </div>
-            <div class="chart-container"><canvas id="wellProjection" width="400" height="180"></canvas></div>
+            <div id="wellProjectionContainer" style="position:relative; height:200px;">
+              <canvas id="wellProjection" width="400" height="200"></canvas>
+            </div>
           </div>
           <div class="prescription-box" id="wellPrescription">
-            <div class="label">🧠 Diagnosis & Prescription</div>
+            <div class="label">🧠 Diagnosis</div>
             <div class="solution" id="wellSolution">Enter your numbers to see your personalized wellbeing plan.</div>
-            <div class="action" id="wellAction">We'll pinpoint your weak spots and give you actionable steps.</div>
+            <!-- action removed -->
           </div>
         </div>
         <div class="ai-power-wrapper">
@@ -1080,18 +1129,20 @@
   }
 
   // ============================
-  // 2. WELLBEING INDEX (unchanged)
+  // 2. WELLBEING INDEX (updated with sliders, fixed chart, no action)
   // ============================
   let radarChartInstance = null;
   let projectionChartInstance = null;
 
   function calculateWellbeing() {
+    // Values from sliders
     const work = parseFloat(document.getElementById('wellWork').value) || 8;
     const days = parseFloat(document.getElementById('wellDays').value) || 5;
     const sleep = parseFloat(document.getElementById('wellSleep').value) || 7;
     const happiness = parseFloat(document.getElementById('wellHappiness').value) || 5;
     const chaos = parseFloat(document.getElementById('wellChaos').value) || 5;
 
+    // Compute scores
     let prodScore = Math.min(100, Math.max(0, 100 - (Math.abs(work - 8) * 5) - (Math.abs(days - 5) * 3)));
     let workScore = Math.min(100, Math.max(0, 100 - (Math.abs(work - 8) * 8)));
     let sleepScore = Math.min(100, Math.max(0, 100 - (Math.abs(sleep - 7.5) * 12)));
@@ -1117,8 +1168,8 @@
     let interpretation = overall > 70 ? '🌟 You are thriving!' : overall > 45 ? '📈 Stable, room to grow.' : '⚠️ Prioritize rest and financial clarity.';
     document.getElementById('wellInterpretation').textContent = interpretation;
 
+    // Diagnosis (only solution, no action)
     const solution = document.getElementById('wellSolution');
-    const action = document.getElementById('wellAction');
     let weakSpots = [];
     if (workScore < 50) weakSpots.push('Work/Life');
     if (sleepScore < 50) weakSpots.push('Sleep');
@@ -1128,16 +1179,11 @@
 
     if (weakSpots.length === 0) {
       solution.textContent = '✅ All systems balanced! You are in the harmony zone.';
-      action.textContent = 'Action: Maintain this by protecting your sleep and setting work boundaries.';
     } else {
       solution.textContent = `⚠️ Weak spots: ${weakSpots.join(', ')}. Focus on the lowest score first.`;
-      if (weakSpots.includes('Sleep')) action.textContent = 'Action: Go to bed 30 minutes earlier tonight.';
-      else if (weakSpots.includes('Work/Life')) action.textContent = 'Action: Set a hard stop at 7 PM tonight.';
-      else if (weakSpots.includes('Financial')) action.textContent = 'Action: Use Tool 1 (Debt Reality) to create a plan.';
-      else if (weakSpots.includes('Productivity')) action.textContent = 'Action: Review your work hours and days. Aim for 8 hrs, 5 days to optimize productivity.';
-      else action.textContent = 'Action: Start with the smallest habit change.';
     }
 
+    // Radar chart
     const ctx = document.getElementById('wellRadar').getContext('2d');
     if (radarChartInstance) radarChartInstance.destroy();
 
@@ -1176,6 +1222,7 @@
       }
     });
 
+    // 10‑year projection – fixed height container
     const projCtx = document.getElementById('wellProjection').getContext('2d');
     if (projectionChartInstance) projectionChartInstance.destroy();
 
@@ -1227,7 +1274,7 @@
       },
       options: {
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: { labels: { color: textColor, boxWidth: 12, padding: 12, font: { size: 10 } } }
         },

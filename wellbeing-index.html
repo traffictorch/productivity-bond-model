@@ -22,11 +22,13 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" media="print" onload="this.media='all'" crossorigin="anonymous" />
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" crossorigin="anonymous" /></noscript>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+  <link rel="preconnect" href="https://static.addtoany.com" />
 
   <style>
-    /* ===== FULL CSS ===== */
+    /* --- Reset, Theme, Background --- */
     html { opacity: 0; transition: opacity 0.12s ease; }
     html.loaded { opacity: 1; }
+
     :root {
       --bg-body: #05060a;
       --bg-glass: rgba(12,15,25,0.65);
@@ -65,8 +67,10 @@
       --orb2: rgba(236,72,153,0.05);
       --orb3: rgba(16,185,129,0.04);
     }
+
     * { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior:smooth; }
+
     body {
       font-family:'Inter',system-ui,-apple-system,sans-serif;
       background:var(--bg-body);
@@ -82,10 +86,12 @@
       min-height: 100vh;
       position: relative;
     }
+
     @keyframes gradientShift {
       0% { background-position: 0% 0%; }
       100% { background-position: 100% 100%; }
     }
+
     .orb {
       position: fixed;
       border-radius: 50%;
@@ -100,10 +106,13 @@
       0% { transform: translate(0,0) scale(1); }
       100% { transform: translate(80px,-60px) scale(1.2); }
     }
+
     .container, .sticky-nav, .footer, .floating-return-top, .pwa-install-btn {
       position: relative;
       z-index: 1;
     }
+
+    /* --- Reusable Components --- */
     .container { max-width:1280px; margin:0 auto; padding:0 1.5rem; }
     .glass-card {
       background:var(--bg-glass);
@@ -175,12 +184,14 @@
       text-align:center;
     }
     .share-btn:hover { background:rgba(255,255,255,0.15); transform:scale(1.02); }
-    .hero { min-height:20vh; display:flex; align-items:center; padding:2rem 6px 1rem; background:transparent; }
+    .hero { min-height:60vh; display:flex; align-items:center; padding:2rem 6px 1rem; background:transparent; }
     .section-spacing { padding:3rem 0; }
     @media (max-width:768px) {
       .glass-card { padding:1.5rem 1rem; border-radius:1.5rem; }
-      .hero { min-height:15vh; padding:1rem 0; }
+      .hero { min-height:40vh; padding:1rem 0; }
     }
+
+    /* ===== NAVIGATION – FIXED STICKY WITH GLASS ===== */
     .sticky-nav {
       position: sticky;
       top: 0;
@@ -198,12 +209,12 @@
     }
     .nav-left { display:flex; align-items:center; gap:0.8rem; }
     .nav-links { display:flex; gap:0.4rem; list-style:none; align-items:center; flex-wrap:wrap; }
-    .nav-links a { color:var(--text-primary); text-decoration:none; }
     .hamburger { display:none; flex-direction:column; cursor:pointer; background:transparent; border:none; padding:0.3rem; gap:5px; }
     .hamburger span { display:block; width:26px; height:3px; background:var(--text-primary); border-radius:3px; }
     .theme-toggle { background:transparent; border:1px solid var(--border-divider); border-radius:40px; padding:0.2rem 0.6rem; font-size:1.1rem; cursor:pointer; color:var(--text-primary); }
+
     .dropdown { position:relative; }
-    .dropdown-toggle { cursor:pointer; display:inline-block; padding:0.3rem 0.6rem; border-radius:6px; transition:background 0.15s; user-select:none; color:var(--text-primary); }
+    .dropdown-toggle { cursor:pointer; display:inline-block; padding:0.3rem 0.6rem; border-radius:6px; transition:background 0.15s; user-select:none; }
     .dropdown-toggle:hover { background:var(--bg-input); }
     .dropdown-menu {
       display:none;
@@ -244,6 +255,7 @@
       margin:0 0.3rem;
     }
     .dropdown-menu a:hover { background:var(--bg-input); color:var(--text-secondary); }
+
     @media (max-width:768px) {
       .hamburger { display:flex; }
       .nav-links { display:none; flex-direction:column; width:100%; background:var(--bg-body); padding:0.5rem 0; margin-top:0.5rem; border-top:1px solid var(--border-divider); }
@@ -254,6 +266,7 @@
       .dropdown.open .dropdown-menu { max-height:400px; display:block; }
       .dropdown-toggle { display:block; padding:0.4rem 0.6rem; }
     }
+
     .floating-return-top {
       position:fixed;
       bottom:7rem;
@@ -273,17 +286,33 @@
       font-family:'Inter',system-ui;
     }
     .floating-return-top:hover { background:rgba(0,255,255,0.25); transform:scale(1.05); }
-    @media (max-width: 768px) {
-      .floating-return-top { display: none !important; }
+
+    .hero-tabs { display:flex; flex-wrap:wrap; gap:0.6rem; align-items:center; margin-bottom:0.8rem; }
+    .hero-tab-btn {
+      background:none;
+      border:1px solid var(--border-divider);
+      color:var(--text-muted);
+      font-size:0.9rem;
+      font-weight:600;
+      padding:0.5rem 1.2rem;
+      border-radius:40px;
+      cursor:pointer;
+      transition:0.2s;
+      font-family:inherit;
     }
-    .breadcrumb { font-size:0.85rem; color:var(--text-muted); display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap; margin-bottom:0.5rem; }
-    .breadcrumb a { color:var(--text-muted); text-decoration:none; }
-    .breadcrumb a:hover { color:var(--text-primary); }
+    .hero-tab-btn:hover { color:var(--text-primary); background:var(--bg-input); border-color:var(--text-muted); }
+    .hero-tab-btn.active { background:rgba(79,70,229,0.2); color:#b388ff; border-color:rgba(79,70,229,0.4); }
+
+    .tool-panel { display:none; animation:fade 0.2s ease; }
+    .tool-panel.active { display:block; }
+    @keyframes fade { 0%{opacity:0.4;transform:translateY(4px)} 100%{opacity:1;transform:translateY(0)} }
     .desc { color:var(--text-muted); font-size:0.95rem; margin-bottom:1.5rem; }
+    .help-text { display:block; font-size:0.7rem; color:var(--text-muted); opacity:0.7; margin-top:0.2rem; font-weight:400; text-transform:none; letter-spacing:0; }
     .input-group { display:flex; flex-wrap:wrap; gap:1rem 2rem; margin-bottom:1.5rem; background:var(--bg-input); padding:1.2rem 1.5rem; border-radius:12px; border:1px solid var(--border-divider); }
     .input-group label { display:flex; flex-direction:column; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-muted); gap:0.3rem; flex:1 1 140px; }
     .input-group input[type="number"], .input-group input[type="range"] { background:var(--bg-body); border:1px solid var(--border-divider); border-radius:8px; padding:0.5rem 0.75rem; color:var(--text-primary); font-weight:500; width:100%; font-family:inherit; }
     .input-group input[type="range"] { padding:0; accent-color:#4f46e5; }
+
     .result-box { background:var(--bg-input); border-radius:12px; padding:1.5rem; border-left:4px solid #4f46e5; margin-top:1rem; }
     .result-box .stat { font-size:2rem; font-weight:700; color:var(--text-primary); }
     .result-box .stat span { color:#4f46e5; }
@@ -291,22 +320,63 @@
     .risk-low { color:var(--color-safe); font-weight:600; }
     .risk-med { color:#ffd43b; font-weight:600; }
     .risk-high { color:var(--color-burnout); font-weight:600; }
+    .footer { margin-top:4rem; padding:2rem 0; border-top:1px solid var(--border-divider); text-align:center; color:var(--text-muted); font-size:0.85rem; }
+    .footer a { color:var(--text-secondary); text-decoration:none; }
+    .footer a:hover { text-decoration:underline; }
+    .breadcrumb { font-size:0.85rem; color:var(--text-muted); display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap; margin-bottom:0.5rem; }
+    .breadcrumb a { color:var(--text-muted); text-decoration:none; }
+    .breadcrumb a:hover { color:var(--text-primary); }
     .chart-container { max-height:300px; margin:1rem 0; }
-    .prescription-box { background:var(--bg-body); border-radius:10px; padding:1rem; margin-top:1rem; border-left:4px solid #f59e0b; }
-    .prescription-box .label { font-size:0.65rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-muted); font-weight:700; }
-    .prescription-box .solution { color:#f59e0b; font-weight:600; margin-top:0.2rem; }
-    .prescription-box .action { color:var(--text-secondary); font-size:0.9rem; margin-top:0.2rem; }
+    .grid-2col { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    @media (max-width:768px) { .grid-2col { grid-template-columns:1fr; } }
+
+    .accordion-toggle {
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 1rem;
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: background 0.2s, border-radius 0.2s;
+    }
+    .accordion-toggle:hover { background: rgba(255,255,255,0.03); border-radius: 8px; }
+    .accordion-toggle .arrow { transition: transform 0.25s ease; display: inline-block; font-size: 0.7rem; color: var(--text-muted); }
+    .accordion-toggle.open .arrow { transform: rotate(180deg); }
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.3s ease;
+      padding: 0 1rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .accordion-content.open { max-height: 600px; padding: 0.2rem 1rem 1rem 1rem; }
+
+    .prescription-box {
+      background: var(--bg-body);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-left: 4px solid #f59e0b;
+    }
+    .prescription-box .label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700; }
+    .prescription-box .solution { color: #f59e0b; font-weight: 600; margin-top: 0.2rem; }
+    .prescription-box .action { color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.2rem; }
+
     .ai-power-wrapper { margin-top: 1.5rem; }
     .ai-power-wrapper .glass-card { padding: 1.2rem 1.5rem; border-color: rgba(167,139,250,0.3); }
     .ai-output { margin-top: 0.8rem; padding: 0.8rem 1.2rem; background: var(--bg-body); border-radius: 0.8rem; border-left: 4px solid #a78bfa; min-height: 50px; font-size: 0.9rem; color: var(--text-body); }
     .ai-output .summary { color: var(--text-primary); font-weight: 500; margin-bottom: 0.3rem; }
     .ai-output .advice { color: var(--text-secondary); }
     .ai-output .placeholder { opacity: 0.5; }
+
     .ask-ai-section { margin-top:1rem; border-top:1px solid var(--border-divider); padding-top:1rem; }
     .ask-ai-section label { font-weight:600; display:block; margin-bottom:0.3rem; }
-    .footer { margin-top:4rem; padding:2rem 0; border-top:1px solid var(--border-divider); text-align:center; color:var(--text-muted); font-size:0.85rem; }
-    .footer a { color:var(--text-secondary); text-decoration:none; }
-    .footer a:hover { text-decoration:underline; }
+
     .pwa-ios-overlay {
       display: none;
       position: fixed;
@@ -337,6 +407,7 @@
     .pwa-ios-modal .step-icon { background:var(--bg-input); padding:0.2rem 0.8rem; border-radius:6px; font-size:1.2rem; }
     .pwa-ios-modal .close-btn { margin-top:1rem; padding:0.6rem 2rem; background:#4f46e5; color:#fff; border:none; border-radius:40px; font-size:1rem; font-weight:600; cursor:pointer; transition:0.2s; }
     .pwa-ios-modal .close-btn:hover { background:#4338ca; transform:scale(1.02); }
+
     .pwa-install-btn {
       position: fixed;
       bottom: 2rem;
@@ -363,35 +434,37 @@
       .pwa-install-btn { bottom:1rem; right:1rem; padding:0.4rem 1rem; font-size:0.8rem; }
       .pwa-install-btn .icon { font-size:1rem; }
     }
-    .accordion-item { margin-bottom:0.5rem; }
-    .accordion-toggle {
+@media (max-width: 768px) {
+  .floating-return-top {
+    display: none !important;
+  }
+}
+
+    /* Additional slider-specific tweaks */
+    .input-group input[type="range"] {
+      width: 100%;
+      accent-color: #4f46e5;
+      background: transparent;
       cursor: pointer;
-      user-select: none;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.6rem 1rem;
-      background: var(--bg-input);
-      border-radius: 8px;
+    }
+    .range-value {
+      font-weight: 600;
       color: var(--text-primary);
-      font-weight: 500;
-      font-size: 0.95rem;
-      transition: background 0.2s;
-      border: 1px solid var(--border-divider);
+      min-width: 2.5rem;
+      text-align: center;
     }
-    .accordion-toggle:hover { background: var(--bg-glass); }
-    .accordion-toggle .arrow { transition: transform 0.25s ease; display: inline-block; font-size: 0.7rem; color: var(--text-muted); }
-    .accordion-toggle.open .arrow { transform: rotate(180deg); }
-    .accordion-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s ease, padding 0.3s ease;
-      padding: 0 1rem;
-      color: var(--text-secondary);
-      font-size: 0.9rem;
-      line-height: 1.6;
+    /* Ensure the projection chart container has a min-height on mobile */
+    #wellProjectionContainer {
+      min-height: 180px;
+      height: 200px;
+      max-height: 250px;
     }
-    .accordion-content.open { max-height: 600px; padding: 0.8rem 1rem; }
+    @media (max-width: 640px) {
+      #wellProjectionContainer {
+        height: 160px;
+        min-height: 140px;
+      }
+    }
   </style>
 
   <!-- Floating Orbs -->
@@ -399,6 +472,7 @@
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
 
+  <!-- FAQ Schema -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -415,34 +489,34 @@
 </head>
 <body>
 
- <!-- ===== NAV ===== -->
-<nav class="sticky-nav no-print" id="mainNav">
-  <div class="nav-left">
-    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-pressed="false"><span id="themeIcon">🌙</span></button>
-  </div>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="index.html">🏠 Home</a></li>
-    <li class="dropdown">
-      <span class="dropdown-toggle">🧰 Tools ▼</span>
-      <ul class="dropdown-menu">
+  <!-- ===== NAV ===== (same as before) -->
+  <nav class="sticky-nav no-print" id="mainNav">
+    <div class="nav-left">
+      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-pressed="false"><span id="themeIcon">🌙</span></button>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">🏠 Home</a></li>
+      <li class="dropdown">
+        <span class="dropdown-toggle">Tools ▼</span>
+        <ul class="dropdown-menu">
           <li><a href="tools.html">🧰 All Tools</a></li>
           <li><a href="wellbeing-index.html">🌿 Wellbeing Index</a></li>
           <li><a href="debt-reality.html">💳 Debt Reality</a></li>
           <li><a href="compound-curve.html">📈 Compound Curve</a></li>
-      </ul>
-    </li>
-    <li class="dropdown"><span class="dropdown-toggle">About ▼</span><ul class="dropdown-menu"><li><a href="news.html">News</a></li><li><a href="about.html">Traffic Torch</a></li><li><a href="changelog.html">Change Log</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="contact.html">Contact</a></li></ul></li>
-    <li class="dropdown"><span class="dropdown-toggle">Abstract ▼</span><ul class="dropdown-menu"><li><a href="index.html#abstract">The Abstract</a></li><li><a href="index.html#problem-visualized">The Problem</a></li><li><a href="index.html#wellbeing">Wellbeing</a></li></ul></li>
-    <li class="dropdown"><span class="dropdown-toggle">PBM ▼</span><ul class="dropdown-menu"><li><a href="index.html#model-definition">Model</a></li><li><a href="index.html#mechanism">Mechanism</a></li><li><a href="index.html#glossary">Glossary</a></li><li><a href="index.html#limitations">Limitations</a></li><li><a href="index.html#related">Related</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="index.html#citation">Cite</a></li></ul></li>
-    <li class="dropdown"><span class="dropdown-toggle">Simulation ▼</span><ul class="dropdown-menu"><li><a href="index.html#simulator">Live Simulator</a></li><li><a href="index.html#results-data">Results</a></li><li><a href="index.html#sensitivity">Sensitivity</a></li><li><a href="index.html#adoption">Scenarios</a></li><li><a href="index.html#implement">Implementation</a></li></ul></li>
-    <li><a href="book.html">🎧 Books</a></li>
-    <li><a href="index.html#learn">💸 Learn</a></li>
-  </ul>
-</nav>
+        </ul>
+      </li>
+      <li class="dropdown"><span class="dropdown-toggle">About ▼</span><ul class="dropdown-menu"><li><a href="news.html">News</a></li><li><a href="about.html">Traffic Torch</a></li><li><a href="changelog.html">Change Log</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="contact.html">Contact</a></li></ul></li>
+      <li class="dropdown"><span class="dropdown-toggle">Abstract ▼</span><ul class="dropdown-menu"><li><a href="index.html#abstract">The Abstract</a></li><li><a href="index.html#problem-visualized">The Problem</a></li><li><a href="index.html#wellbeing">Wellbeing</a></li></ul></li>
+      <li class="dropdown"><span class="dropdown-toggle">PBM ▼</span><ul class="dropdown-menu"><li><a href="index.html#model-definition">Model</a></li><li><a href="index.html#mechanism">Mechanism</a></li><li><a href="index.html#glossary">Glossary</a></li><li><a href="index.html#limitations">Limitations</a></li><li><a href="index.html#related">Related</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="index.html#citation">Cite</a></li></ul></li>
+      <li class="dropdown"><span class="dropdown-toggle">Simulation ▼</span><ul class="dropdown-menu"><li><a href="index.html#simulator">Live Simulator</a></li><li><a href="index.html#results-data">Results</a></li><li><a href="index.html#sensitivity">Sensitivity</a></li><li><a href="index.html#adoption">Scenarios</a></li><li><a href="index.html#implement">Implementation</a></li></ul></li>
+      <li><a href="book.html">Books</a></li>
+      <li><a href="index.html#learn">Learn 💸</a></li>
+    </ul>
+  </nav>
 
   <main>
-    <!-- Breadcrumb -->
+    <!-- ===== BREADCRUMB ===== -->
     <div class="container" style="padding-top:1.5rem; padding-bottom:0;">
       <nav class="breadcrumb">
         <a href="index.html">🏠 Home</a><span style="opacity:0.5;">/</span>
@@ -451,7 +525,7 @@
       </nav>
     </div>
 
-    <!-- Hero -->
+    <!-- ===== HERO ===== -->
     <section class="container hero" style="min-height:20vh; padding:1rem 0;">
       <div>
         <span class="badge-glow" style="margin-bottom:0.5rem;">🌿 Interactive Tool</span>
@@ -462,16 +536,46 @@
       </div>
     </section>
 
-    <!-- Tool -->
+    <!-- ===== TOOL ===== -->
     <section class="container section-spacing" style="padding-top:0.5rem;">
       <div class="glass-card">
         <p class="desc">Enter your values and click <strong>Find My Balance</strong> to get your personalised dashboard.</p>
         <div class="input-group">
-          <label>💼 Work Hours/Day <input type="number" id="wellWork" value="8" step="0.5" /></label>
-          <label>📅 Days Worked/Week <input type="number" id="wellDays" value="5" step="1" min="1" max="7" /></label>
-          <label>😴 Sleep Hours/Night <input type="number" id="wellSleep" value="7" step="0.5" /></label>
-          <label>😊 Happiness (1-10) <input type="range" id="wellHappiness" min="1" max="10" value="6" step="1" oninput="document.getElementById('wellHappinessDisplay').textContent=this.value" /> <span id="wellHappinessDisplay">6</span></label>
-          <label>🌀 Chaos Level (1-10) <input type="range" id="wellChaos" min="1" max="10" value="5" step="1" oninput="document.getElementById('wellChaosDisplay').textContent=this.value" /> <span id="wellChaosDisplay">5</span></label>
+          <!-- Work Hours: slider 1‑24 -->
+          <label>💼 Work Hours/Day
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <input type="range" id="wellWork" min="1" max="24" value="8" step="0.5" oninput="document.getElementById('wellWorkDisplay').textContent=this.value" />
+              <span id="wellWorkDisplay" class="range-value">8</span>
+            </div>
+          </label>
+          <!-- Days Worked: slider 1‑7 -->
+          <label>📅 Days Worked/Week
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <input type="range" id="wellDays" min="1" max="7" value="5" step="1" oninput="document.getElementById('wellDaysDisplay').textContent=this.value" />
+              <span id="wellDaysDisplay" class="range-value">5</span>
+            </div>
+          </label>
+          <!-- Sleep Hours: slider 1‑24 -->
+          <label>😴 Sleep Hours/Night
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <input type="range" id="wellSleep" min="1" max="24" value="7" step="0.5" oninput="document.getElementById('wellSleepDisplay').textContent=this.value" />
+              <span id="wellSleepDisplay" class="range-value">7</span>
+            </div>
+          </label>
+          <!-- Happiness: slider 1‑10 (unchanged) -->
+          <label>😊 Happiness (1-10)
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <input type="range" id="wellHappiness" min="1" max="10" value="6" step="1" oninput="document.getElementById('wellHappinessDisplay').textContent=this.value" />
+              <span id="wellHappinessDisplay" class="range-value">6</span>
+            </div>
+          </label>
+          <!-- Chaos: slider 1‑10 (unchanged) -->
+          <label>🌀 Chaos Level (1-10)
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <input type="range" id="wellChaos" min="1" max="10" value="5" step="1" oninput="document.getElementById('wellChaosDisplay').textContent=this.value" />
+              <span id="wellChaosDisplay" class="range-value">5</span>
+            </div>
+          </label>
         </div>
         <button class="btn-primary" onclick="calculateWellbeing()">🧘 Find My Balance</button>
         <div id="wellResult" class="result-box">
@@ -486,16 +590,19 @@
               <span style="font-size:0.9rem; font-weight:600; color:var(--text-primary);">📊 10‑Year Projection</span>
               <span style="font-size:0.7rem; color:var(--text-muted);">Based on your current habits</span>
             </div>
-            <div class="chart-container"><canvas id="wellProjection" width="400" height="180"></canvas></div>
+            <!-- Container with fixed height to prevent squashing -->
+            <div id="wellProjectionContainer" style="position:relative; height:200px;">
+              <canvas id="wellProjection" width="400" height="200"></canvas>
+            </div>
           </div>
           <div class="prescription-box" id="wellPrescription">
-            <div class="label">🧠 Diagnosis & Prescription</div>
+            <div class="label">🧠 Diagnosis</div>
             <div class="solution" id="wellSolution">Enter your numbers to see your personalized wellbeing plan.</div>
-            <div class="action" id="wellAction">We'll pinpoint your weak spots and give you actionable steps.</div>
+            <!-- action removed -->
           </div>
         </div>
 
-        <!-- AI Advisor -->
+        <!-- AI Advisor (default) -->
         <div class="ai-power-wrapper">
           <div class="glass-card" style="border-color:rgba(167,139,250,0.3);">
             <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap; margin-bottom:0.8rem;">
@@ -528,7 +635,7 @@
       </div>
     </section>
 
-    <!-- FAQ Accordion -->
+    <!-- ===== FAQ ACCORDION ===== -->
     <section class="container section-spacing" style="padding-top:0;">
       <div class="glass-card">
         <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:1rem;">Frequently Asked Questions</h2>
@@ -555,12 +662,12 @@
       </div>
     </section>
 
-    <!-- Noscript -->
+    <!-- ===== NOSCRIPT ===== -->
     <noscript>
       <section class="container section-spacing" style="padding-top:0;">
         <div class="glass-card" style="border-color:var(--color-burnout);">
           <h2 style="font-size:1.5rem; font-weight:700; color:var(--color-burnout);">⚠️ JavaScript is disabled</h2>
-          <p style="color:var(--text-secondary);">The Wellbeing Index is an interactive tool that calculates your wellbeing score, resilience, and a 10‑year projection based on your work, sleep, mood, and chaos levels. You can still use the tool manually by following these steps:</p>
+          <p style="color:var(--text-secondary);">The Wellbeing Index requires JavaScript to run the calculations and display interactive charts. You can still use the tool manually by following these steps:</p>
           <ol style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
             <li>Write down your daily work hours, days worked per week, sleep hours, happiness (1‑10), and chaos (1‑10).</li>
             <li>Calculate your weekly work hours = work × days. A healthy range is 35‑40 hours.</li>
@@ -574,7 +681,7 @@
       </section>
     </noscript>
 
-    <!-- Learn / CTA -->
+    <!-- ===== LEARN / CTA ===== -->
     <section class="container section-spacing" style="padding-top:0;">
       <div class="glass-card" style="border-color:rgba(251,191,36,0.2); padding:1.5rem 1.2rem;">
         <h2 style="font-size:clamp(1.4rem,2.5vw,1.8rem); font-weight:700; margin-bottom:0.5rem; color:var(--text-primary);">📖 Learn More About the Productivity Bond Model</h2>
@@ -588,10 +695,10 @@
     </section>
   </main>
 
-  <!-- Return to top -->
+  <!-- ===== FLOATING RETURN TO TOP ===== -->
   <button class="floating-return-top" id="floatingReturnTop" aria-label="Return to top">⬆ Top</button>
 
-  <!-- Footer -->
+  <!-- ===== FOOTER ===== -->
   <footer class="footer">
     <div class="container">
       <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1rem 1.5rem; margin-bottom:1.5rem; font-size:0.85rem;">
@@ -604,7 +711,7 @@
     </div>
   </footer>
 
-  <!-- PWA Install -->
+  <!-- ===== PWA ===== -->
   <button id="pwaInstallBtn" class="pwa-install-btn" style="display:none;">
     <span class="icon">📱</span>
     <span class="btn-text">Install App</span>
@@ -620,9 +727,18 @@
     </div>
   </div>
 
+  <!-- ===== SCRIPTS ===== -->
   <script>
-    // ---- Theme toggle ----
+    // ---- Service Worker ----
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/productivity-bond-model/sw.js')
+        .then(r => console.log('SW registered:', r))
+        .catch(e => console.log('SW failed:', e));
+    }
+
+    // ---- Theme, hamburger, accordion, PWA (same as before) ----
     document.addEventListener('DOMContentLoaded', function() {
+      // Theme toggle
       const toggle = document.getElementById('themeToggle');
       const icon = document.getElementById('themeIcon');
       const stored = localStorage.getItem('theme');
@@ -641,7 +757,7 @@
         icon.textContent = next === 'dark' ? '🌙' : '☀️';
       });
 
-      // ---- Hamburger ----
+      // Hamburger
       const hamburger = document.getElementById('hamburgerBtn');
       const navLinks = document.getElementById('navLinks');
       if (hamburger && navLinks) {
@@ -664,7 +780,7 @@
         });
       }
 
-      // ---- Return to top ----
+      // Return to top
       const returnTop = document.getElementById('floatingReturnTop');
       if (returnTop) {
         returnTop.addEventListener('click', function() {
@@ -672,7 +788,7 @@
         });
       }
 
-      // ---- Accordion FAQ ----
+      // Accordion
       document.querySelectorAll('.accordion-item').forEach(item => {
         const toggle = item.querySelector('.accordion-toggle');
         const content = item.querySelector('.accordion-content');
@@ -684,14 +800,16 @@
         }
       });
 
-      // ---- PWA: show on iOS immediately ----
+      // PWA install
       const installBtn = document.getElementById('pwaInstallBtn');
       const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
       if (installBtn) {
         if (isIos) {
           installBtn.style.display = 'flex';
         } else {
-          setTimeout(function() { installBtn.style.display = 'flex'; }, 12000);
+          setTimeout(function() {
+            installBtn.style.display = 'flex';
+          }, 12000);
         }
         installBtn.addEventListener('click', function() {
           if (isIos) {
@@ -702,34 +820,35 @@
           document.getElementById('pwaIosOverlay').classList.remove('active');
         });
       }
-
-      // ---- Dropdown hover ----
-      document.querySelectorAll('.nav-links .dropdown').forEach(function(dropdown) {
-        dropdown.addEventListener('mouseenter', function() { this.classList.add('hover'); });
-        dropdown.addEventListener('mouseleave', function() { this.classList.remove('hover'); });
-      });
     });
 
-    // ---- Wellbeing tool logic ----
+    // ---- Wellbeing logic ----
     let radarChartInstance = null;
     let projectionChartInstance = null;
 
     function calculateWellbeing() {
+      // Values from sliders
       const work = parseFloat(document.getElementById('wellWork').value) || 8;
       const days = parseFloat(document.getElementById('wellDays').value) || 5;
       const sleep = parseFloat(document.getElementById('wellSleep').value) || 7;
       const happiness = parseFloat(document.getElementById('wellHappiness').value) || 5;
       const chaos = parseFloat(document.getElementById('wellChaos').value) || 5;
 
+      // Compute scores
       let prodScore = Math.min(100, Math.max(0, 100 - (Math.abs(work - 8) * 5) - (Math.abs(days - 5) * 3)));
       let workScore = Math.min(100, Math.max(0, 100 - (Math.abs(work - 8) * 8)));
       let sleepScore = Math.min(100, Math.max(0, 100 - (Math.abs(sleep - 7.5) * 12)));
       let mentalScore = Math.min(100, Math.max(0, (happiness * 10) - (chaos * 4)));
       let resilienceScore = Math.min(100, Math.max(0, (sleepScore * 0.5) + (workScore * 0.5)));
 
-      // For financial score, use a default – we don't have debt/income in this page
-      // We'll use a placeholder based on happiness/chaos
-      let financialScore = Math.min(100, Math.max(0, 60 + (happiness - chaos) * 2));
+      // Financial score (if debt fields exist, otherwise use default)
+      const debt = parseFloat(document.getElementById('debtTotal')?.value) || 0;
+      const income = parseFloat(document.getElementById('debtIncome')?.value) || 1;
+      let financialScore = 100;
+      if (income > 0) {
+        const dti = (debt / (income * 12)) * 100;
+        financialScore = Math.min(100, Math.max(0, 100 - (dti * 1.5)));
+      }
 
       const overall = Math.round((workScore + financialScore + mentalScore + sleepScore + resilienceScore + prodScore) / 6);
 
@@ -742,8 +861,8 @@
       let interpretation = overall > 70 ? '🌟 You are thriving!' : overall > 45 ? '📈 Stable, room to grow.' : '⚠️ Prioritize rest and financial clarity.';
       document.getElementById('wellInterpretation').textContent = interpretation;
 
+      // Diagnosis (only solution, no action)
       const solution = document.getElementById('wellSolution');
-      const action = document.getElementById('wellAction');
       let weakSpots = [];
       if (workScore < 50) weakSpots.push('Work/Life');
       if (sleepScore < 50) weakSpots.push('Sleep');
@@ -753,19 +872,14 @@
 
       if (weakSpots.length === 0) {
         solution.textContent = '✅ All systems balanced! You are in the harmony zone.';
-        action.textContent = 'Action: Maintain this by protecting your sleep and setting work boundaries.';
       } else {
         solution.textContent = `⚠️ Weak spots: ${weakSpots.join(', ')}. Focus on the lowest score first.`;
-        if (weakSpots.includes('Sleep')) action.textContent = 'Action: Go to bed 30 minutes earlier tonight.';
-        else if (weakSpots.includes('Work/Life')) action.textContent = 'Action: Set a hard stop at 7 PM tonight.';
-        else if (weakSpots.includes('Financial')) action.textContent = 'Action: Use Tool 1 (Debt Reality) to create a plan.';
-        else if (weakSpots.includes('Productivity')) action.textContent = 'Action: Review your work hours and days. Aim for 8 hrs, 5 days to optimize productivity.';
-        else action.textContent = 'Action: Start with the smallest habit change.';
       }
 
-      // Charts (unchanged)
+      // Radar chart
       const ctx = document.getElementById('wellRadar').getContext('2d');
       if (radarChartInstance) radarChartInstance.destroy();
+
       const theme = document.documentElement.getAttribute('data-theme') || 'dark';
       const textColor = theme === 'dark' ? '#eef2f8' : '#0f111a';
       const gridColor = theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
@@ -801,12 +915,14 @@
         }
       });
 
+      // 10‑year projection – fixed height container
       const projCtx = document.getElementById('wellProjection').getContext('2d');
       if (projectionChartInstance) projectionChartInstance.destroy();
 
       let wellbeing = overall;
       let productivity = prodScore;
       let financial = financialScore;
+
       const years = 10;
       const labels = Array.from({ length: years }, (_, i) => `Y${i+1}`);
       const wellbeingData = [];
@@ -827,9 +943,10 @@
         else if (days < 4) productivity -= 3;
         productivity = Math.min(100, Math.max(0, productivity));
 
-        // Simplified financial projection
-        if (happiness < 4 || chaos > 6) financial -= 3;
-        else if (happiness > 7 && chaos < 4) financial += 2;
+        const dti = (parseFloat(document.getElementById('debtTotal')?.value) || 0) / (parseFloat(document.getElementById('debtIncome')?.value) || 1) / 12 * 100;
+        if (dti > 40) financial -= 6;
+        else if (dti > 30) financial -= 3;
+        else if (dti < 20) financial += 2;
         else financial += 1;
         financial = Math.min(100, Math.max(0, financial));
 
@@ -850,7 +967,7 @@
         },
         options: {
           responsive: true,
-          maintainAspectRatio: true,
+          maintainAspectRatio: false, // allows the container height to control aspect
           plugins: {
             legend: { labels: { color: textColor, boxWidth: 12, padding: 12, font: { size: 10 } } }
           },
@@ -862,14 +979,16 @@
       });
     }
 
-    // ---- AI default ----
+    // ---- AI default (uses ai-wellbeing) ----
     async function generateAI(tool) {
       if (tool !== 'wellbeing') return;
       const status = document.getElementById('ai-wellbeing-status');
       const output = document.getElementById('ai-wellbeing-output');
       if (!status || !output) return;
+
       status.textContent = '⏳ Thinking...';
       output.innerHTML = '<span style="opacity:0.6;">Generating your personalized advice...</span>';
+
       const data = {
         work: document.getElementById('wellWork').value,
         days: document.getElementById('wellDays').value,
@@ -877,6 +996,7 @@
         happiness: document.getElementById('wellHappiness').value,
         chaos: document.getElementById('wellChaos').value
       };
+
       try {
         const response = await fetch('https://ai-wellbeing.traffictorch.workers.dev', {
           method: 'POST',
@@ -886,10 +1006,11 @@
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const result = await response.json();
         if (result.error) throw new Error(result.error);
+
         let html = '';
         if (result.summary) html += `<div class="summary">📌 ${result.summary}</div>`;
         if (result.advice) html += `<div class="advice">✅ ${result.advice}</div>`;
-        if (!html) html = '<span style="opacity:0.6;">No advice received.</span>';
+        if (!html) html = `<span style="opacity:0.6;">No advice received.</span>`;
         output.innerHTML = html;
         status.textContent = '✅ Done';
       } catch (error) {
@@ -899,20 +1020,23 @@
       }
     }
 
-    // ---- Ask AI ----
+    // ---- Ask AI (uses ask-wellbeing) ----
     async function askAI(tool) {
       if (tool !== 'wellbeing') return;
       const input = document.getElementById('ask-wellbeing-input');
       const output = document.getElementById('ask-wellbeing-output');
       const status = document.getElementById('ask-wellbeing-status');
       if (!input || !output || !status) return;
+
       const question = input.value.trim();
       if (!question) {
         output.innerHTML = '<span style="color:var(--color-burnout);">Please enter a question.</span>';
         return;
       }
+
       status.textContent = '⏳ Thinking...';
       output.innerHTML = '<span style="opacity:0.6;">Generating answer...</span>';
+
       try {
         const response = await fetch('https://ask-wellbeing.traffictorch.workers.dev', {
           method: 'POST',
@@ -935,6 +1059,14 @@
     window.addEventListener('load', function() {
       setTimeout(calculateWellbeing, 400);
       document.documentElement.classList.add('loaded');
+    });
+
+    // ---- Dropdown hover fix ----
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.nav-links .dropdown').forEach(function(dropdown) {
+        dropdown.addEventListener('mouseenter', function() { this.classList.add('hover'); });
+        dropdown.addEventListener('mouseleave', function() { this.classList.remove('hover'); });
+      });
     });
   </script>
 </body>
