@@ -955,69 +955,27 @@
         });
       }
 
-// ---- PWA install ----
-var installBtn = document.getElementById('pwaInstallBtn');
-if (!installBtn) return;
-
-// Check if already installed (standalone mode)
-var isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-
-// If already installed, hide the button permanently
-if (isStandalone) {
-  installBtn.style.display = 'none';
-  installBtn.dataset.installed = 'true';
-  return;
-}
-
-// Only show if not installed
-var isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-if (isIos) {
-  installBtn.style.display = 'flex';
-} else {
-  // Show after a delay (gives time for beforeinstallprompt to fire first)
-  setTimeout(function() {
-    // Double-check it's still not installed before showing
-    if (!window.matchMedia('(display-mode: standalone)').matches && !window.navigator.standalone) {
-      installBtn.style.display = 'flex';
-    }
-  }, 12000);
-}
-
-// Handle the beforeinstallprompt event for Android/Chrome
-var deferredPrompt = null;
-window.addEventListener('beforeinstallprompt', function(e) {
-  e.preventDefault();
-  deferredPrompt = e;
-  // Show the button immediately when the prompt is available
-  if (!isStandalone && installBtn.style.display === 'none') {
-    installBtn.style.display = 'flex';
-  }
-});
-
-// When the app is installed, hide the button
-window.addEventListener('appinstalled', function() {
-  installBtn.style.display = 'none';
-  installBtn.dataset.installed = 'true';
-  deferredPrompt = null;
-});
-
-// Click handler
-installBtn.addEventListener('click', async function() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    console.log('PWA install outcome:', outcome);
-    deferredPrompt = null;
-    if (outcome === 'accepted') {
-      installBtn.style.display = 'none';
-      installBtn.dataset.installed = 'true';
-    }
-  } else if (isIos) {
-    document.getElementById('pwaIosOverlay').classList.add('active');
-  } else {
-    alert("To install this app, look for 'Install' or 'Add to Home Screen' in your browser's menu.");
-  }
-});
+      // ---- PWA install (show on iOS immediately) ----
+      var installBtn = document.getElementById('pwaInstallBtn');
+      var isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      if (installBtn) {
+        if (isIos) {
+          installBtn.style.display = 'flex';
+        } else {
+          setTimeout(function() {
+            installBtn.style.display = 'flex';
+          }, 12000);
+        }
+        installBtn.addEventListener('click', function() {
+          if (isIos) {
+            document.getElementById('pwaIosOverlay').classList.add('active');
+          }
+        });
+        document.getElementById('pwaCloseIosModal').addEventListener('click', function() {
+          document.getElementById('pwaIosOverlay').classList.remove('active');
+        });
+      }
+    });
 
     // ============================================================
     //  TOOL‑SPECIFIC FUNCTIONS (unchanged)
