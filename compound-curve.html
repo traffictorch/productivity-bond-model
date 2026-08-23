@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📈 Compound Curve – Free Interactive Tool | PBM Productivity Lab</title>
+  <meta name="description" content="See how your debt compounds over time and how small changes bend the curve. Interactive projection tool." />
+  <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/compound-curve.html" />
+  <meta property="og:title" content="Compound Curve – Interactive Tool" />
+  <meta property="og:description" content="See how your debt compounds over time and how small changes bend the curve." />
+  <meta property="og:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.webp" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://traffictorch.github.io/productivity-bond-model/compound-curve.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Compound Curve – Interactive Tool" />
+  <meta name="twitter:description" content="See how your debt compounds over time and how small changes bend the curve." />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="icon-512.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" media="print" onload="this.media='all'" crossorigin="anonymous" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" crossorigin="anonymous" /></noscript>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+  <link rel="preconnect" href="https://static.addtoany.com" />
+
+  <style>
+    /* --- Reset, Theme, Background --- */
+    html { opacity: 0; transition: opacity 0.12s ease; }
+    html.loaded { opacity: 1; }
+
+    :root {
+      --bg-body: #05060a;
+      --bg-glass: rgba(12,15,25,0.65);
+      --bg-input: rgba(255,255,255,0.04);
+      --btn-primary-bg: linear-gradient(135deg,#4f46e5,#7c3aed);
+      --btn-primary-text: #fff;
+      --btn-secondary-bg: rgba(255,255,255,0.06);
+      --btn-secondary-border: rgba(255,255,255,0.15);
+      --btn-secondary-text: #eef2f8;
+      --text-primary: #eef2f8;
+      --text-secondary: #c7d2fe;
+      --text-muted: #a5b4fc;
+      --border-divider: rgba(255,255,255,0.04);
+      --color-safe: #69db7c;
+      --color-burnout: #ff6b6b;
+      --color-stagnant: #4dabf7;
+      --orb1: rgba(79,70,229,0.15);
+      --orb2: rgba(236,72,153,0.10);
+      --orb3: rgba(16,185,129,0.08);
+    }
+    [data-theme="light"] {
+      --bg-body: #f0f2f8;
+      --bg-glass: rgba(255,255,255,0.75);
+      --bg-input: rgba(0,0,0,0.04);
+      --btn-secondary-bg: rgba(0,0,0,0.04);
+      --btn-secondary-border: rgba(0,0,0,0.12);
+      --btn-secondary-text: #0f111a;
+      --text-primary: #0f111a;
+      --text-secondary: #2d2f3e;
+      --text-muted: #4a4a6a;
+      --border-divider: rgba(0,0,0,0.06);
+      --color-safe: #2b8a3e;
+      --color-burnout: #e03131;
+      --color-stagnant: #1971c2;
+      --orb1: rgba(79,70,229,0.06);
+      --orb2: rgba(236,72,153,0.05);
+      --orb3: rgba(16,185,129,0.04);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+
+    body {
+      font-family:'Inter',system-ui,-apple-system,sans-serif;
+      background:var(--bg-body);
+      color:var(--text-primary);
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+      background-image:
+        radial-gradient(circle at 20% 30%, var(--orb1) 0%, transparent 60%),
+        radial-gradient(circle at 80% 70%, var(--orb2) 0%, transparent 60%),
+        radial-gradient(circle at 40% 80%, var(--orb3) 0%, transparent 60%);
+      background-attachment: fixed;
+      animation: gradientShift 20s ease-in-out infinite alternate;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 100% 100%; }
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .orb-1 { width: 40vw; height: 40vw; top: -10vh; left: -10vw; background: var(--orb1); animation: floatOrb 25s infinite alternate ease-in-out; }
+    .orb-2 { width: 35vw; height: 35vw; bottom: -15vh; right: -10vw; background: var(--orb2); animation: floatOrb 30s infinite alternate-reverse ease-in-out; }
+    .orb-3 { width: 25vw; height: 25vw; top: 40vh; right: 20vw; background: var(--orb3); animation: floatOrb 20s infinite alternate ease-in-out; }
+    @keyframes floatOrb {
+      0% { transform: translate(0,0) scale(1); }
+      100% { transform: translate(80px,-60px) scale(1.2); }
+    }
+
+    .container, .sticky-nav, .footer, .floating-return-top, .pwa-install-btn {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* --- Reusable Components --- */
+    .container { max-width:1280px; margin:0 auto; padding:0 1.5rem; }
+    .glass-card {
+      background:var(--bg-glass);
+      backdrop-filter:blur(16px);
+      border:1px solid rgba(255,255,255,0.06);
+      border-radius:2.5rem;
+      padding:2.5rem 2rem;
+      box-shadow:0 30px 60px -20px rgba(0,0,0,0.8);
+    }
+    .text-gradient {
+      background:linear-gradient(135deg,#4f46e5,#a78bfa,#f472b6);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .badge-glow {
+      display:inline-block;
+      background:rgba(79,70,229,0.15);
+      color:var(--text-secondary);
+      font-size:0.7rem;
+      font-weight:700;
+      padding:0.3rem 1rem;
+      border-radius:60px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      border:1px solid rgba(79,70,229,0.15);
+    }
+    .btn-primary {
+      display:inline-block;
+      background:var(--btn-primary-bg);
+      color:var(--btn-primary-text);
+      font-weight:600;
+      padding:0.8rem 2.2rem;
+      border-radius:60px;
+      border:none;
+      cursor:pointer;
+      transition:0.2s;
+      text-decoration:none;
+      text-align:center;
+      box-shadow:0 4px 20px rgba(79,70,229,0.4);
+    }
+    .btn-primary:hover { background:#4338ca; transform:scale(1.02); }
+    .btn-secondary {
+      display:inline-block;
+      background:var(--btn-secondary-bg);
+      color:var(--btn-secondary-text);
+      font-weight:500;
+      padding:0.8rem 2.2rem;
+      border-radius:60px;
+      border:1px solid var(--btn-secondary-border);
+      text-decoration:none;
+      transition:0.2s;
+      cursor:pointer;
+      text-align:center;
+    }
+    .btn-secondary:hover { background:rgba(255,255,255,0.12); }
+    .share-btn {
+      background:var(--btn-secondary-bg);
+      border:1px solid var(--btn-secondary-border);
+      color:var(--btn-secondary-text);
+      padding:0.8rem 2.2rem;
+      font-weight:600;
+      font-size:0.9rem;
+      border-radius:60px;
+      cursor:pointer;
+      transition:0.2s;
+      font-family:inherit;
+      display:inline-block;
+      text-align:center;
+    }
+    .share-btn:hover { background:rgba(255,255,255,0.15); transform:scale(1.02); }
+    .hero { min-height:60vh; display:flex; align-items:center; padding:2rem 6px 1rem; background:transparent; }
+    .section-spacing { padding:3rem 0; }
+    @media (max-width:768px) {
+      .glass-card { padding:1.5rem 1rem; border-radius:1.5rem; }
+      .hero { min-height:40vh; padding:1rem 0; }
+    }
+
+    /* ===== NAVIGATION – FIXED STICKY WITH GLASS ===== */
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 1.5rem;
+      background: var(--bg-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-divider);
+      flex-wrap: wrap;
+      transition: background 0.2s;
+    }
+    .nav-left { display:flex; align-items:center; gap:0.8rem; }
+    .nav-links { display:flex; gap:0.4rem; list-style:none; align-items:center; flex-wrap:wrap; }
+    .hamburger { display:none; flex-direction:column; cursor:pointer; background:transparent; border:none; padding:0.3rem; gap:5px; }
+    .hamburger span { display:block; width:26px; height:3px; background:var(--text-primary); border-radius:3px; }
+    .theme-toggle { background:transparent; border:1px solid var(--border-divider); border-radius:40px; padding:0.2rem 0.6rem; font-size:1.1rem; cursor:pointer; color:var(--text-primary); }
+
+    .dropdown { position:relative; }
+    .dropdown-toggle { cursor:pointer; display:inline-block; padding:0.3rem 0.6rem; border-radius:6px; transition:background 0.15s; user-select:none; }
+    .dropdown-toggle:hover { background:var(--bg-input); }
+    .dropdown-menu {
+      display:none;
+      position:absolute;
+      top:100%;
+      left:0;
+      background:var(--bg-body);
+      border:1px solid var(--border-divider);
+      border-radius:0.8rem;
+      padding:0.5rem 0;
+      min-width:200px;
+      list-style:none;
+      box-shadow:0 20px 40px rgba(0,0,0,0.5);
+      z-index:9999;
+      padding-top:8px;
+      margin-top:-8px;
+    }
+    .dropdown-menu::before {
+      content:'';
+      position:absolute;
+      top:-12px;
+      left:0;
+      right:0;
+      height:16px;
+      background:transparent;
+      pointer-events:none;
+    }
+    .dropdown.hover .dropdown-menu,
+    .dropdown:hover .dropdown-menu { display:block; }
+    .dropdown-menu a {
+      display:block;
+      padding:0.4rem 1.2rem;
+      color:var(--text-primary);
+      text-decoration:none;
+      font-size:0.9rem;
+      transition:background 0.12s;
+      border-radius:4px;
+      margin:0 0.3rem;
+    }
+    .dropdown-menu a:hover { background:var(--bg-input); color:var(--text-secondary); }
+
+    @media (max-width:768px) {
+      .hamburger { display:flex; }
+      .nav-links { display:none; flex-direction:column; width:100%; background:var(--bg-body); padding:0.5rem 0; margin-top:0.5rem; border-top:1px solid var(--border-divider); }
+      .nav-links.open { display:flex; }
+      .dropdown { width:100%; }
+      .dropdown-menu { position:static; background:transparent; border:none; box-shadow:none; padding-left:1.5rem; padding-top:0; margin-top:0; display:block; max-height:0; overflow:hidden; transition:max-height 0.25s ease; }
+      .dropdown-menu::before { display:none; }
+      .dropdown.open .dropdown-menu { max-height:400px; display:block; }
+      .dropdown-toggle { display:block; padding:0.4rem 0.6rem; }
+    }
+
+    .floating-return-top {
+      position:fixed;
+      bottom:7rem;
+      right:2rem;
+      z-index:9998;
+      display:flex;
+      background:rgba(0,255,255,0.12);
+      backdrop-filter:blur(8px);
+      border:1px solid rgba(0,255,255,0.2);
+      border-radius:60px;
+      padding:0.7rem 1.2rem;
+      color:#17cfcf;
+      font-weight:600;
+      font-size:0.9rem;
+      cursor:pointer;
+      transition:0.3s;
+      font-family:'Inter',system-ui;
+    }
+    .floating-return-top:hover { background:rgba(0,255,255,0.25); transform:scale(1.05); }
+
+    .hero-tabs { display:flex; flex-wrap:wrap; gap:0.6rem; align-items:center; margin-bottom:0.8rem; }
+    .hero-tab-btn {
+      background:none;
+      border:1px solid var(--border-divider);
+      color:var(--text-muted);
+      font-size:0.9rem;
+      font-weight:600;
+      padding:0.5rem 1.2rem;
+      border-radius:40px;
+      cursor:pointer;
+      transition:0.2s;
+      font-family:inherit;
+    }
+    .hero-tab-btn:hover { color:var(--text-primary); background:var(--bg-input); border-color:var(--text-muted); }
+    .hero-tab-btn.active { background:rgba(79,70,229,0.2); color:#b388ff; border-color:rgba(79,70,229,0.4); }
+
+    .tool-panel { display:none; animation:fade 0.2s ease; }
+    .tool-panel.active { display:block; }
+    @keyframes fade { 0%{opacity:0.4;transform:translateY(4px)} 100%{opacity:1;transform:translateY(0)} }
+    .desc { color:var(--text-muted); font-size:0.95rem; margin-bottom:1.5rem; }
+    .help-text { display:block; font-size:0.7rem; color:var(--text-muted); opacity:0.7; margin-top:0.2rem; font-weight:400; text-transform:none; letter-spacing:0; }
+    .input-group { display:flex; flex-wrap:wrap; gap:1rem 2rem; margin-bottom:1.5rem; background:var(--bg-input); padding:1.2rem 1.5rem; border-radius:12px; border:1px solid var(--border-divider); }
+    .input-group label { display:flex; flex-direction:column; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-muted); gap:0.3rem; flex:1 1 140px; }
+    .input-group input[type="number"], .input-group input[type="range"] { background:var(--bg-body); border:1px solid var(--border-divider); border-radius:8px; padding:0.5rem 0.75rem; color:var(--text-primary); font-weight:500; width:100%; font-family:inherit; }
+    .input-group input[type="range"] { padding:0; accent-color:#4f46e5; }
+
+    .result-box { background:var(--bg-input); border-radius:12px; padding:1.5rem; border-left:4px solid #4f46e5; margin-top:1rem; }
+    .result-box .stat { font-size:2rem; font-weight:700; color:var(--text-primary); }
+    .result-box .stat span { color:#4f46e5; }
+    .result-box .sub-stat { color:var(--text-muted); font-size:0.9rem; }
+    .risk-low { color:var(--color-safe); font-weight:600; }
+    .risk-med { color:#ffd43b; font-weight:600; }
+    .risk-high { color:var(--color-burnout); font-weight:600; }
+    .footer { margin-top:4rem; padding:2rem 0; border-top:1px solid var(--border-divider); text-align:center; color:var(--text-muted); font-size:0.85rem; }
+    .footer a { color:var(--text-secondary); text-decoration:none; }
+    .footer a:hover { text-decoration:underline; }
+    .breadcrumb { font-size:0.85rem; color:var(--text-muted); display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap; margin-bottom:0.5rem; }
+    .breadcrumb a { color:var(--text-muted); text-decoration:none; }
+    .breadcrumb a:hover { color:var(--text-primary); }
+    .chart-container { max-height:300px; margin:1rem 0; }
+    .grid-2col { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    @media (max-width:768px) { .grid-2col { grid-template-columns:1fr; } }
+
+    .accordion-toggle {
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 1rem;
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: background 0.2s, border-radius 0.2s;
+    }
+    .accordion-toggle:hover { background: rgba(255,255,255,0.03); border-radius: 8px; }
+    .accordion-toggle .arrow { transition: transform 0.25s ease; display: inline-block; font-size: 0.7rem; color: var(--text-muted); }
+    .accordion-toggle.open .arrow { transform: rotate(180deg); }
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.3s ease;
+      padding: 0 1rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .accordion-content.open { max-height: 600px; padding: 0.2rem 1rem 1rem 1rem; }
+
+    .prescription-box {
+      background: var(--bg-body);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-left: 4px solid #f59e0b;
+    }
+    .prescription-box .label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700; }
+    .prescription-box .solution { color: #f59e0b; font-weight: 600; margin-top: 0.2rem; }
+    .prescription-box .action { color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.2rem; }
+
+    .ai-power-wrapper { margin-top: 1.5rem; }
+    .ai-power-wrapper .glass-card { padding: 1.2rem 1.5rem; border-color: rgba(167,139,250,0.3); }
+    .ai-output { margin-top: 0.8rem; padding: 0.8rem 1.2rem; background: var(--bg-body); border-radius: 0.8rem; border-left: 4px solid #a78bfa; min-height: 50px; font-size: 0.9rem; color: var(--text-body); }
+    .ai-output .summary { color: var(--text-primary); font-weight: 500; margin-bottom: 0.3rem; }
+    .ai-output .advice { color: var(--text-secondary); }
+    .ai-output .placeholder { opacity: 0.5; }
+
+    .ask-ai-section { margin-top:1rem; border-top:1px solid var(--border-divider); padding-top:1rem; }
+    .ask-ai-section label { font-weight:600; display:block; margin-bottom:0.3rem; }
+
+    .pwa-ios-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    }
+    .pwa-ios-overlay.active { display: flex; }
+    .pwa-ios-modal {
+      background: var(--bg-body);
+      border: 1px solid var(--border-divider);
+      padding: 2rem 1.5rem;
+      border-radius: 1.5rem;
+      max-width: 340px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 30px 60px -20px rgba(0,0,0,0.8);
+    }
+    .pwa-ios-modal h3 { color: var(--text-primary); font-size: 1.3rem; margin-bottom: 0.5rem; }
+    .pwa-ios-modal p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; }
+    .pwa-ios-modal .step { display:flex; align-items:center; justify-content:center; gap:0.5rem; margin:0.8rem 0; font-size:0.9rem; color:var(--text-primary); }
+    .pwa-ios-modal .step-icon { background:var(--bg-input); padding:0.2rem 0.8rem; border-radius:6px; font-size:1.2rem; }
+    .pwa-ios-modal .close-btn { margin-top:1rem; padding:0.6rem 2rem; background:#4f46e5; color:#fff; border:none; border-radius:40px; font-size:1rem; font-weight:600; cursor:pointer; transition:0.2s; }
+    .pwa-ios-modal .close-btn:hover { background:#4338ca; transform:scale(1.02); }
+
+    .pwa-install-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.6rem 1.2rem;
+      background: rgba(79,70,229,0.2);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(79,70,229,0.4);
+      border-radius: 60px;
+      color: var(--text-primary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(79,70,229,0.2);
+      transition: 0.2s;
+    }
+    .pwa-install-btn:hover { background: rgba(79,70,229,0.35); transform: scale(1.05); }
+    .pwa-install-btn .icon { font-size: 1.3rem; }
+    @media (max-width:640px) {
+      .pwa-install-btn { bottom:1rem; right:1rem; padding:0.4rem 1rem; font-size:0.8rem; }
+      .pwa-install-btn .icon { font-size:1rem; }
+    }
+@media (max-width: 768px) {
+  .floating-return-top {
+    display: none !important;
+  }
+}
+  </style>
+
+  <!-- Floating Orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"What is the Compound Curve tool?","acceptedAnswer":{"@type":"Answer","text":"The Compound Curve tool projects how your annual debt grows over time due to compound interest. It shows the difference between taking action and doing nothing."}},
+        {"@type":"Question","name":"How do I use the Compound Curve?","acceptedAnswer":{"@type":"Answer","text":"Enter your annual debt, growth rate, time horizon, and the amount you can reduce annually. Click 'Project the Future' to see the chart and savings."}},
+        {"@type":"Question","name":"What does the Growth Rate represent?","acceptedAnswer":{"@type":"Answer","text":"The growth rate is the annual percentage increase in your debt. Even 10% can double your debt in ~7 years."}},
+        {"@type":"Question","name":"How much can I save by reducing my annual debt?","acceptedAnswer":{"@type":"Answer","text":"Small cuts compound into huge savings over time. The tool shows you exactly how much you save in the final year."}},
+        {"@type":"Question","name":"Is the Compound Curve tool free?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely free and open source."}}
+      ]
+    }
+  </script>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav class="sticky-nav no-print" id="mainNav">
+  <div class="nav-left">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-pressed="false"><span id="themeIcon">🌙</span></button>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">🏠 Home</a></li>
+    <li class="dropdown">
+      <span class="dropdown-toggle">🧰 Tools ▼</span>
+      <ul class="dropdown-menu">
+        <li><a href="tools.html">🧰 PBM Lab</a></li>
+        <li><a href="#tab1">🌿 Wellbeing Index</a></li>
+        <li><a href="#tab2">💳 Debt Reality</a></li>
+        <li><a href="#tab3">📈 Compound Curve</a></li>
+      </ul>
+    </li>
+    <li class="dropdown"><span class="dropdown-toggle">About ▼</span><ul class="dropdown-menu"><li><a href="news.html">News</a></li><li><a href="about.html">Traffic Torch</a></li><li><a href="changelog.html">Change Log</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="contact.html">Contact</a></li></ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">Abstract ▼</span><ul class="dropdown-menu"><li><a href="index.html#abstract">The Abstract</a></li><li><a href="index.html#problem-visualized">The Problem</a></li><li><a href="index.html#wellbeing">Wellbeing</a></li></ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">PBM ▼</span><ul class="dropdown-menu"><li><a href="index.html#model-definition">Model</a></li><li><a href="index.html#mechanism">Mechanism</a></li><li><a href="index.html#glossary">Glossary</a></li><li><a href="index.html#limitations">Limitations</a></li><li><a href="index.html#related">Related</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="index.html#citation">Cite</a></li></ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">Simulation ▼</span><ul class="dropdown-menu"><li><a href="index.html#simulator">Live Simulator</a></li><li><a href="index.html#results-data">Results</a></li><li><a href="index.html#sensitivity">Sensitivity</a></li><li><a href="index.html#adoption">Scenarios</a></li><li><a href="index.html#implement">Implementation</a></li></ul></li>
+    <li><a href="book.html">🎧 Books</a></li>
+    <li><a href="index.html#learn">💸 Learn</a></li>
+  </ul>
+</nav>
+
+  <main>
+    <!-- ===== BREADCRUMB ===== -->
+    <div class="container" style="padding-top:1.5rem; padding-bottom:0;">
+      <nav class="breadcrumb">
+        <a href="index.html">🏠 Home</a><span style="opacity:0.5;">/</span>
+        <a href="tools.html">🧰 Tools</a><span style="opacity:0.5;">/</span>
+        <span style="color:var(--text-primary); font-weight:500;">Compound Curve</span>
+      </nav>
+    </div>
+
+    <!-- ===== HERO ===== -->
+    <section class="container hero" style="min-height:20vh; padding:1rem 0;">
+      <div>
+        <span class="badge-glow" style="margin-bottom:0.5rem;">📈 Interactive Tool</span>
+        <h1 class="text-gradient" style="font-size:clamp(2.8rem,6vw,4rem); font-weight:800; letter-spacing:-0.03em; line-height:1.1;">Compound Curve</h1>
+        <p style="font-size:clamp(1.2rem,2vw,1.6rem); font-weight:300; opacity:0.8; max-width:650px; margin:0.5rem 0 1.5rem; color:var(--text-secondary);">
+          See how your debt compounds over time — and how small changes bend the curve.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== TOOL ===== -->
+    <section class="container section-spacing" style="padding-top:0.5rem;">
+      <div class="glass-card">
+        <p class="desc">Enter your numbers and click <strong>Project the Future</strong> to see the compounding effect.</p>
+        <div class="input-group">
+          <label>💰 Annual Debt ($) <input type="number" id="compBase" value="13000" step="100" /></label>
+          <label>📈 Growth Rate (%) <input type="range" id="compRate" min="5" max="20" value="10" step="0.5" oninput="document.getElementById('compRateDisplay').textContent=this.value+'%'" /> <span id="compRateDisplay">10%</span></label>
+          <label>⏳ Years <input type="range" id="compYears" min="5" max="20" value="10" step="1" oninput="document.getElementById('compYearsDisplay').textContent=this.value" /> <span id="compYearsDisplay">10</span></label>
+        </div>
+        <div style="background:var(--bg-input); border-radius:8px; padding:0.8rem 1rem; margin-bottom:1rem; border:1px solid var(--border-divider);">
+          <label style="display:flex; align-items:center; gap:0.5rem; font-size:0.8rem; color:var(--text-muted);">
+            🚀 Reduce Annual Debt by ($)
+            <input type="range" id="compReduction" min="0" max="5000" value="1000" step="100" oninput="document.getElementById('compReductionDisplay').textContent='$'+this.value; runCompoundCurve();" style="flex:1; min-width:100px;" />
+            <span id="compReductionDisplay" style="font-weight:700; color:#69db7c; min-width:60px;">$1000</span>
+          </label>
+        </div>
+        <button class="btn-primary" onclick="runCompoundCurve()">📊 Project the Future</button>
+        <div id="compResult" class="result-box">
+          <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:0.5rem;">
+            <div class="stat">💸 Total Debt: $<span id="compTotal">0</span></div>
+            <div class="stat" style="font-size:1.5rem; color:#ffd43b;">Final Year: $<span id="compFinal">0</span></div>
+          </div>
+          <div class="sub-stat">Over <span id="compYearsOut">10</span> years · Savings: <span id="compSavings" style="color:#69db7c;">$0</span></div>
+          <div class="chart-container"><canvas id="compChart" width="400" height="200"></canvas></div>
+          <div class="prescription-box">
+            <div class="label">🧠 Diagnosis & Prescription</div>
+            <div class="solution" id="compSolution">Your debt grows exponentially unless you intervene.</div>
+            <div class="action" id="compAction">Use the slider above to see how much you can save.</div>
+          </div>
+        </div>
+
+        <!-- AI Advisor (default) -->
+        <div class="ai-power-wrapper">
+          <div class="glass-card" style="border-color:rgba(167,139,250,0.3);">
+            <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap; margin-bottom:0.8rem;">
+              <span class="badge-glow" style="background:rgba(167,139,250,0.15); color:#a78bfa;">AI 🤖</span>
+              <h3 style="font-weight:700; font-size:1rem; margin:0; color:var(--text-primary);">Your Personal AI Advisor</h3>
+              <span style="font-size:0.65rem; color:var(--text-muted);">Powered by GLM/Llama</span>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; gap:0.8rem; align-items:center;">
+              <button class="btn-primary" style="padding:0.4rem 1.5rem; font-size:0.85rem;" onclick="generateAI('compound')">🧠 Get Personalized Advice</button>
+              <span style="font-size:0.75rem; color:var(--text-muted);" id="ai-compound-status">Ready</span>
+            </div>
+            <div id="ai-compound-output" class="ai-output">
+              <span class="placeholder">Click "Get Personalized Advice" to receive a custom projection analysis.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ask AI -->
+        <div class="ask-ai-section">
+          <label for="ask-compound-input">💬 Ask a specific question about your projections</label>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <input type="text" id="ask-compound-input" placeholder="e.g. What if I reduce my annual debt by $2,000?" style="flex:1; min-width:200px; background:var(--bg-body); border:1px solid var(--border-divider); border-radius:8px; padding:0.6rem 0.8rem; color:var(--text-primary); font-family:inherit;" />
+            <button class="btn-primary" style="padding:0.4rem 1.5rem; font-size:0.85rem;" onclick="askAI('compound')">Ask AI</button>
+          </div>
+          <div id="ask-compound-output" class="ai-output" style="margin-top:0.5rem;">
+            <span class="placeholder">Ask a question to get a specific answer.</span>
+          </div>
+          <span style="font-size:0.75rem; color:var(--text-muted);" id="ask-compound-status"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ACCORDION ===== -->
+    <section class="container section-spacing" style="padding-top:0;">
+      <div class="glass-card">
+        <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:1rem;">Frequently Asked Questions</h2>
+        <div class="accordion-item">
+          <div class="accordion-toggle"><span>What is the Compound Curve tool?</span><span class="arrow">▼</span></div>
+          <div class="accordion-content"><p style="color:var(--text-secondary);">The Compound Curve tool projects how your annual debt grows over time due to compound interest. It shows the difference between taking action and doing nothing.</p></div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-toggle"><span>How do I use the Compound Curve?</span><span class="arrow">▼</span></div>
+          <div class="accordion-content"><p style="color:var(--text-secondary);">Enter your annual debt, growth rate, time horizon, and the amount you can reduce annually. Click 'Project the Future' to see the chart and savings.</p></div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-toggle"><span>What does the Growth Rate represent?</span><span class="arrow">▼</span></div>
+          <div class="accordion-content"><p style="color:var(--text-secondary);">The growth rate is the annual percentage increase in your debt. Even 10% can double your debt in ~7 years.</p></div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-toggle"><span>How much can I save by reducing my annual debt?</span><span class="arrow">▼</span></div>
+          <div class="accordion-content"><p style="color:var(--text-secondary);">Small cuts compound into huge savings over time. The tool shows you exactly how much you save in the final year.</p></div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-toggle"><span>Is the Compound Curve tool free?</span><span class="arrow">▼</span></div>
+          <div class="accordion-content"><p style="color:var(--text-secondary);">Yes, completely free and open source.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== NOSCRIPT ===== -->
+    <noscript>
+      <section class="container section-spacing" style="padding-top:0;">
+        <div class="glass-card" style="border-color:var(--color-burnout);">
+          <h2 style="font-size:1.5rem; font-weight:700; color:var(--color-burnout);">⚠️ JavaScript is disabled</h2>
+          <p style="color:var(--text-secondary);">
+            The Compound Curve tool requires JavaScript to display the interactive chart.
+            You can still calculate the future value manually using the formula:
+          </p>
+          <p style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
+            <strong>Future Value = Annual Debt × (1 + Growth Rate)<sup>Years</sup></strong>
+          </p>
+          <p style="color:var(--text-secondary);">
+            <strong>Example:</strong> Annual debt $13,000, growth 10%, 10 years → $13,000 × (1.10)<sup>10</sup> = $33,718.
+            If you reduce by $1,000/year → $12,000 × (1.10)<sup>10</sup> = $31,125 – a saving of $2,593.
+            <br /><em>For an interactive experience, please enable JavaScript.</em>
+          </p>
+        </div>
+      </section>
+    </noscript>
+
+    <!-- ===== LEARN / CTA ===== -->
+    <section class="container section-spacing" style="padding-top:0;">
+      <div class="glass-card" style="border-color:rgba(251,191,36,0.2); padding:1.5rem 1.2rem;">
+        <h2 style="font-size:clamp(1.4rem,2.5vw,1.8rem); font-weight:700; margin-bottom:0.5rem; color:var(--text-primary);">📖 Learn More About the Productivity Bond Model</h2>
+        <p style="color:var(--text-secondary); margin-bottom:1rem;">
+          This tool is part of the PBM framework. Discover the full theory, simulation, and implementation roadmap in the book.
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap:0.6rem;">
+          <a href="index.html#simulator" class="btn-primary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">💸 Run Live Simulation</a>
+          <a href="book.html" class="btn-secondary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">📘 Get the Book</a>
+          <a href="tools.html" class="btn-secondary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">🧰 All Tools</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FLOATING RETURN TO TOP ===== -->
+  <button class="floating-return-top" id="floatingReturnTop" aria-label="Return to top">⬆ Top</button>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">...</footer>
+
+  <!-- ===== PWA ===== -->
+  <button id="pwaInstallBtn" class="pwa-install-btn" style="display:none;">...</button>
+  <div id="pwaIosOverlay" class="pwa-ios-overlay">...</div>
+
+  <script>
+    // ---- Same initialisation (theme, hamburger, accordion, PWA) ----
+    // (copied from the debt page but with compound-specific logic)
+
+    // ---- Compound Curve Logic ----
+    let compChartInstance = null;
+
+    function runCompoundCurve() {
+      const base = parseFloat(document.getElementById('compBase').value) || 0;
+      const rate = parseFloat(document.getElementById('compRate').value) / 100;
+      const years = parseInt(document.getElementById('compYears').value) || 10;
+      const reduction = parseFloat(document.getElementById('compReduction').value) || 0;
+
+      const reducedBase = Math.max(0, base - reduction);
+      let data = [];
+      let cum1 = 0, cum2 = 0;
+      for (let i = 1; i <= years; i++) {
+        const val1 = base * Math.pow(1 + rate, i);
+        const val2 = reducedBase * Math.pow(1 + rate, i);
+        cum1 += val1;
+        cum2 += val2;
+        data.push({ year: i, original: cum1, reduced: cum2 });
+      }
+
+      document.getElementById('compTotal').textContent = data[data.length-1].reduced.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      document.getElementById('compFinal').textContent = (base * Math.pow(1 + rate, years)).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      document.getElementById('compYearsOut').textContent = years;
+      const savings = data[data.length-1].original - data[data.length-1].reduced;
+      document.getElementById('compSavings').textContent = '$' + savings.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+      const solution = document.getElementById('compSolution');
+      const action = document.getElementById('compAction');
+      if (reduction > 0) {
+        const savedYears = Math.round((years * (1 - (data[data.length-1].reduced / data[data.length-1].original))) * 10) / 10;
+        solution.textContent = `✅ You are taking action! Reducing by $${reduction.toLocaleString()} saves $${savings.toFixed(0).toLocaleString()}.`;
+        action.textContent = `Action: This is equivalent to cutting ${Math.round((reduction / (35 * 5 * 48)) * 100)}% of your daily waste.`;
+      } else {
+        solution.textContent = `⚠️ Your debt grows exponentially. At ${rate*100}%, it will ${(Math.pow(1+rate, years) > 2) ? 'more than double' : 'grow significantly'}.`;
+        action.textContent = `Action: Even a $500 reduction saves $${Math.round(base * Math.pow(1+rate, years) - (base-500) * Math.pow(1+rate, years)).toLocaleString()} in the final year.`;
+      }
+
+      const ctx = document.getElementById('compChart').getContext('2d');
+      if (compChartInstance) compChartInstance.destroy();
+
+      const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const textColor = theme === 'dark' ? '#eef2f8' : '#0f111a';
+      const gridColor = theme === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+
+      compChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: data.map(d => d.year),
+          datasets: [
+            { label: 'Current Path', data: data.map(d => d.original), borderColor: '#ff6b6b', fill: false, tension: 0.3, borderDash: [4, 4] },
+            { label: 'Optimized Path', data: data.map(d => d.reduced), borderColor: '#69db7c', fill: true, backgroundColor: 'rgba(105,219,124,0.1)', tension: 0.3 }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: { legend: { labels: { color: textColor, boxWidth: 12, padding: 12, font: { size: 11 } } } },
+          scales: {
+            x: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 } } },
+            y: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 }, callback: v => '$' + v.toLocaleString() } }
+          }
+        }
+      });
+    }
+
+    // ---- AI default (uses ai-compound) ----
+    async function generateAI(tool) {
+      if (tool !== 'compound') return;
+      const status = document.getElementById('ai-compound-status');
+      const output = document.getElementById('ai-compound-output');
+      if (!status || !output) return;
+
+      status.textContent = '⏳ Thinking...';
+      output.innerHTML = '<span style="opacity:0.6;">Generating your personalized advice...</span>';
+
+      const data = {
+        base: document.getElementById('compBase').value,
+        rate: document.getElementById('compRate').value,
+        years: document.getElementById('compYears').value,
+        reduction: document.getElementById('compReduction').value
+      };
+
+      try {
+        const response = await fetch('https://ai-compound.traffictorch.workers.dev', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const result = await response.json();
+        if (result.error) throw new Error(result.error);
+
+        let html = '';
+        if (result.summary) html += `<div class="summary">📌 ${result.summary}</div>`;
+        if (result.advice) html += `<div class="advice">✅ ${result.advice}</div>`;
+        if (!html) html = `<span style="opacity:0.6;">No advice received.</span>`;
+        output.innerHTML = html;
+        status.textContent = '✅ Done';
+      } catch (error) {
+        console.error('AI Error:', error);
+        output.innerHTML = `<span style="color: var(--color-burnout);">⚠️ Could not reach AI advisor. Please try again later. (${error.message})</span>`;
+        status.textContent = '❌ Error';
+      }
+    }
+
+    // ---- Ask AI (uses ask-compound) ----
+    async function askAI(tool) {
+      if (tool !== 'compound') return;
+      const input = document.getElementById('ask-compound-input');
+      const output = document.getElementById('ask-compound-output');
+      const status = document.getElementById('ask-compound-status');
+      if (!input || !output || !status) return;
+
+      const question = input.value.trim();
+      if (!question) {
+        output.innerHTML = '<span style="color:var(--color-burnout);">Please enter a question.</span>';
+        return;
+      }
+
+      status.textContent = '⏳ Thinking...';
+      output.innerHTML = '<span style="opacity:0.6;">Generating answer...</span>';
+
+      try {
+        const response = await fetch('https://ask-compound.traffictorch.workers.dev', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question })
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const result = await response.json();
+        let answer = result.answer || 'No answer provided.';
+        output.innerHTML = `<div class="advice">${answer}</div>`;
+        status.textContent = '✅ Done';
+      } catch (error) {
+        console.error('Ask AI Error:', error);
+        output.innerHTML = `<span style="color:var(--color-burnout);">⚠️ Error: ${error.message}</span>`;
+        status.textContent = '❌ Error';
+      }
+    }
+
+    // ---- Auto-run ----
+    window.addEventListener('load', function() {
+      setTimeout(runCompoundCurve, 400);
+      document.documentElement.classList.add('loaded');
+    });
+  </script>
+</body>
+</html>
