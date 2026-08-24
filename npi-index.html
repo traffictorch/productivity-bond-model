@@ -3,39 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>📊 NPI Index Tracker – Free Interactive Tool | PBM Productivity 
-Lab</title>
-  <meta name="description" content="Track the National Productivity Index 
-(NPI) with real-world data. See how efficiently your economy turns inputs 
-into value." />
-  <link rel="canonical" 
-href="https://traffictorch.github.io/productivity-bond-model/npi-index.html" 
-/>
-  <meta property="og:title" content="NPI Index Tracker – Interactive Tool" 
-/>
-  <meta property="og:description" content="Track the National Productivity 
-Index (NPI) with real-world data." />
-  <meta property="og:image" 
-content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.png" 
-/>
+  <title>📊 NPI Index Tracker – Free Interactive Tool | PBM Productivity Lab</title>
+  <meta name="description" content="Track the National Productivity Index (NPI) with real-world data. See how efficiently your economy turns inputs into value." />
+  <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/npi-index.html" />
+  <meta property="og:title" content="NPI Index Tracker – Interactive Tool" />
+  <meta property="og:description" content="Track the National Productivity Index (NPI) with real-world data." />
+  <meta property="og:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.png" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" 
-content="https://traffictorch.github.io/productivity-bond-model/npi-index.html" 
-/>
+  <meta property="og:url" content="https://traffictorch.github.io/productivity-bond-model/npi-index.html" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="NPI Index Tracker – Interactive 
-Tool" />
-  <meta name="twitter:description" content="Track the National 
-Productivity Index (NPI) with real-world data." />
+  <meta name="twitter:title" content="NPI Index Tracker – Interactive Tool" />
+  <meta name="twitter:description" content="Track the National Productivity Index (NPI) with real-world data." />
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="favicon.ico" />
   <link rel="apple-touch-icon" href="icon-512.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" 
-href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=block" 
-crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=block" crossorigin="anonymous" />
 
   <link rel="stylesheet" href="css/core.min.css" />
 
@@ -119,8 +104,7 @@ crossorigin="anonymous" />
       border-left:4px solid #4f46e5;
       margin-top:1rem;
     }
-    .result-box .stat { font-size:2rem; font-weight:700; 
-color:var(--text-primary); }
+    .result-box .stat { font-size:2rem; font-weight:700; color:var(--text-primary); }
     .result-box .stat span { color:#4f46e5; }
     .result-box .sub-stat { color:var(--text-muted); font-size:0.9rem; }
 
@@ -133,13 +117,9 @@ color:var(--text-primary); }
       margin-top: 1rem;
       border-left: 4px solid #f59e0b;
     }
-    .prescription-box .label { font-size: 0.65rem; text-transform: 
-uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 
-700; }
-    .prescription-box .solution { color: #f59e0b; font-weight: 600; 
-margin-top: 0.2rem; }
-    .prescription-box .action { color: var(--text-secondary); font-size: 
-0.9rem; margin-top: 0.2rem; }
+    .prescription-box .label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700; }
+    .prescription-box .solution { color: #f59e0b; font-weight: 600; margin-top: 0.2rem; }
+    .prescription-box .action { color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.2rem; }
 
     .accordion-toggle {
       cursor: pointer;
@@ -153,10 +133,8 @@ margin-top: 0.2rem; }
       font-size: 0.9rem;
       transition: background 0.2s, border-radius 0.2s;
     }
-    .accordion-toggle:hover { background: rgba(255,255,255,0.03); 
-border-radius: 8px; }
-    .accordion-toggle .arrow { transition: transform 0.25s ease; display: 
-inline-block; font-size: 0.7rem; color: var(--text-muted); }
+    .accordion-toggle:hover { background: rgba(255,255,255,0.03); border-radius: 8px; }
+    .accordion-toggle .arrow { transition: transform 0.25s ease; display: inline-block; font-size: 0.7rem; color: var(--text-muted); }
     .accordion-toggle.open .arrow { transform: rotate(180deg); }
     .accordion-content {
       max-height: 0;
@@ -167,8 +145,7 @@ inline-block; font-size: 0.7rem; color: var(--text-muted); }
       font-size: 0.9rem;
       line-height: 1.6;
     }
-    .accordion-content.open { max-height: 600px; padding: 0.2rem 1rem 1rem 
-1rem; }
+    .accordion-content.open { max-height: 600px; padding: 0.2rem 1rem 1rem 1rem; }
 
     .reset-btn {
       background: rgba(79,70,229,0.15);
@@ -191,9 +168,7 @@ inline-block; font-size: 0.7rem; color: var(--text-muted); }
       align-items:center;
       margin-bottom:0.5rem;
     }
-    .weight-header .title { font-size:0.8rem; font-weight:600; 
-color:var(--text-muted); text-transform:uppercase; letter-spacing:0.04em; 
-}
+    .weight-header .title { font-size:0.8rem; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.04em; }
 
     @media (max-width: 768px) {
       .weight-sliders { grid-template-columns: 1fr; }
@@ -201,9 +176,7 @@ color:var(--text-muted); text-transform:uppercase; letter-spacing:0.04em;
     }
   </style>
 
-  <script 
-src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" 
-defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
   <script src="js/ga4.js" defer></script>
 
   <script type="application/ld+json">
@@ -211,11 +184,8 @@ defer></script>
       "@context": "https://schema.org",
       "@type": "WebPage",
       "name": "NPI Index Tracker – Free Interactive Tool",
-      "description": "Track the National Productivity Index (NPI) with 
-real-world data. See how efficiently your economy turns inputs into 
-value.",
-      "url": 
-"https://traffictorch.github.io/productivity-bond-model/npi-index.html"
+      "description": "Track the National Productivity Index (NPI) with real-world data. See how efficiently your economy turns inputs into value.",
+      "url": "https://traffictorch.github.io/productivity-bond-model/npi-index.html"
     }
   </script>
 </head>
@@ -227,10 +197,8 @@ value.",
 
 <nav class="sticky-nav no-print" id="mainNav">
   <div class="nav-left">
-    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle 
-navigation"><span></span><span></span><span></span></button>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle 
-theme" aria-pressed="false"><span id="themeIcon">🌙</span></button>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-pressed="false"><span id="themeIcon">🌙</span></button>
   </div>
   <ul class="nav-links" id="navLinks">
     <li><a href="index.html">🏠 Home</a></li>
@@ -244,34 +212,10 @@ theme" aria-pressed="false"><span id="themeIcon">🌙</span></button>
         <li><a href="npi-index.html">📊 NPI Index</a></li>
       </ul>
     </li>
-    <li class="dropdown"><span class="dropdown-toggle">About ▼</span><ul 
-class="dropdown-menu"><li><a href="news.html">News</a></li><li><a 
-href="about.html">Traffic Torch</a></li><li><a 
-href="changelog.html">Change Log</a></li><li><a 
-href="privacy.html">Privacy</a></li><li><a 
-href="terms.html">Terms</a></li><li><a 
-href="contact.html">Contact</a></li></ul></li>
-    <li class="dropdown"><span class="dropdown-toggle">Abstract 
-▼</span><ul class="dropdown-menu"><li><a href="index.html#abstract">The 
-Abstract</a></li><li><a href="index.html#problem-visualized">The 
-Problem</a></li><li><a 
-href="index.html#wellbeing">Wellbeing</a></li></ul></li>
-    <li class="dropdown"><span class="dropdown-toggle">PBM ▼</span><ul 
-class="dropdown-menu"><li><a 
-href="index.html#model-definition">Model</a></li><li><a 
-href="index.html#mechanism">Mechanism</a></li><li><a 
-href="index.html#glossary">Glossary</a></li><li><a 
-href="index.html#limitations">Limitations</a></li><li><a 
-href="index.html#related">Related</a></li><li><a 
-href="index.html#faq">FAQ</a></li><li><a 
-href="index.html#citation">Cite</a></li></ul></li>
-    <li class="dropdown"><span class="dropdown-toggle">Simulation 
-▼</span><ul class="dropdown-menu"><li><a href="index.html#simulator">Live 
-Simulator</a></li><li><a 
-href="index.html#results-data">Results</a></li><li><a 
-href="index.html#sensitivity">Sensitivity</a></li><li><a 
-href="index.html#adoption">Scenarios</a></li><li><a 
-href="index.html#implement">Implementation</a></li></ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">About ▼</span><ul class="dropdown-menu"><li><a href="news.html">News</a></li><li><a href="about.html">Traffic Torch</a></li><li><a href="changelog.html">Change Log</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="contact.html">Contact</a></li></ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">Abstract ▼</span><ul class="dropdown-menu"><li><a href="index.html#abstract">The Abstract</a></li><li><a href="index.html#problem-visualized">The Problem</a></li><li><a href="index.html#wellbeing">Wellbeing</a></li></ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">PBM ▼</span><ul class="dropdown-menu"><li><a href="index.html#model-definition">Model</a></li><li><a href="index.html#mechanism">Mechanism</a></li><li><a href="index.html#glossary">Glossary</a></li><li><a href="index.html#limitations">Limitations</a></li><li><a href="index.html#related">Related</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="index.html#citation">Cite</a></li></ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">Simulation ▼</span><ul class="dropdown-menu"><li><a href="index.html#simulator">Live Simulator</a></li><li><a href="index.html#results-data">Results</a></li><li><a href="index.html#sensitivity">Sensitivity</a></li><li><a href="index.html#adoption">Scenarios</a></li><li><a href="index.html#implement">Implementation</a></li></ul></li>
     <li><a href="book.html">🎧 Books</a></li>
     <li><a href="index.html#learn">💸 Learn</a></li>
   </ul>
@@ -282,62 +226,41 @@ href="index.html#implement">Implementation</a></li></ul></li>
     <nav class="breadcrumb">
       <a href="index.html">🏠 Home</a><span style="opacity:0.5;">/</span>
       <a href="tools.html">🧰 Tools</a><span style="opacity:0.5;">/</span>
-      <span style="color:var(--text-primary); font-weight:500;">NPI 
-Index</span>
+      <span style="color:var(--text-primary); font-weight:500;">NPI Index</span>
     </nav>
   </div>
 
   <section class="container hero">
     <div>
-      <span class="badge-glow" style="margin-bottom:0.5rem;">📊 
-Interactive Tool</span>
-      <span class="badge-glow badge-version" 
-style="margin-left:0.5rem;">v0.9.0</span>
-      <h1 class="text-gradient" style="font-size:clamp(2.8rem,6vw,4rem); 
-font-weight:800; letter-spacing:-0.03em; line-height:1.1;">NPI Index 
-Tracker</h1>
-      <p style="font-size:clamp(1.2rem,2vw,1.6rem); font-weight:300; 
-opacity:0.8; max-width:650px; margin:0.5rem 0 1.5rem; 
-color:var(--text-secondary);">
-        Measure how efficiently your economy turns inputs into value – 
-with real‑world data from 50+ countries.
+      <span class="badge-glow" style="margin-bottom:0.5rem;">📊 Interactive Tool</span>
+      <span class="badge-glow badge-version" style="margin-left:0.5rem;">v0.9.0</span>
+      <h1 class="text-gradient" style="font-size:clamp(2.8rem,6vw,4rem); font-weight:800; letter-spacing:-0.03em; line-height:1.1;">NPI Index Tracker</h1>
+      <p style="font-size:clamp(1.2rem,2vw,1.6rem); font-weight:300; opacity:0.8; max-width:650px; margin:0.5rem 0 1.5rem; color:var(--text-secondary);">
+        Measure how efficiently your economy turns inputs into value – with real‑world data from 50+ countries.
       </p>
     </div>
   </section>
 
   <section class="container section-spacing" style="padding-top:0.5rem;">
     <div class="glass-card">
-      <p style="color:var(--text-muted); font-size:0.95rem; 
-margin-bottom:1.5rem;">
-        Select a country and year range to see the <strong>National 
-Productivity Index (NPI)</strong> – a composite measure of economic 
-efficiency.<br>
-        <span style="font-size:0.85rem; opacity:0.7;">⚡ Powered by 
-real‑world data from World Bank, ILO, IEA, UNEP, and OECD.</span>
+      <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:1.5rem;">
+        Select a country and year range to see the <strong>National Productivity Index (NPI)</strong> – a composite measure of economic efficiency.<br>
+        <span style="font-size:0.85rem; opacity:0.7;">⚡ Powered by real‑world data from World Bank, ILO, IEA, UNEP, and OECD.</span>
       </p>
 
       <!-- Accordion -->
-      <div style="background:var(--bg-input); border-radius:12px; 
-padding:0.2rem 0.2rem; margin-bottom:1.5rem; border:1px solid 
-var(--border-divider);">
+      <div style="background:var(--bg-input); border-radius:12px; padding:0.2rem 0.2rem; margin-bottom:1.5rem; border:1px solid var(--border-divider);">
         <div class="accordion-item">
-          <div class="accordion-toggle"><span>📖 What is the 
-NPI?</span><span class="arrow">▼</span></div>
+          <div class="accordion-toggle"><span>📖 What is the NPI?</span><span class="arrow">▼</span></div>
           <div class="accordion-content">
             <p style="padding:0.5rem 0; color:var(--text-secondary);">
-              The <strong>National Productivity Index (NPI)</strong> 
-measures how efficiently an economy converts its key inputs into economic 
-output. It is defined as:
+              The <strong>National Productivity Index (NPI)</strong> measures how efficiently an economy converts its key inputs into economic output. It is defined as:
             </p>
-            <div style="background:var(--bg-code); border-radius:8px; 
-padding:0.8rem 1rem; font-family:monospace; font-size:0.85rem; 
-margin:0.5rem 0; border-left:3px solid #4f46e5;">
-              NPI = GDP ÷ (Labour<sup>0.40</sup> × Energy<sup>0.25</sup> × 
-Materials<sup>0.20</sup> × Capital<sup>0.15</sup>)
+            <div style="background:var(--bg-code); border-radius:8px; padding:0.8rem 1rem; font-family:monospace; font-size:0.85rem; margin:0.5rem 0; border-left:3px solid #4f46e5;">
+              NPI = GDP ÷ (Labour<sup>0.40</sup> × Energy<sup>0.25</sup> × Materials<sup>0.20</sup> × Capital<sup>0.15</sup>)
             </div>
             <p style="padding:0.5rem 0; color:var(--text-secondary);">
-              Higher NPI means the economy produces more value from the 
-same inputs – a sign of genuine progress, not just growth.
+              Higher NPI means the economy produces more value from the same inputs – a sign of genuine progress, not just growth.
             </p>
           </div>
         </div>
@@ -351,146 +274,93 @@ same inputs – a sign of genuine progress, not just growth.
           </select>
         </label>
         <label>📅 Start Year
-          <input type="range" id="yearStart" min="1990" max="2023" 
-value="2000" step="1" 
-oninput="document.getElementById('startYearDisplay').textContent=this.value" 
-/>
-          <span id="startYearDisplay" style="font-weight:600; 
-color:var(--text-primary);">2000</span>
+          <input type="range" id="yearStart" min="1990" max="2023" value="2000" step="1" oninput="document.getElementById('startYearDisplay').textContent=this.value" />
+          <span id="startYearDisplay" style="font-weight:600; color:var(--text-primary);">2000</span>
         </label>
         <label>📅 End Year
-          <input type="range" id="yearEnd" min="1990" max="2023" 
-value="2023" step="1" 
-oninput="document.getElementById('endYearDisplay').textContent=this.value" 
-/>
-          <span id="endYearDisplay" style="font-weight:600; 
-color:var(--text-primary);">2023</span>
+          <input type="range" id="yearEnd" min="1990" max="2023" value="2023" step="1" oninput="document.getElementById('endYearDisplay').textContent=this.value" />
+          <span id="endYearDisplay" style="font-weight:600; color:var(--text-primary);">2023</span>
         </label>
       </div>
 
       <!-- Weight Adjusters -->
       <div class="weight-header">
         <span class="title">⚖️ Weight Adjusters (Simulation Mode)</span>
-        <button class="reset-btn" onclick="resetWeights()">↺ Reset to 
-Book Weights</button>
+        <button class="reset-btn" onclick="resetWeights()">↺ Reset to Book Weights</button>
       </div>
       <div class="weight-sliders" id="weightSliders">
         <label>
-          <span>👷 Labour <span 
-style="font-weight:400;color:var(--text-muted);">(H)</span></span>
+          <span>👷 Labour <span style="font-weight:400;color:var(--text-muted);">(H)</span></span>
           <div class="slider-row">
-            <input type="range" id="weightH" min="0" max="100" value="40" 
-step="1" oninput="updateWeights('H', this.value)" />
+            <input type="range" id="weightH" min="0" max="100" value="40" step="1" oninput="updateWeights('H', this.value)" />
             <span class="weight-value" id="weightHDisplay">40%</span>
           </div>
         </label>
         <label>
-          <span>⚡ Energy <span 
-style="font-weight:400;color:var(--text-muted);">(E)</span></span>
+          <span>⚡ Energy <span style="font-weight:400;color:var(--text-muted);">(E)</span></span>
           <div class="slider-row">
-            <input type="range" id="weightE" min="0" max="100" value="25" 
-step="1" oninput="updateWeights('E', this.value)" />
+            <input type="range" id="weightE" min="0" max="100" value="25" step="1" oninput="updateWeights('E', this.value)" />
             <span class="weight-value" id="weightEDisplay">25%</span>
           </div>
         </label>
         <label>
-          <span>🧱 Materials <span 
-style="font-weight:400;color:var(--text-muted);">(M)</span></span>
+          <span>🧱 Materials <span style="font-weight:400;color:var(--text-muted);">(M)</span></span>
           <div class="slider-row">
-            <input type="range" id="weightM" min="0" max="100" value="20" 
-step="1" oninput="updateWeights('M', this.value)" />
+            <input type="range" id="weightM" min="0" max="100" value="20" step="1" oninput="updateWeights('M', this.value)" />
             <span class="weight-value" id="weightMDisplay">20%</span>
           </div>
         </label>
         <label>
-          <span>🏗️ Capital <span 
-style="font-weight:400;color:var(--text-muted);">(K)</span></span>
+          <span>🏗️ Capital <span style="font-weight:400;color:var(--text-muted);">(K)</span></span>
           <div class="slider-row">
-            <input type="range" id="weightK" min="0" max="100" value="15" 
-step="1" oninput="updateWeights('K', this.value)" />
+            <input type="range" id="weightK" min="0" max="100" value="15" step="1" oninput="updateWeights('K', this.value)" />
             <span class="weight-value" id="weightKDisplay">15%</span>
           </div>
         </label>
       </div>
 
-      <button class="btn-primary" onclick="runNPI()" 
-style="margin-top:0.5rem;">📊 Calculate NPI</button>
+      <button class="btn-primary" onclick="runNPI()" style="margin-top:0.5rem;">📊 Calculate NPI</button>
 
       <div id="npiResult" class="result-box">
-        <div style="display:flex; flex-wrap:wrap; 
-justify-content:space-between; gap:0.5rem;">
+        <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:0.5rem;">
           <div class="stat">📈 NPI: <span id="npiValue">—</span></div>
-          <div class="stat" style="font-size:1.5rem; color:#34d399;">📊 
-Growth: <span id="npiGrowth">—</span></div>
+          <div class="stat" style="font-size:1.5rem; color:#34d399;">📊 Growth: <span id="npiGrowth">—</span></div>
         </div>
-        <div class="sub-stat" id="npiSubtitle">Select a country and click 
-"Calculate NPI" to get started.</div>
-        <div class="chart-container"><canvas id="npiChart" width="400" 
-height="200"></canvas></div>
+        <div class="sub-stat" id="npiSubtitle">Select a country and click "Calculate NPI" to get started.</div>
+        <div class="chart-container"><canvas id="npiChart" width="400" height="200"></canvas></div>
 
         <!-- Component Breakdown -->
         <div style="margin-top:1rem;">
-          <div style="display:flex; justify-content:space-between; 
-align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.5rem;">
-            <span style="font-size:0.9rem; font-weight:600; 
-color:var(--text-primary);">📊 Component Breakdown</span>
-            <span style="font-size:0.7rem; 
-color:var(--text-muted);">Average annual contribution</span>
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.5rem;">
+            <span style="font-size:0.9rem; font-weight:600; color:var(--text-primary);">📊 Component Breakdown</span>
+            <span style="font-size:0.7rem; color:var(--text-muted);">Average annual contribution</span>
           </div>
-          <div class="chart-container" style="max-height:180px;"><canvas 
-id="componentChart" width="400" height="150"></canvas></div>
+          <div class="chart-container" style="max-height:180px;"><canvas id="componentChart" width="400" height="150"></canvas></div>
         </div>
 
         <div class="prescription-box" id="npiPrescription">
           <div class="label">🧠 Diagnosis</div>
-          <div class="solution" id="npiSolution">Select a country and 
-click "Calculate NPI" to see your analysis.</div>
-          <div class="action" id="npiAction">We'll show you which factor 
-drives your productivity.</div>
+          <div class="solution" id="npiSolution">Select a country and click "Calculate NPI" to see your analysis.</div>
+          <div class="action" id="npiAction">We'll show you which factor drives your productivity.</div>
         </div>
       </div>
 
       <!-- Data Quality Notice -->
-      <div style="margin-top:1rem; padding:0.8rem 1rem; 
-background:var(--bg-code); border-radius:8px; border:1px solid 
-var(--border-divider);">
-        <span style="font-size:0.7rem; color:var(--text-muted);">📌 Data 
-sourced from World Bank, ILO, IEA, UNEP, and OECD. Last updated: 
-2024.</span>
-        <span style="font-size:0.7rem; color:var(--text-muted); 
-display:block; margin-top:0.2rem;">⚠️ Capital stock data is estimated. 
-This is an <strong>empirical proxy</strong> for the NPI framework.</span>
+      <div style="margin-top:1rem; padding:0.8rem 1rem; background:var(--bg-code); border-radius:8px; border:1px solid var(--border-divider);">
+        <span style="font-size:0.7rem; color:var(--text-muted);">📌 Data sourced from World Bank, ILO, IEA, UNEP, and OECD. Last updated: 2024.</span>
+        <span style="font-size:0.7rem; color:var(--text-muted); display:block; margin-top:0.2rem;">⚠️ Capital stock data is estimated. This is an <strong>empirical proxy</strong> for the NPI framework.</span>
       </div>
 
       <!-- FAQ Accordion -->
-      <div style="margin-top:2rem; background:var(--bg-input); 
-border-radius:12px; padding:0.2rem 0.2rem; border:1px solid 
-var(--border-divider);">
+      <div style="margin-top:2rem; background:var(--bg-input); border-radius:12px; padding:0.2rem 0.2rem; border:1px solid var(--border-divider);">
         <div class="accordion-item">
-          <div class="accordion-toggle"><span>❓ Frequently Asked 
-Questions</span><span class="arrow">▼</span></div>
+          <div class="accordion-toggle"><span>❓ Frequently Asked Questions</span><span class="arrow">▼</span></div>
           <div class="accordion-content">
             <div style="padding:0.5rem 0;">
-              <div style="margin-bottom:0.8rem;"><strong 
-style="color:var(--text-primary);">What is the NPI?</strong><br><span 
-style="color:var(--text-secondary);">The National Productivity Index 
-measures how efficiently an economy converts inputs (labour, energy, 
-materials, capital) into GDP. Higher NPI = more efficient.</span></div>
-              <div style="margin-bottom:0.8rem;"><strong 
-style="color:var(--text-primary);">Why are the weights 
-adjustable?</strong><br><span style="color:var(--text-secondary);">The 
-book proposes fixed weights (40/25/20/15). But different economies have 
-different structures – the sliders let you explore "what if" 
-scenarios.</span></div>
-              <div style="margin-bottom:0.8rem;"><strong 
-style="color:var(--text-primary);">Where does the data come 
-from?</strong><br><span style="color:var(--text-secondary);">GDP (World 
-Bank), Hours (ILO/OECD), Energy (IEA), Materials (UNEP), Capital 
-(OECD/Penn World Table). All public sources.</span></div>
-              <div><strong style="color:var(--text-primary);">Why is some 
-data missing?</strong><br><span style="color:var(--text-secondary);">Not 
-all countries report all metrics. The tool skips years with incomplete 
-data and shows a warning.</span></div>
+              <div style="margin-bottom:0.8rem;"><strong style="color:var(--text-primary);">What is the NPI?</strong><br><span style="color:var(--text-secondary);">The National Productivity Index measures how efficiently an economy converts inputs (labour, energy, materials, capital) into GDP. Higher NPI = more efficient.</span></div>
+              <div style="margin-bottom:0.8rem;"><strong style="color:var(--text-primary);">Why are the weights adjustable?</strong><br><span style="color:var(--text-secondary);">The book proposes fixed weights (40/25/20/15). But different economies have different structures – the sliders let you explore "what if" scenarios.</span></div>
+              <div style="margin-bottom:0.8rem;"><strong style="color:var(--text-primary);">Where does the data come from?</strong><br><span style="color:var(--text-secondary);">GDP (World Bank), Hours (ILO/OECD), Energy (IEA), Materials (UNEP), Capital (OECD/Penn World Table). All public sources.</span></div>
+              <div><strong style="color:var(--text-primary);">Why is some data missing?</strong><br><span style="color:var(--text-secondary);">Not all countries report all metrics. The tool skips years with incomplete data and shows a warning.</span></div>
             </div>
           </div>
         </div>
@@ -501,113 +371,70 @@ data and shows a warning.</span></div>
 
   <!-- Tool Cards Row -->
   <section class="container section-spacing" style="padding-bottom:3;">
-    <h2 class="text-gradient" style="font-size:clamp(1.8rem,3vw,2.2rem); 
-font-weight:700; text-align:center; margin-bottom:0.5rem;">Explore the 
-Tools</h2>
-    <p style="text-align:center; color:var(--text-secondary); 
-max-width:600px; margin:0 auto 2rem; 
-font-size:clamp(0.95rem,1.1vw,1.05rem);">
-      Interactive calculators to help you understand your financial and 
-personal wellbeing.
+    <h2 class="text-gradient" style="font-size:clamp(1.8rem,3vw,2.2rem); font-weight:700; text-align:center; margin-bottom:0.5rem;">Explore the Tools</h2>
+    <p style="text-align:center; color:var(--text-secondary); max-width:600px; margin:0 auto 2rem; font-size:clamp(0.95rem,1.1vw,1.05rem);">
+      Interactive calculators to help you understand your financial and personal wellbeing.
     </p>
     <div class="tool-cards-grid">
       <div class="tool-card">
         <div class="tool-card-icon">🌿</div>
         <h3 class="tool-card-title">Wellbeing Index</h3>
-        <p class="tool-card-desc">Measure your work-life balance, mental 
-health, and productivity to find your harmony zone.</p>
-        <a href="wellbeing-index.html" class="btn-secondary" 
-style="width:100%; text-align:center; padding:0.6rem 1.5rem; 
-font-size:0.85rem;">Try It →</a>
+        <p class="tool-card-desc">Measure your work-life balance, mental health, and productivity to find your harmony zone.</p>
+        <a href="wellbeing-index.html" class="btn-secondary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Try It →</a>
       </div>
       <div class="tool-card">
         <div class="tool-card-icon">💳</div>
         <h3 class="tool-card-title">Debt Reality</h3>
-        <p class="tool-card-desc">Diagnose your financial situation, see 
-the true cost of debt, and get a personalized plan.</p>
-        <a href="debt-reality.html" class="btn-secondary" 
-style="width:100%; text-align:center; padding:0.6rem 1.5rem; 
-font-size:0.85rem;">Try It →</a>
+        <p class="tool-card-desc">Diagnose your financial situation, see the true cost of debt, and get a personalized plan.</p>
+        <a href="debt-reality.html" class="btn-secondary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Try It →</a>
       </div>
       <div class="tool-card">
         <div class="tool-card-icon">📈</div>
         <h3 class="tool-card-title">Compound Curve</h3>
-        <p class="tool-card-desc">See how your debt compounds over time — 
-and how small changes bend the curve.</p>
-        <a href="compound-curve.html" class="btn-secondary" 
-style="width:100%; text-align:center; padding:0.6rem 1.5rem; 
-font-size:0.85rem;">Try It →</a>
+        <p class="tool-card-desc">See how your debt compounds over time — and how small changes bend the curve.</p>
+        <a href="compound-curve.html" class="btn-secondary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Try It →</a>
       </div>
     </div>
   </section>
 
   <!-- Learn Section -->
-  <section id="learn" class="container section-spacing" 
-style="padding-top:2rem;">
-    <div class="glass-card" style="border-color:rgba(251,191,36,0.2); 
-padding:1.5rem 1.2rem;">
-      <span class="badge-glow" style="background:rgba(251,191,36,0.15); 
-color:#fbbf24; border-color:rgba(251,191,36,0.15); 
-margin-bottom:0.6rem;">📖 Learn</span>
-      <h2 style="font-size:clamp(1.4rem,3vw,1.8rem); font-weight:700; 
-margin-bottom:0.25rem; color:var(--text-primary);">Master the Productivity 
-Bond Model</h2>
-      <p style="color:var(--text-secondary); margin-bottom:0.8rem; 
-max-width:800px;">
-        The NPI Index Tracker is powered by the <strong>Productivity Bond 
-Model (PBM)</strong> – a revolutionary framework for replacing 
-perpetual-growth-dependent debt with productivity-linked prosperity.
+  <section id="learn" class="container section-spacing" style="padding-top:2rem;">
+    <div class="glass-card" style="border-color:rgba(251,191,36,0.2); padding:1.5rem 1.2rem;">
+      <span class="badge-glow" style="background:rgba(251,191,36,0.15); color:#fbbf24; border-color:rgba(251,191,36,0.15); margin-bottom:0.6rem;">📖 Learn</span>
+      <h2 style="font-size:clamp(1.4rem,3vw,1.8rem); font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">Master the Productivity Bond Model</h2>
+      <p style="color:var(--text-secondary); margin-bottom:0.8rem; max-width:800px;">
+        The NPI Index Tracker is powered by the <strong>Productivity Bond Model (PBM)</strong> – a revolutionary framework for replacing perpetual-growth-dependent debt with productivity-linked prosperity.
       </p>
-      <div style="display:flex; flex-wrap:wrap; gap:0.6rem; 
-margin-bottom:1.2rem; padding-bottom:1.2rem; border-bottom:1px solid 
-var(--border-divider);">
-        <a href="book.html#download" class="btn-secondary" 
-style="padding:0.4rem 1.2rem; font-size:0.85rem;">📄 Read the PDF</a>
-        <a href="book.html#audiobook-chapters" class="btn-secondary" 
-style="padding:0.4rem 1.2rem; font-size:0.85rem;">🎧 Listen to 
-Audiobook</a>
+      <div style="display:flex; flex-wrap:wrap; gap:0.6rem; margin-bottom:1.2rem; padding-bottom:1.2rem; border-bottom:1px solid var(--border-divider);">
+        <a href="book.html#download" class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;">📄 Read the PDF</a>
+        <a href="book.html#audiobook-chapters" class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;">🎧 Listen to Audiobook</a>
       </div>
-      <div style="display:flex; flex-wrap:wrap; gap:0.6rem; 
-padding-top:0.8rem; border-top:1px solid var(--border-divider);">
-        <a href="index.html#simulator" class="btn-primary" 
-style="padding:0.5rem 1.2rem; font-size:0.9rem;">💸 Run Live 
-Simulation</a>
-        <a href="index.html#model-definition" class="btn-secondary" 
-style="padding:0.5rem 1.2rem; font-size:0.9rem;">📐 View the Model</a>
+      <div style="display:flex; flex-wrap:wrap; gap:0.6rem; padding-top:0.8rem; border-top:1px solid var(--border-divider);">
+        <a href="index.html#simulator" class="btn-primary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">💸 Run Live Simulation</a>
+        <a href="index.html#model-definition" class="btn-secondary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">📐 View the Model</a>
       </div>
     </div>
   </section>
 
 </main>
 
-<button class="floating-return-top" id="floatingReturnTop" 
-aria-label="Return to top">⬆ Top</button>
+<button class="floating-return-top" id="floatingReturnTop" aria-label="Return to top">⬆ Top</button>
 
 <footer class="footer">
   <div class="container">
-    <div style="display:flex; flex-wrap:wrap; justify-content:center; 
-gap:1rem 1.5rem; margin-bottom:1.5rem; font-size:0.85rem;">
-      <a href="index.html" style="color:var(--text-muted); 
-text-decoration:none;">🏠 Home</a>
-      <a href="about.html" style="color:var(--text-muted); 
-text-decoration:none;">About</a>
-      <a href="book.html" style="color:var(--text-muted); 
-text-decoration:none;">Book</a>
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1rem 1.5rem; margin-bottom:1.5rem; font-size:0.85rem;">
+      <a href="index.html" style="color:var(--text-muted); text-decoration:none;">🏠 Home</a>
+      <a href="about.html" style="color:var(--text-muted); text-decoration:none;">About</a>
+      <a href="book.html" style="color:var(--text-muted); text-decoration:none;">Book</a>
       <a href="tools.html" style="color:#b388ff;">🧰 Tools</a>
-      <a href="privacy.html" style="color:var(--text-muted); 
-text-decoration:none;">Privacy</a>
-      <a href="terms.html" style="color:var(--text-muted); 
-text-decoration:none;">Terms</a>
-      <a href="contact.html" style="color:var(--text-muted); 
-text-decoration:none;">Contact</a>
-      <a href="index.html#simulator" style="color:var(--text-muted); 
-text-decoration:none;">Simulator</a>
+      <a href="privacy.html" style="color:var(--text-muted); text-decoration:none;">Privacy</a>
+      <a href="terms.html" style="color:var(--text-muted); text-decoration:none;">Terms</a>
+      <a href="contact.html" style="color:var(--text-muted); text-decoration:none;">Contact</a>
+      <a href="index.html#simulator" style="color:var(--text-muted); text-decoration:none;">Simulator</a>
     </div>
     <p>
       © 2026 <a href="https://traffictorch.net">Traffic Torch</a> ·
-      <a 
-href="https://github.com/traffictorch/productivity-bond-model">GitHub 
-Repository</a> ·
+      <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> ·
       Version 0.9.0
     </p>
     <p style="font-size:0.7rem; margin-top:0.3rem;">
@@ -620,7 +447,7 @@ Repository</a> ·
 
 <script>
 // ============================================================
-// NPI INDEX TRACKER – MAIN JAVASCRIPT
+// NPI INDEX TRACKER – MAIN JAVASCRIPT (FIXED)
 // ============================================================
 
 const WORKER_URL = "https://npi-api.traffictorch.workers.dev";
@@ -644,8 +471,7 @@ function updateWeights(changed, value) {
 
     // Distribute the remaining 100% proportionally among other weights
     const others = Object.keys(weights).filter(k => k !== changed);
-    const totalOthers = Object.keys(weights).reduce((sum, k) => sum + 
-weights[k], 0) - val;
+    const totalOthers = Object.keys(weights).reduce((sum, k) => sum + weights[k], 0) - val;
 
     if (totalOthers > 0) {
         const remaining = 100 - val;
@@ -665,14 +491,10 @@ weights[k], 0) - val;
     }
 
     // Update UI
-    document.getElementById('weightHDisplay').textContent = weights.H + 
-'%';
-    document.getElementById('weightEDisplay').textContent = weights.E + 
-'%';
-    document.getElementById('weightMDisplay').textContent = weights.M + 
-'%';
-    document.getElementById('weightKDisplay').textContent = weights.K + 
-'%';
+    document.getElementById('weightHDisplay').textContent = weights.H + '%';
+    document.getElementById('weightEDisplay').textContent = weights.E + '%';
+    document.getElementById('weightMDisplay').textContent = weights.M + '%';
+    document.getElementById('weightKDisplay').textContent = weights.K + '%';
 
     // Update sliders without triggering loops
     document.getElementById('weightH').value = weights.H;
@@ -692,14 +514,10 @@ function resetWeights() {
     document.getElementById('weightE').value = weights.E;
     document.getElementById('weightM').value = weights.M;
     document.getElementById('weightK').value = weights.K;
-    document.getElementById('weightHDisplay').textContent = weights.H + 
-'%';
-    document.getElementById('weightEDisplay').textContent = weights.E + 
-'%';
-    document.getElementById('weightMDisplay').textContent = weights.M + 
-'%';
-    document.getElementById('weightKDisplay').textContent = weights.K + 
-'%';
+    document.getElementById('weightHDisplay').textContent = weights.H + '%';
+    document.getElementById('weightEDisplay').textContent = weights.E + '%';
+    document.getElementById('weightMDisplay').textContent = weights.M + '%';
+    document.getElementById('weightKDisplay').textContent = weights.K + '%';
     if (document.getElementById('countrySelect').value) {
         runNPI();
     }
@@ -712,11 +530,10 @@ function resetWeights() {
 async function loadCountries() {
     const select = document.getElementById('countrySelect');
     try {
-        const resp = await fetch(`${WORKER_URL}/api/countries`);
+        const resp = await fetch(WORKER_URL + '/api/countries');
         if (!resp.ok) throw new Error('Failed to fetch countries');
         const countries = await resp.json();
-        select.innerHTML = '<option value="">Select a 
-country...</option>';
+        select.innerHTML = '<option value="">Select a country...</option>';
         countries.forEach(c => {
             const opt = document.createElement('option');
             opt.value = c;
@@ -730,8 +547,7 @@ country...</option>';
         }
     } catch (err) {
         console.error('Error loading countries:', err);
-        select.innerHTML = '<option value="">Error loading 
-countries</option>';
+        select.innerHTML = '<option value="">Error loading countries</option>';
     }
 }
 
@@ -747,8 +563,7 @@ async function runNPI() {
     if (!country) {
         document.getElementById('npiValue').textContent = '—';
         document.getElementById('npiGrowth').textContent = '—';
-        document.getElementById('npiSubtitle').textContent = 'Please 
-select a country.';
+        document.getElementById('npiSubtitle').textContent = 'Please select a country.';
         return;
     }
 
@@ -756,8 +571,7 @@ select a country.';
     document.getElementById('npiGrowth').textContent = '⏳';
 
     try {
-        const url = 
-`${WORKER_URL}/api/npi?country=${country}&start=${start}&end=${end}`;
+        const url = WORKER_URL + '/api/npi?country=' + country + '&start=' + start + '&end=' + end;
         const resp = await fetch(url);
         if (!resp.ok) throw new Error('API error');
         const data = await resp.json();
@@ -765,8 +579,7 @@ select a country.';
         if (data.length === 0) {
             document.getElementById('npiValue').textContent = 'No data';
             document.getElementById('npiGrowth').textContent = '—';
-            document.getElementById('npiSubtitle').textContent = 'No data 
-available for this country and year range.';
+            document.getElementById('npiSubtitle').textContent = 'No data available for this country and year range.';
             return;
         }
 
@@ -777,87 +590,58 @@ available for this country and year range.';
         const wK = weights.K / 100;
 
         const results = data.map(d => {
-            // Check for missing data
-            if (d.gdp === null || d.hours === null || d.energy === null || 
-d.materials === null || d.capital === null) {
-                return { year: d.year, npi: null, gdp: d.gdp, hours: 
-d.hours, energy: d.energy, materials: d.materials, capital: d.capital };
+            if (d.gdp === null || d.hours === null || d.energy === null || d.materials === null || d.capital === null) {
+                return { year: d.year, npi: null, gdp: d.gdp, hours: d.hours, energy: d.energy, materials: d.materials, capital: d.capital };
             }
-            const npi = d.gdp / (Math.pow(d.hours, wH) * 
-Math.pow(d.energy, wE) * Math.pow(d.materials, wM) * Math.pow(d.capital, 
-wK));
-            return { year: d.year, npi, gdp: d.gdp, hours: d.hours, 
-energy: d.energy, materials: d.materials, capital: d.capital };
+            const npi = d.gdp / (Math.pow(d.hours, wH) * Math.pow(d.energy, wE) * Math.pow(d.materials, wM) * Math.pow(d.capital, wK));
+            return { year: d.year, npi: npi, gdp: d.gdp, hours: d.hours, energy: d.energy, materials: d.materials, capital: d.capital };
         });
 
-        // Filter out null NPI values for the main chart
         const validYears = results.filter(r => r.npi !== null);
         const validData = validYears.map(r => r.npi);
 
         if (validData.length < 2) {
-            document.getElementById('npiValue').textContent = 
-'Insufficient data';
-            document.getElementById('npiSubtitle').textContent = 'Need at 
-least 2 years of complete data.';
+            document.getElementById('npiValue').textContent = 'Insufficient data';
+            document.getElementById('npiSubtitle').textContent = 'Need at least 2 years of complete data.';
             document.getElementById('npiGrowth').textContent = '—';
             return;
         }
 
-        // Normalise to base year (first valid year = 100)
         const baseValue = validData[0];
         const normalised = validData.map(v => (v / baseValue) * 100);
         const labels = validYears.map(r => r.year);
 
         const latestNPI = normalised[normalised.length - 1];
-        document.getElementById('npiValue').textContent = 
-latestNPI.toFixed(1);
+        document.getElementById('npiValue').textContent = latestNPI.toFixed(1);
 
-        // Calculate annual growth (CAGR)
         const startVal = normalised[0];
         const endVal = normalised[normalised.length - 1];
         const years = normalised.length - 1;
-        const growth = years > 0 ? (Math.pow(endVal / startVal, 1 / years) 
-- 1) * 100 : 0;
-        document.getElementById('npiGrowth').textContent = 
-growth.toFixed(2) + '%';
-        document.getElementById('npiGrowth').style.color = growth >= 0 ? 
-'#34d399' : '#ff6b6b';
+        const growth = years > 0 ? (Math.pow(endVal / startVal, 1 / years) - 1) * 100 : 0;
+        document.getElementById('npiGrowth').textContent = growth.toFixed(2) + '%';
+        document.getElementById('npiGrowth').style.color = growth >= 0 ? '#34d399' : '#ff6b6b';
 
-        document.getElementById('npiSubtitle').textContent = `📊 
-${country} · ${labels[0]}–${labels[labels.length-1]} · ${validData.length} 
-years · Base year ${labels[0]} = 100`;
+        document.getElementById('npiSubtitle').textContent = '📊 ' + country + ' · ' + labels[0] + '–' + labels[labels.length-1] + ' · ' + validData.length + ' years · Base year ' + labels[0] + ' = 100';
 
-        // Render main chart
         renderNPIChart(labels, normalised);
-
-        // Render component breakdown
         renderComponentBreakdown(validYears);
-
-        // Generate prescription
         generatePrescription(validYears, growth, weights);
 
     } catch (err) {
         console.error('Error:', err);
         document.getElementById('npiValue').textContent = '⚠️ Error';
         document.getElementById('npiGrowth').textContent = '—';
-        document.getElementById('npiSubtitle').textContent = 'Failed to 
-load data. Please try again.';
+        document.getElementById('npiSubtitle').textContent = 'Failed to load data. Please try again.';
     }
 }
-
-// ============================================================
-// RENDER NPI CHART
-// ============================================================
 
 function renderNPIChart(labels, data) {
     const ctx = document.getElementById('npiChart').getContext('2d');
     if (npiChartInstance) npiChartInstance.destroy();
 
-    const theme = document.documentElement.getAttribute('data-theme') || 
-'dark';
+    const theme = document.documentElement.getAttribute('data-theme') || 'dark';
     const textColor = theme === 'dark' ? '#eef2f8' : '#0f111a';
-    const gridColor = theme === 'dark' ? 'rgba(255,255,255,0.06)' : 
-'rgba(0,0,0,0.06)';
+    const gridColor = theme === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
 
     npiChartInstance = new Chart(ctx, {
         type: 'line',
@@ -878,50 +662,36 @@ function renderNPIChart(labels, data) {
             responsive: true,
             maintainAspectRatio: true,
             plugins: {
-                legend: { labels: { color: textColor, boxWidth: 12, 
-padding: 12, font: { size: 11 } } }
+                legend: { labels: { color: textColor, boxWidth: 12, padding: 12, font: { size: 11 } } }
             },
             scales: {
-                x: { grid: { color: gridColor }, ticks: { color: 
-textColor, font: { size: 10 } } },
-                y: { grid: { color: gridColor }, ticks: { color: 
-textColor, font: { size: 10 }, callback: v => v.toFixed(0) } }
+                x: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 } } },
+                y: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 }, callback: v => v.toFixed(0) } }
             }
         }
     });
 }
 
-// ============================================================
-// RENDER COMPONENT BREAKDOWN
-// ============================================================
-
 function renderComponentBreakdown(yearsData) {
-    const ctx = 
-document.getElementById('componentChart').getContext('2d');
+    const ctx = document.getElementById('componentChart').getContext('2d');
     if (componentChartInstance) componentChartInstance.destroy();
 
-    // Calculate average annual growth for each component
     const components = ['gdp', 'hours', 'energy', 'materials', 'capital'];
     const labels = ['GDP', 'Labour', 'Energy', 'Materials', 'Capital'];
-    const colors = ['#4f46e5', '#f472b6', '#f59e0b', '#34d399', 
-'#a78bfa'];
+    const colors = ['#4f46e5', '#f472b6', '#f59e0b', '#34d399', '#a78bfa'];
 
     const growthRates = components.map((comp, idx) => {
-        const values = yearsData.map(d => d[comp]).filter(v => v !== null 
-&& v > 0);
+        const values = yearsData.map(d => d[comp]).filter(v => v !== null && v > 0);
         if (values.length < 2) return 0;
         const start = values[0];
         const end = values[values.length - 1];
         const years = values.length - 1;
-        return years > 0 ? (Math.pow(end / start, 1 / years) - 1) * 100 : 
-0;
+        return years > 0 ? (Math.pow(end / start, 1 / years) - 1) * 100 : 0;
     });
 
-    const theme = document.documentElement.getAttribute('data-theme') || 
-'dark';
+    const theme = document.documentElement.getAttribute('data-theme') || 'dark';
     const textColor = theme === 'dark' ? '#eef2f8' : '#0f111a';
-    const gridColor = theme === 'dark' ? 'rgba(255,255,255,0.06)' : 
-'rgba(0,0,0,0.06)';
+    const gridColor = theme === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
 
     componentChartInstance = new Chart(ctx, {
         type: 'bar',
@@ -940,22 +710,15 @@ document.getElementById('componentChart').getContext('2d');
             responsive: true,
             maintainAspectRatio: true,
             plugins: {
-                legend: { labels: { color: textColor, boxWidth: 12, 
-padding: 12, font: { size: 10 } } }
+                legend: { labels: { color: textColor, boxWidth: 12, padding: 12, font: { size: 10 } } }
             },
             scales: {
-                x: { grid: { color: gridColor }, ticks: { color: 
-textColor, font: { size: 9 } } },
-                y: { grid: { color: gridColor }, ticks: { color: 
-textColor, font: { size: 9 }, callback: v => v.toFixed(1) + '%' } }
+                x: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 9 } } },
+                y: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 9 }, callback: v => v.toFixed(1) + '%' } }
             }
         }
     });
 }
-
-// ============================================================
-// GENERATE PRESCRIPTION
-// ============================================================
 
 function generatePrescription(yearsData, growth, weights) {
     const solution = document.getElementById('npiSolution');
@@ -967,18 +730,15 @@ function generatePrescription(yearsData, growth, weights) {
         return;
     }
 
-    // Find which component grew fastest
     const components = ['gdp', 'hours', 'energy', 'materials', 'capital'];
     const labels = ['GDP', 'Labour', 'Energy', 'Materials', 'Capital'];
     const growthRates = components.map((comp, idx) => {
-        const values = yearsData.map(d => d[comp]).filter(v => v !== null 
-&& v > 0);
+        const values = yearsData.map(d => d[comp]).filter(v => v !== null && v > 0);
         if (values.length < 2) return 0;
         const start = values[0];
         const end = values[values.length - 1];
         const years = values.length - 1;
-        return years > 0 ? (Math.pow(end / start, 1 / years) - 1) * 100 : 
-0;
+        return years > 0 ? (Math.pow(end / start, 1 / years) - 1) * 100 : 0;
     });
 
     const maxIdx = growthRates.indexOf(Math.max(...growthRates));
@@ -987,35 +747,25 @@ function generatePrescription(yearsData, growth, weights) {
     const country = document.getElementById('countrySelect').value;
 
     if (growth > 0) {
-        solution.textContent = `📈 ${country}'s NPI grew by 
-${growth.toFixed(2)}% per year.`;
+        let msg = country + "'s NPI grew by " + growth.toFixed(2) + '% per year.';
         if (growthRates[maxIdx] > 2) {
-            solution.textContent += ` Driven primarily by 
-${labels[maxIdx]} productivity (${growthRates[maxIdx].toFixed(2)}% 
-p.a.).`;
+            msg += ' Driven primarily by ' + labels[maxIdx] + ' productivity (' + growthRates[maxIdx].toFixed(2) + '% p.a.).';
         }
         if (growthRates[minIdx] < 0) {
-            solution.textContent += ` ${labels[minIdx]} efficiency 
-declined (${growthRates[minIdx].toFixed(2)}% p.a.) – an opportunity for 
-improvement.`;
+            msg += ' ' + labels[minIdx] + ' efficiency declined (' + growthRates[minIdx].toFixed(2) + '% p.a.) – an opportunity for improvement.';
         }
-        action.textContent = `Action: Focus on ${labels[minIdx]} 
-efficiency to accelerate NPI growth.`;
+        solution.textContent = msg;
+        action.textContent = 'Action: Focus on ' + labels[minIdx] + ' efficiency to accelerate NPI growth.';
     } else if (growth < 0) {
-        solution.textContent = `⚠️ ${country}'s NPI declined by 
-${Math.abs(growth).toFixed(2)}% per year.`;
+        let msg = '⚠️ ' + country + "'s NPI declined by " + Math.abs(growth).toFixed(2) + '% per year.';
         if (growthRates[minIdx] < -1) {
-            solution.textContent += ` ${labels[minIdx]} efficiency dropped 
-sharply (${growthRates[minIdx].toFixed(2)}% p.a.).`;
+            msg += ' ' + labels[minIdx] + ' efficiency dropped sharply (' + growthRates[minIdx].toFixed(2) + '% p.a.).';
         }
-        action.textContent = `Action: Prioritise ${labels[minIdx]} 
-efficiency improvements. Consider technology, training, or process 
-optimisation.`;
+        solution.textContent = msg;
+        action.textContent = 'Action: Prioritise ' + labels[minIdx] + ' efficiency improvements. Consider technology, training, or process optimisation.';
     } else {
-        solution.textContent = `📊 ${country}'s NPI has been stable (0% 
-growth).`;
-        action.textContent = 'Action: Look for bottlenecks in the 
-lowest-performing component to unlock growth.';
+        solution.textContent = '📊 ' + country + "'s NPI has been stable (0% growth).";
+        action.textContent = 'Action: Look for bottlenecks in the lowest-performing component to unlock growth.';
     }
 }
 
@@ -1027,29 +777,18 @@ window.addEventListener('load', function() {
     document.documentElement.classList.add('loaded');
     loadCountries();
 
-    // Set year range defaults based on available data
-    setTimeout(() => {
-        // Enable auto-recalculation when sliders change
-        document.getElementById('yearStart').addEventListener('change', 
-runNPI);
-        document.getElementById('yearEnd').addEventListener('change', 
-runNPI);
-        
-document.getElementById('countrySelect').addEventListener('change', 
-runNPI);
+    setTimeout(function() {
+        document.getElementById('yearStart').addEventListener('change', runNPI);
+        document.getElementById('yearEnd').addEventListener('change', runNPI);
+        document.getElementById('countrySelect').addEventListener('change', runNPI);
     }, 500);
 });
 
-// ============================================================
-// THEME TOGGLE (override if needed)
-// ============================================================
-
-// core.min.js handles theme, but we need to re-render charts on theme 
-change
+// Re-render charts on theme change
 document.addEventListener('click', function(e) {
-    const toggle = e.target.closest('#themeToggle');
+    var toggle = e.target.closest('#themeToggle');
     if (toggle) {
-        setTimeout(() => {
+        setTimeout(function() {
             if (document.getElementById('countrySelect').value) {
                 runNPI();
             }
