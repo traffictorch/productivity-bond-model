@@ -20,21 +20,19 @@
   <link rel="apple-touch-icon" href="icon-512.png" />
   <link rel="preconnect" href="https://static.addtoany.com" />
 
-  <!-- ===== FONTS (synchronous – no FOUT) ===== -->
+  <!-- ===== FONTS (synchronous) ===== -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=block" crossorigin="anonymous" />
 
-  <!-- ===== CORE CSS (synchronous – no FOUC) ===== -->
+  <!-- ===== CORE CSS (synchronous) ===== -->
   <link rel="stylesheet" href="css/core.min.css" />
 
-  <!-- ===== TOOL‑SPECIFIC OVERRIDES (small inline) ===== -->
+  <!-- ===== TOOL‑SPECIFIC OVERRIDES ===== -->
   <style>
-    /* Safety net: hide until fully loaded, then fade in */
     html { opacity: 0; transition: opacity 0.12s ease; }
     html.loaded { opacity: 1; }
 
-    /* Custom colours for tool feedback */
     :root {
       --color-safe: #69db7c;
       --color-burnout: #ff6b6b;
@@ -149,31 +147,43 @@
       #wellProjectionContainer { height:160px; min-height:140px; }
     }
 
-    /* Hide return-to-top on mobile (core.min.css also does this, but safe fallback) */
+    /* ===== FIXED ACCORDION ===== */
+    .accordion-toggle {
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 1rem;
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: background 0.2s, border-radius 0.2s;
+    }
+    .accordion-toggle:hover { background: rgba(255,255,255,0.03); border-radius: 8px; }
+    .accordion-toggle .arrow { transition: transform 0.25s ease; display: inline-block; font-size: 0.7rem; color: var(--text-muted); }
+    .accordion-toggle.open .arrow { transform: rotate(180deg); }
+    .accordion-content {
+      max-height: 0 !important;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.3s ease;
+      padding: 0 1rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .accordion-content.open {
+      max-height: 600px !important;
+      padding: 0.2rem 1rem 1rem 1rem;
+    }
+
     @media (max-width: 768px) {
       .floating-return-top { display: none !important; }
     }
-    
-    .accordion-content {
-  max-height: 0 !important;
-  overflow: hidden;
-  transition: max-height 0.35s ease, padding 0.3s ease;
-  padding: 0 1rem;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
-.accordion-content.open {
-  max-height: 600px !important;
-  padding: 0.2rem 1rem 1rem 1rem;
-}
-
   </style>
 
   <!-- ===== CHART.JS (deferred) ===== -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
-
-  <!-- ===== GA4 (deferred) ===== -->
   <script src="js/ga4.js" defer></script>
 
   <!-- Structured Data -->
@@ -227,7 +237,7 @@
 </head>
 <body>
 
-<!-- ===== NAV (standard – core.min.js handles logic) ===== -->
+<!-- ===== NAV ===== -->
 <nav class="sticky-nav no-print" id="mainNav">
   <div class="nav-left">
     <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
@@ -263,9 +273,9 @@
       <p style="font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:300; opacity:0.8; max-width:600px; margin:0.8rem 0 1.5rem; color:var(--text-secondary);">3 powerful tools to diagnose your debt, measure your wellbeing, and project your financial future.</p>
       <!-- Tool Tabs -->
       <div class="hero-tabs">
-        <button class="hero-tab-btn active" data-tab="tab1" onclick="switchTab('tab1')">🌿 1. Wellbeing Index</button>
-        <button class="hero-tab-btn" data-tab="tab2" onclick="switchTab('tab2')">💳 2. Debt Reality</button>
-        <button class="hero-tab-btn" data-tab="tab3" onclick="switchTab('tab3')">📈 3. Compound Curve</button>
+        <button class="hero-tab-btn active" data-tab="tab1" onclick="switchTab('tab1', true)">🌿 1. Wellbeing Index</button>
+        <button class="hero-tab-btn" data-tab="tab2" onclick="switchTab('tab2', true)">💳 2. Debt Reality</button>
+        <button class="hero-tab-btn" data-tab="tab3" onclick="switchTab('tab3', true)">📈 3. Compound Curve</button>
         <button class="share-btn" id="nativeShareBtn" style="padding:0.4rem 1.2rem; font-size:0.85rem;">📤 Share</button>
       </div>
     </div>
@@ -283,15 +293,13 @@
   <section id="tools" class="container section-spacing" style="padding-top:1rem;">
     <div class="glass-card">
 
-      <!-- ============================================================ -->
-      <!-- TOOL 1: WELLBEING INDEX                                      -->
-      <!-- ============================================================ -->
+      <!-- ===== TOOL 1: WELLBEING INDEX ===== -->
       <div id="tab1" class="tool-panel active">
         <h2 style="font-size:1.5rem; font-weight:600; color:var(--text-primary); margin-bottom:0.3rem;">🌿 The Wellbeing Index</h2>
         <p class="desc">Measure your work-life balance, mental health, and productivity to find your harmony zone.</p>
         <div style="background:var(--bg-input); border-radius:12px; padding:0.2rem 0.2rem; margin-bottom:1.5rem; border:1px solid var(--border-divider);">
           <div class="accordion-item">
-            <div class="accordion-toggle"><span>📖 What do these terms mean?</span><span class="arrow">▼</span></div>
+            <div class="accordion-toggle" onclick="toggleAccordion(this)"><span>📖 What do these terms mean?</span><span class="arrow">▼</span></div>
             <div class="accordion-content">
               <div style="padding:0.5rem 0;">
                 <div style="margin-bottom:0.6rem;"><strong style="color:var(--text-primary);">Work Hours/Day</strong> — Total hours you spend working.</div>
@@ -362,20 +370,20 @@
           <div class="glass-card" style="border-color:rgba(167,139,250,0.3);">
             <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap; margin-bottom:0.8rem;">
               <span class="badge-glow" style="background:rgba(167,139,250,0.15); color:#a78bfa;">AI 🤖</span>
-              <h3 style="font-weight:700; font-size:1rem; margin:0; color:var(--text-primary);">Your Personal AI Advisor</h3>
-              <span style="font-size:0.65rem; color:var(--text-muted);">Powered by GLM/Llama</span>
+              <h3 style="font-weight:700; font-size:1rem; margin:0; color:var(--text-primary);">Wellbeing Interpreter</h3>
+              <span style="font-size:0.65rem; color:var(--text-muted);">Powered by AI</span>
             </div>
             <div style="display:flex; flex-wrap:wrap; gap:0.8rem; align-items:center;">
-              <button class="btn-primary" style="padding:0.4rem 1.5rem; font-size:0.85rem;" onclick="generateAI('wellbeing')">🧠 Get Personalized Advice</button>
+              <button class="btn-primary" style="padding:0.4rem 1.5rem; font-size:0.85rem;" onclick="generateAI('wellbeing')">🧠 Generate</button>
               <span style="font-size:0.75rem; color:var(--text-muted);" id="ai-wellbeing-status">Ready</span>
             </div>
             <div id="ai-wellbeing-output" class="ai-output">
-              <span class="placeholder">Click "Get Personalized Advice" to receive a custom wellbeing plan.</span>
+              <span class="placeholder">Click "Generate" to interpret wellbeing.</span>
             </div>
           </div>
         </div>
         <div class="ask-ai-section">
-          <label for="ask-wellbeing-input">💬 Ask a specific question about your wellbeing</label>
+          <label for="ask-wellbeing-input">💬 Ask a question about your wellbeing</label>
           <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
             <input type="text" id="ask-wellbeing-input" placeholder="e.g. How can I improve my sleep score?" style="flex:1; min-width:200px; background:var(--bg-body); border:1px solid var(--border-divider); border-radius:8px; padding:0.6rem 0.8rem; color:var(--text-primary); font-family:inherit;" />
             <button class="btn-primary" style="padding:0.4rem 1.5rem; font-size:0.85rem;" onclick="askAI('wellbeing')">Ask AI</button>
@@ -387,15 +395,13 @@
         </div>
       </div>
 
-      <!-- ============================================================ -->
-      <!-- TOOL 2: DEBT REALITY                                         -->
-      <!-- ============================================================ -->
+      <!-- ===== TOOL 2: DEBT REALITY ===== -->
       <div id="tab2" class="tool-panel">
         <h2 style="font-size:1.5rem; font-weight:600; color:var(--text-primary); margin-bottom:0.3rem;">💳 The Debt Reality</h2>
         <p class="desc">Diagnose your financial situation, see the true cost of debt, and get a personalized plan to freedom.</p>
         <div style="background:var(--bg-input); border-radius:12px; padding:0.2rem 0.2rem; margin-bottom:1.5rem; border:1px solid var(--border-divider);">
           <div class="accordion-item">
-            <div class="accordion-toggle"><span>📖 What do these terms mean?</span><span class="arrow">▼</span></div>
+            <div class="accordion-toggle" onclick="toggleAccordion(this)"><span>📖 What do these terms mean?</span><span class="arrow">▼</span></div>
             <div class="accordion-content">
               <div style="padding:0.5rem 0;">
                 <div style="margin-bottom:0.6rem;"><strong style="color:var(--text-primary);">Total Debt</strong> — The total amount you owe (credit cards, loans, mortgage).</div>
@@ -439,20 +445,20 @@
           <div class="glass-card" style="border-color:rgba(167,139,250,0.3);">
             <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap; margin-bottom:0.8rem;">
               <span class="badge-glow" style="background:rgba(167,139,250,0.15); color:#a78bfa;">AI 🤖</span>
-              <h3 style="font-weight:700; font-size:1rem; margin:0; color:var(--text-primary);">Your Personal AI Advisor</h3>
-              <span style="font-size:0.65rem; color:var(--text-muted);">Powered by GLM/Llama</span>
+              <h3 style="font-weight:700; font-size:1rem; margin:0; color:var(--text-primary);">Debt Reality Interpreter</h3>
+              <span style="font-size:0.65rem; color:var(--text-muted);">Powered by AI</span>
             </div>
             <div style="display:flex; flex-wrap:wrap; gap:0.8rem; align-items:center;">
-              <button class="btn-primary" style="padding:0.4rem 1.5rem; font-size:0.85rem;" onclick="generateAI('debt')">🧠 Get Personalized Advice</button>
+              <button class="btn-primary" style="padding:0.4rem 1.5rem; font-size:0.85rem;" onclick="generateAI('debt')">🧠 Generate</button>
               <span style="font-size:0.75rem; color:var(--text-muted);" id="ai-debt-status">Ready</span>
             </div>
             <div id="ai-debt-output" class="ai-output">
-              <span class="placeholder">Click "Get Personalized Advice" to receive a custom financial plan.</span>
+              <span class="placeholder">Click "Generate" to interpret debt analysis.</span>
             </div>
           </div>
         </div>
         <div class="ask-ai-section">
-          <label for="ask-debt-input">💬 Ask a specific question about your debt</label>
+          <label for="ask-debt-input">💬 Ask a question about debt</label>
           <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
             <input type="text" id="ask-debt-input" placeholder="e.g. How can I pay this off in 2 years?" style="flex:1; min-width:200px; background:var(--bg-body); border:1px solid var(--border-divider); border-radius:8px; padding:0.6rem 0.8rem; color:var(--text-primary); font-family:inherit;" />
             <button class="btn-primary" style="padding:0.4rem 1.5rem; font-size:0.85rem;" onclick="askAI('debt')">Ask AI</button>
@@ -464,15 +470,13 @@
         </div>
       </div>
 
-      <!-- ============================================================ -->
-      <!-- TOOL 3: COMPOUND CURVE                                       -->
-      <!-- ============================================================ -->
+      <!-- ===== TOOL 3: COMPOUND CURVE ===== -->
       <div id="tab3" class="tool-panel">
         <h2 style="font-size:1.5rem; font-weight:600; color:var(--text-primary); margin-bottom:0.3rem;">📈 The Compound Curve</h2>
         <p class="desc">See how your debt (or wasted time) compounds over time — and how small changes bend the curve.</p>
         <div style="background:var(--bg-input); border-radius:12px; padding:0.2rem 0.2rem; margin-bottom:1.5rem; border:1px solid var(--border-divider);">
           <div class="accordion-item">
-            <div class="accordion-toggle"><span>📖 What do these terms mean?</span><span class="arrow">▼</span></div>
+            <div class="accordion-toggle" onclick="toggleAccordion(this)"><span>📖 What do these terms mean?</span><span class="arrow">▼</span></div>
             <div class="accordion-content">
               <div style="padding:0.5rem 0;">
                 <div style="margin-bottom:0.6rem;"><strong style="color:var(--text-primary);">Annual Debt</strong> — The yearly financial loss from your productivity or spending leak. This is the amount you want to reduce.</div>
@@ -513,20 +517,20 @@
           <div class="glass-card" style="border-color:rgba(167,139,250,0.3);">
             <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap; margin-bottom:0.8rem;">
               <span class="badge-glow" style="background:rgba(167,139,250,0.15); color:#a78bfa;">AI 🤖</span>
-              <h3 style="font-weight:700; font-size:1rem; margin:0; color:var(--text-primary);">Your Personal AI Advisor</h3>
-              <span style="font-size:0.65rem; color:var(--text-muted);">Powered by GLM/Llama</span>
+              <h3 style="font-weight:700; font-size:1rem; margin:0; color:var(--text-primary);">Compound Curve Interpreter</h3>
+              <span style="font-size:0.65rem; color:var(--text-muted);">Powered by AI</span>
             </div>
             <div style="display:flex; flex-wrap:wrap; gap:0.8rem; align-items:center;">
-              <button class="btn-primary" style="padding:0.4rem 1.5rem; font-size:0.85rem;" onclick="generateAI('compound')">🧠 Get Personalized Advice</button>
+              <button class="btn-primary" style="padding:0.4rem 1.5rem; font-size:0.85rem;" onclick="generateAI('compound')">🧠 Generate</button>
               <span style="font-size:0.75rem; color:var(--text-muted);" id="ai-compound-status">Ready</span>
             </div>
             <div id="ai-compound-output" class="ai-output">
-              <span class="placeholder">Click "Get Personalized Advice" to receive a custom projection analysis.</span>
+              <span class="placeholder">Click "Generate" to interpret analysis.</span>
             </div>
           </div>
         </div>
         <div class="ask-ai-section">
-          <label for="ask-compound-input">💬 Ask a specific question about your projections</label>
+          <label for="ask-compound-input">💬 Ask a question about compound interest</label>
           <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
             <input type="text" id="ask-compound-input" placeholder="e.g. What if I reduce my annual debt by $2,000?" style="flex:1; min-width:200px; background:var(--bg-body); border:1px solid var(--border-divider); border-radius:8px; padding:0.6rem 0.8rem; color:var(--text-primary); font-family:inherit;" />
             <button class="btn-primary" style="padding:0.4rem 1.5rem; font-size:0.85rem;" onclick="askAI('compound')">Ask AI</button>
@@ -538,7 +542,7 @@
         </div>
       </div>
 
-      <!-- ===== LEARN SECTION (shared) ===== -->
+      <!-- ===== LEARN SECTION ===== -->
       <section id="learn" class="container section-spacing" style="padding-top:2rem;">
         <div class="glass-card" style="border-color:rgba(251,191,36,0.2); padding:1.5rem 1.2rem;">
           <span class="badge-glow" style="background:rgba(251,191,36,0.15); color:#fbbf24; border-color:rgba(251,191,36,0.15); margin-bottom:0.6rem;">📖 Learn</span>
@@ -619,7 +623,7 @@
   </div>
 </footer>
 
-<!-- ===== PWA INSTALL BUTTON (text preserved: "Install Apps") ===== -->
+<!-- ===== PWA ===== -->
 <button id="pwaInstallBtn" class="pwa-install-btn">
   <span class="icon">📱</span>
   <span class="btn-text">Install Apps</span>
@@ -644,15 +648,14 @@
   }
 </script>
 
-<!-- ===== CORE JS (shared) ===== -->
+<!-- ===== CORE JS ===== -->
 <script src="js/core.min.js" defer></script>
 
-<!-- ===== TOOL-SPECIFIC SCRIPTS ===== -->
+<!-- ===== TOOL SCRIPTS ===== -->
 <script>
-  // Wait for everything to be ready before fading in
   window.addEventListener('load', function() {
     document.documentElement.classList.add('loaded');
-    // Auto-run the active tool after a short delay (allow Chart.js to load)
+    // Run the active tool after a short delay
     setTimeout(function() {
       if (document.getElementById('tab1').classList.contains('active')) {
         calculateWellbeing();
@@ -667,33 +670,60 @@
   });
 
   // ============================================================
-  // HERO TAB SWITCHING
+  // HERO TAB SWITCHING – FIXED AUTO‑SCROLL
   // ============================================================
-  function switchTab(tabId) {
-    window.location.hash = tabId;
+  function switchTab(tabId, updateHash = true) {
+    // Update UI
     document.querySelectorAll('.hero-tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
     const activeBtn = document.querySelector(`.hero-tab-btn[data-tab="${tabId}"]`);
     if (activeBtn) activeBtn.classList.add('active');
     const panel = document.getElementById(tabId);
     if (panel) panel.classList.add('active');
-    
+
+    // Update URL hash WITHOUT causing a scroll (only when user clicks)
+    if (updateHash) {
+      if (window.location.hash !== '#' + tabId) {
+        history.replaceState(null, null, '#' + tabId);
+      }
+    }
+
+    // Run the corresponding calculator
     if (tabId === 'tab2') setTimeout(calculateDebtReality, 300);
     if (tabId === 'tab1') setTimeout(calculateWellbeing, 300);
     if (tabId === 'tab3') setTimeout(runCompoundCurve, 300);
   }
 
+  // Handle initial load / deep linking
   function handleHash() {
     const hash = window.location.hash.replace('#', '');
-    if (hash && document.getElementById(hash)) switchTab(hash);
-    else switchTab('tab1');
+    if (hash && document.getElementById(hash)) {
+      // User arrived with a hash – switch tab AND update hash (but the hash is already set, so no scroll)
+      // But we need to avoid a second scroll. Use replaceState to keep the hash but no scroll.
+      // Actually, if the hash is already in the URL, the browser may have already scrolled.
+      // We'll scroll to the top to override it.
+      switchTab(hash, false);
+      // If the hash is present, the browser may have already scrolled. Force scroll to top.
+      window.scrollTo(0, 0);
+    } else {
+      // No hash – show first tab, don't set hash (no scroll)
+      switchTab('tab1', false);
+    }
   }
 
-  window.addEventListener('hashchange', handleHash);
+  // Listen for hash changes (user clicking back/forward)
+  window.addEventListener('hashchange', function() {
+    const hash = window.location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) {
+      switchTab(hash, false);
+    }
+  });
+
+  // Run on load
   window.addEventListener('load', handleHash);
 
   // ============================================================
-  // TOOL FUNCTIONS (unchanged – kept as provided)
+  // TOOL FUNCTIONS (unchanged)
   // ============================================================
   const state = { hourlyRate: 35, workDays: 5, wastedHours: 2.0 };
   let debtChartInstance = null;
@@ -702,7 +732,6 @@
   let compChartInstance = null;
 
   function calculateDebtReality() {
-    // ... (identical to previous version)
     const debt = parseFloat(document.getElementById('debtTotal').value) || 0;
     const rate = parseFloat(document.getElementById('debtRate').value) || 0;
     const payment = parseFloat(document.getElementById('debtPayment').value) || 1;
@@ -1019,7 +1048,7 @@
   }
 
   // ============================================================
-  // AI GENERATOR & ASK AI (unchanged)
+  // AI FUNCTIONS (unchanged)
   // ============================================================
   const WORKER_URLS = {
     debt: 'https://ai-debt.traffictorch.workers.dev',

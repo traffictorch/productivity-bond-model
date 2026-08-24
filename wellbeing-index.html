@@ -282,15 +282,15 @@
         <div class="glass-card" style="border-color:rgba(167,139,250,0.3);">
           <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap; margin-bottom:0.8rem;">
             <span class="badge-glow" style="background:rgba(167,139,250,0.15); color:#a78bfa;">AI 🤖</span>
-            <h3 style="font-weight:700; font-size:1rem; margin:0; color:var(--text-primary);">Your Personal AI Advisor</h3>
-            <span style="font-size:0.65rem; color:var(--text-muted);">Powered by GLM/Llama</span>
+            <h3 style="font-weight:700; font-size:1rem; margin:0; color:var(--text-primary);">Wellbeing Interpreter</h3>
+            <span style="font-size:0.65rem; color:var(--text-muted);">Powered by AI</span>
           </div>
           <div style="display:flex; flex-wrap:wrap; gap:0.8rem; align-items:center;">
-            <button class="btn-primary" style="padding:0.4rem 1.5rem; font-size:0.85rem;" onclick="generateAI()">🧠 Get Personalized Advice</button>
+            <button class="btn-primary" style="padding:0.4rem 1.5rem; font-size:0.85rem;" onclick="generateAI()">🧠 Generate</button>
             <span style="font-size:0.75rem; color:var(--text-muted);" id="ai-wellbeing-status">Ready</span>
           </div>
           <div id="ai-wellbeing-output" class="ai-output">
-            <span class="placeholder">Click "Get Personalized Advice" to receive a custom wellbeing plan.</span>
+            <span class="placeholder">Click "Generate" to interpret wellbeing.</span>
           </div>
         </div>
       </div>
@@ -303,7 +303,7 @@
           <button class="btn-primary" style="padding:0.4rem 1.5rem; font-size:0.85rem;" onclick="askAI()">Ask AI</button>
         </div>
         <div id="ask-wellbeing-output" class="ai-output" style="margin-top:0.5rem;">
-          <span class="placeholder">Ask a question to get a specific answer.</span>
+          <span class="placeholder">Ask a question about your wellbeing.</span>
         </div>
         <span style="font-size:0.75rem; color:var(--text-muted);" id="ask-wellbeing-status"></span>
       </div>
