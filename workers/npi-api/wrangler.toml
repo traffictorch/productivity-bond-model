@@ -1,0 +1,9 @@
+name = "npi-api"
+main = "index.js"
+compatibility_date = "2024-07-01"
+
+[[d1_databases]]
+binding = "NPI_DB"
+database_name = "npi-db"
+database_id = "4fbc5cdf-1df4-47fe-95c7-57a34301a500"
+

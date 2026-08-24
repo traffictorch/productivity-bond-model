@@ -167,8 +167,48 @@
       justify-content:space-between;
       align-items:center;
       margin-bottom:0.5rem;
+      flex-wrap:wrap;
+      gap:0.5rem;
     }
     .weight-header .title { font-size:0.8rem; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.04em; }
+
+    .mode-selector {
+      display:flex;
+      gap:0.5rem;
+      flex-wrap:wrap;
+      margin-bottom:0.8rem;
+    }
+    .mode-btn {
+      background:var(--bg-body);
+      border:1px solid var(--border-divider);
+      color:var(--text-muted);
+      padding:0.4rem 1rem;
+      border-radius:40px;
+      font-size:0.75rem;
+      font-weight:600;
+      cursor:pointer;
+      transition:0.2s;
+      font-family:inherit;
+    }
+    .mode-btn:hover {
+      border-color:var(--text-muted);
+      color:var(--text-primary);
+    }
+    .mode-btn.active {
+      background:rgba(79,70,229,0.2);
+      border-color:#4f46e5;
+      color:#b388ff;
+    }
+
+    .mode-label {
+      font-size:0.7rem;
+      color:var(--text-muted);
+      background:var(--bg-code);
+      padding:0.2rem 0.8rem;
+      border-radius:40px;
+      display:inline-block;
+      margin-bottom:0.5rem;
+    }
 
     @media (max-width: 768px) {
       .weight-sliders { grid-template-columns: 1fr; }
@@ -233,7 +273,7 @@
   <section class="container hero">
     <div>
       <span class="badge-glow" style="margin-bottom:0.5rem;">📊 Interactive Tool</span>
-      <span class="badge-glow badge-version" style="margin-left:0.5rem;">v0.9.0</span>
+      <span class="badge-glow badge-version" style="margin-left:0.5rem;">v1.0.0</span>
       <h1 class="text-gradient" style="font-size:clamp(2.8rem,6vw,4rem); font-weight:800; letter-spacing:-0.03em; line-height:1.1;">NPI Index Tracker</h1>
       <p style="font-size:clamp(1.2rem,2vw,1.6rem); font-weight:300; opacity:0.8; max-width:650px; margin:0.5rem 0 1.5rem; color:var(--text-secondary);">
         Measure how efficiently your economy turns inputs into value – with real‑world data from 50+ countries.
@@ -283,9 +323,17 @@
         </label>
       </div>
 
+      <!-- Weight Mode Selector -->
+      <div class="mode-selector" id="modeSelector">
+        <button class="mode-btn active" data-mode="book" onclick="setMode('book')">📘 Book NPI (Fixed)</button>
+        <button class="mode-btn" data-mode="preset" onclick="setMode('preset')">🌍 Country Preset</button>
+        <button class="mode-btn" data-mode="custom" onclick="setMode('custom')">⚙️ Custom</button>
+      </div>
+      <div id="modeLabel" class="mode-label">📘 Using book's fixed weights (40/25/20/15)</div>
+
       <!-- Weight Adjusters -->
       <div class="weight-header">
-        <span class="title">⚖️ Weight Adjusters (Simulation Mode)</span>
+        <span class="title">⚖️ Weight Adjusters</span>
         <button class="reset-btn" onclick="resetWeights()">↺ Reset to Book Weights</button>
       </div>
       <div class="weight-sliders" id="weightSliders">
@@ -358,7 +406,7 @@
           <div class="accordion-content">
             <div style="padding:0.5rem 0;">
               <div style="margin-bottom:0.8rem;"><strong style="color:var(--text-primary);">What is the NPI?</strong><br><span style="color:var(--text-secondary);">The National Productivity Index measures how efficiently an economy converts inputs (labour, energy, materials, capital) into GDP. Higher NPI = more efficient.</span></div>
-              <div style="margin-bottom:0.8rem;"><strong style="color:var(--text-primary);">Why are the weights adjustable?</strong><br><span style="color:var(--text-secondary);">The book proposes fixed weights (40/25/20/15). But different economies have different structures – the sliders let you explore "what if" scenarios.</span></div>
+              <div style="margin-bottom:0.8rem;"><strong style="color:var(--text-primary);">What are the weight modes?</strong><br><span style="color:var(--text-secondary);"><strong>Book NPI</strong> uses fixed weights (40/25/20/15). <strong>Country Preset</strong> applies weights based on the country's economic structure. <strong>Custom</strong> lets you adjust freely.</span></div>
               <div style="margin-bottom:0.8rem;"><strong style="color:var(--text-primary);">Where does the data come from?</strong><br><span style="color:var(--text-secondary);">GDP (World Bank), Hours (ILO/OECD), Energy (IEA), Materials (UNEP), Capital (OECD/Penn World Table). All public sources.</span></div>
               <div><strong style="color:var(--text-primary);">Why is some data missing?</strong><br><span style="color:var(--text-secondary);">Not all countries report all metrics. The tool skips years with incomplete data and shows a warning.</span></div>
             </div>
@@ -435,7 +483,7 @@
     <p>
       © 2026 <a href="https://traffictorch.net">Traffic Torch</a> ·
       <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> ·
-      Version 0.9.0
+      Version 1.0.0
     </p>
     <p style="font-size:0.7rem; margin-top:0.3rem;">
       Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI
@@ -447,7 +495,7 @@
 
 <script>
 // ============================================================
-// NPI INDEX TRACKER – MAIN JAVASCRIPT (FIXED)
+// NPI INDEX TRACKER – WITH COUNTRY PRESETS
 // ============================================================
 
 const WORKER_URL = "https://npi-api.traffictorch.workers.dev";
@@ -458,18 +506,100 @@ let componentChartInstance = null;
 // Default weights (book's proposal)
 const DEFAULT_WEIGHTS = { H: 40, E: 25, M: 20, K: 15 };
 
-// Current weights
+// Country presets by economic category
+const COUNTRY_PRESETS = {
+    // Tech-Driven: high capital, low energy/materials
+    'USA': { H: 30, E: 15, M: 15, K: 40 },
+    'KOR': { H: 30, E: 15, M: 15, K: 40 },
+    // Manufacturing: balanced, higher materials
+    'DEU': { H: 35, E: 25, M: 20, K: 20 },
+    'JPN': { H: 35, E: 25, M: 20, K: 20 },
+    'ITA': { H: 35, E: 25, M: 20, K: 20 },
+    'CHN': { H: 40, E: 25, M: 20, K: 15 },
+    // Resource-Based: high energy, high materials
+    'AUS': { H: 25, E: 35, M: 30, K: 10 },
+    'RUS': { H: 25, E: 35, M: 30, K: 10 },
+    'CAN': { H: 25, E: 35, M: 30, K: 10 },
+    // Service-Based: high capital, low materials
+    'GBR': { H: 35, E: 15, M: 10, K: 40 },
+    'FRA': { H: 35, E: 15, M: 10, K: 40 },
+    'ESP': { H: 35, E: 15, M: 10, K: 40 },
+    // Developing: high labour, low capital
+    'IND': { H: 55, E: 15, M: 15, K: 15 },
+    'BRA': { H: 55, E: 15, M: 15, K: 15 },
+    'MEX': { H: 55, E: 15, M: 15, K: 15 },
+    'IDN': { H: 55, E: 15, M: 15, K: 15 },
+    'TUR': { H: 55, E: 15, M: 15, K: 15 },
+    'ZAF': { H: 55, E: 15, M: 15, K: 15 },
+};
+
+// Default category for unknown countries
+const DEFAULT_PRESET = { H: 40, E: 25, M: 20, K: 15 };
+
+// Current weights and mode
 let weights = { ...DEFAULT_WEIGHTS };
+let currentMode = 'book'; // 'book', 'preset', 'custom'
+
+// ============================================================
+// MODE SELECTOR
+// ============================================================
+
+function setMode(mode) {
+    currentMode = mode;
+
+    // Update buttons
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === mode);
+    });
+
+    // Update label
+    const label = document.getElementById('modeLabel');
+    const country = document.getElementById('countrySelect').value;
+
+    if (mode === 'book') {
+        label.textContent = '📘 Using book\'s fixed weights (40/25/20/15)';
+        weights = { ...DEFAULT_WEIGHTS };
+    } else if (mode === 'preset') {
+        const preset = COUNTRY_PRESETS[country] || DEFAULT_PRESET;
+        weights = { ...preset };
+        label.textContent = '🌍 Using presets for ' + country + ' (' + weights.H + '/' + weights.E + '/' + weights.M + '/' + weights.K + ')';
+    } else {
+        label.textContent = '⚙️ Custom weights – drag sliders to adjust';
+        // Keep current weights
+    }
+
+    // Update sliders
+    document.getElementById('weightH').value = weights.H;
+    document.getElementById('weightE').value = weights.E;
+    document.getElementById('weightM').value = weights.M;
+    document.getElementById('weightK').value = weights.K;
+    document.getElementById('weightHDisplay').textContent = weights.H + '%';
+    document.getElementById('weightEDisplay').textContent = weights.E + '%';
+    document.getElementById('weightMDisplay').textContent = weights.M + '%';
+    document.getElementById('weightKDisplay').textContent = weights.K + '%';
+
+    // Recalculate if data is loaded
+    if (document.getElementById('countrySelect').value) {
+        runNPI();
+    }
+}
 
 // ============================================================
 // WEIGHT SLIDER LOGIC
 // ============================================================
 
 function updateWeights(changed, value) {
+    if (currentMode === 'book') {
+        // If in book mode, switching slider auto-switches to custom
+        setMode('custom');
+        // But we need to set the weight that triggered this
+        weights[changed] = parseFloat(value);
+        // ... and continue
+    }
+
     const val = parseFloat(value);
     weights[changed] = val;
 
-    // Distribute the remaining 100% proportionally among other weights
     const others = Object.keys(weights).filter(k => k !== changed);
     const totalOthers = Object.keys(weights).reduce((sum, k) => sum + weights[k], 0) - val;
 
@@ -482,7 +612,6 @@ function updateWeights(changed, value) {
         });
     }
 
-    // Fix rounding errors – ensure total is exactly 100
     let sum = Object.values(weights).reduce((a, b) => a + b, 0);
     if (sum !== 100) {
         const diff = 100 - sum;
@@ -490,37 +619,23 @@ function updateWeights(changed, value) {
         weights[lastKey] = Math.max(0, weights[lastKey] + diff);
     }
 
-    // Update UI
     document.getElementById('weightHDisplay').textContent = weights.H + '%';
     document.getElementById('weightEDisplay').textContent = weights.E + '%';
     document.getElementById('weightMDisplay').textContent = weights.M + '%';
     document.getElementById('weightKDisplay').textContent = weights.K + '%';
 
-    // Update sliders without triggering loops
     document.getElementById('weightH').value = weights.H;
     document.getElementById('weightE').value = weights.E;
     document.getElementById('weightM').value = weights.M;
     document.getElementById('weightK').value = weights.K;
 
-    // Auto-recalculate if data is loaded
     if (document.getElementById('countrySelect').value) {
         runNPI();
     }
 }
 
 function resetWeights() {
-    weights = { ...DEFAULT_WEIGHTS };
-    document.getElementById('weightH').value = weights.H;
-    document.getElementById('weightE').value = weights.E;
-    document.getElementById('weightM').value = weights.M;
-    document.getElementById('weightK').value = weights.K;
-    document.getElementById('weightHDisplay').textContent = weights.H + '%';
-    document.getElementById('weightEDisplay').textContent = weights.E + '%';
-    document.getElementById('weightMDisplay').textContent = weights.M + '%';
-    document.getElementById('weightKDisplay').textContent = weights.K + '%';
-    if (document.getElementById('countrySelect').value) {
-        runNPI();
-    }
+    setMode('book');
 }
 
 // ============================================================
@@ -540,9 +655,13 @@ async function loadCountries() {
             opt.textContent = c;
             select.appendChild(opt);
         });
-        // Auto-select USA for demo
         if (countries.includes('USA')) {
             select.value = 'USA';
+            // Apply preset if mode is preset
+            if (currentMode === 'preset') {
+                const preset = COUNTRY_PRESETS['USA'] || DEFAULT_PRESET;
+                weights = { ...preset };
+            }
             runNPI();
         }
     } catch (err) {
@@ -583,7 +702,6 @@ async function runNPI() {
             return;
         }
 
-        // Calculate NPI for each year
         const wH = weights.H / 100;
         const wE = weights.E / 100;
         const wM = weights.M / 100;
@@ -621,7 +739,7 @@ async function runNPI() {
         document.getElementById('npiGrowth').textContent = growth.toFixed(2) + '%';
         document.getElementById('npiGrowth').style.color = growth >= 0 ? '#34d399' : '#ff6b6b';
 
-        document.getElementById('npiSubtitle').textContent = '📊 ' + country + ' · ' + labels[0] + '–' + labels[labels.length-1] + ' · ' + validData.length + ' years · Base year ' + labels[0] + ' = 100';
+        document.getElementById('npiSubtitle').textContent = '📊 ' + country + ' · ' + labels[0] + '–' + labels[labels.length-1] + ' · ' + validData.length + ' years · Base year ' + labels[0] + ' = 100 · Mode: ' + currentMode;
 
         renderNPIChart(labels, normalised);
         renderComponentBreakdown(validYears);
@@ -780,7 +898,22 @@ window.addEventListener('load', function() {
     setTimeout(function() {
         document.getElementById('yearStart').addEventListener('change', runNPI);
         document.getElementById('yearEnd').addEventListener('change', runNPI);
-        document.getElementById('countrySelect').addEventListener('change', runNPI);
+        document.getElementById('countrySelect').addEventListener('change', function() {
+            if (currentMode === 'preset') {
+                const preset = COUNTRY_PRESETS[this.value] || DEFAULT_PRESET;
+                weights = { ...preset };
+                document.getElementById('weightH').value = weights.H;
+                document.getElementById('weightE').value = weights.E;
+                document.getElementById('weightM').value = weights.M;
+                document.getElementById('weightK').value = weights.K;
+                document.getElementById('weightHDisplay').textContent = weights.H + '%';
+                document.getElementById('weightEDisplay').textContent = weights.E + '%';
+                document.getElementById('weightMDisplay').textContent = weights.M + '%';
+                document.getElementById('weightKDisplay').textContent = weights.K + '%';
+                document.getElementById('modeLabel').textContent = '🌍 Using presets for ' + this.value + ' (' + weights.H + '/' + weights.E + '/' + weights.M + '/' + weights.K + ')';
+            }
+            runNPI();
+        });
     }, 500);
 });
 
