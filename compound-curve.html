@@ -142,20 +142,141 @@
   <!-- ===== GA4 (deferred) ===== -->
   <script src="js/ga4.js" defer></script>
 
-  <!-- FAQ Schema -->
-  <script type="application/ld+json">
+<!-- ===== SCHEMA.ORG (Compound Curve) ===== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": "https://traffictorch.github.io/productivity-bond-model/compound-curve.html#webpage",
+      "url": "https://traffictorch.github.io/productivity-bond-model/compound-curve.html",
+      "name": "Compound Curve – Free Interactive Tool | PBM Productivity Lab",
+      "description": "See how your debt compounds over time and how small changes bend the curve. Interactive projection tool.",
+      "inLanguage": "en-US",
+      "dateModified": "2026-08-24",
+      "isPartOf": {
+        "@id": "https://traffictorch.github.io/productivity-bond-model/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://traffictorch.github.io/productivity-bond-model/compound-curve.html#breadcrumb"
+      },
+      "mainEntity": {
+        "@id": "https://traffictorch.github.io/productivity-bond-model/compound-curve.html#software"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://traffictorch.github.io/productivity-bond-model/compound-curve.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://traffictorch.github.io/productivity-bond-model/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tools",
+          "item": "https://traffictorch.github.io/productivity-bond-model/tools.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Compound Curve"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://traffictorch.github.io/productivity-bond-model/compound-curve.html#software",
+      "name": "Compound Curve",
+      "description": "See how your debt compounds over time and how small changes bend the curve. Interactive projection tool.",
+      "url": "https://traffictorch.github.io/productivity-bond-model/compound-curve.html",
+      "applicationCategory": "FinancialApplication",
+      "applicationSubCategory": "FinancialProjection",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript",
+      "softwareVersion": "0.9.0",
+      "dateModified": "2026-08-24",
+      "author": {
+        "@type": "Person",
+        "@id": "https://yliacallan.github.io/#person",
+        "name": "Ylia Callan",
+        "url": "https://yliacallan.github.io/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://traffictorch.net/#organization",
+        "name": "Traffic Torch",
+        "url": "https://traffictorch.net"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Debt growth projection over 5–20 years",
+        "Compound interest visualisation (line chart)",
+        "Reduction slider – see savings from cutting annual debt",
+        "Current Path vs Optimised Path comparison",
+        "Total debt and final year projections",
+        "Personalised prescription for action",
+        "AI-powered personalised projection analysis"
+      ],
+      "image": "https://traffictorch.github.io/productivity-bond-model/og-image-1200w.png"
+    },
+    {
       "@type": "FAQPage",
+      "@id": "https://traffictorch.github.io/productivity-bond-model/compound-curve.html#faq",
       "mainEntity": [
-        {"@type":"Question","name":"What is the Compound Curve tool?","acceptedAnswer":{"@type":"Answer","text":"The Compound Curve tool projects how your annual debt grows over time due to compound interest. It shows the difference between taking action and doing nothing."}},
-        {"@type":"Question","name":"How do I use the Compound Curve?","acceptedAnswer":{"@type":"Answer","text":"Enter your annual debt, growth rate, time horizon, and the amount you can reduce annually. Click 'Project the Future' to see the chart and savings."}},
-        {"@type":"Question","name":"What does the Growth Rate represent?","acceptedAnswer":{"@type":"Answer","text":"The growth rate is the annual percentage increase in your debt. Even 10% can double your debt in ~7 years."}},
-        {"@type":"Question","name":"How much can I save by reducing my annual debt?","acceptedAnswer":{"@type":"Answer","text":"Small cuts compound into huge savings over time. The tool shows you exactly how much you save in the final year."}},
-        {"@type":"Question","name":"Is the Compound Curve tool free?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely free and open source."}}
+        {
+          "@type": "Question",
+          "name": "What is the Compound Curve tool?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Compound Curve tool projects how your annual debt grows over time due to compound interest. It shows the difference between taking action and doing nothing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I use the Compound Curve?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Enter your annual debt, growth rate, time horizon, and the amount you can reduce annually. Click 'Project the Future' to see the chart and savings."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does the Growth Rate represent?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The growth rate is the annual percentage increase in your debt. Even 10% can double your debt in ~7 years."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much can I save by reducing my annual debt?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Small cuts compound into huge savings over time. The tool shows you exactly how much you save in the final year."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the Compound Curve tool free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, completely free and open source."
+          }
+        }
       ]
     }
-  </script>
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -175,7 +296,7 @@
     <li class="dropdown">
       <span class="dropdown-toggle">🧰 Tools ▼</span>
       <ul class="dropdown-menu">
-        <li><a href="tools.html">🧰 All Tools</a></li>
+        <li><a href="tools.html">⚙️ All Tools</a></li>
         <li><a href="wellbeing-index.html">🌿 Wellbeing Index</a></li>
         <li><a href="debt-reality.html">💳 Debt Reality</a></li>
         <li><a href="compound-curve.html">📈 Compound Curve</a></li>

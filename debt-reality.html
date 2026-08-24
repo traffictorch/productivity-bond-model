@@ -141,20 +141,141 @@
   <!-- ===== GA4 (deferred) ===== -->
   <script src="js/ga4.js" defer></script>
 
-  <!-- FAQ Schema -->
-  <script type="application/ld+json">
+<!-- ===== SCHEMA.ORG (Debt Reality) ===== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": "https://traffictorch.github.io/productivity-bond-model/debt-reality.html#webpage",
+      "url": "https://traffictorch.github.io/productivity-bond-model/debt-reality.html",
+      "name": "Debt Reality – Free Interactive Tool | PBM Productivity Lab",
+      "description": "Diagnose your financial situation, see the true cost of debt, and get a personalized plan to freedom.",
+      "inLanguage": "en-US",
+      "dateModified": "2026-08-24",
+      "isPartOf": {
+        "@id": "https://traffictorch.github.io/productivity-bond-model/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://traffictorch.github.io/productivity-bond-model/debt-reality.html#breadcrumb"
+      },
+      "mainEntity": {
+        "@id": "https://traffictorch.github.io/productivity-bond-model/debt-reality.html#software"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://traffictorch.github.io/productivity-bond-model/debt-reality.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://traffictorch.github.io/productivity-bond-model/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tools",
+          "item": "https://traffictorch.github.io/productivity-bond-model/tools.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Debt Reality"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://traffictorch.github.io/productivity-bond-model/debt-reality.html#software",
+      "name": "Debt Reality",
+      "description": "Diagnose your financial situation, see the true cost of debt, and get a personalized plan to freedom.",
+      "url": "https://traffictorch.github.io/productivity-bond-model/debt-reality.html",
+      "applicationCategory": "FinancialApplication",
+      "applicationSubCategory": "Debt Management",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript",
+      "softwareVersion": "0.9.0",
+      "dateModified": "2026-08-24",
+      "author": {
+        "@type": "Person",
+        "@id": "https://yliacallan.github.io/#person",
+        "name": "Ylia Callan",
+        "url": "https://yliacallan.github.io/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://traffictorch.net/#organization",
+        "name": "Traffic Torch",
+        "url": "https://traffictorch.net"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Debt payoff time calculator (months to freedom)",
+        "Total interest projection",
+        "Debt-to-income (DTI) ratio diagnosis",
+        "Extra payment impact slider (see savings instantly)",
+        "Stacked bar chart visualisation (interest vs principal)",
+        "Personalised financial prescription",
+        "AI-powered personalised financial advice"
+      ],
+      "image": "https://traffictorch.github.io/productivity-bond-model/og-image-1200w.png"
+    },
+    {
       "@type": "FAQPage",
+      "@id": "https://traffictorch.github.io/productivity-bond-model/debt-reality.html#faq",
       "mainEntity": [
-        {"@type":"Question","name":"What is the Debt Reality tool?","acceptedAnswer":{"@type":"Answer","text":"The Debt Reality tool calculates how long it will take you to pay off your debt given your current interest rate and monthly payment. It also shows the total interest you'll pay and lets you see the impact of making extra payments."}},
-        {"@type":"Question","name":"How do I use the Debt Reality calculator?","acceptedAnswer":{"@type":"Answer","text":"Simply enter your total debt, annual interest rate, monthly payment, and monthly income. Then click 'Diagnose My Debt'. You'll see your payoff time, total interest, and a chart. You can also adjust the extra payment slider to see how much you can save."}},
-        {"@type":"Question","name":"What is a good debt-to-income ratio?","acceptedAnswer":{"@type":"Answer","text":"A debt-to-income (DTI) ratio below 36% is generally considered healthy, and below 28% is excellent. The tool will flag if your DTI is too high and suggest actions."}},
-        {"@type":"Question","name":"How can I pay off debt faster?","acceptedAnswer":{"@type":"Answer","text":"The most effective way is to increase your monthly payment – even a small extra amount can shorten your payoff time significantly. The tool shows you exactly how many months you save and how much interest you avoid."}},
-        {"@type":"Question","name":"Is the Debt Reality tool free?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely free and open source. No registration required."}}
+        {
+          "@type": "Question",
+          "name": "What is the Debt Reality tool?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Debt Reality tool calculates how long it will take you to pay off your debt given your current interest rate and monthly payment. It also shows the total interest you'll pay and lets you see the impact of making extra payments."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I use the Debt Reality calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Simply enter your total debt, annual interest rate, monthly payment, and monthly income. Then click 'Diagnose My Debt'. You'll see your payoff time, total interest, and a chart. You can also adjust the extra payment slider to see how much you can save."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a good debt-to-income ratio?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A debt-to-income (DTI) ratio below 36% is generally considered healthy, and below 28% is excellent. The tool will flag if your DTI is too high and suggest actions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I pay off debt faster?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The most effective way is to increase your monthly payment – even a small extra amount can shorten your payoff time significantly. The tool shows you exactly how many months you save and how much interest you avoid."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the Debt Reality tool free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, completely free and open source. No registration required."
+          }
+        }
       ]
     }
-  </script>
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -174,7 +295,7 @@
     <li class="dropdown">
       <span class="dropdown-toggle">🧰 Tools ▼</span>
       <ul class="dropdown-menu">
-        <li><a href="tools.html">🧰 All Tools</a></li>
+        <li><a href="tools.html">⚙️ All Tools</a></li>
         <li><a href="wellbeing-index.html">🌿 Wellbeing Index</a></li>
         <li><a href="debt-reality.html">💳 Debt Reality</a></li>
         <li><a href="compound-curve.html">📈 Compound Curve</a></li>

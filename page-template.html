@@ -325,72 +325,29 @@
 </head>
 <body>
 
-<!-- ====== NAVIGATION (inlined – copy from index.html) ====== -->
+<!-- ===== NAV ===== -->
 <nav class="sticky-nav no-print" id="mainNav">
   <div class="nav-left">
-    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
-      <span></span><span></span><span></span>
-    </button>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-pressed="false">
-      <span id="themeIcon">🌙</span>
-    </button>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-pressed="false"><span id="themeIcon">🌙</span></button>
   </div>
   <ul class="nav-links" id="navLinks">
     <li><a href="index.html">🏠 Home</a></li>
-      <li class="dropdown">
-      <span class="dropdown-toggle">Tools ▼</span>
-      <ul class="dropdown-menu">
-        <li><a href="news.html">Tool Name 1 etc to 12</a></li>
-        <li><a href="about.html">2</a></li>
-        <li><a href="changelog.html">3</a></li>
-        <li><a href="privacy.html">4</a></li>
-        <li><a href="terms.html">5</a></li>
-        <li><a href="contact.html">6 etc</a></li>
-      </ul>
-    </li>
     <li class="dropdown">
-      <span class="dropdown-toggle">About ▼</span>
+      <span class="dropdown-toggle">🧰 Tools ▼</span>
       <ul class="dropdown-menu">
-        <li><a href="news.html">News</a></li>
-        <li><a href="about.html">Traffic Torch</a></li>
-        <li><a href="changelog.html">Change Log</a></li>
-        <li><a href="privacy.html">Privacy</a></li>
-        <li><a href="terms.html">Terms</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="tools.html">⚙️ All Tools</a></li>
+        <li><a href="wellbeing-index.html">🌿 Wellbeing Index</a></li>
+        <li><a href="debt-reality.html">💳 Debt Reality</a></li>
+        <li><a href="compound-curve.html">📈 Compound Curve</a></li>
       </ul>
     </li>
-    <li class="dropdown">
-      <span class="dropdown-toggle">Abstract ▼</span>
-      <ul class="dropdown-menu">
-        <li><a href="index.html#abstract">The Abstract</a></li>
-        <li><a href="index.html#problem-visualized">The Problem</a></li>
-        <li><a href="index.html#wellbeing">Wellbeing</a></li>
-      </ul>
-    </li>
-    <li class="dropdown">
-      <span class="dropdown-toggle">PBM ▼</span>
-      <ul class="dropdown-menu">
-        <li><a href="index.html#model-definition">Model</a></li>
-        <li><a href="index.html#mechanism">Mechanism</a></li>
-        <li><a href="index.html#glossary">Glossary</a></li>
-        <li><a href="index.html#limitations">Limitations</a></li>
-        <li><a href="index.html#related">Related</a></li>
-        <li><a href="index.html#faq">FAQ</a></li>
-        <li><a href="index.html#citation">Cite</a></li>
-      </ul>
-    </li>
-    <li class="dropdown">
-      <span class="dropdown-toggle">Simulation ▼</span>
-      <ul class="dropdown-menu">
-        <li><a href="index.html#simulator">Live Simulator</a></li>
-        <li><a href="index.html#results-data">Results</a></li>
-        <li><a href="index.html#sensitivity">Sensitivity</a></li>
-        <li><a href="index.html#adoption">Scenarios</a></li>
-        <li><a href="index.html#implement">Implementation</a></li>
-      </ul>
-    </li>
-    <li><a href="book.html">Books</a></li>
-    <li><a href="index.html#learn">Learn 💸</a></li>
+    <li class="dropdown"><span class="dropdown-toggle">About ▼</span><ul class="dropdown-menu"><li><a href="news.html">News</a></li><li><a href="about.html">Traffic Torch</a></li><li><a href="changelog.html">Change Log</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="contact.html">Contact</a></li></ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">Abstract ▼</span><ul class="dropdown-menu"><li><a href="index.html#abstract">The Abstract</a></li><li><a href="index.html#problem-visualized">The Problem</a></li><li><a href="index.html#wellbeing">Wellbeing</a></li></ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">PBM ▼</span><ul class="dropdown-menu"><li><a href="index.html#model-definition">Model</a></li><li><a href="index.html#mechanism">Mechanism</a></li><li><a href="index.html#glossary">Glossary</a></li><li><a href="index.html#limitations">Limitations</a></li><li><a href="index.html#related">Related</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="index.html#citation">Cite</a></li></ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">Simulation ▼</span><ul class="dropdown-menu"><li><a href="index.html#simulator">Live Simulator</a></li><li><a href="index.html#results-data">Results</a></li><li><a href="index.html#sensitivity">Sensitivity</a></li><li><a href="index.html#adoption">Scenarios</a></li><li><a href="index.html#implement">Implementation</a></li></ul></li>
+    <li><a href="book.html">🎧 Books</a></li>
+    <li><a href="index.html#learn">💸 Learn</a></li>
   </ul>
 </nav>
 
@@ -429,7 +386,7 @@
   </section>
   
   <!-- ===== TOOL CARDS ROW ===== -->
-<section class="container section-spacing" style="padding-bottom:3;">
+<section class="container section-spacing" style="padding-top:0; -bottom:3;">
   <h2 class="text-gradient" style="font-size:clamp(1.8rem,3vw,2.2rem); font-weight:700; text-align:center; margin-bottom:0.5rem;">Explore the Tools</h2>
   <p style="text-align:center; color:var(--text-secondary); max-width:600px; margin:0 auto 2rem; font-size:clamp(0.95rem,1.1vw,1.05rem);">
     Interactive calculators to help you understand your financial and personal wellbeing.

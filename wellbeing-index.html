@@ -147,20 +147,139 @@
   <!-- ===== GA4 (deferred) ===== -->
   <script src="js/ga4.js" defer></script>
 
-  <!-- FAQ Schema -->
-  <script type="application/ld+json">
+<!-- ===== SCHEMA.ORG (Wellbeing Index) ===== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": "https://traffictorch.github.io/productivity-bond-model/wellbeing-index.html#webpage",
+      "url": "https://traffictorch.github.io/productivity-bond-model/wellbeing-index.html",
+      "name": "Wellbeing Index – Free Interactive Tool | PBM Productivity Lab",
+      "description": "Measure your work-life balance, mental health, and productivity. Get personalised wellbeing advice and a 10‑year projection.",
+      "inLanguage": "en-US",
+      "dateModified": "2026-08-24",
+      "isPartOf": {
+        "@id": "https://traffictorch.github.io/productivity-bond-model/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://traffictorch.github.io/productivity-bond-model/wellbeing-index.html#breadcrumb"
+      },
+      "mainEntity": {
+        "@id": "https://traffictorch.github.io/productivity-bond-model/wellbeing-index.html#software"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://traffictorch.github.io/productivity-bond-model/wellbeing-index.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://traffictorch.github.io/productivity-bond-model/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tools",
+          "item": "https://traffictorch.github.io/productivity-bond-model/tools.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Wellbeing Index"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://traffictorch.github.io/productivity-bond-model/wellbeing-index.html#software",
+      "name": "Wellbeing Index",
+      "description": "Measure your work-life balance, mental health, sleep, and productivity. Get personalised wellbeing advice and a 10‑year projection.",
+      "url": "https://traffictorch.github.io/productivity-bond-model/wellbeing-index.html",
+      "applicationCategory": "HealthApplication",
+      "applicationSubCategory": "Wellness",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript",
+      "softwareVersion": "0.9.0",
+      "dateModified": "2026-08-24",
+      "author": {
+        "@type": "Person",
+        "@id": "https://yliacallan.github.io/#person",
+        "name": "Ylia Callan",
+        "url": "https://yliacallan.github.io/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://traffictorch.net/#organization",
+        "name": "Traffic Torch",
+        "url": "https://traffictorch.net"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Wellbeing score calculation (0–100)",
+        "Radar chart visualisation (6 dimensions)",
+        "10‑year wellbeing projection",
+        "Personalised diagnosis",
+        "AI‑powered personalised advice"
+      ],
+      "image": "https://traffictorch.github.io/productivity-bond-model/og-image-1200w.png"
+    },
+    {
       "@type": "FAQPage",
+      "@id": "https://traffictorch.github.io/productivity-bond-model/wellbeing-index.html#faq",
       "mainEntity": [
-        {"@type":"Question","name":"What is the Wellbeing Index tool?","acceptedAnswer":{"@type":"Answer","text":"The Wellbeing Index measures your work-life balance, mental health, sleep, and productivity. It calculates a wellbeing score and provides personalised advice to improve your harmony zone."}},
-        {"@type":"Question","name":"How do I use the Wellbeing Index?","acceptedAnswer":{"@type":"Answer","text":"Enter your work hours per day, days worked per week, sleep hours per night, happiness level (1‑10), and chaos level (1‑10). Click 'Find My Balance' to see your score, resilience, and a 10‑year projection."}},
-        {"@type":"Question","name":"What does the Resilience score mean?","acceptedAnswer":{"@type":"Answer","text":"Resilience reflects how well you can cope with stress. It is calculated from your sleep and work patterns. A high score (>70) indicates strong coping mechanisms; a low score (<45) suggests you need to prioritise rest and recovery."}},
-        {"@type":"Question","name":"How is the Productivity Score calculated?","acceptedAnswer":{"@type":"Answer","text":"The Productivity Score (0‑100) is based on your work hours and days. It peaks at 8h/day, 5 days/week. Overworking or underworking reduces the score, indicating inefficiency."}},
-        {"@type":"Question","name":"Is the Wellbeing Index free?","acceptedAnswer":{"@type":"Answer","text":"Yes, it's completely free and open source. No registration required."}}
+        {
+          "@type": "Question",
+          "name": "What is the Wellbeing Index tool?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Wellbeing Index measures your work-life balance, mental health, sleep, and productivity. It calculates a wellbeing score and provides personalised advice to improve your harmony zone."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I use the Wellbeing Index?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Enter your work hours per day, days worked per week, sleep hours per night, happiness level (1‑10), and chaos level (1‑10). Click 'Find My Balance' to see your score, resilience, and a 10‑year projection."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does the Resilience score mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Resilience reflects how well you can cope with stress. It is calculated from your sleep and work patterns. A high score (>70) indicates strong coping mechanisms; a low score (<45) suggests you need to prioritise rest and recovery."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is the Productivity Score calculated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Productivity Score (0‑100) is based on your work hours and days. It peaks at 8h/day, 5 days/week. Overworking or underworking reduces the score, indicating inefficiency."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the Wellbeing Index free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, it's completely free and open source. No registration required."
+          }
+        }
       ]
     }
-  </script>
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -180,7 +299,7 @@
     <li class="dropdown">
       <span class="dropdown-toggle">🧰 Tools ▼</span>
       <ul class="dropdown-menu">
-        <li><a href="tools.html">🧰 All Tools</a></li>
+        <li><a href="tools.html">⚙️ All Tools</a></li>
         <li><a href="wellbeing-index.html">🌿 Wellbeing Index</a></li>
         <li><a href="debt-reality.html">💳 Debt Reality</a></li>
         <li><a href="compound-curve.html">📈 Compound Curve</a></li>
