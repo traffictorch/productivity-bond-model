@@ -2,7 +2,76 @@
 
 All notable changes to the Productivity Bond Model and this website.
 
-## [0.8.0] – 2026-08-24
+## [0.8.0] – 2026-08-25
+
+### Added – NPI Index Tracker (Tool #4)
+
+#### Backend Infrastructure
+- **Cloudflare D1 Database** – `npi-db` with 47 countries and 34 years (1990–2023) of productivity data.
+- **Cloudflare Worker API** – `npi-api` providing two endpoints:
+  - `/api/countries` – returns list of available countries
+  - `/api/npi` – returns time-series data (GDP, Hours, Energy, Materials, Capital) for a given country and year range
+- **Data sources** – compiled from World Bank (GDP), ILO/OECD (Hours), IEA (Energy), UNEP (Materials), and OECD/Penn World Table (Capital).
+- **Sample data** – pre-populated with realistic historical data for testing and validation.
+
+#### Frontend Tool – NPI Index Tracker
+- **National Productivity Index (NPI) calculation** – implements the book's formula: `NPI = GDP ÷ (Labour^0.40 × Energy^0.25 × Materials^0.20 × Capital^0.15)`.
+- **Country selection** – dropdown populated dynamically from the Worker API, supporting 47 countries.
+- **Year range slider** – interactive range selector (1990–2023) with live numeric display.
+- **Three weight modes**:
+  - 📘 **Book NPI** – fixed weights (40/25/20/15) as defined in the book
+  - 🌍 **Country Preset** – auto-applies weights based on economic category (Tech, Resource, Manufacturing, Developing, Service, Mixed)
+  - ⚙️ **Custom** – user-adjustable sliders with automatic rebalancing to sum to 100%
+- **Interactive charts** (Chart.js):
+  - Main NPI line chart (base year = 100)
+  - Component breakdown bar chart (average annual growth of GDP, Labour, Energy, Materials, Capital)
+- **Prescription box** – auto-generated diagnosis with actionable recommendations based on component performance.
+- **Data quality notice** – transparent disclaimer about data sources and estimation methods.
+
+#### Additional Features
+- **📥 Export CSV** – downloads the current chart data (Year, GDP, Hours, Energy, Materials, Capital, NPI) as a CSV file.
+- **📋 Shareable links** – encodes country, year range, weight mode, and custom weights in the URL for easy sharing.
+- **🤖 AI Analysis** – Cloudflare Worker (`ai-npi`) providing rule-based productivity insights with:
+  - Country-specific economic context (e.g., UK productivity puzzle, Australia's resource economy)
+  - Best/worst component identification
+  - Category-specific advice (Tech, Resource, Developing, Manufacturing, Mixed)
+  - Markdown-to-HTML rendering for bold text formatting
+  - AI-generated analysis disclaimer
+
+#### Country Presets
+Added country-specific weight presets based on economic categories:
+
+- **Tech-Driven** (USA, KOR, SGP, ISR, CHE, FIN, SWE, DNK) – 30/15/15/40
+- **Resource-Based** (AUS, RUS, CAN, SAU, NOR, ZAF, CHL, PER, COL, NGA) – 25/35/30/10
+- **Manufacturing** (DEU, JPN, ITA, CHN, POL, CZE, HUN) – 35/25/20/20
+- **Service-Based** (GBR, FRA, ESP, NLD, BEL, PRT, GRC) – 35/15/10/40
+- **Developing** (IND, BRA, MEX, IDN, TUR, ARG, PHL, VNM, KEN, EGY, THA, MYS) – 55/15/15/15
+- **Mixed** (default fallback) – 40/25/20/15
+
+#### Documentation
+- **FAQ section** – comprehensive questions and answers about the NPI, weight modes, data sources, and missing data.
+- **Data source attribution** – clearly lists World Bank, ILO, IEA, UNEP, and OECD as data providers.
+- **Limitations disclaimer** – notes that capital stock data is estimated and the NPI is an empirical proxy.
+
+### Changed
+- **tools.html** – added NPI Index Tracker card to the tools grid.
+- **index.html** – added NPI Index Tracker feature section on the homepage.
+- **Navigation** – updated all pages to include NPI Index in the Tools dropdown.
+- **Version badge** – updated to v1.1.0 across all pages.
+
+### Fixed
+- **CORS headers** – updated Worker to allow cross-origin requests (`Access-Control-Allow-Origin: *`).
+- **Bold text rendering** – added `markdownToHtml()` helper to convert `**bold**` to `<strong>` tags in AI output.
+- **AI warning** – added "AI can make mistakes ⚠️" disclaimer to the AI output section.
+
+### Technical Notes
+- **Deployment** – Worker deployed to Cloudflare Workers (`npi-api.traffictorch.workers.dev` and `ai-npi.traffictorch.workers.dev`).
+- **Database** – D1 database `npi-db` with 47 countries × 34 years = 1,598 rows of data.
+- **Frontend** – single-page HTML with inline JavaScript, Chart.js for visualisations, and `core.min.css` for styling.
+- **File size** – `npi-index.html` is ~1,500 lines including all JavaScript logic.
+
+
+## [0.7.0] – 2026-08-24
 
 ### Added
 - **PBM Productivity Lab** – a central `tools.html` page housing all three interactive tools with tabbed navigation and consistent glass‑morphism design.
@@ -34,7 +103,7 @@ All notable changes to the Productivity Bond Model and this website.
 - All async font loading from tool pages (`display=swap` removed in favour of `display=block`).
 - Duplicated accordion initialisation logic from page‑specific scripts (now handled by `core.min.js` or direct `onclick`).
 
-## [0.7.0] – 2026-08-21
+## [0.6.0] – 2026-08-21
 
 ### Added
 - **Endogenous debt feedback loop** – Monte Carlo simulator now models the full debt dynamics, revealing 77.2pp distress increase for Productivity bonds (raw model).
@@ -91,7 +160,7 @@ All notable changes to the Productivity Bond Model and this website.
 - `main.js` (split into `core.min.js` and `home.js`).
 - `main.css` (split into `core.min.css` and `home.css`).
 
-## [0.6.0] – 2026-08-20
+## [0.5.0] – 2026-08-20
 
 ### Added
 - Happiness Curve and Bond Strength dashboard.
@@ -101,7 +170,7 @@ All notable changes to the Productivity Bond Model and this website.
 - Bar chart visualisation in the simulator.
 - Responsive layout for mobile devices.
 
-## [0.5.0] – 2026-08-19
+## [0.4.0] – 2026-08-19
 
 ### Added
 - Initial public release of the canonical website.

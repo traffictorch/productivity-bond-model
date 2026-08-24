@@ -342,12 +342,13 @@
     <li><a href="index.html">🏠 Home</a></li>
     <li class="dropdown">
       <span class="dropdown-toggle">🧰 Tools ▼</span>
-      <ul class="dropdown-menu">
-          <li><a href="tools.html">⚙️ All Tools</a></li>
-          <li><a href="wellbeing-index.html">🌿 Wellbeing Index</a></li>
-          <li><a href="debt-reality.html">💳 Debt Reality</a></li>
-          <li><a href="compound-curve.html">📈 Compound Curve</a></li>
-      </ul>
+<ul class="dropdown-menu">
+  <li><a href="tools.html">⚙️ All Tools</a></li>
+  <li><a href="wellbeing-index.html">🌿 Wellbeing Index</a></li>
+  <li><a href="debt-reality.html">💳 Debt Reality</a></li>
+  <li><a href="compound-curve.html">📈 Compound Curve</a></li>
+  <li><a href="npi-index.html">📊 NPI Index</a></li>
+</ul>
     </li>
     <li class="dropdown"><span class="dropdown-toggle">About ▼</span><ul class="dropdown-menu"><li><a href="news.html">News</a></li><li><a href="about.html">Traffic Torch</a></li><li><a href="changelog.html">Change Log</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="contact.html">Contact</a></li></ul></li>
     <li class="dropdown"><span class="dropdown-toggle">Abstract ▼</span><ul class="dropdown-menu"><li><a href="index.html#abstract">The Abstract</a></li><li><a href="index.html#problem-visualized">The Problem</a></li><li><a href="index.html#wellbeing">Wellbeing</a></li></ul></li>
@@ -383,26 +384,56 @@
         </div>
       </section>
 
-      <!-- ABSTRACT -->
+<!-- ABSTRACT -->
       <section id="abstract" class="container section-spacing-sm" style="padding-top:0;">
         <div class="glass-card">
-          <h2 class="badge-glow" style="margin-bottom:0.8rem;">Abstract</h2>
+          <span class="badge-glow" style="margin-bottom:0.8rem; display:inline-block;">Abstract</span>
           <p style="font-size:1.05rem; line-height:1.7; max-width:900px; margin-bottom:1.5rem;">
-            With <strong>Universal Basic Income (UBI)</strong> on the horizon as an inevitable dividend of the coming AI economy. We've built a financial system that needs the economy to grow forever — but the planet doesn't work that way. Global debt has exploded while resources stay finite, and ordinary people eventually pay the price through higher taxes, service cuts, or inflation.
+            We've built a financial system that demands the economy to grow forever — but the planet doesn't work that way. Global debt has exploded past <strong>$300 trillion</strong>, resources remain finite, and ordinary people eventually pay the price through higher taxes, service cuts, or inflation.
           </p>
           <p style="font-size:1.05rem; line-height:1.7; max-width:900px; margin-bottom:1.5rem;">
-            The Productivity Bond Model offers a better way: a government bond that pays investors when we get <strong>smarter</strong> with what we already have, not just bigger. When efficiency rises, a share of the gains goes to every citizen as a <strong>Productivity Dividend</strong> — your share of the prosperity you helped create. It's a financial tool that works with reality, not against it.
+            The <strong>Productivity Bond Model</strong> offers a better path: a sovereign debt instrument whose return is linked to measurable productivity gains rather than fixed compounding. It rewards efficiency, innovation, and shared prosperity — not extraction and endless expansion. When productivity rises, a share of the gains flows to citizens through a <strong>Productivity Dividend</strong>: your share of the prosperity you helped create.
           </p>
-          <p style="font-size:1.05rem; line-height:1.7; max-width:900px; margin-top:0;">
-            The <strong>Productivity Bond Model</strong> proposes a sovereign debt instrument whose return is linked to measurable productivity gains (NPI) rather than fixed compounding. It addresses the fundamental contradiction between unlimited financial promises and a finite planet. The model is parameterised by <strong>θ_AI</strong> (government capture of AI gains), <strong>α_N</strong> (investor participation), and a cap/floor structure. Monte Carlo simulations (10,000 paths, 10‑year horizon) show a <strong>3.1% cost reduction</strong> vs conventional bonds, with a feedback loop that can be mitigated via principal adjustment.
+          <p style="font-size:1.05rem; line-height:1.7; max-width:900px; margin-bottom:1.5rem;">
+            The model is parameterised by <strong>θ_AI</strong> (government capture of AI gains), <strong>α_N</strong> (investor participation), and a cap/floor structure. <strong>Monte Carlo simulations</strong> (10,000 paths, 10-year horizon) show a <strong>~3.1% cost reduction</strong> vs conventional bonds, with a feedback loop that can be mitigated via principal adjustment. <a href="#simulator" style="color:#b388ff; text-decoration:underline;">Explore the simulator →</a>
           </p>
-          <p style="font-size:1.05rem; line-height:1.7; max-width:900px; margin-top:1.5rem;">
-            The <strong>model</strong> is designed for implementation by sovereign governments and includes a <strong>Productivity Dividend</strong> to share gains with citizens. This page is the canonical reference for the model, including formal definition, variable specification, simulation results, and implementation guide.
+          <p style="font-size:1.05rem; line-height:1.7; max-width:900px; margin-bottom:1.5rem;">
+            The model is designed for implementation by sovereign governments and includes a <strong>Productivity Dividend</strong> to share gains with citizens. This page is the <strong>canonical reference</strong> for the model, including formal definition, variable specification, simulation results, and implementation guide.
           </p>
-          <div style="display:flex; flex-wrap:wrap; gap:0.5rem 1.5rem; margin-top:1rem; font-size:0.85rem; color:var(--text-muted);">
-            <span>📅 Published: 2026-08-12</span>
-            <span>📌 Version: 0.8.0</span>
-            <span>🔗 <a href="#citation">Cite this work</a></span>
+
+          <hr style="border-color:var(--border-divider); margin:1.5rem 0;">
+
+          <p style="font-size:1rem; line-height:1.7; max-width:900px; margin-bottom:1rem;">
+            <strong>🧪 Live Interactive Tools</strong> – Explore the model in action with four hands-on tools:
+          </p>
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:0.8rem; max-width:900px; margin-bottom:0.5rem;">
+            <a href="npi-index.html" style="background:var(--bg-input); padding:0.8rem 1.2rem; border-radius:10px; border:1px solid var(--border-divider); text-decoration:none; color:var(--text-primary); transition:0.2s;">
+              <div style="font-size:1.5rem; line-height:1.2;">📊</div>
+              <div style="font-weight:600; font-size:0.9rem;">NPI Index Tracker</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">50+ countries · real data</div>
+            </a>
+            <a href="wellbeing-index.html" style="background:var(--bg-input); padding:0.8rem 1.2rem; border-radius:10px; border:1px solid var(--border-divider); text-decoration:none; color:var(--text-primary); transition:0.2s;">
+              <div style="font-size:1.5rem; line-height:1.2;">🌿</div>
+              <div style="font-weight:600; font-size:0.9rem;">Wellbeing Index</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">Work-life balance</div>
+            </a>
+            <a href="debt-reality.html" style="background:var(--bg-input); padding:0.8rem 1.2rem; border-radius:10px; border:1px solid var(--border-divider); text-decoration:none; color:var(--text-primary); transition:0.2s;">
+              <div style="font-size:1.5rem; line-height:1.2;">💳</div>
+              <div style="font-weight:600; font-size:0.9rem;">Debt Reality</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">Payoff calculator</div>
+            </a>
+            <a href="compound-curve.html" style="background:var(--bg-input); padding:0.8rem 1.2rem; border-radius:10px; border:1px solid var(--border-divider); text-decoration:none; color:var(--text-primary); transition:0.2s;">
+              <div style="font-size:1.5rem; line-height:1.2;">📈</div>
+              <div style="font-weight:600; font-size:0.9rem;">Compound Curve</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">Compounding visualiser</div>
+            </a>
+          </div>
+
+          <div style="display:flex; flex-wrap:wrap; gap:0.5rem 1.5rem; margin-top:1.5rem; font-size:0.85rem; color:var(--text-muted);">
+            <span>📅 Published: 2026-08-25</span>
+            <span>📌 Version: 1.1.0</span>
+            <span>🔗 <a href="#citation" style="color:#b388ff;">Cite this work</a></span>
+            <span>📊 <a href="npi-index.html" style="color:#b388ff;">Try the NPI Tracker →</a></span>
           </div>
         </div>
       </section>
@@ -781,9 +812,34 @@
           <div id="prediction-output" style="margin-top:1rem; padding:1rem 1.5rem; background:var(--bg-code); border-radius:1rem; border-left:4px solid #a78bfa; min-height:80px; font-size:0.95rem; color:var(--text-body);"><span style="opacity:0.5;">Interpretation will appear here.</span></div>
         </div>
       </div>
+      
+      <!-- NPI Index Tracker Feature -->
+<section class="container section-spacing">
+  <div class="glass-card" style="border-color:rgba(79,70,229,0.2);">
+    <div style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+      <span class="badge-glow" style="margin-bottom:0.5rem;">🧪 NEW TOOL</span>
+      <h2 style="font-size:clamp(2rem,4vw,2.8rem); font-weight:700; margin-bottom:0.5rem;">📊 NPI Index Tracker</h2>
+      <p style="color:var(--text-secondary); max-width:700px; margin:0 auto 1rem; font-size:clamp(1rem,1.2vw,1.2rem);">
+        Track the <strong>National Productivity Index (NPI)</strong> with real‑world data from 50+ countries.
+        See how efficiently an economy turns labour, energy, materials, and capital into value.
+      </p>
+      <div style="display:flex; flex-wrap:wrap; gap:0.8rem; margin-top:0.5rem;">
+        <a href="npi-index.html" class="btn-primary" style="padding:0.6rem 2rem;">Launch NPI Tracker →</a>
+        <a href="tools.html" class="btn-secondary" style="padding:0.6rem 2rem;">All Tools</a>
+      </div>
+      <div style="margin-top:0.8rem; display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; font-size:0.8rem; color:var(--text-muted);">
+        <span>🌍 47 countries</span>
+        <span>📅 1990–2023</span>
+        <span>⚖️ Adjustable weights</span>
+        <span>🤖 AI analysis</span>
+        <span>📥 Export CSV</span>
+      </div>
+    </div>
+  </div>
+</section>
 
       <!-- WELLBEING -->
-      <section id="wellbeing" class="container section-spacing" style="padding-top:1;">
+      <section id="wellbeing" class="container section-spacing" style="padding-top:0rem;">
         <div class="glass-card">
           <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">😌 Happiness Curve & Bond Strength</h2>
           <p style="color:var(--text-secondary); margin-bottom:1.5rem;">Here we show the relationship between economic productivity, societal happiness, and the strength of the financial bond. Move the slider to find the 'sweet spot' where the economy grows happily.</p>

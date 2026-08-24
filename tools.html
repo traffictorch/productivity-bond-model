@@ -247,12 +247,13 @@
     <li><a href="index.html">🏠 Home</a></li>
     <li class="dropdown">
       <span class="dropdown-toggle">🧰 Tools ▼</span>
-      <ul class="dropdown-menu">
-        <li><a href="tools.html">⚙️ All Tools</a></li>
-        <li><a href="wellbeing-index.html">🌿 Wellbeing Index</a></li>
-        <li><a href="debt-reality.html">💳 Debt Reality</a></li>
-        <li><a href="compound-curve.html">📈 Compound Curve</a></li>
-      </ul>
+<ul class="dropdown-menu">
+  <li><a href="tools.html">⚙️ All Tools</a></li>
+  <li><a href="wellbeing-index.html">🌿 Wellbeing Index</a></li>
+  <li><a href="debt-reality.html">💳 Debt Reality</a></li>
+  <li><a href="compound-curve.html">📈 Compound Curve</a></li>
+  <li><a href="npi-index.html">📊 NPI Index</a></li>
+</ul>
     </li>
     <li class="dropdown"><span class="dropdown-toggle">About ▼</span><ul class="dropdown-menu"><li><a href="news.html">News</a></li><li><a href="about.html">Traffic Torch</a></li><li><a href="changelog.html">Change Log</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="contact.html">Contact</a></li></ul></li>
     <li class="dropdown"><span class="dropdown-toggle">Abstract ▼</span><ul class="dropdown-menu"><li><a href="index.html#abstract">The Abstract</a></li><li><a href="index.html#problem-visualized">The Problem</a></li><li><a href="index.html#wellbeing">Wellbeing</a></li></ul></li>
@@ -518,22 +519,24 @@
         </div>
       </div>
       
-      <noscript>
+<noscript>
   <section class="container section-spacing" style="padding-top:0;">
     <div class="glass-card" style="border-color:var(--color-burnout);">
       <h2 style="font-size:1.5rem; font-weight:700; color:var(--color-burnout);">⚠️ JavaScript is disabled</h2>
 
-      <!-- ===== TOOL DESCRIPTION (brief overview of all 3) ===== -->
-      <h3 style="font-size:1.2rem; font-weight:600; margin-top:0.5rem; color:var(--text-primary);">🧪 The PBM Productivity Lab – 3 Tools</h3>
+      <h3 style="font-size:1.2rem; font-weight:600; margin-top:0.5rem; color:var(--text-primary);">🧪 The PBM Productivity Lab – 4 Tools</h3>
       <p style="color:var(--text-secondary);">
-        The <strong>Productivity Lab</strong> brings you three interactive calculators powered by the Productivity Bond Model (PBM) framework. Each tool helps you diagnose a different aspect of your personal and financial health:
+        The <strong>Productivity Lab</strong> brings you four interactive calculators powered by the Productivity Bond Model (PBM) framework. Each tool helps you diagnose a different aspect of your personal and financial health:
       </p>
       <ul style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
         <li>
-          <strong>🌿 Wellbeing Index</strong> – measures work-life balance, mental health, sleep, resilience, and productivity (0–100 score + radar chart + 10‑year projection).
+          <strong>📊 NPI Index Tracker</strong> – track real‑world productivity for 50+ countries with live data, AI analysis, and exportable insights.
         </li>
         <li>
-          <strong>💳 Debt Reality</strong> – calculates your payoff timeline, total interest, and debt‑to‑income (DTI) ratio, with an extra-payment slider to see savings.
+          <strong>🌿 Wellbeing Index</strong> – measures work‑life balance, mental health, sleep, resilience, and productivity (0–100 score + radar chart + 10‑year projection).
+        </li>
+        <li>
+          <strong>💳 Debt Reality</strong> – calculates your payoff timeline, total interest, and debt‑to‑income (DTI) ratio, with an extra‑payment slider to see savings.
         </li>
         <li>
           <strong>📈 Compound Curve</strong> – projects how annual debt grows exponentially and shows how small reductions bend the curve downward.
@@ -545,39 +548,44 @@
 
       <hr style="border-color:var(--border-divider); margin:1.5rem 0;" />
 
-      <!-- ===== SHORT MANUAL WORKAROUND (unified) ===== -->
-      <h4 style="font-weight:600; color:var(--text-primary);">📝 Manual estimates (without JavaScript)</h4>
       <p style="color:var(--text-secondary);">
-        You can still get a meaningful estimate using these simplified formulas:
-      </p>
-      <ul style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
-        <li>
-          <strong>Wellbeing</strong> (0–100) = average of:<br />
-          <span style="font-family:monospace; font-size:0.85rem;">
-            Work/Life = 100 − (|work−8|×8) &nbsp;|&nbsp; Sleep = 100 − (|sleep−7.5|×12) &nbsp;|&nbsp; Mental = (happiness×10) − (chaos×4) &nbsp;|&nbsp; Productivity = 100 − (|work−8|×5) − (|days−5|×3) &nbsp;|&nbsp; Resilience = (Sleep×0.5)+(Work/Life×0.5)
-          </span>
-        </li>
-        <li>
-          <strong>Debt Reality</strong>: monthly interest = (annual rate/100)/12 × current balance. Subtract your payment each month until balance reaches zero – count months and sum interest.
-        </li>
-        <li>
-          <strong>Compound Curve</strong>: future value = annual debt × (1 + growth rate)<sup>years</sup>. Try different reduction amounts to compare savings.
-        </li>
-      </ul>
-      <p style="color:var(--text-secondary); margin-top:0.5rem;">
-        <strong>Example (all three):</strong> Work 8h/day, 5 days/week, sleep 7h, happiness 6, chaos 5 → wellbeing ≈ 65/100.<br />
-        Debt $25,000 at 12% with $500/mo → ~66 months (5.5 yrs) and ~$4,800 interest.<br />
-        Annual debt $13,000 at 10% for 10 years → $33,718; with $1,000 reduction → $31,125, saving $2,593.
-      </p>
-      <p style="color:var(--text-muted); font-size:0.9rem; margin-top:0.8rem;">
         💡 For the full interactive experience (charts, sliders, AI advice), please <strong>enable JavaScript</strong>.
       </p>
+      <div style="display:flex; flex-wrap:wrap; gap:0.8rem; margin-top:1rem;">
+        <a href="npi-index.html" class="btn-primary">📊 Try the NPI Index Tracker</a>
+        <a href="book.html" class="btn-secondary">📖 Read the Book</a>
+      </div>
     </div>
   </section>
 </noscript>
 
+<!-- NPI Index Tracker Feature -->
+<section class="container section-spacing">
+  <div class="glass-card" style="border-color:rgba(79,70,229,0.2);">
+    <div style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+      <span class="badge-glow" style="margin-bottom:0.5rem;">🧪 NEW TOOL</span>
+      <h2 style="font-size:clamp(2rem,4vw,2.8rem); font-weight:700; margin-bottom:0.5rem;">📊 NPI Index Tracker</h2>
+      <p style="color:var(--text-secondary); max-width:700px; margin:0 auto 1rem; font-size:clamp(1rem,1.2vw,1.2rem);">
+        Track the <strong>National Productivity Index (NPI)</strong> with real‑world data from 50+ countries.
+        See how efficiently an economy turns labour, energy, materials, and capital into value.
+      </p>
+      <div style="display:flex; flex-wrap:wrap; gap:0.8rem; margin-top:0.5rem;">
+        <a href="npi-index.html" class="btn-primary" style="padding:0.6rem 2rem;">Launch NPI Tracker →</a>
+        <a href="tools.html" class="btn-secondary" style="padding:0.6rem 2rem;">All Tools</a>
+      </div>
+      <div style="margin-top:0.8rem; display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; font-size:0.8rem; color:var(--text-muted);">
+        <span>🌍 47 countries</span>
+        <span>📅 1990–2023</span>
+        <span>⚖️ Adjustable weights</span>
+        <span>🤖 AI analysis</span>
+        <span>📥 Export CSV</span>
+      </div>
+    </div>
+  </div>
+</section>
+
       <!-- ===== LEARN SECTION ===== -->
-      <section id="learn" class="container section-spacing" style="padding-top:2rem;">
+      <section id="learn" class="container section-spacing" style="padding-top:1rem;">
         <div class="glass-card" style="border-color:rgba(251,191,36,0.2); padding:1.5rem 1.2rem;">
           <span class="badge-glow" style="background:rgba(251,191,36,0.15); color:#fbbf24; border-color:rgba(251,191,36,0.15); margin-bottom:0.6rem;">📖 Learn</span>
           <h2 style="font-size:clamp(1.4rem,3vw,1.8rem); font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">Master the Productivity Bond Model</h2>

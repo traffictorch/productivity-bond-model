@@ -18,6 +18,7 @@ The canonical reference for the Productivity Bond Model is now **live**:
 The website includes:
 
 - **Interactive Monte Carlo Simulator** – run your own 10,000-path simulations with real-time feedback
+- **📊 NPI Index Tracker** – real-world productivity data for 50+ countries with interactive charts, CSV export, shareable links, and AI analysis
 - **🧠 AI-Power Economic Interpretation Engine** – powered by GLM, Google Gemma, and Llama
 - **😌 Happiness & Bond Strength Unified Interpreter** – explore the relationship between productivity, wellbeing, and financial stability
 - **Full Book Page** – read and download *The Infinite Debt Problem*
@@ -55,6 +56,49 @@ The simulation uses a 10,000‑path Monte Carlo engine over a 10‑year horizon,
 
 ## 🌍 What's New – The PBM Universe Expands
 
+### 📊 NPI Index Tracker – Real-World Productivity Data
+
+The PBM Productivity Lab now includes a **fourth interactive tool**: the **NPI Index Tracker**.
+
+This tool brings the National Productivity Index (NPI) to life with **real-world data** from 50+ countries, spanning 1990 to 2023. Unlike the simulation, which projects *future* scenarios, the NPI Index Tracker is an **empirical proxy** – a real-data dashboard that calculates the NPI using actual economic statistics from the World Bank, ILO, IEA, UNEP, and OECD.
+
+**Key Features:**
+
+- **🌍 47 Countries** – from the USA and China to Nigeria and Vietnam.
+- **📅 1990–2023** – 34 years of historical data.
+- **⚖️ Three Weight Modes**:
+  - 📘 **Book NPI** – fixed weights (40/25/20/15) as defined in *The Infinite Debt Problem*.
+  - 🌍 **Country Preset** – auto-applies weights based on economic category (Tech, Resource, Manufacturing, Developing, Service, Mixed).
+  - ⚙️ **Custom** – fully adjustable sliders with automatic rebalancing.
+- **📊 Interactive Charts** – main NPI line chart (base year = 100) + component breakdown bar chart.
+- **🧠 Diagnosis** – auto-generated prescription with actionable recommendations.
+- **📥 Export CSV** – download the current chart data.
+- **📋 Shareable Links** – encode country, years, mode, and weights in the URL.
+- **🤖 AI Analysis** – powered by a Cloudflare Worker with country-specific context and personalised advice.
+
+**Data Sources:**
+
+| Component | Source |
+|-----------|--------|
+| GDP | World Bank |
+| Hours Worked | ILO / OECD |
+| Energy Consumption | IEA |
+| Materials Consumption | UNEP |
+| Capital Stock | OECD / Penn World Table |
+
+**Architecture:**
+
+- **Cloudflare D1** – serverless SQL database with 47 countries × 34 years of data.
+- **Cloudflare Workers** – two serverless APIs: `npi-api` (data retrieval) and `ai-npi` (AI analysis).
+- **Chart.js** – interactive data visualisation.
+- **GitHub Pages** – static frontend hosting.
+
+**Try it live:**
+
+👉 **[NPI Index Tracker](https://traffictorch.github.io/productivity-bond-model/npi-index.html)**
+
+> **Note:** This is an **empirical proxy** for the NPI framework. Capital stock data is estimated. The tool is for educational and research purposes.
+
 ### 🧠 AI-Power Economic Interpretation Engine
 
 Running a simulation is one thing. Understanding what it means is another. The new AI-Power Economic Interpretation Engine bridges that gap.
@@ -72,7 +116,12 @@ A tool that explores the relationship between economic productivity, societal we
 | Page | Description |
 |------|-------------|
 | **[Home](https://traffictorch.github.io/productivity-bond-model/)** | Full PBM reference with interactive simulator |
-| **[Book](https://traffictorch.github.io/productivity-bond-model/book.html)** | *The Infinite Debt Problem* – PDF preview, download links, metadata |
+| **[NPI Tracker](https://traffictorch.github.io/productivity-bond-model/npi-index.html)** | 📊 Real-world productivity data for 50+ countries |
+| **[Wellbeing Index](https://traffictorch.github.io/productivity-bond-model/wellbeing-index.html)** | 🌿 Measure work-life balance, mental health, and productivity |
+| **[Debt Reality](https://traffictorch.github.io/productivity-bond-model/debt-reality.html)** | 💳 Diagnose your debt, see the true cost, and get a personalized plan |
+| **[Compound Curve](https://traffictorch.github.io/productivity-bond-model/compound-curve.html)** | 📈 Visualise how debt compounds and how small changes bend the curve |
+| **[Tools](https://traffictorch.github.io/productivity-bond-model/tools.html)** | 🧰 PBM Productivity Lab – all four interactive tools in one place |
+| **[Book](https://traffictorch.github.io/productivity-bond-model/book.html)** | *The Infinite Debt Problem* – PDF, EPUB, audiobook links |
 | **[About](https://traffictorch.github.io/productivity-bond-model/about.html)** | Model origins, author, research philosophy |
 | **[Contact](https://traffictorch.github.io/productivity-bond-model/contact.html)** | Get in touch with the Traffic Torch research team |
 | **[Changelog](https://traffictorch.github.io/productivity-bond-model/changelog.html)** | Auto‑updating version history from GitHub |
