@@ -383,21 +383,6 @@
         </div>
       </div>
 
-      <!-- Ask AI -->
-      <div class="ask-ai-section">
-        <label for="ask-debt-input">💬 Ask a question?</label>
-        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-          <input type="text" id="ask-debt-input" placeholder="e.g. How can I pay this off in 2 years?" style="flex:1; min-width:200px; background:var(--bg-body); border:1px solid var(--border-divider); border-radius:8px; padding:0.6rem 0.8rem; color:var(--text-primary); font-family:inherit;" />
-          <button class="btn-primary" style="padding:0.4rem 1.5rem; font-size:0.85rem;" onclick="askAI()">Ask AI</button>
-        </div>
-        <div id="ask-debt-output" class="ai-output" style="margin-top:0.5rem;">
-          <span class="placeholder">Ask a question about debt.</span>
-        </div>
-        <span style="font-size:0.75rem; color:var(--text-muted);" id="ask-debt-status"></span>
-      </div>
-    </div>
-  </section>
-
   <!-- ===== FAQ ACCORDION ===== -->
   <section class="container section-spacing" style="padding-top:0;">
     <div class="glass-card">
@@ -766,42 +751,6 @@
     } catch (error) {
       console.error('AI Error:', error);
       output.innerHTML = `<span style="color: var(--color-burnout);">⚠️ Could not reach AI advisor. Please try again later. (${error.message})</span>`;
-      status.textContent = '❌ Error';
-    }
-  }
-
-  // ============================
-  // ASK AI (Debt)
-  // ============================
-  async function askAI() {
-    const input = document.getElementById('ask-debt-input');
-    const output = document.getElementById('ask-debt-output');
-    const status = document.getElementById('ask-debt-status');
-    if (!input || !output || !status) return;
-
-    const question = input.value.trim();
-    if (!question) {
-      output.innerHTML = '<span style="color:var(--color-burnout);">Please enter a question.</span>';
-      return;
-    }
-
-    status.textContent = '⏳ Thinking...';
-    output.innerHTML = '<span style="opacity:0.6;">Generating answer...</span>';
-
-    try {
-      const response = await fetch('https://ask-debt.traffictorch.workers.dev', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question })
-      });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const result = await response.json();
-      let answer = result.answer || 'No answer provided.';
-      output.innerHTML = `<div class="advice">${answer}</div>`;
-      status.textContent = '✅ Done';
-    } catch (error) {
-      console.error('Ask AI Error:', error);
-      output.innerHTML = `<span style="color:var(--color-burnout);">⚠️ Error: ${error.message}</span>`;
       status.textContent = '❌ Error';
     }
   }

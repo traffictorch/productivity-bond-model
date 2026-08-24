@@ -212,8 +212,10 @@
     .accordion-toggle .arrow { transition:transform 0.2s; }
     .accordion-toggle.open .arrow { transform:rotate(180deg); }
     .accordion-content { max-height:0; overflow:hidden; transition:max-height 0.4s ease,padding 0.3s ease; padding:0 0.2rem; }
-    .accordion-content.open { max-height:800px; padding:0.8rem 0.2rem 0; }
-    
+.accordion-content.open {
+  max-height: 3000px;      /* large enough for glossary + grid */
+  padding: 0.8rem 0.2rem 0;
+}    
     /* === MOBILE OVERFLOW FIX (all in one) === */
 @media (max-width: 640px) {
   .table-wrap { overflow-x: auto !important; -webkit-overflow-scrolling: touch; max-width: 100% !important; }
