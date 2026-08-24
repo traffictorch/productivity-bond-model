@@ -541,6 +541,64 @@
           <span style="font-size:0.75rem; color:var(--text-muted);" id="ask-compound-status"></span>
         </div>
       </div>
+      
+      <noscript>
+  <section class="container section-spacing" style="padding-top:0;">
+    <div class="glass-card" style="border-color:var(--color-burnout);">
+      <h2 style="font-size:1.5rem; font-weight:700; color:var(--color-burnout);">⚠️ JavaScript is disabled</h2>
+
+      <!-- ===== TOOL DESCRIPTION (brief overview of all 3) ===== -->
+      <h3 style="font-size:1.2rem; font-weight:600; margin-top:0.5rem; color:var(--text-primary);">🧪 The PBM Productivity Lab – 3 Tools</h3>
+      <p style="color:var(--text-secondary);">
+        The <strong>Productivity Lab</strong> brings you three interactive calculators powered by the Productivity Bond Model (PBM) framework. Each tool helps you diagnose a different aspect of your personal and financial health:
+      </p>
+      <ul style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
+        <li>
+          <strong>🌿 Wellbeing Index</strong> – measures work-life balance, mental health, sleep, resilience, and productivity (0–100 score + radar chart + 10‑year projection).
+        </li>
+        <li>
+          <strong>💳 Debt Reality</strong> – calculates your payoff timeline, total interest, and debt‑to‑income (DTI) ratio, with an extra-payment slider to see savings.
+        </li>
+        <li>
+          <strong>📈 Compound Curve</strong> – projects how annual debt grows exponentially and shows how small reductions bend the curve downward.
+        </li>
+      </ul>
+      <p style="color:var(--text-secondary);">
+        All tools are <strong>free, private, and require no registration</strong>. They give you personalised diagnoses and actionable prescriptions.
+      </p>
+
+      <hr style="border-color:var(--border-divider); margin:1.5rem 0;" />
+
+      <!-- ===== SHORT MANUAL WORKAROUND (unified) ===== -->
+      <h4 style="font-weight:600; color:var(--text-primary);">📝 Manual estimates (without JavaScript)</h4>
+      <p style="color:var(--text-secondary);">
+        You can still get a meaningful estimate using these simplified formulas:
+      </p>
+      <ul style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
+        <li>
+          <strong>Wellbeing</strong> (0–100) = average of:<br />
+          <span style="font-family:monospace; font-size:0.85rem;">
+            Work/Life = 100 − (|work−8|×8) &nbsp;|&nbsp; Sleep = 100 − (|sleep−7.5|×12) &nbsp;|&nbsp; Mental = (happiness×10) − (chaos×4) &nbsp;|&nbsp; Productivity = 100 − (|work−8|×5) − (|days−5|×3) &nbsp;|&nbsp; Resilience = (Sleep×0.5)+(Work/Life×0.5)
+          </span>
+        </li>
+        <li>
+          <strong>Debt Reality</strong>: monthly interest = (annual rate/100)/12 × current balance. Subtract your payment each month until balance reaches zero – count months and sum interest.
+        </li>
+        <li>
+          <strong>Compound Curve</strong>: future value = annual debt × (1 + growth rate)<sup>years</sup>. Try different reduction amounts to compare savings.
+        </li>
+      </ul>
+      <p style="color:var(--text-secondary); margin-top:0.5rem;">
+        <strong>Example (all three):</strong> Work 8h/day, 5 days/week, sleep 7h, happiness 6, chaos 5 → wellbeing ≈ 65/100.<br />
+        Debt $25,000 at 12% with $500/mo → ~66 months (5.5 yrs) and ~$4,800 interest.<br />
+        Annual debt $13,000 at 10% for 10 years → $33,718; with $1,000 reduction → $31,125, saving $2,593.
+      </p>
+      <p style="color:var(--text-muted); font-size:0.9rem; margin-top:0.8rem;">
+        💡 For the full interactive experience (charts, sliders, AI advice), please <strong>enable JavaScript</strong>.
+      </p>
+    </div>
+  </section>
+</noscript>
 
       <!-- ===== LEARN SECTION ===== -->
       <section id="learn" class="container section-spacing" style="padding-top:2rem;">

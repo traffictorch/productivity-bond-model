@@ -456,24 +456,61 @@
     </div>
   </section>
 
-  <!-- ===== NOSCRIPT ===== -->
-  <noscript>
-    <section class="container section-spacing" style="padding-top:0;">
-      <div class="glass-card" style="border-color:var(--color-burnout);">
-        <h2 style="font-size:1.5rem; font-weight:700; color:var(--color-burnout);">⚠️ JavaScript is disabled</h2>
-        <p style="color:var(--text-secondary);">The Wellbeing Index requires JavaScript to run the calculations and display interactive charts. You can still use the tool manually by following these steps:</p>
-        <ol style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
-          <li>Write down your daily work hours, days worked per week, sleep hours, happiness (1‑10), and chaos (1‑10).</li>
-          <li>Calculate your weekly work hours = work × days. A healthy range is 35‑40 hours.</li>
-          <li>Check your sleep: 7‑8 hours is optimal; less than 5 or more than 10 may indicate issues.</li>
-          <li>Your wellbeing score (0‑100) is an average of work/life balance, financial health, mental health, sleep, resilience, and productivity.</li>
-          <li>Resilience = (sleep score × 0.5) + (work/life score × 0.5).</li>
-          <li>For a full interactive experience, please enable JavaScript in your browser.</li>
-        </ol>
-        <p style="color:var(--text-secondary); margin-top:0.5rem;"><strong>Example:</strong> If you work 8h/day, 5 days/week, sleep 7h, happiness 6, chaos 5, your wellbeing score would be around 65/100 – a balanced but improvable state.</p>
-      </div>
-    </section>
-  </noscript>
+<noscript>
+  <section class="container section-spacing" style="padding-top:0;">
+    <div class="glass-card" style="border-color:var(--color-burnout);">
+      <h2 style="font-size:1.5rem; font-weight:700; color:var(--color-burnout);">⚠️ JavaScript is disabled</h2>
+      
+      <!-- ===== TOOL DESCRIPTION (what it is and does) ===== -->
+      <h3 style="font-size:1.2rem; font-weight:600; margin-top:0.5rem; color:var(--text-primary);">🌿 What is the Wellbeing Index?</h3>
+      <p style="color:var(--text-secondary);">
+        The <strong>Wellbeing Index</strong> is an interactive self-assessment tool that measures six key dimensions of your personal and professional life:
+      </p>
+      <ul style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
+        <li><strong>Work/Life Balance</strong> – how well you juggle work hours and personal time</li>
+        <li><strong>Financial Health</strong> – your debt-to-income ratio and financial stability</li>
+        <li><strong>Mental Health</strong> – your self-reported happiness and perceived chaos</li>
+        <li><strong>Sleep Quality</strong> – hours of rest and recovery per night</li>
+        <li><strong>Resilience</strong> – your ability to cope with stress (calculated from sleep and work patterns)</li>
+        <li><strong>Productivity</strong> – your efficiency based on optimal work hours (peak at 8h/day, 5 days/week)</li>
+      </ul>
+      <p style="color:var(--text-secondary);">
+        The tool calculates a <strong>total wellbeing score (0–100)</strong>, generates a radar chart, projects your 10‑year trend, and gives personalised advice to help you find your <em>harmony zone</em>. It's free, private, and requires no registration.
+      </p>
+
+      <hr style="border-color:var(--border-divider); margin:1.5rem 0;" />
+
+      <!-- ===== MANUAL WORKAROUND ===== -->
+      <h4 style="font-weight:600; color:var(--text-primary);">📝 Use it manually (without JavaScript)</h4>
+      <p style="color:var(--text-secondary);">You can still get a meaningful estimate by following these steps:</p>
+      <ol style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
+        <li>Write down your:
+          <ul>
+            <li><strong>Work hours/day</strong> (e.g. 8)</li>
+            <li><strong>Days worked/week</strong> (e.g. 5)</li>
+            <li><strong>Sleep hours/night</strong> (e.g. 7)</li>
+            <li><strong>Happiness</strong> (1–10, e.g. 6)</li>
+            <li><strong>Chaos level</strong> (1–10, e.g. 5)</li>
+            <li><strong>Total debt</strong> and <strong>monthly income</strong> (optional, for financial score)</li>
+          </ul>
+        </li>
+        <li><strong>Productivity score</strong> = 100 – (|work – 8| × 5) – (|days – 5| × 3), clamped 0–100.</li>
+        <li><strong>Sleep score</strong> = 100 – (|sleep – 7.5| × 12), clamped 0–100.</li>
+        <li><strong>Work/Life score</strong> = 100 – (|work – 8| × 8), clamped 0–100.</li>
+        <li><strong>Mental score</strong> = (happiness × 10) – (chaos × 4), clamped 0–100.</li>
+        <li><strong>Financial score</strong> = 100 – (debt-to-income ratio × 1.5), clamped 0–100.</li>
+        <li><strong>Resilience</strong> = (sleep score × 0.5) + (work/life score × 0.5).</li>
+        <li><strong>Total wellbeing</strong> = average of all six scores.</li>
+      </ol>
+      <p style="color:var(--text-secondary); margin-top:0.5rem;">
+        <strong>Example:</strong> 8h work, 5 days, 7h sleep, happiness 6, chaos 5 → wellbeing ≈ 65/100 (balanced but improvable).
+      </p>
+      <p style="color:var(--text-muted); font-size:0.9rem; margin-top:0.8rem;">
+        💡 For the full interactive experience (charts, projections, AI advice), please <strong>enable JavaScript</strong> in your browser.
+      </p>
+    </div>
+  </section>
+</noscript>
   
   <!-- ===== TOOL CARDS ROW – pick any 3 ===== -->
 <section class="container section-spacing" style="padding-bottom:3;">

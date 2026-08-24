@@ -441,17 +441,58 @@
     </div>
   </section>
 
-  <!-- ===== NOSCRIPT ===== -->
-  <noscript>
-    <section class="container section-spacing" style="padding-top:0;">
-      <div class="glass-card" style="border-color:var(--color-burnout);">
-        <h2 style="font-size:1.5rem; font-weight:700; color:var(--color-burnout);">⚠️ JavaScript is disabled</h2>
-        <p style="color:var(--text-secondary);">The Compound Curve tool requires JavaScript to display the interactive chart. You can still calculate the future value manually using the formula:</p>
-        <p style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;"><strong>Future Value = Annual Debt × (1 + Growth Rate)<sup>Years</sup></strong></p>
-        <p style="color:var(--text-secondary);"><strong>Example:</strong> Annual debt $13,000, growth 10%, 10 years → $13,000 × (1.10)<sup>10</sup> = $33,718. If you reduce by $1,000/year → $12,000 × (1.10)<sup>10</sup> = $31,125 – a saving of $2,593.<br /><em>For an interactive experience, please enable JavaScript.</em></p>
+<noscript>
+  <section class="container section-spacing" style="padding-top:0;">
+    <div class="glass-card" style="border-color:var(--color-burnout);">
+      <h2 style="font-size:1.5rem; font-weight:700; color:var(--color-burnout);">⚠️ JavaScript is disabled</h2>
+      
+      <!-- ===== TOOL DESCRIPTION (what it is and does) ===== -->
+      <h3 style="font-size:1.2rem; font-weight:600; margin-top:0.5rem; color:var(--text-primary);">📈 What is the Compound Curve tool?</h3>
+      <p style="color:var(--text-secondary);">
+        The <strong>Compound Curve</strong> tool visualises the exponential growth of debt over time and shows how small reductions today can dramatically bend the curve downward. It helps you understand the power of compounding – both the danger of inaction and the benefit of early intervention.
+      </p>
+      <p style="color:var(--text-secondary);">
+        You enter four key inputs:
+      </p>
+      <ul style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
+        <li><strong>Annual Debt</strong> – the yearly financial leak from your productivity or spending habits.</li>
+        <li><strong>Growth Rate</strong> – the annual percentage increase (e.g., 10% can double debt in ~7 years).</li>
+        <li><strong>Time Horizon</strong> – how many years into the future you want to project.</li>
+        <li><strong>Reduction</strong> – the amount you can cut from your annual debt (use the slider to experiment).</li>
+      </ul>
+      <p style="color:var(--text-secondary);">
+        The tool instantly generates a <strong>line chart</strong> comparing two paths: <em>Current Path</em> (doing nothing) vs. <em>Optimised Path</em> (after your reduction). It shows the <strong>total cumulative debt</strong>, the <strong>final year's debt</strong>, and the <strong>total savings</strong> achieved. You also get a personalised prescription with clear action steps. It's free, private, and requires no registration.
+      </p>
+
+      <hr style="border-color:var(--border-divider); margin:1.5rem 0;" />
+
+      <!-- ===== MANUAL WORKAROUND ===== -->
+      <h4 style="font-weight:600; color:var(--text-primary);">🧮 Calculate it manually (without JavaScript)</h4>
+      <p style="color:var(--text-secondary);">You can estimate your debt projection using the compound growth formula:</p>
+      <div style="background:var(--bg-body); border-radius:8px; padding:0.8rem 1rem; margin:0.5rem 0 1rem; font-family:monospace; border:1px solid var(--border-divider);">
+        <strong style="color:var(--text-primary);">Future Value = Annual Debt × (1 + Growth Rate)<sup>Years</sup></strong>
       </div>
-    </section>
-  </noscript>
+      <p style="color:var(--text-secondary);">To calculate the cumulative total over multiple years, you need to sum each year's value:</p>
+      <ol style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
+        <li><strong>Year 1</strong>: Annual Debt × (1 + Growth Rate)</li>
+        <li><strong>Year 2</strong>: Annual Debt × (1 + Growth Rate)<sup>2</sup></li>
+        <li>… continue for each year up to your time horizon.</li>
+        <li>Add all yearly values to get the <strong>cumulative debt</strong>.</li>
+        <li>To see the effect of a <strong>reduction</strong>, subtract the reduction from Annual Debt and repeat the calculation.</li>
+        <li>Compare the two cumulative totals – the difference is your <strong>savings</strong>.</li>
+      </ol>
+      <p style="color:var(--text-secondary); margin-top:0.5rem;">
+        <strong>Example:</strong> Annual debt $13,000 · Growth 10% · 10 years.<br />
+        Future value without reduction = $13,000 × (1.10)<sup>10</sup> = <strong>$33,718</strong>.<br />
+        If you reduce by $1,000/year → $12,000 × (1.10)<sup>10</sup> = <strong>$31,125</strong>.<br />
+        Total savings = $33,718 − $31,125 = <strong>$2,593</strong> in the final year alone. Cumulative savings would be even larger.
+      </p>
+      <p style="color:var(--text-muted); font-size:0.9rem; margin-top:0.8rem;">
+        💡 For the full interactive experience (instant chart, slider, and AI advice), please <strong>enable JavaScript</strong> in your browser.
+      </p>
+    </div>
+  </section>
+</noscript>
   
   <!-- ===== TOOL CARDS ROW ===== -->
 <section class="container section-spacing" style="padding-bottom:3;">

@@ -425,26 +425,64 @@
     </div>
   </section>
 
-  <!-- ===== NOSCRIPT ===== -->
-  <noscript>
-    <section class="container section-spacing" style="padding-top:0;">
-      <div class="glass-card" style="border-color:var(--color-burnout);">
-        <h2 style="font-size:1.5rem; font-weight:700; color:var(--color-burnout);">⚠️ JavaScript is disabled</h2>
-        <p style="color:var(--text-secondary);">The Debt Reality tool requires JavaScript to run the calculations and display interactive charts. You can still use the tool manually with the following steps:</p>
-        <ol style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
-          <li>Write down your total debt, interest rate, monthly payment, and monthly income.</li>
-          <li>Calculate your monthly interest rate = (annual rate / 100) / 12.</li>
-          <li>Each month, your new balance = previous balance + interest - payment.</li>
-          <li>Repeat until balance reaches zero. Count the months.</li>
-          <li>Total interest = sum of all monthly interest payments.</li>
-        </ol>
-        <p style="color:var(--text-secondary); margin-top:0.5rem;">
-          <strong>Example:</strong> Debt $25,000, rate 12%, payment $500. Monthly rate = 0.01. First month interest = $250, principal = $250, new balance = $24,750. It will take about 66 months (5.5 years) and total interest ~$4,800.<br />
-          <em>For an interactive experience, please enable JavaScript.</em>
-        </p>
-      </div>
-    </section>
-  </noscript>
+<noscript>
+  <section class="container section-spacing" style="padding-top:0;">
+    <div class="glass-card" style="border-color:var(--color-burnout);">
+      <h2 style="font-size:1.5rem; font-weight:700; color:var(--color-burnout);">⚠️ JavaScript is disabled</h2>
+      
+      <!-- ===== TOOL DESCRIPTION (what it is and does) ===== -->
+      <h3 style="font-size:1.2rem; font-weight:600; margin-top:0.5rem; color:var(--text-primary);">💳 What is the Debt Reality tool?</h3>
+      <p style="color:var(--text-secondary);">
+        The <strong>Debt Reality</strong> tool is a personal financial diagnostic that shows you the true cost of your debt and maps a clear path to freedom. It analyses four key inputs:
+      </p>
+      <ul style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
+        <li><strong>Total debt</strong> – your current outstanding balance</li>
+        <li><strong>Interest rate</strong> – the annual percentage rate (APR) you're being charged</li>
+        <li><strong>Monthly payment</strong> – what you're currently paying each month</li>
+        <li><strong>Monthly income</strong> – to calculate your debt‑to‑income (DTI) ratio</li>
+      </ul>
+      <p style="color:var(--text-secondary);">
+        The tool instantly calculates your <strong>payoff timeline (months to freedom)</strong>, the <strong>total interest you'll pay</strong>, and your <strong>DTI ratio</strong> – flagging if you're in the danger zone. You can also slide an <strong>extra payment</strong> control to see exactly how much time and money you save by paying just a little more each month. A stacked bar chart visualises interest vs. principal over time, and you get a personalised prescription with clear next steps. It's free, private, and requires no registration.
+      </p>
+
+      <hr style="border-color:var(--border-divider); margin:1.5rem 0;" />
+
+      <!-- ===== MANUAL WORKAROUND ===== -->
+      <h4 style="font-weight:600; color:var(--text-primary);">🧮 Calculate it manually (without JavaScript)</h4>
+      <p style="color:var(--text-secondary);">You can still estimate your debt payoff by following these steps:</p>
+      <ol style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
+        <li>Write down your:
+          <ul>
+            <li><strong>Total debt</strong> (e.g. $25,000)</li>
+            <li><strong>Annual interest rate</strong> (e.g. 12%)</li>
+            <li><strong>Monthly payment</strong> (e.g. $500)</li>
+            <li><strong>Monthly income</strong> (e.g. $4,500 – optional, for DTI)</li>
+          </ul>
+        </li>
+        <li>Convert your annual rate to a <strong>monthly rate</strong>: <code>monthlyRate = (annualRate / 100) / 12</code> (e.g. 0.12 / 12 = 0.01).</li>
+        <li>Each month, calculate:
+          <ul>
+            <li><strong>Interest</strong> = currentBalance × monthlyRate</li>
+            <li><strong>Principal paid</strong> = payment – interest</li>
+            <li><strong>New balance</strong> = currentBalance – principal paid</li>
+          </ul>
+        </li>
+        <li>Repeat month by month until the balance reaches zero. Count the months – that's your <strong>payoff time</strong>.</li>
+        <li>Add up all the monthly interest amounts – that's your <strong>total interest cost</strong>.</li>
+        <li>For <strong>DTI</strong>, divide your monthly payment by your monthly income and multiply by 100 (e.g. $500 / $4,500 = 11%).</li>
+      </ol>
+      <p style="color:var(--text-secondary); margin-top:0.5rem;">
+        <strong>Example:</strong> Debt $25,000 · Rate 12% · Payment $500.<br />
+        Monthly rate = 0.01. Month 1: interest = $250, principal = $250, new balance = $24,750.<br />
+        Continuing this, you'd be debt‑free in about <strong>66 months (5.5 years)</strong> and pay roughly <strong>$4,800 in total interest</strong>.
+        Adding just $50/month extra cuts that to ~58 months and saves ~$800 in interest.
+      </p>
+      <p style="color:var(--text-muted); font-size:0.9rem; margin-top:0.8rem;">
+        💡 For the full interactive experience (instant calculations, charts, sliders, and AI advice), please <strong>enable JavaScript</strong> in your browser.
+      </p>
+    </div>
+  </section>
+</noscript>
   
 <!-- ===== TOOL CARDS ROW ===== -->
 <section class="container section-spacing" style="padding-bottom:3;">
