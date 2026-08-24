@@ -10,7 +10,6 @@ All notable changes to the Productivity Bond Model and this website.
 - **Debt Reality tool** – debt payoff calculator that shows time to freedom, total interest paid, debt‑to‑income ratio, and includes an extra payment slider with stacked bar chart visualisation.
 - **Compound Curve tool** – debt projection tool that visualises how debt compounds over time, with a reduction slider showing savings from cutting annual debt.
 - **AI advisors** – each tool includes a personalised AI advisor (powered by GLM/Llama) that generates custom recommendations based on user inputs.
-- **Ask AI feature** – users can ask specific questions about their wellbeing, debt, or projections and receive instant answers from the AI.
 - **Tool cards row** – reusable 3‑card grid (stacking on mobile) for promoting tools across all pages, with interchangeable cards for each tool.
 - **Changelog entry for v0.9.0** – documenting all new tools and fixes.
 
@@ -35,7 +34,7 @@ All notable changes to the Productivity Bond Model and this website.
 - All async font loading from tool pages (`display=swap` removed in favour of `display=block`).
 - Duplicated accordion initialisation logic from page‑specific scripts (now handled by `core.min.js` or direct `onclick`).
 
-## [0.7.0] – 2026-08-22
+## [0.7.0] – 2026-08-21
 
 ### Added
 - **Endogenous debt feedback loop** – Monte Carlo simulator now models the full debt dynamics, revealing 77.2pp distress increase for Productivity bonds (raw model).
@@ -92,7 +91,7 @@ All notable changes to the Productivity Bond Model and this website.
 - `main.js` (split into `core.min.js` and `home.js`).
 - `main.css` (split into `core.min.css` and `home.css`).
 
-## [0.6.0] – 2026-07-15
+## [0.6.0] – 2026-08-20
 
 ### Added
 - Happiness Curve and Bond Strength dashboard.
@@ -102,7 +101,7 @@ All notable changes to the Productivity Bond Model and this website.
 - Bar chart visualisation in the simulator.
 - Responsive layout for mobile devices.
 
-## [0.5.0] – 2026-06-01
+## [0.5.0] – 2026-08-19
 
 ### Added
 - Initial public release of the canonical website.
