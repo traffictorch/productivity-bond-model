@@ -276,7 +276,7 @@
       "applicationSubCategory": "Economic Analysis",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript",
-      "softwareVersion": "1.1.0",
+      "softwareVersion": "0.8.0",
       "dateModified": "2026-08-25",
       "offers": {
         "@type": "Offer",
@@ -445,10 +445,10 @@
   <section class="container hero">
     <div>
       <span class="badge-glow" style="margin-bottom:0.5rem;">📊 Interactive Tool</span>
-      <span class="badge-glow badge-version" style="margin-left:0.5rem;">v1.1.0</span>
+      <span class="badge-glow badge-version" style="margin-left:0.5rem;">v0.8.0</span>
       <h1 class="text-gradient" style="font-size:clamp(2.8rem,6vw,4rem); font-weight:800; letter-spacing:-0.03em; line-height:1.1;">NPI Index Tracker</h1>
       <p style="font-size:clamp(1.2rem,2vw,1.6rem); font-weight:300; opacity:0.8; max-width:650px; margin:0.5rem 0 1.5rem; color:var(--text-secondary);">
-        Measure how efficiently your economy turns inputs into value – with real‑world data from 50+ countries.
+        Measure how efficiently your economy turns inputs into value – with real‑world data from 47+ countries.
       </p>
     </div>
   </section>
@@ -978,25 +978,34 @@
 
 <button class="floating-return-top" id="floatingReturnTop" aria-label="Return to top">⬆ Top</button>
 
+<!-- ====== FOOTER ====== -->
 <footer class="footer">
   <div class="container">
     <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1rem 1.5rem; margin-bottom:1.5rem; font-size:0.85rem;">
       <a href="index.html" style="color:var(--text-muted); text-decoration:none;">🏠 Home</a>
+      <a href="news.html" style="color:var(--text-muted); text-decoration:none;">News</a>
       <a href="about.html" style="color:var(--text-muted); text-decoration:none;">About</a>
       <a href="book.html" style="color:var(--text-muted); text-decoration:none;">Book</a>
+      <a href="changelog.html" style="color:var(--text-muted); text-decoration:none;">Changelog</a>
       <a href="tools.html" style="color:#b388ff;">🧰 Tools</a>
       <a href="privacy.html" style="color:var(--text-muted); text-decoration:none;">Privacy</a>
       <a href="terms.html" style="color:var(--text-muted); text-decoration:none;">Terms</a>
       <a href="contact.html" style="color:var(--text-muted); text-decoration:none;">Contact</a>
       <a href="index.html#simulator" style="color:var(--text-muted); text-decoration:none;">Simulator</a>
+      <a href="index.html#learn" style="color:var(--text-muted); text-decoration:none;">Learn 💸</a>
     </div>
     <p>
       © 2026 <a href="https://traffictorch.net">Traffic Torch</a> ·
       <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> ·
-      Version 1.1.0
+      Version 0.8.0 ·
+      <a href="https://zenodo.org/records/21970090" target="_blank" rel="external noopener">Simulation Code (Zenodo)</a> ·
+      <button class="share-btn" style="background:transparent; border:none; color:#4f46e5; padding:0; font-size:0.85rem; cursor:pointer;">📤 Share</button>
     </p>
     <p style="font-size:0.7rem; margin-top:0.3rem;">
-      Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI
+      Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI · <span id="last-updated"></span>
+    </p>
+    <p style="font-size:0.65rem; margin-top:0.5rem; color:var(--text-muted); opacity:0.7;">
+      📌 v0.8.0 – feat: NPI Index Tracker with real-world data. Endogenous debt feedback loop implemented - reveals 2.5pp lower distress for Productivity.
     </p>
   </div>
 </footer>
@@ -1627,6 +1636,23 @@ window.addEventListener('load', function() {
     // We'll not auto-update to avoid spamming history.
 });
 
+</script>
+
+<script>
+// Fallback: reattach accordion click handlers after page load
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.accordion-toggle').forEach(function(toggle) {
+        toggle.addEventListener('click', function() {
+            var content = this.nextElementSibling;
+            var arrow = this.querySelector('.arrow');
+            if (content) {
+                content.classList.toggle('open');
+                this.classList.toggle('open');
+                if (arrow) arrow.classList.toggle('open');
+            }
+        });
+    });
+});
 </script>
 
 </body>
