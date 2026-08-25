@@ -397,3 +397,8 @@ input[type="range"]::-moz-range-thumb {
 }
 .diagram-container svg text { fill: var(--text-primary); }
 .diagram-container svg rect { stroke: var(--border-input); }
+
+/* Arrow rotation for accordion */
+.accordion-toggle.open .arrow {
+  transform: rotate(180deg);
+}
