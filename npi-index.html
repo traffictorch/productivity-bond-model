@@ -239,6 +239,35 @@
       .weight-sliders { grid-template-columns: 1fr; }
       .floating-return-top { display: none !important; }
     }
+    
+    /* ===== FIX: Prevent FAQ content clipping on mobile ===== */
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.3s ease;
+    padding: 0 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.accordion-content.open {
+    max-height: 3000px; /* Increased from 600px to prevent clipping */
+    padding: 0.2rem 1rem 1rem 1rem;
+}
+
+/* Mobile specific: ensure content is fully visible */
+@media (max-width: 768px) {
+    .accordion-content.open {
+        max-height: 5000px; /* Even more room on mobile */
+        padding: 0.2rem 0.8rem 1rem 0.8rem;
+    }
+    
+    .accordion-content {
+        padding: 0 0.8rem;
+        font-size: 0.85rem;
+    }
+}
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
@@ -461,22 +490,25 @@
       </p>
 
       <!-- Accordion -->
-      <div style="background:var(--bg-input); border-radius:12px; padding:0.2rem 0.2rem; margin-bottom:1.5rem; border:1px solid var(--border-divider);">
-        <div class="accordion-item">
-          <div class="accordion-toggle"><span>📖 What is the NPI?</span><span class="arrow">▼</span></div>
-          <div class="accordion-content">
-            <p style="padding:0.5rem 0; color:var(--text-secondary);">
-              The <strong>National Productivity Index (NPI)</strong> measures how efficiently an economy converts its key inputs into economic output. It is defined as:
-            </p>
-            <div style="background:var(--bg-code); border-radius:8px; padding:0.8rem 1rem; font-family:monospace; font-size:0.85rem; margin:0.5rem 0; border-left:3px solid #4f46e5;">
-              NPI = GDP ÷ (Labour<sup>0.40</sup> × Energy<sup>0.25</sup> × Materials<sup>0.20</sup> × Capital<sup>0.15</sup>)
-            </div>
-            <p style="padding:0.5rem 0; color:var(--text-secondary);">
-              Higher NPI means the economy produces more value from the same inputs – a sign of genuine progress, not just growth.
-            </p>
-          </div>
-        </div>
+<div style="background:var(--bg-input); border-radius:12px; padding:0.2rem 0.2rem; margin-bottom:1.5rem; border:1px solid var(--border-divider);">
+  <div class="accordion-item">
+    <div class="accordion-toggle" onclick="toggleAccordion(this)">
+      <span>📖 What is the NPI?</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="accordion-content">
+      <p style="padding:0.5rem 0; color:var(--text-secondary);">
+        The <strong>National Productivity Index (NPI)</strong> measures how efficiently an economy converts its key inputs into economic output. It is defined as:
+      </p>
+      <div style="background:var(--bg-code); border-radius:8px; padding:0.8rem 1rem; font-family:monospace; font-size:0.85rem; margin:0.5rem 0; border-left:3px solid #4f46e5;">
+        NPI = GDP ÷ (Labour<sup>0.40</sup> × Energy<sup>0.25</sup> × Materials<sup>0.20</sup> × Capital<sup>0.15</sup>)
       </div>
+      <p style="padding:0.5rem 0; color:var(--text-secondary);">
+        Higher NPI means the economy produces more value from the same inputs – a sign of genuine progress, not just growth.
+      </p>
+    </div>
+  </div>
+</div>
 
       <!-- Inputs: Country + Year Range -->
       <div class="input-group">
@@ -1639,20 +1671,44 @@ window.addEventListener('load', function() {
 </script>
 
 <script>
-// Fallback: reattach accordion click handlers after page load
+
+// ============================================================
+// FALLBACK: Reattach all accordion toggles
+// ============================================================
 document.addEventListener('DOMContentLoaded', function() {
+    // Target ALL accordion toggles on the page
     document.querySelectorAll('.accordion-toggle').forEach(function(toggle) {
-        toggle.addEventListener('click', function() {
-            var content = this.nextElementSibling;
-            var arrow = this.querySelector('.arrow');
-            if (content) {
-                content.classList.toggle('open');
-                this.classList.toggle('open');
-                if (arrow) arrow.classList.toggle('open');
-            }
-        });
+        // Remove any existing listeners to avoid duplicates
+        toggle.removeEventListener('click', toggleAccordionFallback);
+        // Add new listener
+        toggle.addEventListener('click', toggleAccordionFallback);
     });
 });
+
+function toggleAccordionFallback(e) {
+    // If this was triggered by a click event, get the element
+    var el = this || e.currentTarget;
+    if (!el) return;
+    
+    var content = el.nextElementSibling;
+    var arrow = el.querySelector('.arrow');
+    if (content) {
+        content.classList.toggle('open');
+        el.classList.toggle('open');
+        if (arrow) arrow.classList.toggle('open');
+    }
+}
+
+// Also ensure the global function exists for inline onclick
+window.toggleAccordion = function(el) {
+    var content = el.nextElementSibling;
+    var arrow = el.querySelector('.arrow');
+    if (content) {
+        content.classList.toggle('open');
+        el.classList.toggle('open');
+        if (arrow) arrow.classList.toggle('open');
+    }
+};
 </script>
 
 </body>
