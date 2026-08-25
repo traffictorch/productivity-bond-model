@@ -598,8 +598,6 @@
 
         <!-- Action Bar: Export, Share, AI -->
         <div class="action-bar">
-          <button class="btn-secondary" onclick="exportCSV()">📥 Export CSV</button>
-          <button class="btn-secondary" onclick="copyShareLink()">📋 Copy Link</button>
           <button class="btn-secondary" id="aiButton" onclick="generateAI()">🧠 Generate AI Analysis</button>
           <span style="font-size:0.7rem; color:var(--text-muted); margin-left:0.5rem;" id="aiStatus">Ready</span>
         </div>
@@ -610,6 +608,27 @@
           <div style="margin-top:0.4rem; font-size:0.65rem; color:var(--text-muted); opacity:0.6;">⚠️ AI can make mistakes. Verify with your own research.</div>
         </div>
       </div>
+      
+        <!-- ===== SHARE & REPORT MODULE ===== -->
+        <div class="share-module" style="margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid var(--border-divider);">
+          <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap; margin-bottom:0.8rem;">
+            <span class="badge-glow" style="background:rgba(251,191,36,0.15); color:#fbbf24;">📋 Share & Report</span>
+            <h3 style="font-weight:700; font-size:1rem; margin:0; color:var(--text-primary);">Share your NPI results</h3>
+          </div>
+
+          <div style="display:flex; flex-wrap:wrap; gap:0.6rem; align-items:center;">
+            <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="copyShareLink()">🔗 Copy Link</button>
+            <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="copyNpiSummary()">📝 Copy Summary</button>
+            <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="exportCSV()">📊 Export CSV</button>
+            <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="window.print()">🖨️ Print / PDF</button>
+            <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="shareNpiSocial('x')">🐦 X</button>
+            <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="shareNpiSocial('linkedin')">💼 LinkedIn</button>
+          </div>
+
+          <div style="margin-top:0.6rem; font-size:0.75rem; color:var(--text-muted);">
+            ⚡ Share this NPI configuration and results with others.
+          </div>
+        </div>
 
       <!-- Data Quality Notice -->
       <div style="margin-top:1rem; padding:0.8rem 1rem; background:var(--bg-code); border-radius:8px; border:1px solid var(--border-divider);">
@@ -1709,6 +1728,60 @@ window.toggleAccordion = function(el) {
         if (arrow) arrow.classList.toggle('open');
     }
 };
+
+// ============================================================
+// NPI SHARE & REPORT – Additional functions
+// ============================================================
+
+// ---- Copy NPI summary to clipboard ----
+function copyNpiSummary() {
+  const country = document.getElementById('countrySelect')?.value || '—';
+  const start = document.getElementById('yearStart')?.value || '—';
+  const end = document.getElementById('yearEnd')?.value || '—';
+  const npi = document.getElementById('npiValue')?.textContent || '—';
+  const growth = document.getElementById('npiGrowth')?.textContent || '—';
+  const solution = document.getElementById('npiSolution')?.textContent || '—';
+  const action = document.getElementById('npiAction')?.textContent || '—';
+  const mode = currentMode || 'book';
+  const weightsStr = `H=${weights.H}% E=${weights.E}% M=${weights.M}% K=${weights.K}%`;
+
+  let text = '📊 NPI Index Tracker Report\n';
+  text += '-------------------------\n';
+  text += `Country: ${country}\n`;
+  text += `Year Range: ${start}–${end}\n`;
+  text += `NPI (Base Year = 100): ${npi}\n`;
+  text += `Growth: ${growth}\n`;
+  text += `Mode: ${mode}\n`;
+  text += `Weights: ${weightsStr}\n`;
+  text += `\nDiagnosis: ${solution}\n`;
+  text += `Action: ${action}\n`;
+  text += `\n` + window.location.href;
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text)
+      .then(() => alert('NPI summary copied!'))
+      .catch(() => prompt('Copy manually:', text));
+  } else {
+    prompt('Copy manually:', text);
+  }
+}
+
+// ---- Social sharing ----
+function shareNpiSocial(platform) {
+  const url = buildShareUrl(); // uses existing function
+  const country = document.getElementById('countrySelect')?.value || 'NPI';
+  const text = encodeURIComponent(`📊 Check out this NPI analysis for ${country}: `);
+  let shareUrl = '';
+  if (platform === 'x') {
+    shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(url)}`;
+  } else if (platform === 'linkedin') {
+    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+  }
+  if (shareUrl) {
+    window.open(shareUrl, '_blank', 'width=600,height=400');
+  }
+}
+
 </script>
 
 </body>

@@ -791,6 +791,38 @@
 </div>
         </div>
       </section>
+      
+      <!-- ===== SHARE SIMULATION RESULTS ===== -->
+<div class="share-sim-module" style="margin-top:0rem; padding-bottom:5rem;">
+  <div class="glass-card" style="border-color:rgba(52,211,153,0.3);">
+    <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap; margin-bottom:0.8rem;">
+      <span class="badge-glow" style="background:rgba(52,211,153,0.15); color:#34d399;">📊 Share Simulation</span>
+      <h3 style="font-weight:700; font-size:1rem; margin:0; color:var(--text-primary);">Share your results</h3>
+    </div>
+
+    <div style="display:flex; flex-wrap:wrap; gap:0.6rem; align-items:center;">
+      <!-- 1. Copy Link with current slider state -->
+      <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="copySimLink()">🔗 Copy Link</button>
+
+      <!-- 2. Copy summary of results -->
+      <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="copySimSummary()">📝 Copy Summary</button>
+
+      <!-- 3. Export CSV (reuses the existing download button) -->
+      <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="exportSimCSV()">📊 Export CSV</button>
+
+      <!-- 4. Print / PDF -->
+      <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="window.print()">🖨️ Print / PDF</button>
+
+      <!-- 5. Social shares -->
+      <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="shareSimSocial('x')">🐦 X</button>
+      <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="shareSimSocial('linkedin')">💼 LinkedIn</button>
+    </div>
+
+    <div style="margin-top:0.6rem; font-size:0.75rem; color:var(--text-muted);">
+      ⚡ Share this simulation configuration and results with others.
+    </div>
+  </div>
+</div>
 
       <!-- AI INTERPRETATION -->
       <div class="ai-power-wrapper">
@@ -1317,6 +1349,138 @@
 
 <script>
   document.documentElement.classList.add('loaded');
+</script>
+
+// ============================================================
+// SHARE SIMULATION RESULTS
+// ============================================================
+
+<script>
+// ---- Read slider values ----
+function getSimState() {
+  const theta = document.getElementById('theta-slider')?.value || 0.15;
+  const alpha = document.getElementById('alpha-slider')?.value || 0.55;
+  const cap = document.getElementById('cap-slider')?.value || 0.02;
+  return { theta, alpha, cap };
+}
+
+// ---- Build shareable URL with state ----
+function buildSimShareUrl() {
+  const base = window.location.href.split('?')[0];
+  const state = getSimState();
+  const params = new URLSearchParams();
+  params.set('theta', state.theta);
+  params.set('alpha', state.alpha);
+  params.set('cap', state.cap);
+  return base + '?' + params.toString();
+}
+
+// ---- Copy link ----
+function copySimLink() {
+  const url = buildSimShareUrl();
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url)
+      .then(() => alert('Simulation link copied!'))
+      .catch(() => prompt('Copy this link manually:', url));
+  } else {
+    prompt('Copy this link manually:', url);
+  }
+}
+
+// ---- Apply URL params on load ----
+function applySimParams() {
+  const params = new URLSearchParams(window.location.search);
+  const theta = params.get('theta');
+  const alpha = params.get('alpha');
+  const cap = params.get('cap');
+  let changed = false;
+  if (theta !== null) {
+    const el = document.getElementById('theta-slider');
+    if (el) { el.value = theta; changed = true; }
+  }
+  if (alpha !== null) {
+    const el = document.getElementById('alpha-slider');
+    if (el) { el.value = alpha; changed = true; }
+  }
+  if (cap !== null) {
+    const el = document.getElementById('cap-slider');
+    if (el) { el.value = cap; changed = true; }
+  }
+  if (changed) {
+    // Update the displayed value badges (if they exist)
+    const thetaLabel = document.getElementById('theta-label');
+    const alphaLabel = document.getElementById('alpha-label');
+    const capLabel = document.getElementById('cap-label');
+    if (thetaLabel) thetaLabel.textContent = parseFloat(theta).toFixed(2);
+    if (alphaLabel) alphaLabel.textContent = parseFloat(alpha).toFixed(2);
+    if (capLabel) capLabel.textContent = (parseFloat(cap) * 100).toFixed(1) + '%';
+    // Re‑run the simulation
+    const runBtn = document.getElementById('run-btn');
+    if (runBtn) runBtn.click();
+  }
+}
+
+// ---- Copy summary of current results ----
+function copySimSummary() {
+  const state = getSimState();
+  const costConv = document.getElementById('cost-conv')?.textContent || '—';
+  const costProd = document.getElementById('cost-prod')?.textContent || '—';
+  const distressConv = document.getElementById('distress-conv')?.textContent || '—';
+  const distressProd = document.getElementById('distress-prod')?.textContent || '—';
+  const saving = document.getElementById('headline-cost')?.textContent || '—';
+  const distInc = document.getElementById('headline-distress')?.textContent || '—';
+
+  let text = '📊 PBM Simulation Results\n';
+  text += '-------------------------\n';
+  text += `θ_AI: ${state.theta}\n`;
+  text += `α_N: ${state.alpha}\n`;
+  text += `Cap: ${(state.cap * 100).toFixed(1)}%\n\n`;
+  text += `Conventional Cost: ${costConv}\n`;
+  text += `Productivity Cost: ${costProd}\n`;
+  text += `Conventional Distress: ${distressConv}\n`;
+  text += `Productivity Distress: ${distressProd}\n`;
+  text += `Cost Saving: ${saving}\n`;
+  text += `Distress Increase: ${distInc}\n`;
+  text += '\n' + window.location.href;
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text)
+      .then(() => alert('Summary copied!'))
+      .catch(() => prompt('Copy manually:', text));
+  } else {
+    prompt('Copy manually:', text);
+  }
+}
+
+// ---- Export CSV (reuse existing button) ----
+function exportSimCSV() {
+  const btn = document.getElementById('download-csv-btn');
+  if (btn) {
+    btn.click();
+  } else {
+    alert('CSV export not available right now. Please run the simulation first.');
+  }
+}
+
+// ---- Social sharing ----
+function shareSimSocial(platform) {
+  const url = buildSimShareUrl();
+  const text = encodeURIComponent('Check out this PBM simulation result: ');
+  let shareUrl = '';
+  if (platform === 'x') {
+    shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(url)}`;
+  } else if (platform === 'linkedin') {
+    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+  }
+  if (shareUrl) {
+    window.open(shareUrl, '_blank', 'width=600,height=400');
+  }
+}
+
+// ---- Auto‑apply params on page load ----
+document.addEventListener('DOMContentLoaded', function() {
+  applySimParams();
+});
 </script>
 
 </body>

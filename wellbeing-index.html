@@ -413,9 +413,43 @@
             </div>
           </div>
         </div>
+        
+        <!-- ===== SHARE & REPORT MODULE ===== -->
+<div class="share-module" style="margin-top:1.5rem;">
+  <div class="glass-card" style="border-color:rgba(251,191,36,0.25);">
+    <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap; margin-bottom:0.8rem;">
+      <span class="badge-glow" style="background:rgba(251,191,36,0.15); color:#fbbf24;">📋 Share & Report</span>
+      <h3 style="font-weight:700; font-size:1rem; margin:0; color:var(--text-primary);">Share your results</h3>
+    </div>
+
+    <div style="display:flex; flex-wrap:wrap; gap:0.6rem; align-items:center;">
+      <!-- 1. Copy Link -->
+      <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="copyShareLink()">🔗 Copy Link</button>
+
+      <!-- 2. Copy Summary -->
+      <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="copySummary()">📝 Copy Summary</button>
+
+      <!-- 3. Export Data (CSV) -->
+      <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="exportCSV()">📊 Export CSV</button>
+
+      <!-- 4. Print / PDF -->
+      <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="window.print()">🖨️ Print / PDF</button>
+
+      <!-- 5. Share on X (Twitter) -->
+      <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="shareSocial('x')">🐦 X</button>
+
+      <!-- 6. Share on LinkedIn -->
+      <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="shareSocial('linkedin')">💼 LinkedIn</button>
+    </div>
+
+    <div style="margin-top:0.6rem; font-size:0.75rem; color:var(--text-muted);">
+      ⚡ Share your current inputs and results with others, or save them for later.
+    </div>
+  </div>
+</div>
 
   <!-- ===== FAQ ACCORDION ===== -->
-  <section class="container section-spacing" style="padding-top:0;">
+  <section class="container section-spacing" style="padding-top:1;">
     <div class="glass-card">
       <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:1rem;">Frequently Asked Questions</h2>
       <div class="accordion-item">
@@ -862,6 +896,191 @@
       status.textContent = '❌ Error';
     }
   }
+  
+    // ============================
+  // Copy Link
+  // ============================
+  
+  // ---- URL parameter handling ----
+function getUrlParams() {
+  const params = new URLSearchParams(window.location.search);
+  const obj = {};
+  for (const [key, value] of params) {
+    obj[key] = value;
+  }
+  return obj;
+}
+
+function applyUrlParams() {
+  const params = getUrlParams();
+  // Map each input ID to its parameter name
+  const mapping = {
+    // For Wellbeing:
+    'wellWork': 'work',
+    'wellDays': 'days',
+    'wellSleep': 'sleep',
+    'wellHappiness': 'happiness',
+    'wellChaos': 'chaos',
+    // For Debt:
+    'debtTotal': 'debt',
+    'debtRate': 'rate',
+    'debtPayment': 'payment',
+    'debtIncome': 'income',
+    'debtExtraSlider': 'extra',
+    // For Compound:
+    'compBase': 'annual',
+    'compRate': 'growth',
+    'compYears': 'years',
+    'compReduction': 'reduction'
+  };
+  let applied = false;
+  for (const [id, param] of Object.entries(mapping)) {
+    const el = document.getElementById(id);
+    if (el && params[param] !== undefined) {
+      el.value = params[param];
+      applied = true;
+      // Update any display spans (if any)
+      const displayId = id + 'Display';
+      const displayEl = document.getElementById(displayId);
+      if (displayEl) {
+        if (id === 'compRate') displayEl.textContent = params[param] + '%';
+        else if (id === 'compReduction' || id === 'debtExtraSlider') displayEl.textContent = '$' + params[param];
+        else displayEl.textContent = params[param];
+      }
+    }
+  }
+  if (applied) {
+    // Re-run the appropriate calculation
+    if (document.getElementById('wellWork')) calculateWellbeing();
+    else if (document.getElementById('debtTotal')) calculateDebtReality();
+    else if (document.getElementById('compBase')) runCompoundCurve();
+  }
+}
+
+function buildShareUrl() {
+  const base = window.location.href.split('?')[0];
+  const params = new URLSearchParams();
+  // Gather all relevant inputs based on what exists
+  const inputs = document.querySelectorAll('.input-group input, #debtExtraSlider, #compReduction');
+  const paramMap = {
+    'wellWork': 'work',
+    'wellDays': 'days',
+    'wellSleep': 'sleep',
+    'wellHappiness': 'happiness',
+    'wellChaos': 'chaos',
+    'debtTotal': 'debt',
+    'debtRate': 'rate',
+    'debtPayment': 'payment',
+    'debtIncome': 'income',
+    'debtExtraSlider': 'extra',
+    'compBase': 'annual',
+    'compRate': 'growth',
+    'compYears': 'years',
+    'compReduction': 'reduction'
+  };
+  inputs.forEach(el => {
+    const id = el.id;
+    if (paramMap[id] && el.value) {
+      params.set(paramMap[id], el.value);
+    }
+  });
+  return base + '?' + params.toString();
+}
+
+function copyShareLink() {
+  const url = buildShareUrl();
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(() => alert('Link copied!')).catch(() => prompt('Copy this link manually:', url));
+  } else {
+    prompt('Copy this link manually:', url);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  applyUrlParams();
+  // if no params, run the default calculation (already done by the initial button)
+});
+
+// ---- SHARE & REPORT FUNCTIONS ----
+
+// 1. Get the current diagnosis text (prescription box)
+function getSummaryText() {
+  // Try to get the diagnosis/solution text from the prescription box
+  const solutionEl = document.querySelector('.prescription-box .solution, #wellSolution, #debtSolution, #compSolution');
+  const actionEl = document.querySelector('.prescription-box .action, #debtAction, #compAction');
+  const scoreEl = document.querySelector('.stat span, #wellScore, #debtMonths, #compTotal');
+  
+  let text = 'PBM Productivity Lab Report\n';
+  text += '-------------------------\n';
+  
+  // Gather current input values
+  const inputs = document.querySelectorAll('.input-group input, #debtExtraSlider, #compReduction');
+  inputs.forEach(el => {
+    if (el.id && el.value) {
+      text += `${el.id}: ${el.value}\n`;
+    }
+  });
+  
+  if (solutionEl) text += `\nDiagnosis: ${solutionEl.textContent.trim()}`;
+  if (actionEl) text += `\nAction: ${actionEl.textContent.trim()}`;
+  if (scoreEl) text += `\nKey Metric: ${scoreEl.textContent.trim()}`;
+  
+  return text;
+}
+
+// 2. Copy Summary to clipboard
+function copySummary() {
+  const text = getSummaryText();
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => alert('Summary copied!')).catch(() => prompt('Copy manually:', text));
+  } else {
+    prompt('Copy manually:', text);
+  }
+}
+
+// 3. Export CSV
+function exportCSV() {
+  let csv = 'Parameter,Value\n';
+  const inputs = document.querySelectorAll('.input-group input, #debtExtraSlider, #compReduction');
+  inputs.forEach(el => {
+    if (el.id && el.value) {
+      csv += `${el.id},${el.value}\n`;
+    }
+  });
+  // Add results
+  const results = document.querySelectorAll('.result-box .stat span, .result-box .sub-stat');
+  results.forEach(el => {
+    if (el.id) {
+      csv += `${el.id},${el.textContent.trim()}\n`;
+    }
+  });
+  
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'pbm-report.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// 4. Social Sharing
+function shareSocial(platform) {
+  const url = buildShareUrl(); // uses your existing function
+  const text = 'Check out my PBM Productivity Lab results: ';
+  let shareUrl = '';
+  
+  if (platform === 'x') {
+    shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+  } else if (platform === 'linkedin') {
+    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+  }
+  
+  if (shareUrl) {
+    window.open(shareUrl, '_blank', 'width=600,height=400');
+  }
+}
+  
 </script>
 </body>
 </html>
