@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Pulse · Productivity Calendar</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #f5f5f5;
+      color: #0b1120;
+      height: 100vh;
+      overflow: hidden;
+      transition: background 0.4s, color 0.4s;
+    }
+    body.dark {
+      background: #0b1120;
+      color: #f1f5f9;
+    }
+
+    .app-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 0 1rem 0.5rem;
+      position: relative;
+    }
+
+    /* ===== HEADER ===== */
+    .app-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0 0.5rem;
+      flex-shrink: 0;
+    }
+    .app-header h1 {
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #f97316, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .streak-badge {
+      background: #f97316;
+      color: white;
+      border-radius: 60px;
+      padding: 0.2rem 0.8rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+    .dark .streak-badge { background: #ea580c; }
+    .theme-icon {
+      font-size: 1.3rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.2rem 0.4rem;
+      border-radius: 40px;
+      transition: 0.2s;
+    }
+    .theme-icon:hover { background: rgba(0,0,0,0.05); }
+    .dark .theme-icon:hover { background: rgba(255,255,255,0.05); }
+
+    /* ===== SEARCH BAR ===== */
+    .search-bar {
+      flex-shrink: 0;
+      margin: 0.5rem 0 0.8rem;
+      position: relative;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 0.7rem 1.2rem;
+      border-radius: 60px;
+      border: 1px solid #d1d5db;
+      background: rgba(255,255,255,0.8);
+      font-size: 0.95rem;
+      outline: none;
+      transition: 0.2s;
+      color: inherit;
+      backdrop-filter: blur(8px);
+    }
+    .dark .search-bar input {
+      background: rgba(15,23,42,0.6);
+      border-color: #334155;
+      color: #f1f5f9;
+    }
+    .search-bar input:focus {
+      border-color: #f97316;
+      box-shadow: 0 0 0 3px rgba(249,115,22,0.15);
+    }
+    .search-bar .search-icon {
+      position: absolute;
+      right: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 1.1rem;
+      pointer-events: none;
+    }
+
+    /* ===== MONTH NAV ===== */
+    .month-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.2rem 0 0.5rem;
+      flex-shrink: 0;
+    }
+    .month-nav .month-label {
+      font-size: 1.3rem;
+      font-weight: 700;
+      text-align: center;
+      flex: 1;
+    }
+    .month-nav button {
+      background: none;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #4b5563;
+      padding: 0 0.5rem;
+      transition: 0.2s;
+      line-height: 1;
+    }
+    .dark .month-nav button { color: #94a3b8; }
+    .month-nav button:hover { color: #f97316; }
+
+    /* ===== CALENDAR GRID (LARGE, SCROLLABLE) ===== */
+    .calendar-scroll {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 0.5rem;
+      touch-action: pan-y;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+      background: transparent;
+      border-radius: 1.2rem;
+      overflow: hidden;
+      width: 100%;
+      transition: opacity 0.15s;
+    }
+
+    .weekday-label {
+      padding: 0.6rem 0;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #6b7280;
+      background: rgba(255,255,255,0.3);
+    }
+    .dark .weekday-label {
+      background: rgba(255,255,255,0.02);
+      color: #9ca3af;
+    }
+
+    .day-cell {
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(4px);
+      min-height: 70px;
+      padding: 0.3rem 0.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .day-cell:active {
+      transform: scale(0.96);
+    }
+    .dark .day-cell {
+      background: rgba(255,255,255,0.04);
+    }
+    .day-cell.other-month {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+    .day-cell.today {
+      background: rgba(249,115,22,0.15);
+      border: 2px solid rgba(249,115,22,0.4);
+    }
+    .dark .day-cell.today {
+      background: rgba(249,115,22,0.2);
+      border-color: rgba(249,115,22,0.5);
+    }
+    .day-cell.today .day-number {
+      background: #f97316;
+      color: white;
+      padding: 0.1rem 0.5rem;
+      border-radius: 40px;
+      display: inline-block;
+      width: fit-content;
+    }
+    .day-number {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.1rem;
+    }
+    .day-cell .event-dots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2px;
+      margin-top: auto;
+    }
+    .event-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 10px;
+      background: #f97316;
+    }
+    .event-dot.shared {
+      background: #6366f1;
+    }
+    .event-dot.task {
+      background: #22c55e;
+    }
+    .event-dot.alert-chain {
+      background: #ec4899;
+    }
+    .day-cell .event-label {
+      font-size: 0.55rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0.05rem 0.2rem;
+      border-radius: 4px;
+      background: rgba(249,115,22,0.08);
+      color: #0b1120;
+      margin-top: 1px;
+      max-width: 100%;
+    }
+    .dark .day-cell .event-label {
+      color: #f1f5f9;
+      background: rgba(249,115,22,0.1);
+    }
+
+    /* ===== BOTTOM SHEET ===== */
+    .bottom-sheet-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .bottom-sheet-overlay.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .bottom-sheet {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 500px;
+      margin: 0 auto;
+      background: #ffffff;
+      backdrop-filter: blur(20px);
+      border-radius: 2rem 2rem 0 0;
+      padding: 1.5rem 1.5rem 2rem;
+      z-index: 1001;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 -20px 60px -20px rgba(0,0,0,0.3);
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+    .dark .bottom-sheet {
+      background: #1e293b;
+    }
+    .bottom-sheet.visible {
+      transform: translateY(0);
+    }
+
+    .bottom-sheet .handle {
+      width: 40px;
+      height: 4px;
+      background: #d1d5db;
+      border-radius: 4px;
+      margin: 0 auto 1rem;
+    }
+    .dark .bottom-sheet .handle { background: #475569; }
+
+    .bottom-sheet .sheet-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.8rem;
+    }
+    .bottom-sheet .sheet-header h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .bottom-sheet .sheet-header .close-sheet {
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: #6b7280;
+      padding: 0 0.2rem;
+    }
+    .bottom-sheet .sheet-header .close-sheet:hover { color: #f97316; }
+
+    /* ===== TABS INSIDE SHEET ===== */
+    .sheet-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      padding-bottom: 0.5rem;
+    }
+    .dark .sheet-tabs { border-bottom-color: rgba(255,255,255,0.05); }
+    .sheet-tabs button {
+      background: none;
+      border: none;
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: #6b7280;
+      transition: 0.2s;
+    }
+    .sheet-tabs button.active {
+      background: rgba(249,115,22,0.1);
+      color: #f97316;
+    }
+    .sheet-tabs button:hover { color: #f97316; }
+    .dark .sheet-tabs button { color: #94a3b8; }
+    .dark .sheet-tabs button.active { background: rgba(249,115,22,0.15); color: #fb923c; }
+
+    .sheet-tab-content { display: none; }
+    .sheet-tab-content.active { display: block; }
+
+    .sheet-event-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .dark .sheet-event-item { border-bottom-color: rgba(255,255,255,0.05); }
+    .sheet-event-item .time { font-weight: 500; color: #f97316; margin-right: 0.8rem; font-size: 0.85rem; }
+    .sheet-event-item .title { flex: 1; font-weight: 500; }
+    .sheet-event-item .badge-tag {
+      font-size: 0.6rem;
+      padding: 0.1rem 0.5rem;
+      border-radius: 40px;
+      background: rgba(99,102,241,0.1);
+      color: #6366f1;
+      margin-right: 0.5rem;
+    }
+    .sheet-event-item .delete-btn {
+      background: none;
+      border: none;
+      color: #ef4444;
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 0 0.2rem;
+    }
+
+    /* ===== TASK ITEMS ===== */
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.03);
+    }
+    .dark .task-item { border-bottom-color: rgba(255,255,255,0.03); }
+    .task-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: #f97316;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .task-item .task-title {
+      flex: 1;
+      font-size: 0.9rem;
+    }
+    .task-item .task-title.done {
+      text-decoration: line-through;
+      color: #6b7280;
+    }
+    .task-item .task-delete {
+      background: none;
+      border: none;
+      color: #ef4444;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0 0.2rem;
+    }
+
+    /* ===== ADD FORM INSIDE SHEET ===== */
+    .add-form {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+    .dark .add-form { border-top-color: rgba(255,255,255,0.05); }
+    .add-form label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.8rem;
+      margin-bottom: 0.1rem;
+      margin-top: 0.5rem;
+    }
+    .add-form input,
+    .add-form select,
+    .add-form textarea {
+      width: 100%;
+      padding: 0.6rem 1rem;
+      border-radius: 60px;
+      border: 1px solid #d1d5db;
+      background: rgba(255,255,255,0.6);
+      font-size: 0.95rem;
+      outline: none;
+      transition: 0.2s;
+      color: inherit;
+    }
+    .dark .add-form input,
+    .dark .add-form select,
+    .dark .add-form textarea {
+      background: rgba(15,23,42,0.5);
+      border-color: #374151;
+      color: #f1f5f9;
+    }
+    .add-form input:focus { border-color: #f97316; box-shadow: 0 0 0 3px rgba(249,115,22,0.15); }
+    .add-form textarea {
+      border-radius: 1rem;
+      resize: vertical;
+      min-height: 50px;
+    }
+
+    .add-form .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+    }
+    @media (max-width: 420px) { .add-form .row { grid-template-columns: 1fr; } }
+
+    .add-form .form-actions {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 0.8rem;
+    }
+    .add-form .btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .add-form .btn-primary {
+      background: linear-gradient(135deg, #f97316, #ec4899);
+      color: white;
+      flex: 1;
+    }
+    .add-form .btn-primary:hover { transform: scale(1.02); }
+    .add-form .btn-outline {
+      background: transparent;
+      border: 1px solid #d1d5db;
+      color: #0b1120;
+    }
+    .dark .add-form .btn-outline { border-color: #475569; color: #f1f5f9; }
+    .add-form .btn-outline:hover { background: rgba(0,0,0,0.02); }
+
+    /* ===== EMAIL REMINDER SECTION ===== */
+    .email-reminder-section {
+      margin-top: 0.8rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+    .dark .email-reminder-section { border-top-color: rgba(255,255,255,0.05); }
+    .email-reminder-section .email-input-group {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .email-reminder-section .email-input-group input {
+      flex: 1;
+    }
+    .email-reminder-section .email-input-group .btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+    .email-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: rgba(249,115,22,0.1);
+      padding: 0.2rem 0.6rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      border: 1px solid rgba(249,115,22,0.2);
+    }
+    .email-tag .remove {
+      cursor: pointer;
+      font-weight: 700;
+      color: #ef4444;
+    }
+
+    /* ===== EMPTY STATE ===== */
+    .empty-state {
+      text-align: center;
+      padding: 1.5rem 0;
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+
+    /* ===== SEARCH RESULTS ===== */
+    .search-results { margin-top: 0.5rem; }
+    .search-results .result-item {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.03);
+      font-size: 0.9rem;
+    }
+    .dark .search-results .result-item { border-bottom-color: rgba(255,255,255,0.03); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 480px) {
+      .app-container { padding: 0 0.6rem 0.3rem; }
+      .day-cell { min-height: 58px; padding: 0.2rem; }
+      .day-number { font-size: 0.95rem; }
+      .bottom-sheet { padding: 1.2rem 1rem 1.5rem; }
+    }
+    @media (min-width: 768px) {
+      .app-container { padding: 0 2rem 1rem; }
+      .day-cell { min-height: 90px; }
+    }
+
+    .calendar-scroll::-webkit-scrollbar { width: 0; background: transparent; }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+
+  <!-- HEADER -->
+  <div class="app-header">
+    <h1>⚡ Pulse</h1>
+    <div class="header-right">
+      <span class="streak-badge">🔥 <span id="streakCount">0</span>d</span>
+      <button id="themeToggle" class="theme-icon">🌙</button>
+    </div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search events, tasks, people...">
+    <span class="search-icon">🔍</span>
+  </div>
+
+  <!-- MONTH NAV -->
+  <div class="month-nav">
+    <button id="prevMonth">‹</button>
+    <span class="month-label" id="monthLabel">January 2025</span>
+    <button id="nextMonth">›</button>
+  </div>
+
+  <!-- CALENDAR -->
+  <div class="calendar-scroll" id="calendarScroll">
+    <div class="calendar-grid" id="calendarGrid">
+      <!-- Injected by JS -->
+    </div>
+    <div id="searchResultsContainer" style="display:none; padding: 1rem 0;"></div>
+  </div>
+
+</div>
+
+<!-- ===== BOTTOM SHEET ===== -->
+<div class="bottom-sheet-overlay" id="sheetOverlay"></div>
+<div class="bottom-sheet" id="bottomSheet">
+  <div class="handle"></div>
+  <div class="sheet-header">
+    <h2 id="sheetDateTitle">📅 Day View</h2>
+    <button class="close-sheet" id="closeSheet">✕</button>
+  </div>
+
+  <!-- Tabs -->
+  <div class="sheet-tabs">
+    <button class="active" data-tab="events">📋 Events</button>
+    <button data-tab="tasks">✅ Tasks</button>
+    <button data-tab="add">➕ Add</button>
+  </div>
+
+  <!-- Tab: Events -->
+  <div class="sheet-tab-content active" id="tabEvents">
+    <div id="sheetEventList">
+      <div class="empty-state">No events on this day</div>
+    </div>
+  </div>
+
+  <!-- Tab: Tasks -->
+  <div class="sheet-tab-content" id="tabTasks">
+    <div id="taskList">
+      <div class="empty-state">No tasks for this day</div>
+    </div>
+    <div style="margin-top:0.5rem; display:flex; gap:0.5rem;">
+      <input type="text" id="newTaskInput" placeholder="Add task..." style="flex:1; padding:0.6rem 1rem; border-radius:60px; border:1px solid #d1d5db; background:rgba(255,255,255,0.6); font-size:0.9rem; outline:none; color:inherit;">
+      <button id="addTaskBtn" class="btn btn-primary" style="padding:0.5rem 1.2rem; font-size:0.8rem;">+</button>
+    </div>
+    <div style="margin-top:0.3rem; font-size:0.7rem; color:#6b7280;">Press Enter to add</div>
+  </div>
+
+  <!-- Tab: Add Event + Email Reminder -->
+  <div class="sheet-tab-content" id="tabAdd">
+    <div class="add-form" style="border-top:none; padding-top:0;">
+      <label for="addTitle">Event Title</label>
+      <input type="text" id="addTitle" placeholder="What's happening?" value="Team Sync">
+
+      <div class="row">
+        <div>
+          <label for="addTime">Time</label>
+          <input type="time" id="addTime" value="09:00">
+        </div>
+        <div>
+          <label for="addDuration">Duration (min)</label>
+          <input type="number" id="addDuration" value="30" min="5" step="5">
+        </div>
+      </div>
+
+      <label for="addNote">Notes (optional)</label>
+      <textarea id="addNote" placeholder="Details, link, agenda..."></textarea>
+
+      <!-- Email Reminders -->
+      <div class="email-reminder-section">
+        <label>📧 Email reminders to:</label>
+        <div class="email-input-group">
+          <input type="email" id="emailInput" placeholder="friend@example.com">
+          <button class="btn btn-outline" id="addEmailBtn" style="padding:0.5rem 1rem; font-size:0.8rem;">+</button>
+        </div>
+        <div id="emailList" style="display:flex; flex-wrap:wrap; gap:0.3rem; margin-top:0.3rem;">
+          <span style="font-size:0.7rem; color:#6b7280;">Add emails to get reminders</span>
+        </div>
+        <div style="font-size:0.7rem; color:#6b7280; margin-top:0.2rem;">
+          🔔 Reminders sent: 1 day before, 1 hour before, and at event time
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-outline" id="cancelAddBtn">Cancel</button>
+        <button class="btn btn-primary" id="saveEventBtn">📅 Schedule Event</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    "use strict";
+
+    // ===== DATA LAYER =====
+    const STORAGE_KEY = 'pulse_data';
+    let data = {
+      events: [],
+      tasks: [],
+      emails: []
+    };
+    let currentDate = new Date();
+    let selectedDay = null;
+    let isSearching = false;
+
+    function loadData() {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        try { data = JSON.parse(stored); } catch(e) { data = { events: [], tasks: [], emails: [] }; }
+      } else {
+        // Seed demo
+        const today = new Date();
+        const y = today.getFullYear(), m = today.getMonth();
+        data.events = [
+          { id: 'e1', title: 'Q4 Planning', date: new Date(y, m, 12, 9, 0).getTime(), note: 'Boardroom', duration: 60 },
+          { id: 'e2', title: 'Design Review', date: new Date(y, m, 5, 14, 0).getTime(), note: '', duration: 30 },
+          { id: 'e3', title: 'Pulse Launch', date: new Date(y, m, 18, 10, 0).getTime(), note: 'Virtual', duration: 45 },
+          { id: 'e4', title: 'Sprint Retro', date: new Date(y, m+1, 2, 15, 0).getTime(), note: 'Dev team', duration: 30 },
+        ];
+        data.tasks = [
+          { id: 't1', date: new Date(y, m, 12, 0, 0).getTime(), title: 'Review budget', done: false },
+          { id: 't2', date: new Date(y, m, 12, 0, 0).getTime(), title: 'Send meeting notes', done: true },
+          { id: 't3', date: new Date(y, m, 5, 0, 0).getTime(), title: 'Prepare presentation', done: false },
+        ];
+        data.emails = ['team@pulse.com', 'sarah@example.com'];
+        saveData();
+      }
+      // Ensure all events have duration
+      data.events = data.events.map(e => ({ ...e, duration: e.duration || 30 }));
+    }
+
+    function saveData() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function addEvent(title, date, note = '', duration = 30) {
+      data.events.push({
+        id: 'e' + Date.now(),
+        title,
+        date: date.getTime(),
+        note,
+        duration
+      });
+      saveData();
+      renderAll();
+    }
+
+    function deleteEvent(id) {
+      data.events = data.events.filter(e => e.id !== id);
+      saveData();
+      renderAll();
+      if (selectedDay) {
+        openSheetForDay(selectedDay.year, selectedDay.month, selectedDay.day);
+      }
+    }
+
+    function addTask(date, title) {
+      data.tasks.push({
+        id: 't' + Date.now(),
+        date: date.getTime(),
+        title,
+        done: false
+      });
+      saveData();
+      renderAll();
+      if (selectedDay) {
+        openSheetForDay(selectedDay.year, selectedDay.month, selectedDay.day);
+      }
+    }
+
+    function toggleTask(id) {
+      const task = data.tasks.find(t => t.id === id);
+      if (task) { task.done = !task.done; saveData(); renderAll(); }
+    }
+
+    function deleteTask(id) {
+      data.tasks = data.tasks.filter(t => t.id !== id);
+      saveData();
+      renderAll();
+      if (selectedDay) {
+        openSheetForDay(selectedDay.year, selectedDay.month, selectedDay.day);
+      }
+    }
+
+    function addEmail(email) {
+      if (!data.emails.includes(email)) {
+        data.emails.push(email);
+        saveData();
+        renderEmailTags();
+      }
+    }
+
+    function removeEmail(email) {
+      data.emails = data.emails.filter(e => e !== email);
+      saveData();
+      renderEmailTags();
+    }
+
+    function getEventsForDate(year, month, day) {
+      return data.events.filter(e => {
+        const d = new Date(e.date);
+        return d.getFullYear() === year && d.getMonth() === month && d.getDate() === day;
+      });
+    }
+
+    function getTasksForDate(year, month, day) {
+      return data.tasks.filter(t => {
+        const d = new Date(t.date);
+        return d.getFullYear() === year && d.getMonth() === month && d.getDate() === day;
+      });
+    }
+
+    function formatTime(date) {
+      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    // ===== SEARCH =====
+    function searchEvents(query) {
+      if (!query.trim()) { isSearching = false; renderCalendar(); return; }
+      isSearching = true;
+      const q = query.toLowerCase().trim();
+      const results = data.events.filter(e => {
+        const d = new Date(e.date);
+        return e.title.toLowerCase().includes(q) ||
+               d.toLocaleDateString().includes(q) ||
+               (e.note && e.note.toLowerCase().includes(q));
+      });
+      const taskResults = data.tasks.filter(t => t.title.toLowerCase().includes(q));
+      renderSearchResults(results, taskResults);
+    }
+
+    function renderSearchResults(events, tasks) {
+      const grid = document.getElementById('calendarGrid');
+      const container = document.getElementById('searchResultsContainer');
+      grid.style.display = 'none';
+      container.style.display = 'block';
+
+      let html = '';
+      if (events.length === 0 && tasks.length === 0) {
+        html = `<div class="empty-state">No results found</div>`;
+      } else {
+        if (events.length > 0) {
+          html += `<h4 style="font-weight:600; margin:0.5rem 0 0.2rem;">Events</h4>`;
+          html += events.map(e => {
+            const d = new Date(e.date);
+            return `<div class="result-item">📅 <strong>${e.title}</strong> · ${d.toLocaleDateString()} ${formatTime(d)}</div>`;
+          }).join('');
+        }
+        if (tasks.length > 0) {
+          html += `<h4 style="font-weight:600; margin:0.5rem 0 0.2rem;">Tasks</h4>`;
+          html += tasks.map(t => {
+            const d = new Date(t.date);
+            return `<div class="result-item">✅ ${t.title} · ${d.toLocaleDateString()} ${t.done ? '✓ Done' : ''}</div>`;
+          }).join('');
+        }
+      }
+      container.innerHTML = html;
+    }
+
+    // ===== RENDER CALENDAR =====
+    const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const daysShort = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+    function renderCalendar() {
+      if (isSearching) return;
+
+      const grid = document.getElementById('calendarGrid');
+      const container = document.getElementById('searchResultsContainer');
+      grid.style.display = 'grid';
+      container.style.display = 'none';
+
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth();
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month+1, 0).getDate();
+      const today = new Date();
+
+      document.getElementById('monthLabel').textContent = `${monthNames[month]} ${year}`;
+
+      let html = '';
+      for (let i = 0; i < 7; i++) {
+        html += `<div class="weekday-label">${daysShort[i]}</div>`;
+      }
+
+      const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+      for (let i = 0; i < totalCells; i++) {
+        const day = i - firstDay + 1;
+        const isOtherMonth = day < 1 || day > daysInMonth;
+        const dateObj = new Date(year, month, day);
+        const isToday = !isOtherMonth && dateObj.toDateString() === today.toDateString();
+        const dayEvents = isOtherMonth ? [] : getEventsForDate(year, month, day);
+        const dayTasks = isOtherMonth ? [] : getTasksForDate(year, month, day);
+
+        html += `<div class="day-cell${isOtherMonth ? ' other-month' : ''}${isToday ? ' today' : ''}" 
+                     data-year="${year}" data-month="${month}" data-day="${day}" data-other="${isOtherMonth}">`;
+        html += `<span class="day-number">${isOtherMonth ? '' : day}</span>`;
+        if (!isOtherMonth) {
+          // Event dots
+          const allItems = [...dayEvents, ...dayTasks];
+          const dotsHtml = allItems.slice(0, 4).map(item => {
+            const cls = item.note !== undefined ? 'event-dot shared' : 'event-dot task';
+            return `<span class="${cls}"></span>`;
+          }).join('');
+          if (allItems.length > 4) {
+            html += `<div class="event-dots">${dotsHtml}<span style="font-size:0.6rem; color:#6b7280;">+${allItems.length-4}</span></div>`;
+          } else if (allItems.length > 0) {
+            html += `<div class="event-dots">${dotsHtml}</div>`;
+          }
+          // Show first title
+          if (allItems.length > 0) {
+            const first = allItems[0];
+            const prefix = first.note !== undefined ? '📅' : '✅';
+            html += `<div class="event-label">${prefix} ${first.title}</div>`;
+          }
+        }
+        html += `</div>`;
+      }
+      grid.innerHTML = html;
+
+      grid.querySelectorAll('.day-cell:not(.other-month)').forEach(cell => {
+        cell.addEventListener('click', function() {
+          const year = parseInt(this.dataset.year);
+          const month = parseInt(this.dataset.month);
+          const day = parseInt(this.dataset.day);
+          openSheetForDay(year, month, day);
+        });
+      });
+
+      updateGamification();
+    }
+
+    // ===== BOTTOM SHEET =====
+    function openSheetForDay(year, month, day) {
+      selectedDay = { year, month, day };
+      const sheet = document.getElementById('bottomSheet');
+      const overlay = document.getElementById('sheetOverlay');
+      const titleEl = document.getElementById('sheetDateTitle');
+      const dateObj = new Date(year, month, day);
+      titleEl.textContent = `📅 ${dateObj.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' })}`;
+
+      renderSheetEvents(year, month, day);
+      renderSheetTasks(year, month, day);
+
+      // Pre-fill date in add form
+      const timeInput = document.getElementById('addTime');
+      if (timeInput) {
+        const now = new Date();
+        timeInput.value = now.toTimeString().slice(0, 5);
+      }
+
+      sheet.classList.add('visible');
+      overlay.classList.add('visible');
+      document.body.style.overflow = 'hidden';
+
+      // Reset add tab to default
+      document.getElementById('addTitle').value = '';
+      document.getElementById('addNote').value = '';
+      document.getElementById('addDuration').value = '30';
+    }
+
+    function renderSheetEvents(year, month, day) {
+      const listEl = document.getElementById('sheetEventList');
+      const dayEvents = getEventsForDate(year, month, day);
+      if (dayEvents.length === 0) {
+        listEl.innerHTML = `<div class="empty-state">No events — add one in the "+ Add" tab</div>`;
+        return;
+      }
+      listEl.innerHTML = dayEvents.map(e => {
+        const d = new Date(e.date);
+        const timeStr = formatTime(d);
+        const dur = e.duration ? ` (${e.duration}m)` : '';
+        return `<div class="sheet-event-item">
+          <span class="time">${timeStr}${dur}</span>
+          <span class="title">${e.title} ${e.note ? `📎` : ''}</span>
+          <button class="delete-btn" data-id="${e.id}">✕</button>
+        </div>`;
+      }).join('');
+      listEl.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const id = this.dataset.id;
+          if (confirm('Delete this event?')) { deleteEvent(id); }
+        });
+      });
+    }
+
+    function renderSheetTasks(year, month, day) {
+      const listEl = document.getElementById('taskList');
+      const dayTasks = getTasksForDate(year, month, day);
+      if (dayTasks.length === 0) {
+        listEl.innerHTML = `<div class="empty-state">No tasks — add one below</div>`;
+        return;
+      }
+      listEl.innerHTML = dayTasks.map(t => {
+        return `<div class="task-item">
+          <input type="checkbox" ${t.done ? 'checked' : ''} data-id="${t.id}">
+          <span class="task-title${t.done ? ' done' : ''}">${t.title}</span>
+          <button class="task-delete" data-id="${t.id}">✕</button>
+        </div>`;
+      }).join('');
+      listEl.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', function() {
+          toggleTask(this.dataset.id);
+        });
+      });
+      listEl.querySelectorAll('.task-delete').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const id = this.dataset.id;
+          if (confirm('Delete this task?')) { deleteTask(id); }
+        });
+      });
+    }
+
+    function closeSheet() {
+      document.getElementById('bottomSheet').classList.remove('visible');
+      document.getElementById('sheetOverlay').classList.remove('visible');
+      document.body.style.overflow = '';
+      selectedDay = null;
+      // Reset tabs to Events
+      switchTab('events');
+    }
+
+    // ===== TAB SWITCHING =====
+    function switchTab(tabId) {
+      document.querySelectorAll('.sheet-tabs button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.sheet-tab-content').forEach(c => c.classList.remove('active'));
+      document.querySelector(`.sheet-tabs button[data-tab="${tabId}"]`)?.classList.add('active');
+      document.getElementById(`tab${tabId.charAt(0).toUpperCase() + tabId.slice(1)}`)?.classList.add('active');
+    }
+
+    document.querySelectorAll('.sheet-tabs button').forEach(btn => {
+      btn.addEventListener('click', function() {
+        switchTab(this.dataset.tab);
+      });
+    });
+
+    // ===== EMAIL TAGS =====
+    function renderEmailTags() {
+      const container = document.getElementById('emailList');
+      if (data.emails.length === 0) {
+        container.innerHTML = `<span style="font-size:0.7rem; color:#6b7280;">Add emails to get reminders</span>`;
+        return;
+      }
+      container.innerHTML = data.emails.map(email =>
+        `<span class="email-tag">${email} <span class="remove" data-email="${email}">×</span></span>`
+      ).join('');
+      container.querySelectorAll('.remove').forEach(el => {
+        el.addEventListener('click', function() {
+          removeEmail(this.dataset.email);
+        });
+      });
+    }
+
+    // ===== GAMIFICATION =====
+    let streak = parseInt(localStorage.getItem('pulse_streak')) || 0;
+    let xp = parseInt(localStorage.getItem('pulse_xp')) || 0;
+
+    function updateGamification() {
+      const streakEl = document.getElementById('streakCount');
+      if (streakEl) streakEl.textContent = streak;
+    }
+
+    function addXP(amount) {
+      xp += amount;
+      localStorage.setItem('pulse_xp', xp);
+      streak++;
+      localStorage.setItem('pulse_streak', streak);
+      updateGamification();
+    }
+
+    // ===== SAVE EVENT FROM SHEET =====
+    document.getElementById('saveEventBtn').addEventListener('click', function() {
+      const title = document.getElementById('addTitle').value.trim();
+      const timeStr = document.getElementById('addTime').value;
+      const note = document.getElementById('addNote').value.trim();
+      const duration = parseInt(document.getElementById('addDuration').value) || 30;
+
+      if (!title) { alert('Please enter a title.'); return; }
+      if (!selectedDay) { alert('Please select a date first.'); return; }
+
+      const { year, month, day } = selectedDay;
+      const dateObj = new Date(year, month, day);
+      if (timeStr) {
+        const [h, m] = timeStr.split(':').map(Number);
+        dateObj.setHours(h, m, 0, 0);
+      } else {
+        dateObj.setHours(9, 0, 0, 0);
+      }
+
+      addEvent(title, dateObj, note, duration);
+      addXP(10);
+
+      // Send email reminders (mock for now)
+      if (data.emails.length > 0) {
+        const eventDate = dateObj.toLocaleDateString();
+        const eventTime = formatTime(dateObj);
+        alert(`📧 Email reminders sent to:\n${data.emails.join('\n')}\n\nAbout: "${title}" on ${eventDate} at ${eventTime}\n(1 day before, 1 hour before, and at event time)`);
+      }
+
+      // Reset add form
+      document.getElementById('addTitle').value = '';
+      document.getElementById('addNote').value = '';
+      document.getElementById('addDuration').value = '30';
+
+      // Re-open sheet to show updated list
+      openSheetForDay(year, month, day);
+      switchTab('events');
+    });
+
+    // ===== ADD TASK =====
+    document.getElementById('addTaskBtn').addEventListener('click', addTaskFromInput);
+    document.getElementById('newTaskInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') { e.preventDefault(); addTaskFromInput(); }
+    });
+
+    function addTaskFromInput() {
+      const input = document.getElementById('newTaskInput');
+      const title = input.value.trim();
+      if (!title || !selectedDay) return;
+      const { year, month, day } = selectedDay;
+      const dateObj = new Date(year, month, day);
+      addTask(dateObj, title);
+      input.value = '';
+      renderSheetTasks(year, month, day);
+    }
+
+    // ===== ADD EMAIL =====
+    document.getElementById('addEmailBtn').addEventListener('click', function() {
+      const input = document.getElementById('emailInput');
+      const email = input.value.trim();
+      if (email && email.includes('@')) {
+        addEmail(email);
+        input.value = '';
+      } else {
+        alert('Please enter a valid email address.');
+      }
+    });
+    document.getElementById('emailInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        document.getElementById('addEmailBtn').click();
+      }
+    });
+
+    // ===== CANCEL =====
+    document.getElementById('cancelAddBtn').addEventListener('click', function() {
+      document.getElementById('addTitle').value = '';
+      document.getElementById('addNote').value = '';
+      document.getElementById('addDuration').value = '30';
+      switchTab('events');
+    });
+
+    // ===== SHEET CONTROLS =====
+    document.getElementById('closeSheet').addEventListener('click', closeSheet);
+    document.getElementById('sheetOverlay').addEventListener('click', closeSheet);
+
+    // ===== MONTH NAV =====
+    function navigateMonth(delta) {
+      currentDate.setMonth(currentDate.getMonth() + delta);
+      isSearching = false;
+      document.getElementById('searchInput').value = '';
+      renderCalendar();
+    }
+    document.getElementById('prevMonth').addEventListener('click', () => navigateMonth(-1));
+    document.getElementById('nextMonth').addEventListener('click', () => navigateMonth(1));
+
+    // ===== SWIPE TO CHANGE MONTH =====
+    let touchStartX = 0;
+    let touchStartY = 0;
+    const scrollContainer = document.getElementById('calendarScroll');
+
+    scrollContainer.addEventListener('touchstart', function(e) {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    scrollContainer.addEventListener('touchend', function(e) {
+      const diffX = e.changedTouches[0].screenX - touchStartX;
+      const diffY = e.changedTouches[0].screenY - touchStartY;
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+        if (diffX < 0) navigateMonth(1);
+        else navigateMonth(-1);
+      }
+    }, { passive: true });
+
+    // ===== SEARCH =====
+    document.getElementById('searchInput').addEventListener('input', function() {
+      searchEvents(this.value);
+    });
+
+    // ===== THEME TOGGLE =====
+    const html = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('pulse_theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+      html.classList.add('dark');
+      themeToggle.textContent = '☀️';
+    } else {
+      themeToggle.textContent = '🌙';
+    }
+
+    themeToggle.addEventListener('click', function() {
+      html.classList.toggle('dark');
+      const isDark = html.classList.contains('dark');
+      localStorage.setItem('pulse_theme', isDark ? 'dark' : 'light');
+      this.textContent = isDark ? '☀️' : '🌙';
+    });
+
+    // ===== RENDER ALL =====
+    function renderAll() {
+      renderCalendar();
+      renderEmailTags();
+      updateGamification();
+    }
+
+    // ===== INIT =====
+    loadData();
+    renderAll();
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') { closeSheet(); }
+    });
+
+  });
+</script>
+
+</body>
+</html>
