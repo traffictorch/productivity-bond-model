@@ -138,7 +138,7 @@
 
     .calendar-wrapper {
       flex: 1;
-      overflow: hidden;
+      overflow-y: auto;          /* ← allows scrolling if needed */
       position: relative;
       min-height: 0;
     }
@@ -146,64 +146,31 @@
     .calendar-scroll {
       display: flex;
       height: 100%;
-      overflow-y: auto;
-      overflow-x: hidden;
-      scroll-snap-type: y mandatory;
-      -webkit-overflow-scrolling: touch;
-      scroll-behavior: smooth;
       flex-direction: column;
-      touch-action: pan-y;
-    }
-    .calendar-scroll::-webkit-scrollbar { width: 0; height: 0; background: transparent; }
-
-    @media (min-width: 768px) {
-      .calendar-scroll {
-        overflow-y: visible;
-        scroll-snap-type: none;
-        flex-direction: column;
-      }
     }
 
     .calendar-page {
-      flex: 0 0 100%;
-      height: 100%;
-      overflow-y: auto;
-      scroll-snap-align: start;
+      flex: 1;
+      min-height: 100%;          /* ← ensures it fills the wrapper, but can grow */
       display: flex;
       flex-direction: column;
-      padding-bottom: 0.2rem;
-    }
-    .calendar-page .page-label {
-      display: none; /* we show full month, no need for labels */
+      padding-bottom: 0;
     }
 
-    @media (min-width: 768px) {
-      .calendar-page {
-        flex: 1;
-        height: auto;
-        scroll-snap-align: none;
-        overflow-y: visible;
-      }
-    }
-
-    .calendar-grid {
+    /* Weekday header row - separate from grid */
+    .weekday-row {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      grid-template-rows: repeat(6, 1fr); /* KEY: fills the entire height */
-      gap: 3px;
-      background: transparent;
-      border-radius: 1.2rem;
-      overflow: hidden;
-      width: 100%;
-      flex: 1;
-      min-height: 0;
+      gap: 2px;
+      margin-bottom: 2px;
+      flex-shrink: 0;
     }
 
     .weekday-label {
-      padding: 0.3rem 0;
+      padding: 0.2rem 0;
       text-align: center;
       font-weight: 600;
-      font-size: 0.6rem;
+      font-size: 0.55rem;
       text-transform: uppercase;
       letter-spacing: 0.04em;
       color: #6b7280;
@@ -214,10 +181,23 @@
       color: #9ca3af;
     }
 
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-template-rows: repeat(6, 1fr);
+      gap: 2px;
+      background: transparent;
+      border-radius: 1.2rem;
+      overflow: hidden;
+      width: 100%;
+      flex: 1;                   /* ← fills remaining space in .calendar-page */
+      min-height: 0;
+    }
+
     .day-cell {
       background: rgba(255,255,255,0.6);
       backdrop-filter: blur(4px);
-      padding: 0.2rem 0.15rem;
+      padding: 0.15rem 0.1rem;
       border-radius: 6px;
       cursor: pointer;
       transition: background 0.15s, transform 0.1s;
@@ -225,6 +205,7 @@
       flex-direction: column;
       touch-action: manipulation;
       min-width: 0;
+      min-height: 0;            /* ← allows shrinking if needed */
       overflow: hidden;
     }
     .day-cell:active {
@@ -313,7 +294,7 @@
 
     @media (max-width: 480px) {
       .app-container { padding: 0 0.4rem 0.2rem; }
-      .day-cell { padding: 0.15rem 0.08rem; }
+      .day-cell { padding: 0.1rem 0.05rem; }
       .day-number { font-size: 0.9rem; }
       .day-cell .event-label { font-size: 0.4rem; }
       .event-dot { width: 4px; height: 4px; }
@@ -651,38 +632,6 @@
     .dark .search-results .result-item { border-bottom-color: rgba(255,255,255,0.03); }
 
     .calendar-scroll::-webkit-scrollbar { width: 0; height: 0; background: transparent; }
-    
-    .calendar-page {
-  padding-bottom: 0;          /* remove bottom padding */
-}
-.calendar-grid {
-  gap: 2px;                  /* smaller gap to save space */
-  flex: 1;
-  min-height: 0;             /* allow shrinking if needed */
-}
-
-.calendar-page {
-  flex: 0 0 100%;
-  height: 100%;
-  overflow-y: auto;
-  scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 0;   /* ← removed padding */
-}
-
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: repeat(6, 1fr);
-  gap: 2px;            /* ← reduced from 3px */
-  background: transparent;
-  border-radius: 1.2rem;
-  overflow: hidden;
-  width: 100%;
-  flex: 1;
-  min-height: 0;
-}
   </style>
 </head>
 <body>
@@ -984,7 +933,6 @@
       document.getElementById('monthLabel').textContent = `${monthNames[month]} ${year}`;
 
       const scrollContainer = document.getElementById('calendarScroll');
-      // Single page for all devices (full month)
       let html = `<div class="calendar-page">`;
       html += buildCalendarGrid(year, month, 1, daysInMonth, today);
       html += `</div>`;
@@ -1000,43 +948,60 @@
       });
     }
 
-function buildCalendarGrid(year, month, startDay, endDay, today) {
-  const startDate = new Date(year, month, startDay);
-  const startWeekday = startDate.getDay(); // 0=Sun
-  const daysInMonth = new Date(year, month+1, 0).getDate();
+    function buildCalendarGrid(year, month, startDay, endDay, today) {
+      const startDate = new Date(year, month, startDay);
+      const startWeekday = startDate.getDay(); // 0=Sun
+      const daysInMonth = new Date(year, month+1, 0).getDate();
 
-  // Build weekday row outside the grid
-  let html = `<div style="display:grid; grid-template-columns:repeat(7,1fr); gap:2px; margin-bottom:2px;">`;
-  for (let i = 0; i < 7; i++) {
-    html += `<div class="weekday-label">${daysShort[i]}</div>`;
-  }
-  html += `</div>`;
-
-  // Now the grid for dates only (6 rows × 7 cols)
-  html += `<div class="calendar-grid">`;
-  for (let i = 0; i < 42; i++) {
-    const dayOffset = i - startWeekday;
-    const cellDay = startDay + dayOffset;
-
-    if (cellDay >= startDay && cellDay <= endDay && cellDay >= 1 && cellDay <= daysInMonth) {
-      const dateObj = new Date(year, month, cellDay);
-      const isToday = dateObj.toDateString() === today.toDateString();
-      const dayEvents = getEventsForDate(year, month, cellDay);
-      const dayTasks = getTasksForDate(year, month, cellDay);
-      const allItems = [...dayEvents, ...dayTasks];
-
-      html += `<div class="day-cell${isToday ? ' today' : ''}" 
-                   data-year="${year}" data-month="${month}" data-day="${cellDay}" data-other="false">`;
-      html += `<span class="day-number">${cellDay}</span>`;
-      // ... rest of event dots and label
+      // Weekday header row (separate)
+      let html = `<div class="weekday-row">`;
+      for (let i = 0; i < 7; i++) {
+        html += `<div class="weekday-label">${daysShort[i]}</div>`;
+      }
       html += `</div>`;
-    } else {
-      html += `<div class="day-cell other-month" style="pointer-events:none; opacity:0.2;"></div>`;
+
+      // Date grid: 6 rows × 7 columns
+      html += `<div class="calendar-grid">`;
+      for (let i = 0; i < 42; i++) {
+        const dayOffset = i - startWeekday;
+        const cellDay = startDay + dayOffset;
+
+        if (cellDay >= startDay && cellDay <= endDay && cellDay >= 1 && cellDay <= daysInMonth) {
+          const dateObj = new Date(year, month, cellDay);
+          const isToday = dateObj.toDateString() === today.toDateString();
+          const dayEvents = getEventsForDate(year, month, cellDay);
+          const dayTasks = getTasksForDate(year, month, cellDay);
+          const allItems = [...dayEvents, ...dayTasks];
+
+          html += `<div class="day-cell${isToday ? ' today' : ''}" 
+                       data-year="${year}" data-month="${month}" data-day="${cellDay}" data-other="false">`;
+          html += `<span class="day-number">${cellDay}</span>`;
+
+          if (allItems.length > 0) {
+            const dots = allItems.slice(0, 3).map(item => {
+              const cls = item.note !== undefined ? 'event-dot shared' : 'event-dot task';
+              return `<span class="${cls}"></span>`;
+            }).join('');
+            html += `<div class="event-dots">${dots}`;
+            if (allItems.length > 3) {
+              html += `<span class="badge-count">+${allItems.length-3}</span>`;
+            }
+            html += `</div>`;
+            const first = allItems[0];
+            let label = first.title;
+            if (label.length > 6) label = label.slice(0, 5) + '…';
+            const prefix = first.note !== undefined ? '📅' : '✅';
+            html += `<div class="event-label">${prefix} ${label}</div>`;
+          }
+
+          html += `</div>`;
+        } else {
+          html += `<div class="day-cell other-month" style="pointer-events:none; opacity:0.2;"></div>`;
+        }
+      }
+      html += `</div>`;
+      return html;
     }
-  }
-  html += `</div>`;
-  return html;
-}
 
     // ===== SEARCH =====
     function searchEvents(query) {
