@@ -57,7 +57,6 @@ Added country-specific weight presets based on economic categories:
 - **tools.html** – added NPI Index Tracker card to the tools grid.
 - **index.html** – added NPI Index Tracker feature section on the homepage.
 - **Navigation** – updated all pages to include NPI Index in the Tools dropdown.
-- **Version badge** – updated to v1.1.0 across all pages.
 
 ### Fixed
 - **CORS headers** – updated Worker to allow cross-origin requests (`Access-Control-Allow-Origin: *`).
@@ -80,7 +79,6 @@ Added country-specific weight presets based on economic categories:
 - **Compound Curve tool** – debt projection tool that visualises how debt compounds over time, with a reduction slider showing savings from cutting annual debt.
 - **AI advisors** – each tool includes a personalised AI advisor (powered by GLM/Llama) that generates custom recommendations based on user inputs.
 - **Tool cards row** – reusable 3‑card grid (stacking on mobile) for promoting tools across all pages, with interchangeable cards for each tool.
-- **Changelog entry for v0.9.0** – documenting all new tools and fixes.
 
 ### Fixed
 - **Accordion toggles** – added `onclick="toggleAccordion(this)"` to all accordion items, ensuring they work reliably on dynamically shown panels (tools page).
