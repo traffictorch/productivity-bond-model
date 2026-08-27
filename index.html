@@ -1083,6 +1083,80 @@
         </div>
       </div>
       
+      <!-- ===== FEEDBACK SECTION (BETA) ===== -->
+<section class="container section-spacing" style="padding-top:1rem; padding-bottom:2rem;">
+  <div class="glass-card feedback-container" id="feedback-container">
+    <div class="feedback-header">
+      <span class="badge-glow" style="background:rgba(251,191,36,0.15); color:#fbbf24; border-color:rgba(251,191,36,0.15);">🧪 Beta</span>
+      <h2>Help Us Improve</h2>
+      <p>
+        This website is <strong>new and in beta</strong>. If you find bugs - especially in the simulations or tools - 
+        please let us know. Your feedback helps us fix issues and make the tools better for everyone.
+      </p>
+    </div>
+
+    <button class="btn-primary feedback-toggle-btn" id="feedbackToggleBtn">
+      📝 Submit Feedback
+    </button>
+
+    <div class="feedback-form-container" id="feedbackFormContainer">
+      <p class="form-title">Feedback for <strong>this tool</strong> (beta)</p>
+
+      <form class="feedback-form" id="feedbackForm">
+        <!-- Rating -->
+        <div class="feedback-field">
+          <label>Rate your experience (optional)</label>
+          <div class="feedback-rating-group" role="radiogroup" aria-label="Feedback rating">
+            <button type="button" class="rating-btn" data-rating="1" aria-label="Very dissatisfied">😞</button>
+            <button type="button" class="rating-btn" data-rating="2" aria-label="Dissatisfied">🙁</button>
+            <button type="button" class="rating-btn" data-rating="3" aria-label="Neutral">😐</button>
+            <button type="button" class="rating-btn" data-rating="4" aria-label="Satisfied">🙂</button>
+            <button type="button" class="rating-btn" data-rating="5" aria-label="Very satisfied">😍</button>
+          </div>
+          <input type="hidden" class="feedback-rating-input" value="">
+        </div>
+
+        <!-- Reply checkbox -->
+        <div class="feedback-field">
+          <label class="checkbox-label">
+            <input type="checkbox" class="feedback-reply-checkbox">
+            <span>Request a reply (we'll email you)</span>
+          </label>
+        </div>
+
+        <!-- Email (hidden) -->
+        <div class="feedback-field feedback-email-group hidden">
+          <label for="feedbackEmail">Your email address</label>
+          <input type="email" id="feedbackEmail" class="feedback-email-input" placeholder="you@example.com">
+          <div class="field-hint">We'll only use this to respond to your feedback.</div>
+        </div>
+
+        <!-- Feedback text -->
+        <div class="feedback-field">
+          <label for="feedbackText">Your feedback <span style="color:var(--text-muted);font-weight:400;">(required)</span></label>
+          <textarea id="feedbackText" class="feedback-text-input" rows="4" maxlength="1000" placeholder="Describe the issue, suggestion, or what you'd like to see improved."></textarea>
+          <div class="char-count"><span class="feedback-char-count">0</span> / 1000 characters</div>
+        </div>
+
+        <!-- Submit -->
+        <div class="feedback-submit-row">
+          <button type="submit" class="btn-primary feedback-submit-btn">Send Feedback</button>
+          <span style="font-size:0.7rem; color:var(--text-muted);">100% anonymous unless you request a reply</span>
+        </div>
+      </form>
+
+      <div class="feedback-message" id="feedbackMessage"></div>
+    </div>
+  </div>
+</section>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof initFeedbackForm === 'function') {
+      initFeedbackForm('feedback-container');
+    }
+  });
+</script>
+      
       <!-- NPI Index Tracker Feature -->
 <section class="container section-spacing">
   <div class="glass-card" style="border-color:rgba(79,70,229,0.2);">
