@@ -1166,7 +1166,7 @@
       audioPlayers.forEach(audio => {
         const filename = audio.dataset.filename;
         if (filename) {
-          const newSrc = `${basePath}/${narrator}/${filename}`;
+          const newSrc = `${basePath}/${narrator}/${filename}?v=2`;
           audio.src = newSrc;
           audio.load(); // Forces browser to fetch the new file
         }
