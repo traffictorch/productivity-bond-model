@@ -1127,7 +1127,7 @@
     document.documentElement.classList.add('loaded');
   </script>
   
-  <!-- ====== Auto‑Play Audiobook JavaScript ====== -->
+  <!-- ====== Audiobook JavaScript ====== -->
 <script>
   (function() {
     const audioPlayers = document.querySelectorAll('#audiobook-chapters audio');
@@ -1136,39 +1136,39 @@
 
     if (audioPlayers.length === 0) return;
 
-    // ========== CONFIG: Change this ONE line for external hosting ==========
-    const basePath = 'https://pub-3e6b6c423f91492aa064580517a9ed80.r2.dev'; 
-    // ======================================================================
+    // ========== CONFIG: External hosting URL ==========
+    const basePath = 'https://pub-3e6b6c423f91492aa064580517a9ed80.r2.dev';
+    // ===================================================
 
-    // Clears all "Play Next" chains to prevent ghosts
+    // Clears all "Play Next" chains
     function clearAutoPlayChain() {
       audioPlayers.forEach(audio => {
         audio.onended = null;
       });
     }
 
-    // Pauses all players and resets them
+    // Pauses all players
     function pauseAll() {
       audioPlayers.forEach(audio => {
         audio.pause();
       });
     }
 
-    // Main function: switch narrator
+    // ========== UPDATE NARRATOR (LAZY LOAD – NO audio.load() HERE) ==========
     function updateNarrator(narrator) {
       // 1. Kill any ongoing "Play All" chain
       clearAutoPlayChain();
-      
+
       // 2. Pause everything
       pauseAll();
 
-      // 3. Update all audio sources
+      // 3. Update all audio sources – but DO NOT load them yet!
       audioPlayers.forEach(audio => {
         const filename = audio.dataset.filename;
         if (filename) {
           const newSrc = `${basePath}/${narrator}/${filename}?v=2`;
           audio.src = newSrc;
-          audio.load(); // Forces browser to fetch the new file
+          // IMPORTANT: No audio.load() here – lazy load only when user clicks play.
         }
       });
 
@@ -1178,7 +1178,7 @@
         playAllBtn.textContent = `▶ Play All (${displayName})`;
       }
 
-      // 5. Toggle active class on narrator buttons (relies on CSS)
+      // 5. Toggle active class on narrator buttons
       narratorBtns.forEach(btn => {
         btn.classList.remove('active');
         if (btn.dataset.narrator === narrator) {
@@ -1190,10 +1190,9 @@
       localStorage.setItem('preferredNarrator', narrator);
     }
 
-    // Play All logic: plays from index 0 to N
+    // ========== PLAY CHAPTER (loads ONLY the file being played) ==========
     function playChapter(index) {
       if (index >= audioPlayers.length) {
-        // Finished all chapters
         if (playAllBtn) {
           playAllBtn.textContent = playAllBtn.textContent.replace('▶', '✔');
         }
@@ -1201,14 +1200,13 @@
       }
 
       const audio = audioPlayers[index];
-      
-      // Ensure the file is loaded before playing
+
+      // Load the file NOW – only this one file loads at this moment
       audio.load();
 
       // Attempt to play
       audio.play().catch(() => {
-        // Browser blocked autoplay (user must click the native play button).
-        // Stop the chain here to avoid errors.
+        // Browser blocked autoplay – stop the chain to avoid errors
         clearAutoPlayChain();
         return;
       });
@@ -1227,7 +1225,7 @@
       btn.addEventListener('click', function() {
         const narrator = this.dataset.narrator;
         updateNarrator(narrator);
-        
+
         // Reset "Play All" button text if it showed "✔"
         if (playAllBtn) {
           const displayName = narrator.charAt(0).toUpperCase() + narrator.slice(1);
@@ -1242,7 +1240,7 @@
         // Stop everything and kill old chains
         clearAutoPlayChain();
         pauseAll();
-        
+
         // Start fresh from chapter 1
         playChapter(0);
       });
