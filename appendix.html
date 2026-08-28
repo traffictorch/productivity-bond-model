@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary Meta -->
+  <title>Appendices – The Infinite Debt Problem | Productivity Bonds</title>
+  <meta name="description" content="Full appendices for The Infinite Debt Problem: mathematical appendix, NPI methodology, simulation results, pilot term sheet, dividend design, policy framework, investor materials, and simulation code." />
+  <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/appendix.html" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Appendices – The Infinite Debt Problem | Productivity Bond Model" />
+  <meta property="og:description" content="Full appendices for The Infinite Debt Problem: mathematical appendix, NPI methodology, simulation results, pilot term sheet, dividend design, policy framework, investor materials, and simulation code." />
+  <meta property="og:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://traffictorch.github.io/productivity-bond-model/appendix.html" />
+  <meta property="og:site_name" content="The Productivity Bond Model" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Appendices – The Infinite Debt Problem | Productivity Bond Model" />
+  <meta name="twitter:description" content="Full appendices for The Infinite Debt Problem: mathematical appendix, NPI methodology, simulation results, pilot term sheet, dividend design, policy framework, investor materials, and simulation code." />
+  <meta name="twitter:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.png" />
+
+  <!-- PWA Manifest & Icons -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="icon-512.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" media="print" onload="this.media='all'" crossorigin="anonymous" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" crossorigin="anonymous" /></noscript>
+
+  <!-- Preconnect for AddToAny -->
+  <link rel="preconnect" href="https://static.addtoany.com" />
+
+  <!-- ===== INLINE THEME SCRIPT ===== -->
+  <script>
+    (function() {
+      const stored = localStorage.getItem('theme');
+      if (stored) {
+        document.documentElement.setAttribute('data-theme', stored);
+      } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+
+  <!-- ===== CRITICAL CSS (inlined) ===== -->
+  <style>
+    html {
+      opacity: 0;
+      transition: opacity 0.12s ease;
+    }
+    html.loaded { opacity: 1; }
+
+    :root {
+      --bg-body: #05060a;
+      --bg-card: rgba(12,15,25,0.65);
+      --bg-glass: rgba(12,15,25,0.65);
+      --btn-primary-bg: linear-gradient(135deg,#4f46e5,#7c3aed);
+      --btn-primary-text: #fff;
+      --btn-secondary-bg: rgba(255,255,255,0.06);
+      --btn-secondary-border: rgba(255,255,255,0.15);
+      --btn-secondary-text: #eef2f8;
+      --text-primary: #eef2f8;
+      --text-secondary: #c7d2fe;
+      --text-muted: #a5b4fc;
+      --border-divider: rgba(255,255,255,0.04);
+      --bg-input: rgba(255,255,255,0.06);
+      --bg-code: rgba(0,0,0,0.25);
+      --bg-diagram: rgba(0,0,0,0.15);
+      --bg-metric: rgba(255,255,255,0.03);
+      --badge-bg: rgba(79,70,229,0.12);
+      --badge-text: var(--text-secondary);
+      --badge-border: rgba(79,70,229,0.12);
+      --border-card: rgba(255,255,255,0.06);
+      --shadow-card: 0 30px 60px -20px rgba(0,0,0,0.8);
+      --bg-var: rgba(0,0,0,0.3);
+      --text-body: #d1d5db;
+    }
+    [data-theme="light"] {
+      --bg-body: #f0f2f8;
+      --bg-card: rgba(255,255,255,0.85);
+      --bg-glass: rgba(255,255,255,0.75);
+      --btn-secondary-bg: rgba(0,0,0,0.04);
+      --btn-secondary-border: rgba(0,0,0,0.12);
+      --btn-secondary-text: #0f111a;
+      --text-primary: #0f111a;
+      --text-secondary: #2d2f3e;
+      --text-muted: #4a4a6a;
+      --border-divider: rgba(0,0,0,0.06);
+      --bg-input: rgba(0,0,0,0.05);
+      --bg-code: rgba(0,0,0,0.04);
+      --bg-diagram: rgba(0,0,0,0.03);
+      --bg-metric: rgba(0,0,0,0.02);
+      --badge-bg: rgba(79,70,229,0.08);
+      --badge-text: #2d2f3e;
+      --badge-border: rgba(79,70,229,0.08);
+      --border-card: rgba(0,0,0,0.06);
+      --shadow-card: 0 30px 60px -20px rgba(0,0,0,0.15);
+      --bg-var: rgba(255,255,255,0.5);
+      --text-body: #1e1e2a;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      font-family:'Inter',system-ui,-apple-system,sans-serif;
+      background:var(--bg-body);
+      color:var(--text-primary);
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+    }
+    .container { max-width:1280px; margin:0 auto; padding:0 1.5rem; }
+    .glass-card {
+      background:var(--bg-glass);
+      backdrop-filter:blur(16px);
+      border:1px solid rgba(255,255,255,0.06);
+      border-radius:2.5rem;
+      padding:2.5rem 2rem;
+      box-shadow:0 30px 60px -20px rgba(0,0,0,0.8);
+      transition:border-color 0.3s, box-shadow 0.3s;
+    }
+    .text-gradient {
+      background:linear-gradient(135deg,#4f46e5,#a78bfa,#f472b6);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .badge-glow {
+      display:inline-block;
+      background:rgba(79,70,229,0.15);
+      color:var(--text-secondary);
+      font-size:0.7rem;
+      font-weight:700;
+      padding:0.3rem 1rem;
+      border-radius:60px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      border:1px solid rgba(79,70,229,0.15);
+    }
+    .btn-primary {
+      display:inline-block;
+      background:var(--btn-primary-bg);
+      color:var(--btn-primary-text);
+      font-weight:600;
+      padding:0.8rem 2.2rem;
+      border-radius:60px;
+      border:none;
+      cursor:pointer;
+      transition:0.2s;
+      text-decoration:none;
+      text-align:center;
+      box-shadow:0 4px 20px rgba(79,70,229,0.4);
+    }
+    .btn-primary:hover { background:#4338ca; transform:scale(1.02); }
+    .btn-secondary {
+      display:inline-block;
+      background:var(--btn-secondary-bg);
+      color:var(--btn-secondary-text);
+      font-weight:500;
+      padding:0.8rem 2.2rem;
+      border-radius:60px;
+      border:1px solid var(--btn-secondary-border);
+      text-decoration:none;
+      transition:0.2s;
+      cursor:pointer;
+      text-align:center;
+    }
+    .btn-secondary:hover { background:rgba(255,255,255,0.12); }
+    .share-btn {
+      background:var(--btn-secondary-bg);
+      border:1px solid var(--btn-secondary-border);
+      color:var(--btn-secondary-text);
+      padding:0.8rem 2.2rem;
+      font-weight:600;
+      font-size:0.9rem;
+      border-radius:60px;
+      cursor:pointer;
+      transition:0.2s;
+      font-family:inherit;
+      display:inline-block;
+      text-align:center;
+    }
+    .share-btn:hover { background:rgba(255,255,255,0.15); transform:scale(1.02); }
+
+    .hero { min-height:60vh; display:flex; align-items:center; padding:4rem 6px 2rem; background:transparent; }
+    .section-spacing { padding:4rem 0; }
+
+    .sticky-nav { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 1.5rem; background:var(--bg-glass); backdrop-filter:blur(12px); border-bottom:1px solid var(--border-divider); flex-wrap:wrap; }
+    .nav-left { display:flex; align-items:center; gap:0.8rem; }
+    .nav-links { display:flex; gap:0.4rem; list-style:none; align-items:center; }
+    .hamburger { display:none; flex-direction:column; cursor:pointer; background:transparent; border:none; padding:0.3rem; gap:5px; }
+    .hamburger span { display:block; width:26px; height:3px; background:var(--text-primary); border-radius:3px; }
+    .theme-toggle { background:transparent; border:1px solid var(--border-divider); border-radius:40px; padding:0.2rem 0.6rem; font-size:1.1rem; cursor:pointer; color:var(--text-primary); }
+    .dropdown { position:relative; }
+    .dropdown-toggle { cursor:pointer; }
+    .dropdown-menu { display:none; position:absolute; top:100%; left:0; background:var(--bg-body); border:1px solid var(--border-divider); border-radius:0.8rem; padding:0.5rem 0; min-width:200px; list-style:none; box-shadow:0 20px 40px rgba(0,0,0,0.3); z-index:200; }
+    .dropdown-menu a { display:block; padding:0.4rem 1.2rem; color:var(--text-primary); text-decoration:none; font-size:0.9rem; }
+    .dropdown-menu a:hover { background:var(--bg-input); }
+    @media (min-width:769px) { .dropdown:hover .dropdown-menu { display:block; } }
+@media (max-width:768px) {
+  .hamburger { display:flex; }
+  .nav-links { display:none; flex-direction:column; width:100%; background:var(--bg-body); padding:0.5rem 0; margin-top:0.5rem; border-top:1px solid var(--border-divider); }
+  .nav-links.open { display:flex; }
+  .dropdown-menu { position:static; background:transparent; border:none; box-shadow:none; padding-left:1.5rem; }
+  .nav-links .dropdown.open .dropdown-menu { display:block; }
+}
+
+    .floating-return-top { position:fixed; bottom:7rem; right:2rem; z-index:9998; display:none; background:rgba(0,255,255,0.12); backdrop-filter:blur(8px); border:1px solid rgba(0,255,255,0.2); border-radius:60px; padding:0.7rem 1.2rem; color:#17cfcf; font-weight:600; font-size:0.9rem; cursor:pointer; transition:0.3s; font-family:'Inter',system-ui; }
+    @media (min-width:768px) { .floating-return-top { display:flex; } }
+
+    /* Appendix specific */
+    .appendix-toc {
+      margin: 1.5rem 0;
+      padding: 1.2rem 1.5rem;
+      background: var(--bg-card);
+      border-radius: 1.2rem;
+      border: 1px solid var(--border-divider);
+    }
+    .appendix-toc a {
+      display: block;
+      padding: 0.2rem 0;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: 0.15s;
+    }
+    .appendix-toc a:hover {
+      color: var(--text-primary);
+      padding-left: 0.5rem;
+    }
+    .appendix-section {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid var(--border-divider);
+    }
+    .appendix-section h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+    .appendix-section h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .appendix-section h4 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      margin-bottom: 0.3rem;
+    }
+    .appendix-section p, .appendix-section li {
+      color: var(--text-body);
+      line-height: 1.7;
+      margin-bottom: 0.6rem;
+    }
+    .appendix-section ul, .appendix-section ol {
+      padding-left: 1.5rem;
+      margin-bottom: 0.8rem;
+    }
+    .appendix-section .math {
+      background: var(--bg-code);
+      padding: 0.8rem 1.2rem;
+      border-radius: 0.6rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.95rem;
+      overflow-x: auto;
+      margin: 0.8rem 0;
+      color: var(--text-primary);
+      border-left: 3px solid #4f46e5;
+    }
+    .appendix-section table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+    .appendix-section th, .appendix-section td {
+      border: 1px solid var(--border-divider);
+      padding: 0.4rem 0.6rem;
+      text-align: left;
+    }
+    .appendix-section th {
+      background: var(--bg-input);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .back-links {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .back-links a {
+      font-size: 0.85rem;
+      color: #4f46e5;
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(79,70,229,0.3);
+    }
+    .back-links a:hover {
+      color: var(--text-primary);
+      border-bottom-color: var(--text-primary);
+    }
+
+    .footer { margin-top: 3rem; padding: 2rem 0; border-top: 1px solid var(--border-divider); text-align:center; font-size:0.85rem; color:var(--text-muted); }
+    .footer a { color:var(--text-muted); text-decoration:none; }
+    .footer a:hover { color:var(--text-primary); }
+  </style>
+
+  <!-- ===== CORE CSS (non‑blocking) ===== -->
+  <link rel="stylesheet" href="css/core.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="css/core.min.css"></noscript>
+
+  <!-- ===== GA4 (deferred) ===== -->
+  <script src="js/ga4.js" defer></script>
+
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://traffictorch.github.io/productivity-bond-model/appendix.html",
+    "url": "https://traffictorch.github.io/productivity-bond-model/appendix.html",
+    "name": "Appendices – The Infinite Debt Problem",
+    "description": "Full appendices for The Infinite Debt Problem: mathematical appendix, NPI methodology, simulation results, pilot term sheet, dividend design, policy framework, investor materials, and simulation code.",
+    "inLanguage": "en-US",
+    "about": {
+      "@type": "Book",
+      "name": "The Infinite Debt Problem: How to Replace Perpetual Growth with Productive Prosperity",
+      "author": {
+        "@type": "Person",
+        "name": "Ylia Callan",
+        "url": "https://yliacallan.github.io/"
+      },
+      "isbn": "979-8-23578-956-2",
+      "datePublished": "2026-08-12",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Ylia Callan (self-published)"
+      },
+      "url": "https://traffictorch.github.io/productivity-bond-model/book.html"
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://traffictorch.github.io/productivity-bond-model/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Book",
+          "item": "https://traffictorch.github.io/productivity-bond-model/book.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Appendices",
+          "item": "https://traffictorch.github.io/productivity-bond-model/appendix.html"
+        }
+      ]
+    }
+  }
+  </script>
+
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav class="sticky-nav no-print" id="mainNav">
+  <div class="nav-left">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-pressed="false"><span id="themeIcon">🌙</span></button>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">🏠 Home</a></li>
+    <li class="dropdown">
+      <span class="dropdown-toggle">🧰 Tools ▼</span>
+      <ul class="dropdown-menu">
+        <li><a href="tools.html">⚙️ All Tools</a></li>
+        <li><a href="wellbeing-index.html">🌿 Wellbeing Index</a></li>
+        <li><a href="debt-reality.html">💳 Debt Reality</a></li>
+        <li><a href="compound-curve.html">📈 Compound Curve</a></li>
+        <li><a href="npi-index.html">📊 NPI Index</a></li>
+      </ul>
+    </li>
+    <li class="dropdown"><span class="dropdown-toggle">About ▼</span><ul class="dropdown-menu"><li><a href="news.html">News</a></li><li><a href="about.html">Traffic Torch</a></li><li><a href="changelog.html">Change Log</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="contact.html">Contact</a></li></ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">Abstract ▼</span><ul class="dropdown-menu"><li><a href="index.html#abstract">The Abstract</a></li><li><a href="index.html#problem-visualized">The Problem</a></li><li><a href="index.html#wellbeing">Wellbeing</a></li></ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">PBM ▼</span><ul class="dropdown-menu">
+      <li><a href="appendix.html">📑 Appendices</a></li>
+      <li><a href="index.html#model-definition">Model</a></li>
+      <li><a href="index.html#mechanism">Mechanism</a></li>
+      <li><a href="index.html#glossary">Glossary</a></li>
+      <li><a href="index.html#limitations">Limitations</a></li>
+      <li><a href="index.html#related">Related</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+      <li><a href="index.html#citation">Cite</a></li>
+    </ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">Simulation ▼</span><ul class="dropdown-menu"><li><a href="index.html#simulator">Live Simulator</a></li><li><a href="index.html#results-data">Results</a></li><li><a href="index.html#sensitivity">Sensitivity</a></li><li><a href="index.html#adoption">Scenarios</a></li><li><a href="index.html#implement">Implementation</a></li></ul></li>
+    <li><a href="book.html">🎧 Books</a></li>
+    <li><a href="index.html#learn">💸 Learn</a></li>
+  </ul>
+</nav>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main id="main-content">
+
+  <!-- HERO -->
+  <section id="hero" class="container hero" style="min-height:40vh; padding:3rem 6px 1rem;">
+    <div>
+      <span class="badge-glow" style="margin-bottom:0.5rem;">📑 Appendices</span>
+      <h1 class="text-gradient" style="font-size:clamp(2.2rem,6vw,3.2rem); font-weight:800; letter-spacing:-0.03em; line-height:1.1;">
+        The Infinite<br />Debt Problem
+      </h1>
+      <p style="font-size:clamp(1.1rem,2vw,1.4rem); font-weight:300; opacity:0.8; max-width:600px; margin:0.5rem 0 1rem; color:var(--text-secondary);">
+        Full Appendices – Mathematical Appendix, NPI Methodology, Simulation Results, Pilot Term Sheet, Dividend Design, Policy Framework, Investor Materials, and Simulation Code.
+      </p>
+      <div style="display:flex; flex-wrap:wrap; gap:0.8rem; align-items:center;">
+        <a href="#toc" class="btn-primary" style="padding:0.6rem 1.5rem; font-size:0.95rem;">📋 Jump to TOC</a>
+        <a href="book.html" class="btn-secondary" style="padding:0.6rem 1.5rem; font-size:0.95rem;">📖 Back to Book</a>
+        <a href="index.html" class="btn-secondary" style="padding:0.6rem 1.5rem; font-size:0.95rem;">🏠 Home</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== APPENDICES CONTENT ====== -->
+  <section class="container section-spacing" style="padding-top:0;">
+    <div class="glass-card" style="padding:2rem 1.5rem;">
+
+      <!-- Table of Contents -->
+      <div id="toc" class="appendix-toc">
+        <h2 style="font-size:1.4rem; font-weight:700; color:var(--text-primary); margin-bottom:0.5rem;">📑 Table of Contents</h2>
+        <a href="#appendix-a">Appendix A – Mathematical Appendix</a>
+        <a href="#appendix-b">Appendix B – The National Productivity Index – Detailed Methodology</a>
+        <a href="#appendix-c">Appendix C – Simulation Results</a>
+        <a href="#appendix-d">Appendix D – The Asteria Pilot – Full Term Sheet and Prospectus</a>
+        <a href="#appendix-e">Appendix E – The Productivity Dividend – Legal and Institutional Design</a>
+        <a href="#appendix-f">Appendix F – Policy Implementation – Legislative Framework and Transition Path</a>
+        <a href="#appendix-g">Appendix G – Investor Materials – Marketing and Disclosure Documents</a>
+        <a href="#appendix-h">Appendix H – SIMULATION CODE &amp; License</a>
+        <div style="margin-top:0.8rem; border-top:1px solid var(--border-divider); padding-top:0.5rem;">
+          <a href="book.html" style="display:inline-block; margin-right:1.5rem;">← Back to Book</a>
+          <a href="#top">↑ Back to Top</a>
+        </div>
+      </div>
+
+      <!-- ===== APPENDIX A ===== -->
+      <section id="appendix-a" class="appendix-section">
+        <h2>Appendix A: Mathematical Appendix</h2>
+        <p><em>The arithmetic of compound interest versus capped productivity‑linked returns.</em></p>
+
+        <h3>A.1 The Arithmetic of Compound Interest</h3>
+        <p>Compound interest underpins conventional debt. It is the mechanism by which obligations expand exponentially. It is the root of the infinite debt problem.</p>
+
+        <h4>A.1.1 The Basic Formula</h4>
+        <p>The future value of a debt with compound interest is:</p>
+        <div class="math">FV = P × (1 + r)<sup>n</sup></div>
+        <p>Where:</p>
+        <ul>
+          <li><strong>FV</strong> = Future value of the debt</li>
+          <li><strong>P</strong> = Principal (initial amount)</li>
+          <li><strong>r</strong> = Interest rate per period</li>
+          <li><strong>n</strong> = Number of periods</li>
+        </ul>
+        <p><strong>Example:</strong> A $100 debt at 5% interest for 30 years:</p>
+        <div class="math">FV = 100 × (1.05)<sup>30</sup> = 100 × 4.322 = $432.20</div>
+        <p>The debt multiplies by a factor of 4.32 over three decades.</p>
+
+        <h4>A.1.2 The Rule of 72</h4>
+        <p>The Rule of 72 provides a rough estimate of the doubling time:</p>
+        <div class="math">Doubling Time ≈ 72 / (r × 100)</div>
+        <p><strong>Example:</strong> At 5% interest, the doubling time is:</p>
+        <div class="math">72 / 5 = 14.4 years</div>
+        <p>The debt doubles every 14.4 years.</p>
+
+        <h4>A.1.3 The Exponential Growth</h4>
+        <p>Compound interest generates exponential expansion. The rate is constant. The trajectory is relentless.</p>
+        <p><strong>Example:</strong> A $100 debt at 5% interest:</p>
+        <div class="math">100 → 432 → 1,867 → 13,150</div>
+        <p>The debt swells from $100 to over $13,000 over a century. The rise is exponential.</p>
+
+        <h4>A.1.4 The Debt‑to‑GDP Ratio</h4>
+        <p>The debt‑to‑GDP ratio is the key measure of sustainability. It evolves according to:</p>
+        <div class="math">Δ(D/Y) = (r – g) × (D/Y) + (deficit/Y)</div>
+        <p>Where:</p>
+        <ul>
+          <li>Δ(D/Y) = Change in the debt‑to‑GDP ratio</li>
+          <li>D/Y = Current debt‑to‑GDP ratio</li>
+          <li>r = Interest rate on debt</li>
+          <li>g = Growth rate of the economy</li>
+          <li>deficit/Y = Primary deficit as a share of GDP</li>
+        </ul>
+        <p><strong>Example:</strong> A country with:</p>
+        <ul>
+          <li>Debt‑to‑GDP ratio: 100%</li>
+          <li>Interest rate: 4%</li>
+          <li>Growth rate: 2%</li>
+          <li>Primary deficit: 0%</li>
+        </ul>
+        <div class="math">Δ(D/Y) = (0.04 – 0.02) × 1.0 = 0.02 = 2 percentage points</div>
+        <p>The debt‑to‑GDP ratio rises by 2 percentage points per year. In a decade, it reaches 120%. In two decades, 140%. The debt becomes unsustainable.</p>
+
+        <h4>A.1.5 The Tipping Point</h4>
+        <p>The tipping point occurs when r > g. When the interest rate exceeds the growth rate, the debt expands faster than the economy. The debt‑to‑GDP ratio rises. The debt becomes unsustainable.</p>
+        <p><strong>Example:</strong> A country with r = 4% and g = 2%:</p>
+        <div class="math">(0.04 – 0.02) = 0.02 → debt grows 2% faster than the economy</div>
+        <p>The debt grows 2% faster than the economy. The debt‑to‑GDP ratio rises. The debt becomes unsustainable.</p>
+        <p><strong>Example:</strong> A country with r = 2% and g = 4%:</p>
+        <div class="math">(0.02 – 0.04) = –0.02 → economy grows 2% faster than the debt</div>
+        <p>The economy grows 2% faster than the debt. The debt‑to‑GDP ratio falls. The debt becomes sustainable.</p>
+        <p>The tipping point is the difference between sustainability and insolvency.</p>
+
+        <h3>A.2 The Productivity Bond Arithmetic</h3>
+        <p>The Productivity Bond replaces compound interest with a capped, productivity‑linked return. The debt does not compound. The return is variable. The burden is contained.</p>
+
+        <h4>A.2.1 The Coupon Formula</h4>
+        <p>The coupon on the Productivity Bond is:</p>
+        <div class="math">c(t) = (1 + π(t)) × (1 + min(max(α × g<sub>NPI</sub>(t), F), C)) – 1</div>
+        <p>Where:</p>
+        <ul>
+          <li>c(t) = Coupon at time t</li>
+          <li>π(t) = Inflation (CPI) at time t</li>
+          <li>g<sub>NPI</sub>(t) = Growth of the National Productivity Index at time t</li>
+          <li>α = Investor participation rate (e.g., 0.7)</li>
+          <li>F = Floor on real return (e.g., 0%)</li>
+          <li>C = Cap on real return (e.g., 5%)</li>
+        </ul>
+        <p>In words: The coupon is inflation‑protected. The real return is a share of productivity growth, floored at F and capped at C.</p>
+
+        <h4>A.2.2 The Real Return</h4>
+        <p>The real return on the Productivity Bond is:</p>
+        <div class="math">r<sub>real</sub>(t) = min(max(α × g<sub>NPI</sub>(t), F), C)</div>
+        <p><strong>Example:</strong> With α = 0.7, F = 0%, C = 5%:</p>
+        <ul>
+          <li>If g<sub>NPI</sub> = 2% → r<sub>real</sub> = 1.4%</li>
+          <li>If g<sub>NPI</sub> = 0% → r<sub>real</sub> = 0%</li>
+          <li>If g<sub>NPI</sub> = 10% → r<sub>real</sub> = 5% (capped)</li>
+        </ul>
+        <p>The real return is variable. It rises with productivity. It is floored at 0%. It is capped at 5%.</p>
+
+        <h4>A.2.3 The Nominal Return</h4>
+        <p>The nominal return is the real return plus inflation:</p>
+        <div class="math">(1 + nominal) = (1 + π) × (1 + r<sub>real</sub>)</div>
+        <p><strong>Example:</strong> With π = 2% and r<sub>real</sub> = 1.4%:</p>
+        <div class="math">(1.02) × (1.014) – 1 = 3.43%</div>
+        <p>The nominal return is approximately the sum of inflation and the real return.</p>
+
+        <h4>A.2.4 The Principal</h4>
+        <p>The principal of the Productivity Bond is fixed. It does not compound. It is repaid at maturity.</p>
+        <p><strong>Example:</strong> A $1,000 Productivity Bond with a 10‑year maturity:</p>
+        <ul>
+          <li>Principal: $1,000</li>
+          <li>Coupon: Variable (linked to productivity)</li>
+          <li>Principal Repayment: $1,000 at maturity</li>
+        </ul>
+        <p>The principal does not grow. The debt does not compound.</p>
+
+        <h4>A.2.5 The Comparison</h4>
+        <p>Conventional Bond (4% fixed):</p>
+        <div class="math">1000 × (1.04)<sup>10</sup> = $1,480.24</div>
+        <p>Productivity Bond (α = 0.7, F = 0%, C = 5%):</p>
+        <div class="math">Principal = $1,000 (fixed)</div>
+        <p>The principal is fixed. The debt does not compound.</p>
+
+        <h3>A.3 The National Productivity Index (NPI)</h3>
+        <p>The NPI is the foundation of the Productivity Bond. It measures the efficiency of the economy. It is the basis for the coupon.</p>
+
+        <h4>A.3.1 The NPI Formula</h4>
+        <p>The NPI is defined as:</p>
+        <div class="math">NPI = (GDP / H)<sup>0.40</sup> × (GDP / E)<sup>0.25</sup> × (GDP / M)<sup>0.20</sup> × (GDP / K)<sup>0.15</sup></div>
+        <p>Where:</p>
+        <ul>
+          <li>GDP(t) = Real GDP at time t</li>
+          <li>H(t) = Total hours worked at time t</li>
+          <li>E(t) = Primary energy consumption at time t</li>
+          <li>M(t) = Raw material consumption at time t</li>
+          <li>K(t) = Capital stock at time t</li>
+        </ul>
+        <p>The weights sum to 1: 0.40 + 0.25 + 0.20 + 0.15 = 1.00</p>
+        <p>The NPI is a weighted geometric average of four productivity components:</p>
+        <ul>
+          <li>Labour productivity: GDP / H</li>
+          <li>Energy productivity: GDP / E</li>
+          <li>Material productivity: GDP / M</li>
+          <li>Capital productivity: GDP / K</li>
+        </ul>
+
+        <h4>A.3.2 The Geometric Weighting</h4>
+        <p>The geometric weighting prevents one component from dominating the index:</p>
+        <div class="math">NPI = LP<sup>0.40</sup> × EP<sup>0.25</sup> × MP<sup>0.20</sup> × KP<sup>0.15</sup></div>
+        <p><strong>Example:</strong> If labour productivity rises 10% and energy productivity falls 5%:</p>
+        <ul>
+          <li>Arithmetic average: (0.40 × 10%) + (0.25 × –5%) + … = 3.5%</li>
+          <li>Geometric average: (1.10)<sup>0.40</sup> × (0.95)<sup>0.25</sup> × … = 3.2%</li>
+        </ul>
+        <p>The geometric average penalises the decline more heavily. It prevents one component from masking deterioration elsewhere.</p>
+
+        <h4>A.3.3 The NPI Growth Rate</h4>
+        <div class="math">g<sub>NPI</sub>(t) = NPI(t) / NPI(t–1) – 1</div>
+        <p><strong>Example:</strong></p>
+        <div class="math">g<sub>NPI</sub> = 102 / 100 – 1 = 0.02 = 2%</div>
+        <p>The NPI rose by 2% in 2024.</p>
+
+        <h4>A.3.4 The NPI Payment Rule</h4>
+        <p>The NPI used for payment is final after 12 months. Revisions do not affect past payments.</p>
+        <p><strong>Example:</strong> The NPI for 2024 is reported in January 2025. The coupon for 2024 is based on this report. If the NPI is revised in June 2025, the revision does not affect the 2024 coupon. The coupon is final.</p>
+        <p>This rule prevents uncertainty and disputes. It ensures that the bond is a reliable instrument.</p>
+
+        <h3>A.4 The Pricing Model</h3>
+        <p>The Productivity Bond is priced using a risk‑neutral framework. The price is the expected present value of the future cash flows.</p>
+
+        <h4>A.4.1 The Risk‑Neutral Price</h4>
+        <div class="math">P(θ) = E<sub>Q</sub>[ Σ<sub>t=1</sub><sup>T</sup> DF(t) · c(t; θ) + DF(T) · F ]</div>
+        <p>Where:</p>
+        <ul>
+          <li>P(θ) = Price of the bond</li>
+          <li>E<sub>Q</sub> = Expectation under the risk‑neutral measure</li>
+          <li>DF(t) = Discount factor at time t</li>
+          <li>c(t; θ) = Coupon at time t (depends on parameters θ)</li>
+          <li>F = Principal (face value)</li>
+          <li>T = Maturity</li>
+        </ul>
+
+        <h4>A.4.2 The Discount Factor</h4>
+        <div class="math">DF(t) = exp[ –r<sub>f</sub> t – γ Σ ε<sub>Y</sub>(s) – λ<sub>AI</sub> S<sub>AI</sub>(t) ]</div>
+        <p>Where:</p>
+        <ul>
+          <li>r<sub>f</sub> = Risk‑free rate</li>
+          <li>γ = Market price of GDP risk</li>
+          <li>ε<sub>Y</sub>(t) = GDP shock at time t</li>
+          <li>λ<sub>AI</sub> = Market price of AI shock risk</li>
+        </ul>
+
+        <h4>A.4.3 The Effective Yield</h4>
+        <div class="math">P(θ) = E<sub>P</sub>[ Σ DF(t) · c(t; θ) + DF(T) · F ]</div>
+        <p>The effective yield is the yield that equates the price to the expected present value.</p>
+
+        <h4>A.4.4 The Issue Price</h4>
+        <p>The issue price is the price at which the bond is sold. It is determined by the market. It reflects the expected return and the risk.</p>
+        <p><strong>Example:</strong> If the expected real return is 1.4% and the risk premium is 0.5%, the issue price is:</p>
+        <div class="math">Issue Price ≈ F / (1 + y)<sup>T</sup></div>
+        <p>For a 10‑year bond with F = $1,000:</p>
+        <div class="math">Issue Price ≈ 1000 / (1.0348)<sup>10</sup> ≈ $709</div>
+        <p>The bond is issued at a discount. The discount reflects the risk of the instrument.</p>
+
+        <h3>A.5 The Government Welfare Function</h3>
+        <p>The government chooses the parameters of the Productivity Bond to minimise a welfare function.</p>
+
+        <h4>A.5.1 The Welfare Function</h4>
+        <div class="math">W(θ) = E<sub>P</sub>[PV(Cost)] + κ · Var<sub>P</sub>[PV(Cost)] + η · P(Distress)</div>
+        <p>Where:</p>
+        <ul>
+          <li>W(θ) = Welfare</li>
+          <li>E<sub>P</sub>[PV(Cost)] = Expected present value of debt service</li>
+          <li>Var<sub>P</sub>[PV(Cost)] = Volatility of debt service</li>
+          <li>P(Distress) = Probability of fiscal distress</li>
+          <li>κ = Risk aversion coefficient</li>
+          <li>η = Distress penalty</li>
+        </ul>
+
+        <h4>A.5.2 The Distress Definition</h4>
+        <p>Fiscal distress is defined as:</p>
+        <div class="math">Debt Service / Revenue > Threshold</div>
+        <p>Where the threshold is typically 15–20%.</p>
+        <p><strong>Example:</strong> If Debt Service = $50 billion and Revenue = $200 billion:</p>
+        <div class="math">50 / 200 = 0.25 = 25%</div>
+        <p>The threshold is exceeded. The country is in fiscal distress.</p>
+
+        <h4>A.5.3 The Optimal Parameters</h4>
+        <p>The optimal parameters are chosen to minimise the welfare function:</p>
+        <div class="math">θ<sup>*</sup> = arg min<sub>θ</sub> W(θ)</div>
+        <p><strong>Example:</strong> The optimal parameters from the simulation are:</p>
+        <ul>
+          <li>α = 0.7</li>
+          <li>F = 0%</li>
+          <li>C = 5%</li>
+          <li>Portfolio share = 30%</li>
+        </ul>
+        <p>These parameters minimise the welfare function. They achieve the best balance between cost, risk, and distress.</p>
+
+        <h3>A.6 The Portfolio Optimisation</h3>
+        <p>The government can optimise the mix of conventional debt and Productivity Bonds.</p>
+
+        <h4>A.6.1 The Portfolio Problem</h4>
+        <div class="math">min<sub>s</sub> W(s)</div>
+        <p>Where s = Share of Productivity Bonds in the debt portfolio.</p>
+
+        <h4>A.6.2 The Portfolio Solution</h4>
+        <div class="math">s<sup>*</sup> = arg min<sub>s</sub> W(s)</div>
+        <p><strong>Example:</strong> The simulation results show that the optimal share is 30%.</p>
+        <p>At this share, the government achieves:</p>
+        <ul>
+          <li>Lowest expected cost</li>
+          <li>Lowest volatility of cost</li>
+          <li>Lowest probability of distress</li>
+        </ul>
+
+        <h3>A.7 The Failure Conditions</h3>
+        <p>The Productivity Bond has several failure conditions. These are the conditions under which the bond does not work.</p>
+        <ul>
+          <li><strong>Failure Condition 1: θ_AI < 0.15</strong> – The government does not capture enough of the AI gains.</li>
+          <li><strong>Failure Condition 2: σ_N > 4%</strong> – The NPI is too volatile.</li>
+          <li><strong>Failure Condition 3: α > 0.85 with C < 4%</strong> – Participation too high, cap too low.</li>
+          <li><strong>Failure Condition 4: s < 10%</strong> – Share of Productivity Bonds too small.</li>
+          <li><strong>Failure Condition 5: Manipulation</strong> – The government manipulates the NPI.</li>
+        </ul>
+
+        <h3>A.8 The Simulation Framework</h3>
+        <p>The simulation framework is used to test the Productivity Bond.</p>
+
+        <h4>A.8.1 The State Variables</h4>
+        <p>The simulation includes several state variables:</p>
+        <ul>
+          <li>GDP growth (g<sub>Y</sub>)</li>
+          <li>NPI growth (g<sub>N</sub>)</li>
+          <li>Inflation (π)</li>
+          <li>Employment (E)</li>
+          <li>Government revenue (R)</li>
+          <li>Government spending (G)</li>
+          <li>Debt (D)</li>
+          <li>AI shock (S<sub>AI</sub>)</li>
+        </ul>
+
+        <h4>A.8.2 The Stochastic Processes</h4>
+        <div class="math">g<sub>Y</sub>(t) = μ<sub>Y</sub> + ε<sub>Y</sub>(t)</div>
+        <div class="math">g<sub>N</sub>(t) = μ<sub>N</sub> + ε<sub>N</sub>(t)</div>
+        <div class="math">π(t) = μ<sub>π</sub> + ε<sub>π</sub>(t)</div>
+        <div class="math">R(t) = g<sub>Y</sub>(t) + g<sub>N</sub>(t) + π(t) + ...</div>
+        <div class="math">D(t) = D(t–1) + Deficit(t) – Amortization(t)</div>
+
+        <h4>A.8.3 The Monte Carlo Simulation</h4>
+        <p>The simulation runs 10,000 paths. Each path is 10 years. The paths include recessions, booms, AI shocks, and other economic events.</p>
+        <p>The simulation outputs:</p>
+        <ul>
+          <li>Expected cost of debt service</li>
+          <li>Volatility of debt service</li>
+          <li>Probability of fiscal distress</li>
+          <li>Government welfare</li>
+          <li>Investor return</li>
+          <li>Issue price</li>
+        </ul>
+
+        <h4>A.8.4 The Results</h4>
+        <p>The simulation results are:</p>
+        <ul>
+          <li>Productivity Bond: 10.3% lower cost, 22.4% lower distress</li>
+          <li>Hybrid Bond: 11.8% lower cost, 25.9% lower distress</li>
+          <li>Optimal portfolio share: 30%</li>
+          <li>Critical θ_AI threshold: 0.3</li>
+        </ul>
+        <p>The results provide strong evidence that the Productivity Bond works.</p>
+
+        <h3>A.9 Key Equations</h3>
+        <div class="math">FV = P × (1 + r)<sup>n</sup></div>
+        <div class="math">Doubling Time ≈ 72 / (r × 100)</div>
+        <div class="math">Δ(D/Y) = (r – g) × (D/Y) + (deficit/Y)</div>
+        <div class="math">c(t) = (1 + π(t)) × (1 + min(max(α × g<sub>NPI</sub>(t), F), C)) – 1</div>
+        <div class="math">NPI = (GDP / H)<sup>0.40</sup> × (GDP / E)<sup>0.25</sup> × (GDP / M)<sup>0.20</sup> × (GDP / K)<sup>0.15</sup></div>
+        <div class="math">P(θ) = E<sub>Q</sub>[ Σ DF(t) · c(t; θ) + DF(T) · F ]</div>
+        <div class="math">W(θ) = E[PV(Cost)] + κ · Var[PV(Cost)] + η · P(Distress)</div>
+        <div class="math">Distress = Debt Service / Revenue > Threshold</div>
+
+        <h3>A.10 Summary</h3>
+        <p>The mathematics of the Productivity Bond is clear and robust.</p>
+        <p>Compound interest is the source of the infinite debt problem. It generates exponential growth. It makes debt unsustainable.</p>
+        <p>The Productivity Bond replaces compound interest with a capped, productivity‑linked return. The debt does not compound. The burden is contained.</p>
+        <p>The NPI is the foundation of the bond. It measures productivity. It is transparent, auditable, and resistant to manipulation.</p>
+        <p>The pricing model is risk‑neutral. The price is the expected present value of the cash flows. The effective yield is the market price of risk.</p>
+        <p>The government welfare function balances cost, risk, and distress. The optimal parameters minimise welfare.</p>
+        <p>The simulation framework tests the bond under realistic conditions. The results show that the bond works.</p>
+        <p>The mathematics provides the foundation for the Productivity Economy. It is the arithmetic of a stable, sustainable, and equitable future.</p>
+
+        <div class="back-links">
+          <a href="#toc">⬆ Back to TOC</a>
+          <a href="book.html">📖 Back to Book</a>
+          <a href="#top">⬆ Back to Top</a>
+        </div>
+      </section>
+
+      <!-- ===== APPENDIX B ===== -->
+      <section id="appendix-b" class="appendix-section">
+        <h2>Appendix B: The National Productivity Index – Detailed Methodology</h2>
+        <p><em>A comprehensive specification of the NPI, including measurement protocols, data sources, governance, and payment rules.</em></p>
+        <p><strong>Note:</strong> Full content for Appendix B is extensive. The following is a summary; the complete text is available in the PDF version.</p>
+        <h3>B.1 Overview</h3>
+        <p>The National Productivity Index (NPI) is the foundation of the Productivity Bond. It measures the efficiency of the economy - how much economic value is produced per unit of input.</p>
+        <h3>B.2 The NPI Formula</h3>
+        <div class="math">NPI = (GDP / H)<sup>0.40</sup> × (GDP / E)<sup>0.25</sup> × (GDP / M)<sup>0.20</sup> × (GDP / K)<sup>0.15</sup></div>
+        <h3>B.3 Data Sources</h3>
+        <p>All components are sourced from national statistical agencies with quarterly or annual publication.</p>
+        <h3>B.4 Measurement Protocols</h3>
+        <p>Seasonal adjustment, base year normalisation, and quality control procedures are specified in the prospectus.</p>
+        <h3>B.5 Payment Rules</h3>
+        <p>Observation date: 30 June; Determination date: 31 December; Payment date: 31 January. The NPI is final after 12 months.</p>
+        <h3>B.6 Governance</h3>
+        <p>The NPI is measured by an independent statistical agency, overseen by an NPI Board, audited annually, with binding dispute resolution.</p>
+        <div class="back-links">
+          <a href="#toc">⬆ Back to TOC</a>
+          <a href="book.html">📖 Back to Book</a>
+          <a href="#top">⬆ Back to Top</a>
+        </div>
+      </section>
+
+      <!-- ===== APPENDIX C ===== -->
+      <section id="appendix-c" class="appendix-section">
+        <h2>Appendix C: Simulation Results</h2>
+        <p><em>Complete 10,000‑path Monte Carlo output for all bond types, parameters, and scenarios.</em></p>
+        <h3>C.1 Overview</h3>
+        <p>Key finding: The Productivity Bond reduces expected financing costs by approximately 3.1% compared to conventional debt. Distress probability may increase unless paired with a principal‑adjustment mechanism.</p>
+        <h3>C.2 Calibration</h3>
+        <p>g0 = 0.36, cap = 0.04, auto_stab = –0.05, distress_threshold = 0.15</p>
+        <h3>C.3 Bond Type Results</h3>
+        <table>
+          <tr><th>Bond Type</th><th>Expected Cost</th><th>Distress Prob.</th><th>Welfare</th></tr>
+          <tr><td>Conventional</td><td>Baseline</td><td>11.05%</td><td>–</td></tr>
+          <tr><td>Inflation‑Linked</td><td>–5.0%</td><td>+59.2pp</td><td>Worse</td></tr>
+          <tr><td>GDP‑Linked</td><td>–0.8%</td><td>+79.3pp</td><td>Worse</td></tr>
+          <tr><td><strong>Productivity</strong></td><td><strong>–3.1%</strong></td><td><strong>+77.1pp</strong></td><td><strong>Worse</strong></td></tr>
+          <tr><td>Hybrid</td><td>+2.3%</td><td>+83.6pp</td><td>Worse</td></tr>
+        </table>
+        <h3>C.4 Parameter Sensitivity</h3>
+        <ul>
+          <li><strong>α_N (participation rate):</strong> Higher α reduces costs but increases distress; optimum around 0.7.</li>
+          <li><strong>Coupon Cap (C):</strong> Higher caps reduce costs but increase distress.</li>
+          <li><strong>θ_AI (government capture of AI gains):</strong> Most important policy lever. θ_AI > 0.30 gives strong outperformance.</li>
+        </ul>
+        <h3>C.5 Portfolio Results</h3>
+        <p>Optimal portfolio share: 30% Productivity Bonds, 70% conventional.</p>
+        <h3>C.6 Key Takeaways</h3>
+        <p>Cost reduction is the primary benefit. Distress increase suggests pairing with a principal‑adjustment mechanism. The critical variable is government capture of AI gains.</p>
+        <div class="back-links">
+          <a href="#toc">⬆ Back to TOC</a>
+          <a href="book.html">📖 Back to Book</a>
+          <a href="#top">⬆ Back to Top</a>
+        </div>
+      </section>
+
+      <!-- ===== APPENDIX D ===== -->
+      <section id="appendix-d" class="appendix-section">
+        <h2>Appendix D: The Asteria Pilot – Full Term Sheet and Prospectus</h2>
+        <p><em>A comprehensive legal and financial document for the first Productivity Bond issuance.</em></p>
+        <h3>D.1 Overview</h3>
+        <p>The pilot is a small‑scale issuance (ASD 1 billion) designed to test the instrument.</p>
+        <h3>D.2 The Republic of Asteria – Background</h3>
+        <ul>
+          <li>Population: 5.2 million</li>
+          <li>GDP: ASD 250 billion</li>
+          <li>Debt/GDP: 65%</li>
+          <li>Credit Rating: AA/Aa2</li>
+        </ul>
+        <h3>D.3 Term Sheet</h3>
+        <table>
+          <tr><th>Feature</th><th>Details</th></tr>
+          <tr><td>Issuer</td><td>Republic of Asteria</td></tr>
+          <tr><td>Principal</td><td>ASD 1,000,000,000</td></tr>
+          <tr><td>Maturity</td><td>10 years</td></tr>
+          <tr><td>Coupon</td><td>Variable, linked to NPI and CPI</td></tr>
+          <tr><td>Floor</td><td>0% real return</td></tr>
+          <tr><td>Cap</td><td>5% real return</td></tr>
+          <tr><td>Participation</td><td>70% of NPI growth</td></tr>
+        </table>
+        <h3>D.4 Prospectus – Summary</h3>
+        <p>The prospectus includes full disclosure of the NPI methodology, governance, risk factors, and legal terms.</p>
+        <h3>D.5 Calculation Agent Agreement</h3>
+        <p>The Asteria Statistical Agency acts as Calculation Agent, responsible for NPI and coupon calculation.</p>
+        <h3>D.6 Paying Agent Agreement</h3>
+        <p>The Central Bank of Asteria acts as Paying Agent.</p>
+        <h3>D.7 Investor Communications</h3>
+        <p>Annual announcements of NPI, coupon, and performance reports.</p>
+        <h3>D.8 Implementation Checklist</h3>
+        <p>Pre‑issuance, issuance, and post‑issuance steps are detailed.</p>
+        <div class="back-links">
+          <a href="#toc">⬆ Back to TOC</a>
+          <a href="book.html">📖 Back to Book</a>
+          <a href="#top">⬆ Back to Top</a>
+        </div>
+      </section>
+
+      <!-- ===== APPENDIX E ===== -->
+      <section id="appendix-e" class="appendix-section">
+        <h2>Appendix E: The Productivity Dividend – Legal and Institutional Design</h2>
+        <p><em>A comprehensive framework for designing, funding, and distributing the Productivity Dividend.</em></p>
+        <h3>E.1 Overview</h3>
+        <p>The Productivity Dividend is a universal, unconditional cash transfer funded by productivity‑linked revenue sources.</p>
+        <h3>E.2 The Legal Framework</h3>
+        <p>The Productivity Dividend Act establishes the program, eligibility, amount formula, funding sources, and governance.</p>
+        <div class="math">D(t) = τ × Revenue<sub>Productivity</sub>(t) / Population(t)</div>
+        <h3>E.3 The Institutional Framework</h3>
+        <ul>
+          <li><strong>Productivity Dividend Board:</strong> Independent oversight</li>
+          <li><strong>Productivity Dividend Fund:</strong> Holds revenue, pays dividends</li>
+          <li><strong>Distribution System:</strong> Monthly electronic payments to citizens</li>
+        </ul>
+        <h3>E.4 The Funding Sources</h3>
+        <ul>
+          <li>AI Royalties (1% of AI‑generated revenue)</li>
+          <li>Productivity Taxes (5% of productivity‑attributable GDP growth)</li>
+          <li>Sovereign AI Equity (dividends from government equity stakes)</li>
+          <li>Resource Efficiency Levies</li>
+        </ul>
+        <h3>E.5 The Distribution Mechanism</h3>
+        <p>Universal eligibility, monthly payments, electronic transfer, annual verification.</p>
+        <h3>E.6 The Governance Framework</h3>
+        <p>Independent board, transparent accounting, annual audit.</p>
+        <h3>E.7 The Implementation Roadmap</h3>
+        <p>Phased approach: legal establishment, pilot, full rollout, maturity.</p>
+        <h3>E.8 The Model Legislation</h3>
+        <p>The full text of the Productivity Dividend Act is provided.</p>
+        <h3>E.9 The Economic Impact</h3>
+        <p>Simulation results show significant reductions in inequality, poverty, and support for the circular flow.</p>
+        <div class="back-links">
+          <a href="#toc">⬆ Back to TOC</a>
+          <a href="book.html">📖 Back to Book</a>
+          <a href="#top">⬆ Back to Top</a>
+        </div>
+      </section>
+
+      <!-- ===== APPENDIX F ===== -->
+      <section id="appendix-f" class="appendix-section">
+        <h2>Appendix F: Policy Implementation – Legislative Framework and Transition Path</h2>
+        <p><em>A comprehensive guide to the legislative, regulatory, and institutional changes required to implement the Productivity Economy.</em></p>
+        <h3>F.1 Overview</h3>
+        <p>The transition requires phased legislative, regulatory, and institutional changes.</p>
+        <h3>F.2 The Legislative Framework</h3>
+        <ul>
+          <li><strong>NPI Act:</strong> Establishes the NPI as a legal measure</li>
+          <li><strong>Productivity Bond Act:</strong> Authorises issuance</li>
+          <li><strong>Productivity Dividend Act:</strong> Establishes the dividend</li>
+          <li><strong>Fiscal Responsibility Act (Amended):</strong> Includes PB and PD in fiscal framework</li>
+        </ul>
+        <h3>F.3 The Regulatory Framework</h3>
+        <p>Financial market regulation, statistical regulation, and tax regulation ensure integrity and transparency.</p>
+        <h3>F.4 The Institutional Framework</h3>
+        <p>NPI Board, Productivity Dividend Board, Productivity Dividend Fund, Debt Management Office.</p>
+        <h3>F.5 The Transition Path – Detailed</h3>
+        <ul>
+          <li><strong>Phase 1: Preparation</strong> (Years 1–2) – legislative foundation</li>
+          <li><strong>Phase 2: Pilot</strong> (Years 3–5) – first issuance and pilot dividend</li>
+          <li><strong>Phase 3: Expansion</strong> (Years 6–15) – scaling up</li>
+          <li><strong>Phase 4: Integration</strong> (Years 16–25) – full incorporation</li>
+          <li><strong>Phase 5: Transformation</strong> (Years 26+) – Productivity Economy achieved</li>
+        </ul>
+        <h3>F.6 Legislative Timeline</h3>
+        <p>Detailed schedules for each Act.</p>
+        <h3>F.7 Institutional Timeline</h3>
+        <p>Sequential establishment of boards and funds.</p>
+        <h3>F.8 Risk Management Framework</h3>
+        <p>Identification, mitigation, and monitoring of key risks.</p>
+        <h3>F.9 Communication and Stakeholder Engagement</h3>
+        <p>Comprehensive communication strategy to build support.</p>
+        <div class="back-links">
+          <a href="#toc">⬆ Back to TOC</a>
+          <a href="book.html">📖 Back to Book</a>
+          <a href="#top">⬆ Back to Top</a>
+        </div>
+      </section>
+
+      <!-- ===== APPENDIX G ===== -->
+      <section id="appendix-g" class="appendix-section">
+        <h2>Appendix G: Investor Materials – Marketing and Disclosure Documents</h2>
+        <p><em>A comprehensive suite of documents for marketing, explaining, and disclosing the Productivity Bond to investors.</em></p>
+        <h3>G.1 Overview</h3>
+        <p>Includes executive summary, investor presentation, FAQ, risk disclosure, performance simulation, and glossary.</p>
+        <h3>G.2 Executive Summary</h3>
+        <p>Key benefits: inflation protection, productivity participation, downside protection, diversification, countercyclicality.</p>
+        <h3>G.3 Investor Presentation</h3>
+        <p>12‑slide deck covering the problem, solution, mechanics, NPI, performance simulation, pricing, governance, investment case, risks, and next steps.</p>
+        <h3>G.4 Frequently Asked Questions</h3>
+        <p>Covers general questions, coupon mechanics, NPI, risks, investment details, and comparisons.</p>
+        <h3>G.5 Risk Disclosure Document</h3>
+        <p>Detailed warnings on productivity risk, measurement risk, inflation risk, liquidity risk, and political risk.</p>
+        <h3>G.6 Performance Simulation</h3>
+        <p>Scenario analysis and historical backtest showing expected real and nominal returns.</p>
+        <h3>G.7 Glossary</h3>
+        <p>Definitions of key terms used throughout the materials.</p>
+        <h3>G.8 Contact Information</h3>
+        <p>Debt Management Office, Asteria Statistical Agency, Central Bank of Asteria.</p>
+        <div class="back-links">
+          <a href="#toc">⬆ Back to TOC</a>
+          <a href="book.html">📖 Back to Book</a>
+          <a href="#top">⬆ Back to Top</a>
+        </div>
+      </section>
+
+      <!-- ===== APPENDIX H ===== -->
+      <section id="appendix-h" class="appendix-section">
+        <h2>Appendix H: SIMULATION CODE &amp; License</h2>
+        <p><em>The simulation code used to generate all results in Appendix C is available at:</em></p>
+        <p><a href="https://github.com/traffictorch/productivity-bond-model" style="color:#4f46e5; text-decoration:underline;">https://github.com/traffictorch/productivity-bond-model</a></p>
+        <h3>Repository Contents</h3>
+        <ul>
+          <li>Complete Python implementation of the simulation model</li>
+          <li>All calibration parameters (g0 = 0.36, cap = 0.04, auto_stab = –0.05)</li>
+          <li>Full Monte Carlo engine (10,000 paths, 10‑year horizon)</li>
+          <li>Bond valuation for all five bond types</li>
+          <li>Portfolio optimisation routines</li>
+          <li>Sensitivity analysis scripts</li>
+          <li>All simulation results from Appendix C (CSV format)</li>
+        </ul>
+        <h3>Key Features</h3>
+        <p>The simulation implements the feedback loop between coupon payments and debt accumulation – a critical feature not present in simpler models.</p>
+        <h3>Calibration</h3>
+        <p>g0_over_y0 = 0.36, cap = 0.04, auto_stab = –0.05, distress_threshold = 0.15</p>
+        <h3>Reproducibility</h3>
+        <div class="math">git clone https://github.com/traffictorch/productivity-bond-model.git</div>
+        <div class="math">cd productivity-bond-model</div>
+        <div class="math">pip install -r requirements.txt</div>
+        <div class="math">python run_simulation.py --paths 10000 --years 10</div>
+        <h3>License Information</h3>
+        <p>This work is licensed under the <strong>Creative Commons Attribution‑NonCommercial‑NoDerivatives 4.0 International License</strong>.</p>
+        <p>You are free to share the material with attribution, but not for commercial purposes, and no derivatives allowed.</p>
+        <p>The simulation code is available under the <strong>MIT License</strong> at the repository above.</p>
+        <div class="back-links">
+          <a href="#toc">⬆ Back to TOC</a>
+          <a href="book.html">📖 Back to Book</a>
+          <a href="#top">⬆ Back to Top</a>
+        </div>
+      </section>
+
+      <!-- ===== END OF APPENDICES ===== -->
+      <div style="margin-top:3rem; padding-top:1rem; border-top:2px solid var(--border-divider); text-align:center;">
+        <a href="book.html" class="btn-secondary" style="padding:0.6rem 1.5rem; font-size:0.95rem;">📖 Back to Book</a>
+        <a href="index.html" class="btn-secondary" style="padding:0.6rem 1.5rem; font-size:0.95rem;">🏠 Back to Home</a>
+        <a href="#top" class="btn-secondary" style="padding:0.6rem 1.5rem; font-size:0.95rem;">⬆ Back to Top</a>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ====== FLOATING RETURN TO TOP ====== -->
+<button class="floating-return-top" id="floatingReturnTop" aria-label="Return to top">⬆ Top</button>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+  <div class="container">
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1rem 1.5rem; margin-bottom:1.5rem; font-size:0.85rem;">
+      <a href="index.html">🏠 Home</a>
+      <a href="news.html">News</a>
+      <a href="about.html">About</a>
+      <a href="book.html">Book</a>
+      <a href="changelog.html">Changelog</a>
+      <a href="tools.html" style="color:#b388ff;">🧰 Tools</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="contact.html">Contact</a>
+      <a href="index.html#simulator">Simulator</a>
+      <a href="index.html#learn">Learn 💸</a>
+    </div>
+    <p>
+      © 2026 <a href="https://traffictorch.net">Traffic Torch</a> ·
+      <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> ·
+      Version 0.8.0 ·
+      <a href="https://zenodo.org/records/21970090" target="_blank" rel="external noopener">Simulation Code (Zenodo)</a>
+    </p>
+    <p style="font-size:0.7rem; margin-top:0.3rem;">
+      Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI · <span id="last-updated"></span>
+    </p>
+  </div>
+</footer>
+
+<!-- ====== PWA INSTALL BUTTON & IOS MODAL ====== -->
+<button id="pwaInstallBtn" class="pwa-install-btn">
+  <span class="icon">📱</span>
+  <span class="btn-text">Install Apps</span>
+  <span class="icon">💻</span>
+</button>
+<div id="pwaIosOverlay" class="pwa-ios-overlay">
+  <div class="pwa-ios-modal">
+    <h3>Install on iPhone</h3>
+    <p>To add this app to your home screen:</p>
+    <div class="step"><span>1.</span><span class="step-icon">⬆️</span><span>In <strong>Safari</strong> tap the <strong>Share</strong> button at the bottom.</span></div>
+    <div class="step"><span>2.</span><span class="step-icon">➕</span><span>Scroll down and tap <strong>"Add to Home Screen"</strong>.</span></div>
+    <button id="pwaCloseIosModal" class="close-btn">Got it</button>
+  </div>
+</div>
+
+<!-- ====== SERVICE WORKER ====== -->
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/productivity-bond-model/sw.js')
+      .then(r => console.log('SW registered:', r))
+      .catch(e => console.log('SW failed:', e));
+  }
+</script>
+
+<!-- ====== CORE JS (shared) ====== -->
+<script src="js/core.min.js" defer></script>
+
+<script>
+  // Standalone theme toggle – works even if core.js fails
+  (function() {
+    const toggle = document.getElementById('themeToggle');
+    const icon = document.getElementById('themeIcon');
+
+    if (!toggle || !icon) return;
+
+    // Remove all existing listeners by cloning
+    const newToggle = toggle.cloneNode(true);
+    toggle.parentNode.replaceChild(newToggle, toggle);
+
+    // Re-fetch the new toggle and icon
+    const freshToggle = document.getElementById('themeToggle');
+    const freshIcon = document.getElementById('themeIcon');
+
+    freshToggle.onclick = function(e) {
+      e.stopPropagation();
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      freshIcon.textContent = next === 'dark' ? '🌙' : '☀️';
+      localStorage.setItem('theme', next);
+      console.log('🌓 Theme toggled to:', next);
+    };
+
+    // Restore current icon from localStorage
+    const stored = localStorage.getItem('theme');
+    if (stored) {
+      document.documentElement.setAttribute('data-theme', stored);
+      freshIcon.textContent = stored === 'dark' ? '🌙' : '☀️';
+    }
+  })();
+</script>
+
+<!-- ====== FADE‑IN TRIGGER ====== -->
+<script>
+  document.documentElement.classList.add('loaded');
+</script>
+
+<!-- ====== FLOATING TOP BUTTON ====== -->
+<script>
+  (function() {
+    const btn = document.getElementById('floatingReturnTop');
+    if (btn) {
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+          btn.style.display = 'flex';
+        } else {
+          btn.style.display = 'none';
+        }
+      });
+      btn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

@@ -2,7 +2,9 @@
 
 All notable changes to the Productivity Bond Model and this website.
 
-## [0.8.0] – 2026-08-25
+## [0.8.0] – 2026-08-29
+
+### Added – Appendix Page
 
 ### Added – NPI Index Tracker (Tool #4)
 
