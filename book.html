@@ -1465,6 +1465,36 @@
       }
     })();
   </script>
+ 
+   <script> 
+  function isIOS() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+         (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+}
+
+window.jumpToChapter = function(pageNum) {
+  if (!pageNum) return;
+  loading.style.display = 'block';
+  iframe.style.display = 'none';
+  iframe.src = '';
+
+  setTimeout(function() {
+    let src;
+    if (isIOS()) {
+      // Google Docs Viewer – scales properly on iPhone
+      const encoded = encodeURIComponent(pdfUrl);
+      src = `https://docs.google.com/viewer?url=${encoded}&embedded=true#page=${pageNum}`;
+    } else {
+      // Native + cache-buster for desktop
+      src = pdfUrl + '#page=' + pageNum + '&view=FitH&t=' + Date.now();
+    }
+    iframe.src = src;
+    iframe.style.display = 'block';
+    loading.style.display = 'none';
+    // … existing scroll + highlight code
+  }, 80);
+};
+  </script>
 
 </body>
 </html>
