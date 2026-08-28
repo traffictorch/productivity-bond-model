@@ -77,6 +77,17 @@
       --bar-gdp: #8b5cf6;
       --bar-prod: #a78bfa;
       --bar-hybrid: #f59e0b;
+      --bg-input: rgba(255,255,255,0.06);
+      --bg-code: rgba(0,0,0,0.25);
+      --bg-diagram: rgba(0,0,0,0.15);
+      --bg-metric: rgba(255,255,255,0.03);
+      --badge-bg: rgba(79,70,229,0.12);
+      --badge-text: var(--text-secondary);
+      --badge-border: rgba(79,70,229,0.12);
+      --border-card: rgba(255,255,255,0.06);
+      --shadow-card: 0 30px 60px -20px rgba(0,0,0,0.8);
+      --bg-var: rgba(0,0,0,0.3);
+      --text-body: #d1d5db;
     }
     [data-theme="light"] {
       --bg-body: #f0f2f8;
@@ -94,6 +105,17 @@
       --bar-gdp: #a78bfa;
       --bar-prod: #7c3aed;
       --bar-hybrid: #f59e0b;
+      --bg-input: rgba(0,0,0,0.05);
+      --bg-code: rgba(0,0,0,0.04);
+      --bg-diagram: rgba(0,0,0,0.03);
+      --bg-metric: rgba(0,0,0,0.02);
+      --badge-bg: rgba(79,70,229,0.08);
+      --badge-text: #2d2f3e;
+      --badge-border: rgba(79,70,229,0.08);
+      --border-card: rgba(0,0,0,0.06);
+      --shadow-card: 0 30px 60px -20px rgba(0,0,0,0.15);
+      --bg-var: rgba(255,255,255,0.5);
+      --text-body: #1e1e2a;
     }
     * { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior:smooth; }
@@ -208,24 +230,11 @@
     }
     .floating-return-top { position:fixed; bottom:7rem; right:2rem; z-index:9998; display:none; background:rgba(0,255,255,0.12); backdrop-filter:blur(8px); border:1px solid rgba(0,255,255,0.2); border-radius:60px; padding:0.7rem 1.2rem; color:#17cfcf; font-weight:600; font-size:0.9rem; cursor:pointer; transition:0.3s; font-family:'Inter',system-ui; }
     @media (min-width:768px) { .floating-return-top { display:flex; } }
-    .plot-container { background:rgba(0,0,0,0.2); border-radius:1.5rem; padding:0.5rem; min-height:200px; }
-    .bar-item .bar { transition:height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); will-change:height; background:var(--bar-conv); height:120px; max-height:120px; width:100%; max-width:48px; border-radius:8px 8px 4px 4px; min-height:6px; }
-    .bar-item.highlight .bar { background:var(--bar-prod); box-shadow:0 0 30px rgba(167,139,250,0.4); }
-    .bar-item .bar-label { font-size:0.65rem; font-weight:600; margin-top:4px; color:var(--text-secondary); text-align:center; white-space:nowrap; }
-    .bar-item .bar-val { font-size:0.8rem; font-weight:700; color:var(--text-primary); text-shadow:0 0 10px rgba(0,0,0,0.9); }
-    .progress-bar { transition:width 0.1s linear; will-change:width; background:linear-gradient(90deg,#4f46e5,#a78bfa); height:100%; border-radius:4px; }
-    .progress-wrap { width:100%; height:4px; background:var(--bg-input); border-radius:4px; overflow:hidden; margin:1rem 0; }
-
-    .accordion-toggle { cursor:pointer; user-select:none; display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0; border-bottom:1px solid var(--border-divider); color:var(--text-primary); }
-    .accordion-toggle .arrow { transition:transform 0.2s; }
-    .accordion-toggle.open .arrow { transform:rotate(180deg); }
-    .accordion-content { max-height:0; overflow:hidden; transition:max-height 0.4s ease,padding 0.3s ease; padding:0 0.2rem; }
-    .accordion-content.open { max-height:800px; padding:0.8rem 0.2rem 0; }
 
     /* Book specific */
     .book-cover { width:100%; max-width:280px; aspect-ratio:3/4; border-radius:1.5rem; border:1px solid var(--border-card); box-shadow:var(--shadow-card); overflow:hidden; background:var(--bg-var); }
     .book-cover img { width:100%; height:100%; object-fit:cover; display:block; }
-    .viewer-container { width:100%; max-width:1000px; margin:0 auto; background:var(--bg-code); border:2px solid rgba(79,70,229,0.2); border-radius:16px; overflow:hidden; box-shadow:var(--shadow-card); }
+    .viewer-container { width:100%; max-width:1000px; margin:0 auto; background:var(--bg-code); border:2px solid rgba(79,70,229,0.2); border-radius:16px; overflow:hidden; box-shadow:var(--shadow-card); transition: box-shadow 0.3s ease; }
     .viewer-container iframe { width:100%; max-width:100%; height:80vh; border:none; display:block; margin:0; padding:0; }
     @media (max-width:768px) { .viewer-container iframe { height:70vh; } }
     @media (max-width:480px) { .viewer-container iframe { height:60vh; } }
@@ -235,30 +244,98 @@
     .book-key-features .feature .title { font-weight:600; color:var(--text-primary); font-size:0.85rem; }
     .book-key-features .feature .desc { font-size:0.75rem; color:var(--text-muted); }
    
-       /* Audiobook Button Touch up */ 
-.narrator-btn {
-  background: transparent;
-  border: none;
-  padding: 0.4rem 1.2rem;
-  border-radius: 40px;
-  font-weight: 600;
-  font-size: 0.85rem;
-  cursor: pointer;
-  color: var(--text-muted);
-  transition: 0.2s;
-  font-family: inherit;
-}
+    /* Audiobook Button Touch up */ 
+    .narrator-btn {
+      background: transparent;
+      border: none;
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: 0.2s;
+      font-family: inherit;
+    }
+    .narrator-btn.active {
+      background: rgba(79, 70, 229, 0.2);
+      color: var(--text-primary);
+      border: 1px solid rgba(79, 70, 229, 0.3);
+    }
+    .narrator-btn:hover {
+      background: var(--btn-secondary-bg);
+    }
 
-.narrator-btn.active {
-  background: rgba(79, 70, 229, 0.2);
-  color: var(--text-primary);
-  border: 1px solid rgba(79, 70, 229, 0.3);
-}
+    /* ===== BOOK-STYLE TABLE OF CONTENTS ===== */
+    .toc-container {
+      max-width: 700px;
+      margin: 0 auto 1.5rem auto;
+      padding: 0.8rem 1rem;
+      background: var(--bg-card);
+      border-radius: 1.2rem;
+      border: 1px solid var(--border-divider);
+    }
+    .toc-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.35rem 0.2rem;
+      border-bottom: 1px dashed var(--border-divider);
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: 0.15s;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .toc-item:last-of-type {
+      border-bottom: none;
+    }
+    .toc-item:hover {
+      color: var(--text-primary);
+      background: var(--bg-input);
+      border-radius: 4px;
+    }
+    .toc-item .page {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-left: 1.5rem;
+      flex-shrink: 0;
+    }
+    .toc-section-header {
+      font-weight: 700;
+      margin-top: 0.8rem;
+      padding-top: 0.5rem;
+      padding-bottom: 0.2rem;
+      border-top: 2px solid var(--border-divider);
+      color: var(--text-primary);
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+    .toc-section-header:first-of-type {
+      margin-top: 0;
+      border-top: none;
+      padding-top: 0;
+    }
+    .toc-badge-pdf {
+      font-size: 0.6rem;
+      background: rgba(79,70,229,0.15);
+      color: var(--text-muted);
+      padding: 0.1rem 0.5rem;
+      border-radius: 40px;
+      border: 1px solid var(--border-divider);
+      margin-left: 0.5rem;
+      white-space: nowrap;
+    }
 
-.narrator-btn:hover {
-  background: var(--btn-secondary-bg);
-}
-
+    /* Audiobook appendix list */
+    .appendix-audio-list {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 2px solid var(--border-divider);
+    }
   </style>
 
   <!-- ===== CORE CSS (non‑blocking) ===== -->
@@ -460,8 +537,8 @@
   <!-- ====== MAIN CONTENT (book) ====== -->
   <main id="main-content">
 
-    <!-- HERO (no fade classes) -->
-      <section id="hero" class="container hero" style="min-height:80vh; display:flex; align-items:center; padding:4rem 6px 2rem;">
+    <!-- HERO -->
+    <section id="hero" class="container hero" style="min-height:80vh; display:flex; align-items:center; padding:4rem 6px 2rem;">
       <div>
         <span class="badge-glow" style="margin-bottom:0.5rem;">📚 The Book</span>
         <span class="badge-glow badge-version" style="margin-left:0.5rem;">v0.8.0</span>
@@ -497,7 +574,7 @@
         <!-- Book Flex – stacks on mobile -->
         <div style="display:flex; flex-wrap:wrap; gap:2rem; margin-bottom:2rem;">
 
-          <!-- Cover Column (mobile: full width) -->
+          <!-- Cover Column -->
           <div style="flex:1 1 250px; min-width:200px; display:flex; flex-direction:column; align-items:center;">
             <div class="book-cover" style="width:100%; max-width:280px;">
               <picture>
@@ -552,7 +629,7 @@
           </div>
         </div>
 
-        <!-- Key Features – responsive grid -->
+        <!-- Key Features -->
         <div class="book-key-features">
           <div class="feature">
             <div class="icon">📊</div>
@@ -589,7 +666,7 @@
           </ul>
         </div>
 
-        <!-- Key Results – responsive, smaller on mobile -->
+        <!-- Key Results -->
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(120px,1fr)); gap:0.8rem; margin:1.5rem 0;">
           <div style="background:var(--bg-metric); border-radius:0.8rem; padding:0.8rem; text-align:center; border:1px solid var(--border-divider);">
             <div style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em;">Cost Saving</div>
@@ -638,264 +715,317 @@
           </div>
         </div>
 
-        <!-- PDF VIEWER (fixed) -->
+        <!-- ===== PDF VIEWER WITH BOOK-STYLE TOC ===== -->
         <div style="margin:2rem 0; text-align:center;">
-          <h3 style="font-size:1.1rem; font-weight:600; color:var(--text-primary); margin-bottom:0.8rem;">📄 The Infinite Debt Problem PDF</h3>
-<div class="viewer-container">
-  <object 
-    data="https://traffictorch.github.io/productivity-bond-model/book/The_Infinite_Debt_Problem.pdf" 
-    type="application/pdf" 
-    width="100%" 
-    height="460vh"
-  >
-    <p>Your browser does not support PDF viewing. 
-       <a href="https://traffictorch.github.io/productivity-bond-model/book/The_Infinite_Debt_Problem.pdf">Download the PDF</a>.
-    </p>
-  </object>
-</div>
+          <h3 style="font-size:1.1rem; font-weight:600; color:var(--text-primary); margin-bottom:0.5rem;">📄 The Infinite Debt Problem PDF</h3>
+          
+          <!-- BOOK-STYLE TABLE OF CONTENTS (generated by JS) -->
+          <div class="toc-container" id="tocContainer">
+            <!-- populated by JavaScript -->
+          </div>
+
+          <div class="viewer-container" id="viewerContainer">
+            <iframe 
+              id="pdfViewer"
+              src="https://traffictorch.github.io/productivity-bond-model/book/The_Infinite_Debt_Problem.pdf#page=1" 
+              width="100%" 
+              height="80vh"
+              style="border:none;"
+              title="The Infinite Debt Problem PDF"
+            >
+              <p>Your browser does not support PDF viewing. 
+                 <a href="https://traffictorch.github.io/productivity-bond-model/book/The_Infinite_Debt_Problem.pdf">Download the PDF</a>.
+              </p>
+            </iframe>
+          </div>
           <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.5rem;">
-            The Infinite Debt Problem - PDF </br>
             <a href="https://traffictorch.github.io/productivity-bond-model/book/The_Infinite_Debt_Problem.pdf" target="_blank" style="color:#4f46e5;">⬇ Download full PDF</a>
           </p>
         </div>
-        
-<!-- ====== AUDIOBOOK CHAPTERS ====== -->
-<div id="audiobook-chapters" style="margin: 2rem 0; text-align: center;">
-  
-  <!-- Header & Narrator Toggle -->
-  <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem;">
-    <h3 style="font-size:1.2rem; font-weight:600; color:var(--text-primary); margin:0;">🎧 Audiobook</h3>
-    
-    <div style="display: flex; gap: 0.5rem; background: var(--bg-card); padding: 0.25rem; border-radius: 60px; border: 1px solid var(--border-divider);">
-<button class="narrator-btn active" data-narrator="cole">🎙️ Cole</button>
-<button class="narrator-btn" data-narrator="charlotte">🎙️ Charlotte</button>
-    </div>
-    
-    <button id="playAllBtn" class="btn-primary" style="padding:0.5rem 2rem; font-size:0.95rem;">▶ Play All (Cole)</button>
-  </div>
 
-  <!-- Chapter list -->
-  <div style="display:flex; flex-direction:column; gap:0.8rem; max-width:800px; margin:0 auto;">
-    
-    <!-- Chapter 1: INTRODUCTION -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">INTRODUCTION – The Chart That Changed Everything</span>
-        <audio controls preload="none" data-filename="INTRODUCTION_The_Chart_That_Changed_Everything.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 2 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 1 – The Problem</span>
-        <audio controls preload="none" data-filename="Chapter_1_The_Problem.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 3 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 2 – Introducing the Productivity Bond</span>
-        <audio controls preload="none" data-filename="Chapter_2_Introducing_The_Productivity_Bond.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 4 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 3 – The Productivity Dividend</span>
-        <audio controls preload="none" data-filename="Chapter_3_The_Productivity_Dividend.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 5 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 4 – No Infinite Compounding</span>
-        <audio controls preload="none" data-filename="Chapter_4_No_Infinite_Compounding.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 6 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 5 – Productivity Instead of Extraction</span>
-        <audio controls preload="none" data-filename="Chapter_5_Productivity_Instead_Of_Extraction.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 7 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 6 – The AI Dividend</span>
-        <audio controls preload="none" data-filename="Chapter_6_The_AI_Dividend.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 8 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 7 – The Economy of Enough</span>
-        <audio controls preload="none" data-filename="Chapter_7_The_Economy_Of_Enough.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 9 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 8 – The First Productivity Bond</span>
-        <audio controls preload="none" data-filename="Chapter_8_The_First_Productivity_Bond.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 10 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 9 – The Transition</span>
-        <audio controls preload="none" data-filename="Chapter_9_The_Transition.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 11 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 10 – The New Social Contract</span>
-        <audio controls preload="none" data-filename="Chapter_10_The_New_Social_Contract.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 12 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 11 – The Roadmap</span>
-        <audio controls preload="none" data-filename="Chapter_11_The_Roadmap.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 13 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 12 – CONCLUSION</span>
-        <audio controls preload="none" data-filename="Chapter_12_CONCLUSION.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 14 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 13 – The Ancient Problem of Debt</span>
-        <audio controls preload="none" data-filename="Chapter_13_The_Ancient_Problem_Of_Debt.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 15 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 14 – THE Birth of Compound Growth</span>
-        <audio controls preload="none" data-filename="Chapter_14_THE_Birth_Of_Compound_Growth.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 16 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 15 – The Great Expansion</span>
-        <audio controls preload="none" data-filename="Chapter_15_The_Great_Expansion.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 17 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 16 – When Growth Became the Answer</span>
-        <audio controls preload="none" data-filename="Chapter_16_When_Growth_Became_The_Answer.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 18 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 17 – The Arithmetic of Tomorrow</span>
-        <audio controls preload="none" data-filename="Chapter_17_The_Arithmetic_Of_Tomorrow.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 19 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 18 – The Worker Who Wasn't There</span>
-        <audio controls preload="none" data-filename="Chapter_18_The_Worker_Who_Wasnt_There.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 20 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 19 – Who Owns the Machines</span>
-        <audio controls preload="none" data-filename="Chapter_19_Who_Owns_The_Machines.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 21 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 20 – The Strange Economics of Abundance</span>
-        <audio controls preload="none" data-filename="Chapter_20_The_Strange_Economics_Of_Abundance.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
-
-    <!-- Chapter 22 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 21 – From Labour to Productivity</span>
-        <audio controls preload="none" data-filename="Chapter_21_From_Labour_To_Productivity.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+        <!-- ====== AUDIOBOOK CHAPTERS ====== -->
+        <div id="audiobook-chapters" style="margin: 2rem 0; text-align: center;">
           
-        </audio>
-      </div>
-    </div>
+          <!-- Header & Narrator Toggle -->
+          <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem;">
+            <h3 style="font-size:1.2rem; font-weight:600; color:var(--text-primary); margin:0;">🎧 Audiobook</h3>
+            
+            <div style="display: flex; gap: 0.5rem; background: var(--bg-card); padding: 0.25rem; border-radius: 60px; border: 1px solid var(--border-divider);">
+              <button class="narrator-btn active" data-narrator="cole">🎙️ Cole</button>
+              <button class="narrator-btn" data-narrator="charlotte">🎙️ Charlotte</button>
+            </div>
+            
+            <button id="playAllBtn" class="btn-primary" style="padding:0.5rem 2rem; font-size:0.95rem;">▶ Play All (Cole)</button>
+          </div>
 
-    <!-- Chapter 23 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 22 – The Global Financial Architecture</span>
-        <audio controls preload="none" data-filename="Chapter_22_The_Global_Financial_Architecture.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
+          <!-- Chapter list -->
+          <div style="display:flex; flex-direction:column; gap:0.8rem; max-width:800px; margin:0 auto;">
+            
+            <!-- Chapter 1: INTRODUCTION -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">INTRODUCTION – The Chart That Changed Everything</span>
+                <audio controls preload="none" data-filename="INTRODUCTION_The_Chart_That_Changed_Everything.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
 
-    <!-- Chapter 24 -->
-    <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-        <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 23 – Simulation Code and License</span>
-        <audio controls preload="none" data-filename="Chapter_23_Simulation_Code_And_License.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-        </audio>
-      </div>
-    </div>
+            <!-- Chapter 2 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 1 – The Problem</span>
+                <audio controls preload="none" data-filename="Chapter_1_The_Problem.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
 
-  </div>
-</div>
+            <!-- Chapter 3 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 2 – Introducing the Productivity Bond</span>
+                <audio controls preload="none" data-filename="Chapter_2_Introducing_The_Productivity_Bond.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 4 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 3 – The Productivity Dividend</span>
+                <audio controls preload="none" data-filename="Chapter_3_The_Productivity_Dividend.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 5 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 4 – No Infinite Compounding</span>
+                <audio controls preload="none" data-filename="Chapter_4_No_Infinite_Compounding.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 6 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 5 – Productivity Instead of Extraction</span>
+                <audio controls preload="none" data-filename="Chapter_5_Productivity_Instead_Of_Extraction.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 7 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 6 – The AI Dividend</span>
+                <audio controls preload="none" data-filename="Chapter_6_The_AI_Dividend.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 8 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 7 – The Economy of Enough</span>
+                <audio controls preload="none" data-filename="Chapter_7_The_Economy_Of_Enough.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 9 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 8 – The First Productivity Bond</span>
+                <audio controls preload="none" data-filename="Chapter_8_The_First_Productivity_Bond.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 10 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 9 – The Transition</span>
+                <audio controls preload="none" data-filename="Chapter_9_The_Transition.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 11 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 10 – The New Social Contract</span>
+                <audio controls preload="none" data-filename="Chapter_10_The_New_Social_Contract.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 12 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 11 – The Roadmap</span>
+                <audio controls preload="none" data-filename="Chapter_11_The_Roadmap.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 13 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 12 – CONCLUSION</span>
+                <audio controls preload="none" data-filename="Chapter_12_CONCLUSION.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 14 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 13 – The Ancient Problem of Debt</span>
+                <audio controls preload="none" data-filename="Chapter_13_The_Ancient_Problem_Of_Debt.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 15 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 14 – THE Birth of Compound Growth</span>
+                <audio controls preload="none" data-filename="Chapter_14_THE_Birth_Of_Compound_Growth.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 16 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 15 – The Great Expansion</span>
+                <audio controls preload="none" data-filename="Chapter_15_The_Great_Expansion.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 17 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 16 – When Growth Became the Answer</span>
+                <audio controls preload="none" data-filename="Chapter_16_When_Growth_Became_The_Answer.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 18 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 17 – The Arithmetic of Tomorrow</span>
+                <audio controls preload="none" data-filename="Chapter_17_The_Arithmetic_Of_Tomorrow.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 19 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 18 – The Worker Who Wasn't There</span>
+                <audio controls preload="none" data-filename="Chapter_18_The_Worker_Who_Wasnt_There.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 20 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 19 – Who Owns the Machines</span>
+                <audio controls preload="none" data-filename="Chapter_19_Who_Owns_The_Machines.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 21 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 20 – The Strange Economics of Abundance</span>
+                <audio controls preload="none" data-filename="Chapter_20_The_Strange_Economics_Of_Abundance.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 22 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 21 – From Labour to Productivity</span>
+                <audio controls preload="none" data-filename="Chapter_21_From_Labour_To_Productivity.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 23 -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 22 – The Global Financial Architecture</span>
+                <audio controls preload="none" data-filename="Chapter_22_The_Global_Financial_Architecture.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+            <!-- Chapter 24 (Simulation) -->
+            <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 23 – Simulation Code and License</span>
+                <audio controls preload="none" data-filename="Chapter_23_Simulation_Code_And_License.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
+                </audio>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ===== APPENDICES (PDF ONLY) – BOOK-STYLE LIST ===== -->
+          <div class="appendix-audio-list">
+            <h4 style="font-size:1rem; font-weight:600; color:var(--text-primary); margin-bottom:0.8rem; text-align:left; max-width:700px; margin-left:auto; margin-right:auto; padding-left:0.2rem;">
+              📘 Appendices (PDF only)
+            </h4>
+            <div style="max-width:700px; margin:0 auto; padding:0.2rem 0;">
+              <!-- Each item matches the PDF TOC style -->
+              <div class="toc-item" onclick="jumpToChapter(106)">
+                <span>Appendix A: Mathematical Appendix <span class="toc-badge-pdf">PDF</span></span>
+                <span class="page">106</span>
+              </div>
+              <div class="toc-item" onclick="jumpToChapter(116)">
+                <span>Appendix B: The National Productivity Index – Detailed Methodology <span class="toc-badge-pdf">PDF</span></span>
+                <span class="page">116</span>
+              </div>
+              <div class="toc-item" onclick="jumpToChapter(124)">
+                <span>Appendix C: Simulation Results <span class="toc-badge-pdf">PDF</span></span>
+                <span class="page">124</span>
+              </div>
+              <div class="toc-item" onclick="jumpToChapter(130)">
+                <span>Appendix D: The Asteria Pilot – Full Term Sheet and Prospectus <span class="toc-badge-pdf">PDF</span></span>
+                <span class="page">130</span>
+              </div>
+              <div class="toc-item" onclick="jumpToChapter(139)">
+                <span>Appendix E: The Productivity Dividend – Legal and Institutional Design <span class="toc-badge-pdf">PDF</span></span>
+                <span class="page">139</span>
+              </div>
+              <div class="toc-item" onclick="jumpToChapter(149)">
+                <span>Appendix F: Policy Implementation – Legislative Framework and Transition Path <span class="toc-badge-pdf">PDF</span></span>
+                <span class="page">149</span>
+              </div>
+              <div class="toc-item" onclick="jumpToChapter(157)">
+                <span>Appendix G: Investor Materials – Marketing and Disclosure Documents <span class="toc-badge-pdf">PDF</span></span>
+                <span class="page">157</span>
+              </div>
+              <div class="toc-item" onclick="jumpToChapter(168)">
+                <span>Appendix H: SIMULATION CODE &amp; License <span class="toc-badge-pdf">PDF</span></span>
+                <span class="page">168</span>
+              </div>
+            </div>
+            <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.8rem; max-width:700px; margin-left:auto; margin-right:auto; text-align:left;">
+              ⚠️ These appendices are only available in the PDF version. Click any item above to jump directly to that section in the viewer.
+            </p>
+          </div>
+
+        </div>
+
         <!-- Audiobooks -->
         <div style="margin:1.5rem 0; background:var(--bg-diagram); border-radius:1.2rem; padding:1rem 1.2rem; text-align:center;">
           <h3 style="font-size:0.95rem; font-weight:600; color:var(--text-primary); margin-bottom:0.3rem;">🎧 Audiobook Editions</h3>
@@ -915,39 +1045,39 @@
     </section>
     
     <!-- ===== TOOL CARDS ROW ===== -->
-<section class="container section-spacing" style="padding-top:0; -bottom:3;">
-  <h2 class="text-gradient" style="font-size:clamp(1.8rem,3vw,2.2rem); font-weight:700; text-align:center; margin-bottom:0.5rem;">Explore the Tools</h2>
-  <p style="text-align:center; color:var(--text-secondary); max-width:600px; margin:0 auto 2rem; font-size:clamp(0.95rem,1.1vw,1.05rem);">
-    Interactive calculators to help you understand your financial and personal wellbeing.
-  </p>
-  <div class="tool-cards-grid">
+    <section class="container section-spacing" style="padding-top:0; -bottom:3;">
+      <h2 class="text-gradient" style="font-size:clamp(1.8rem,3vw,2.2rem); font-weight:700; text-align:center; margin-bottom:0.5rem;">Explore the Tools</h2>
+      <p style="text-align:center; color:var(--text-secondary); max-width:600px; margin:0 auto 2rem; font-size:clamp(0.95rem,1.1vw,1.05rem);">
+        Interactive calculators to help you understand your financial and personal wellbeing.
+      </p>
+      <div class="tool-cards-grid">
 
-    <!-- ===== CARD 1: Wellbeing Index ===== -->
-    <div class="tool-card">
-      <div class="tool-card-icon">🌿</div>
-      <h3 class="tool-card-title">Wellbeing Index</h3>
-      <p class="tool-card-desc">Measure your work-life balance, mental health, and productivity to find your harmony zone.</p>
-      <a href="wellbeing-index.html" class="btn-secondary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Try It →</a>
-    </div>
+        <!-- ===== CARD 1: Wellbeing Index ===== -->
+        <div class="tool-card">
+          <div class="tool-card-icon">🌿</div>
+          <h3 class="tool-card-title">Wellbeing Index</h3>
+          <p class="tool-card-desc">Measure your work-life balance, mental health, and productivity to find your harmony zone.</p>
+          <a href="wellbeing-index.html" class="btn-secondary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Try It →</a>
+        </div>
 
-    <!-- ===== CARD 2: Debt Reality ===== -->
-    <div class="tool-card">
-      <div class="tool-card-icon">💳</div>
-      <h3 class="tool-card-title">Debt Reality</h3>
-      <p class="tool-card-desc">Diagnose your financial situation, see the true cost of debt, and get a personalized plan.</p>
-      <a href="debt-reality.html" class="btn-secondary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Try It →</a>
-    </div>
+        <!-- ===== CARD 2: Debt Reality ===== -->
+        <div class="tool-card">
+          <div class="tool-card-icon">💳</div>
+          <h3 class="tool-card-title">Debt Reality</h3>
+          <p class="tool-card-desc">Diagnose your financial situation, see the true cost of debt, and get a personalized plan.</p>
+          <a href="debt-reality.html" class="btn-secondary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Try It →</a>
+        </div>
 
-    <!-- ===== CARD 3: Compound Curve ===== -->
-    <div class="tool-card">
-      <div class="tool-card-icon">📈</div>
-      <h3 class="tool-card-title">Compound Curve</h3>
-      <p class="tool-card-desc">See how debt compounds over time and how small changes bend the curve.</p>
-      <a href="compound-curve.html" class="btn-secondary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Try It →</a>
-    </div>
+        <!-- ===== CARD 3: Compound Curve ===== -->
+        <div class="tool-card">
+          <div class="tool-card-icon">📈</div>
+          <h3 class="tool-card-title">Compound Curve</h3>
+          <p class="tool-card-desc">See how debt compounds over time and how small changes bend the curve.</p>
+          <a href="compound-curve.html" class="btn-secondary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Try It →</a>
+        </div>
 
-  </div>
-</section>
+      </div>
+    </section>
 
     <!-- ====== LEARN SECTION ====== -->
     <section id="learn" class="container section-spacing" style="padding-top:0;">
@@ -984,115 +1114,115 @@
     </section>
     
     <!-- ===== FEEDBACK SECTION (BETA) ===== -->
-<section class="container section-spacing" style="padding-top:1rem; padding-bottom:2rem;">
-  <div class="glass-card feedback-container" id="feedback-container">
-    <div class="feedback-header">
-      <span class="badge-glow" style="background:rgba(251,191,36,0.15); color:#fbbf24; border-color:rgba(251,191,36,0.15);">🧪 Beta</span>
-      <h2>Help Us Improve</h2>
-      <p>
-        This website is <strong>new and in beta</strong>. If you find bugs - especially in the simulations or tools - 
-        please let us know. Your feedback helps us fix issues and make the tools better for everyone.
-      </p>
-    </div>
-
-    <button class="btn-primary feedback-toggle-btn" id="feedbackToggleBtn">
-      📝 Submit Feedback
-    </button>
-
-    <div class="feedback-form-container" id="feedbackFormContainer">
-      <p class="form-title">Feedback for <strong>this tool</strong> (beta)</p>
-
-      <form class="feedback-form" id="feedbackForm">
-        <!-- Rating -->
-        <div class="feedback-field">
-          <label>Rate your experience (optional)</label>
-          <div class="feedback-rating-group" role="radiogroup" aria-label="Feedback rating">
-            <button type="button" class="rating-btn" data-rating="1" aria-label="Very dissatisfied">😞</button>
-            <button type="button" class="rating-btn" data-rating="2" aria-label="Dissatisfied">🙁</button>
-            <button type="button" class="rating-btn" data-rating="3" aria-label="Neutral">😐</button>
-            <button type="button" class="rating-btn" data-rating="4" aria-label="Satisfied">🙂</button>
-            <button type="button" class="rating-btn" data-rating="5" aria-label="Very satisfied">😍</button>
-          </div>
-          <input type="hidden" class="feedback-rating-input" value="">
+    <section class="container section-spacing" style="padding-top:1rem; padding-bottom:2rem;">
+      <div class="glass-card feedback-container" id="feedback-container">
+        <div class="feedback-header">
+          <span class="badge-glow" style="background:rgba(251,191,36,0.15); color:#fbbf24; border-color:rgba(251,191,36,0.15);">🧪 Beta</span>
+          <h2>Help Us Improve</h2>
+          <p>
+            This website is <strong>new and in beta</strong>. If you find bugs - especially in the simulations or tools - 
+            please let us know. Your feedback helps us fix issues and make the tools better for everyone.
+          </p>
         </div>
 
-        <!-- Reply checkbox -->
-        <div class="feedback-field">
-          <label class="checkbox-label">
-            <input type="checkbox" class="feedback-reply-checkbox">
-            <span>Request a reply (we'll email you)</span>
-          </label>
-        </div>
+        <button class="btn-primary feedback-toggle-btn" id="feedbackToggleBtn">
+          📝 Submit Feedback
+        </button>
 
-        <!-- Email (hidden) -->
-        <div class="feedback-field feedback-email-group hidden">
-          <label for="feedbackEmail">Your email address</label>
-          <input type="email" id="feedbackEmail" class="feedback-email-input" placeholder="you@example.com">
-          <div class="field-hint">We'll only use this to respond to your feedback.</div>
-        </div>
+        <div class="feedback-form-container" id="feedbackFormContainer">
+          <p class="form-title">Feedback for <strong>this tool</strong> (beta)</p>
 
-        <!-- Feedback text -->
-        <div class="feedback-field">
-          <label for="feedbackText">Your feedback <span style="color:var(--text-muted);font-weight:400;">(required)</span></label>
-          <textarea id="feedbackText" class="feedback-text-input" rows="4" maxlength="1000" placeholder="Describe the issue, suggestion, or what you'd like to see improved."></textarea>
-          <div class="char-count"><span class="feedback-char-count">0</span> / 1000 characters</div>
-        </div>
+          <form class="feedback-form" id="feedbackForm">
+            <!-- Rating -->
+            <div class="feedback-field">
+              <label>Rate your experience (optional)</label>
+              <div class="feedback-rating-group" role="radiogroup" aria-label="Feedback rating">
+                <button type="button" class="rating-btn" data-rating="1" aria-label="Very dissatisfied">😞</button>
+                <button type="button" class="rating-btn" data-rating="2" aria-label="Dissatisfied">🙁</button>
+                <button type="button" class="rating-btn" data-rating="3" aria-label="Neutral">😐</button>
+                <button type="button" class="rating-btn" data-rating="4" aria-label="Satisfied">🙂</button>
+                <button type="button" class="rating-btn" data-rating="5" aria-label="Very satisfied">😍</button>
+              </div>
+              <input type="hidden" class="feedback-rating-input" value="">
+            </div>
 
-        <!-- Submit -->
-        <div class="feedback-submit-row">
-          <button type="submit" class="btn-primary feedback-submit-btn">Send Feedback</button>
-          <span style="font-size:0.7rem; color:var(--text-muted);">100% anonymous unless you request a reply</span>
-        </div>
-      </form>
+            <!-- Reply checkbox -->
+            <div class="feedback-field">
+              <label class="checkbox-label">
+                <input type="checkbox" class="feedback-reply-checkbox">
+                <span>Request a reply (we'll email you)</span>
+              </label>
+            </div>
 
-      <div class="feedback-message" id="feedbackMessage"></div>
-    </div>
-  </div>
-</section>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    if (typeof initFeedbackForm === 'function') {
-      initFeedbackForm('feedback-container');
-    }
-  });
-</script>
+            <!-- Email (hidden) -->
+            <div class="feedback-field feedback-email-group hidden">
+              <label for="feedbackEmail">Your email address</label>
+              <input type="email" id="feedbackEmail" class="feedback-email-input" placeholder="you@example.com">
+              <div class="field-hint">We'll only use this to respond to your feedback.</div>
+            </div>
+
+            <!-- Feedback text -->
+            <div class="feedback-field">
+              <label for="feedbackText">Your feedback <span style="color:var(--text-muted);font-weight:400;">(required)</span></label>
+              <textarea id="feedbackText" class="feedback-text-input" rows="4" maxlength="1000" placeholder="Describe the issue, suggestion, or what you'd like to see improved."></textarea>
+              <div class="char-count"><span class="feedback-char-count">0</span> / 1000 characters</div>
+            </div>
+
+            <!-- Submit -->
+            <div class="feedback-submit-row">
+              <button type="submit" class="btn-primary feedback-submit-btn">Send Feedback</button>
+              <span style="font-size:0.7rem; color:var(--text-muted);">100% anonymous unless you request a reply</span>
+            </div>
+          </form>
+
+          <div class="feedback-message" id="feedbackMessage"></div>
+        </div>
+      </div>
+    </section>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        if (typeof initFeedbackForm === 'function') {
+          initFeedbackForm('feedback-container');
+        }
+      });
+    </script>
 
   </main>
 
   <!-- ====== FLOATING RETURN TO TOP ====== -->
   <button class="floating-return-top" id="floatingReturnTop" aria-label="Return to top">⬆ Top</button>
 
-<!-- ====== FOOTER ====== -->
-<footer class="footer">
-  <div class="container">
-    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1rem 1.5rem; margin-bottom:1.5rem; font-size:0.85rem;">
-      <a href="index.html" style="color:var(--text-muted); text-decoration:none;">🏠 Home</a>
-      <a href="news.html" style="color:var(--text-muted); text-decoration:none;">News</a>
-      <a href="about.html" style="color:var(--text-muted); text-decoration:none;">About</a>
-      <a href="book.html" style="color:var(--text-muted); text-decoration:none;">Book</a>
-      <a href="changelog.html" style="color:var(--text-muted); text-decoration:none;">Changelog</a>
-      <a href="tools.html" style="color:#b388ff;">🧰 Tools</a>
-      <a href="privacy.html" style="color:var(--text-muted); text-decoration:none;">Privacy</a>
-      <a href="terms.html" style="color:var(--text-muted); text-decoration:none;">Terms</a>
-      <a href="contact.html" style="color:var(--text-muted); text-decoration:none;">Contact</a>
-      <a href="index.html#simulator" style="color:var(--text-muted); text-decoration:none;">Simulator</a>
-      <a href="index.html#learn" style="color:var(--text-muted); text-decoration:none;">Learn 💸</a>
+  <!-- ====== FOOTER ====== -->
+  <footer class="footer">
+    <div class="container">
+      <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1rem 1.5rem; margin-bottom:1.5rem; font-size:0.85rem;">
+        <a href="index.html" style="color:var(--text-muted); text-decoration:none;">🏠 Home</a>
+        <a href="news.html" style="color:var(--text-muted); text-decoration:none;">News</a>
+        <a href="about.html" style="color:var(--text-muted); text-decoration:none;">About</a>
+        <a href="book.html" style="color:var(--text-muted); text-decoration:none;">Book</a>
+        <a href="changelog.html" style="color:var(--text-muted); text-decoration:none;">Changelog</a>
+        <a href="tools.html" style="color:#b388ff;">🧰 Tools</a>
+        <a href="privacy.html" style="color:var(--text-muted); text-decoration:none;">Privacy</a>
+        <a href="terms.html" style="color:var(--text-muted); text-decoration:none;">Terms</a>
+        <a href="contact.html" style="color:var(--text-muted); text-decoration:none;">Contact</a>
+        <a href="index.html#simulator" style="color:var(--text-muted); text-decoration:none;">Simulator</a>
+        <a href="index.html#learn" style="color:var(--text-muted); text-decoration:none;">Learn 💸</a>
+      </div>
+      <p>
+        © 2026 <a href="https://traffictorch.net">Traffic Torch</a> ·
+        <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> ·
+        Version 0.8.0 ·
+        <a href="https://zenodo.org/records/21970090" target="_blank" rel="external noopener">Simulation Code (Zenodo)</a> ·
+        <button class="share-btn" style="background:transparent; border:none; color:#4f46e5; padding:0; font-size:0.85rem; cursor:pointer;">📤 Share</button>
+      </p>
+      <p style="font-size:0.7rem; margin-top:0.3rem;">
+        Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI · <span id="last-updated"></span>
+      </p>
+      <p style="font-size:0.65rem; margin-top:0.5rem; color:var(--text-muted); opacity:0.7;">
+        📌 v0.8.0 – feat: NPI Index Tracker with real-world data. Endogenous debt feedback loop implemented - reveals 2.5pp lower distress for Productivity.
+      </p>
     </div>
-    <p>
-      © 2026 <a href="https://traffictorch.net">Traffic Torch</a> ·
-      <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> ·
-      Version 0.8.0 ·
-      <a href="https://zenodo.org/records/21970090" target="_blank" rel="external noopener">Simulation Code (Zenodo)</a> ·
-      <button class="share-btn" style="background:transparent; border:none; color:#4f46e5; padding:0; font-size:0.85rem; cursor:pointer;">📤 Share</button>
-    </p>
-    <p style="font-size:0.7rem; margin-top:0.3rem;">
-      Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI · <span id="last-updated"></span>
-    </p>
-    <p style="font-size:0.65rem; margin-top:0.5rem; color:var(--text-muted); opacity:0.7;">
-      📌 v0.8.0 – feat: NPI Index Tracker with real-world data. Endogenous debt feedback loop implemented - reveals 2.5pp lower distress for Productivity.
-    </p>
-  </div>
-</footer>
+  </footer>
 
   <!-- ====== PWA INSTALL BUTTON & IOS MODAL ====== -->
   <button id="pwaInstallBtn" class="pwa-install-btn">
@@ -1127,131 +1257,207 @@
     document.documentElement.classList.add('loaded');
   </script>
   
-  <!-- ====== Audiobook JavaScript ====== -->
-<script>
-  (function() {
-    const audioPlayers = document.querySelectorAll('#audiobook-chapters audio');
-    const playAllBtn = document.getElementById('playAllBtn');
-    const narratorBtns = document.querySelectorAll('.narrator-btn');
+  <!-- ====== AUDIOBOOK JAVASCRIPT ====== -->
+  <script>
+    (function() {
+      const audioPlayers = document.querySelectorAll('#audiobook-chapters audio');
+      const playAllBtn = document.getElementById('playAllBtn');
+      const narratorBtns = document.querySelectorAll('.narrator-btn');
 
-    if (audioPlayers.length === 0) return;
+      if (audioPlayers.length === 0) return;
 
-    // ========== CONFIG: External hosting URL ==========
-    const basePath = 'https://pub-3e6b6c423f91492aa064580517a9ed80.r2.dev';
-    // ===================================================
+      const basePath = 'https://pub-3e6b6c423f91492aa064580517a9ed80.r2.dev';
 
-    // Clears all "Play Next" chains
-    function clearAutoPlayChain() {
-      audioPlayers.forEach(audio => {
-        audio.onended = null;
-      });
-    }
-
-    // Pauses all players
-    function pauseAll() {
-      audioPlayers.forEach(audio => {
-        audio.pause();
-      });
-    }
-
-    // ========== UPDATE NARRATOR (LAZY LOAD – NO audio.load() HERE) ==========
-    function updateNarrator(narrator) {
-      // 1. Kill any ongoing "Play All" chain
-      clearAutoPlayChain();
-
-      // 2. Pause everything
-      pauseAll();
-
-      // 3. Update all audio sources – but DO NOT load them yet!
-      audioPlayers.forEach(audio => {
-        const filename = audio.dataset.filename;
-        if (filename) {
-          const newSrc = `${basePath}/${narrator}/${filename}?v=2`;
-          audio.src = newSrc;
-          // IMPORTANT: No audio.load() here – lazy load only when user clicks play.
-        }
-      });
-
-      // 4. Update Play All button text
-      if (playAllBtn) {
-        const displayName = narrator.charAt(0).toUpperCase() + narrator.slice(1);
-        playAllBtn.textContent = `▶ Play All (${displayName})`;
+      function clearAutoPlayChain() {
+        audioPlayers.forEach(audio => {
+          audio.onended = null;
+        });
       }
 
-      // 5. Toggle active class on narrator buttons
-      narratorBtns.forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.narrator === narrator) {
-          btn.classList.add('active');
-        }
-      });
-
-      // 6. Save preference
-      localStorage.setItem('preferredNarrator', narrator);
-    }
-
-    // ========== PLAY CHAPTER (loads ONLY the file being played) ==========
-    function playChapter(index) {
-      if (index >= audioPlayers.length) {
-        if (playAllBtn) {
-          playAllBtn.textContent = playAllBtn.textContent.replace('▶', '✔');
-        }
-        return;
+      function pauseAll() {
+        audioPlayers.forEach(audio => {
+          audio.pause();
+        });
       }
 
-      const audio = audioPlayers[index];
-
-      // Load the file NOW – only this one file loads at this moment
-      audio.load();
-
-      // Attempt to play
-      audio.play().catch(() => {
-        // Browser blocked autoplay – stop the chain to avoid errors
+      function updateNarrator(narrator) {
         clearAutoPlayChain();
-        return;
-      });
+        pauseAll();
 
-      // Remove old listener and set new one to play the next chapter
-      audio.onended = null;
-      audio.onended = function() {
-        playChapter(index + 1);
-      };
-    }
+        audioPlayers.forEach(audio => {
+          const filename = audio.dataset.filename;
+          if (filename) {
+            const newSrc = `${basePath}/${narrator}/${filename}?v=2`;
+            audio.src = newSrc;
+          }
+        });
 
-    // ========== EVENT LISTENERS ==========
-
-    // Narrator buttons
-    narratorBtns.forEach(btn => {
-      btn.addEventListener('click', function() {
-        const narrator = this.dataset.narrator;
-        updateNarrator(narrator);
-
-        // Reset "Play All" button text if it showed "✔"
         if (playAllBtn) {
           const displayName = narrator.charAt(0).toUpperCase() + narrator.slice(1);
           playAllBtn.textContent = `▶ Play All (${displayName})`;
         }
+
+        narratorBtns.forEach(btn => {
+          btn.classList.remove('active');
+          if (btn.dataset.narrator === narrator) {
+            btn.classList.add('active');
+          }
+        });
+
+        localStorage.setItem('preferredNarrator', narrator);
+      }
+
+      function playChapter(index) {
+        if (index >= audioPlayers.length) {
+          if (playAllBtn) {
+            playAllBtn.textContent = playAllBtn.textContent.replace('▶', '✔');
+          }
+          return;
+        }
+
+        const audio = audioPlayers[index];
+        audio.load();
+        audio.play().catch(() => {
+          clearAutoPlayChain();
+          return;
+        });
+
+        audio.onended = null;
+        audio.onended = function() {
+          playChapter(index + 1);
+        };
+      }
+
+      narratorBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const narrator = this.dataset.narrator;
+          updateNarrator(narrator);
+          if (playAllBtn) {
+            const displayName = narrator.charAt(0).toUpperCase() + narrator.slice(1);
+            playAllBtn.textContent = `▶ Play All (${displayName})`;
+          }
+        });
       });
-    });
 
-    // Play All button
-    if (playAllBtn) {
-      playAllBtn.addEventListener('click', function() {
-        // Stop everything and kill old chains
-        clearAutoPlayChain();
-        pauseAll();
+      if (playAllBtn) {
+        playAllBtn.addEventListener('click', function() {
+          clearAutoPlayChain();
+          pauseAll();
+          playChapter(0);
+        });
+      }
 
-        // Start fresh from chapter 1
-        playChapter(0);
+      const savedNarrator = localStorage.getItem('preferredNarrator') || 'cole';
+      updateNarrator(savedNarrator);
+
+    })();
+  </script>
+
+  <!-- ====== PDF BOOK-STYLE TOC & JUMP with Auto-Scroll ====== -->
+  <script>
+    (function() {
+      // Full table of contents with exact page numbers
+      const tocData = [
+        { label: 'Title', page: 1, section: 'main' },
+        { label: 'INTRODUCTION: The Chart That Changed Everything', page: 4, section: 'main' },
+        { label: 'Chapter 1: The Problem', page: 8, section: 'main' },
+        { label: 'Chapter 2: Introducing the Productivity Bond', page: 12, section: 'main' },
+        { label: 'Chapter 3: The Productivity Dividend', page: 16, section: 'main' },
+        { label: 'Chapter 4: No Infinite Compounding', page: 21, section: 'main' },
+        { label: 'Chapter 5: Productivity Instead of Extraction', page: 26, section: 'main' },
+        { label: 'Chapter 6: The AI Dividend', page: 30, section: 'main' },
+        { label: 'Chapter 7: The Economy of Enough', page: 35, section: 'main' },
+        { label: 'Chapter 8: The First Productivity Bond', page: 39, section: 'main' },
+        { label: 'Chapter 9: The Transition', page: 44, section: 'main' },
+        { label: 'Chapter 10: The New Social Contract', page: 49, section: 'main' },
+        { label: 'Chapter 11: The Roadmap', page: 54, section: 'main' },
+        { label: 'Chapter 12: CONCLUSION', page: 60, section: 'main' },
+        { label: 'Chapter 13: The Ancient Problem of Debt', page: 64, section: 'main' },
+        { label: 'Chapter 14: The Birth of Compound Growth', page: 68, section: 'main' },
+        { label: 'Chapter 15: The Great Expansion', page: 72, section: 'main' },
+        { label: 'Chapter 16: When Growth Became the Answer', page: 76, section: 'main' },
+        { label: 'Chapter 17: The Arithmetic of Tomorrow', page: 80, section: 'main' },
+        { label: 'Chapter 18: The Worker Who Wasn\'t There', page: 84, section: 'main' },
+        { label: 'Chapter 19: Who Owns the Machines?', page: 89, section: 'main' },
+        { label: 'Chapter 20: The Strange Economics of Abundance', page: 93, section: 'main' },
+        { label: 'Chapter 21: From Labour to Productivity', page: 98, section: 'main' },
+        { label: 'Chapter 22: The Global Financial Architecture', page: 102, section: 'main' },
+        { label: '── Appendices ──', page: null, section: 'header' },
+        { label: 'Appendix A: Mathematical Appendix', page: 106, section: 'appendix' },
+        { label: 'Appendix B: The National Productivity Index – Detailed Methodology', page: 116, section: 'appendix' },
+        { label: 'Appendix C: Simulation Results', page: 124, section: 'appendix' },
+        { label: 'Appendix D: The Asteria Pilot – Full Term Sheet and Prospectus', page: 130, section: 'appendix' },
+        { label: 'Appendix E: The Productivity Dividend – Legal and Institutional Design', page: 139, section: 'appendix' },
+        { label: 'Appendix F: Policy Implementation – Legislative Framework and Transition Path', page: 149, section: 'appendix' },
+        { label: 'Appendix G: Investor Materials – Marketing and Disclosure Documents', page: 157, section: 'appendix' },
+        { label: 'Appendix H: SIMULATION CODE & License', page: 168, section: 'appendix' }
+      ];
+
+      const container = document.getElementById('tocContainer');
+      const pdfViewer = document.getElementById('pdfViewer');
+      const viewerContainer = document.getElementById('viewerContainer');
+      const baseUrl = 'https://traffictorch.github.io/productivity-bond-model/book/The_Infinite_Debt_Problem.pdf';
+
+      // Expose jump function globally
+      window.jumpToChapter = function(page) {
+        if (pdfViewer && page) {
+          const currentSrc = pdfViewer.src.split('#')[0];
+          pdfViewer.src = currentSrc + '#page=' + page;
+          
+          // Scroll to viewer and highlight
+          if (viewerContainer) {
+            viewerContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // brief highlight
+            viewerContainer.style.transition = 'box-shadow 0.3s ease';
+            viewerContainer.style.boxShadow = '0 0 0 4px rgba(79,70,229,0.6)';
+            setTimeout(() => {
+              viewerContainer.style.boxShadow = '';
+            }, 1200);
+          }
+        }
+      };
+
+      // Build the TOC
+      tocData.forEach(item => {
+        if (item.section === 'header') {
+          const header = document.createElement('div');
+          header.className = 'toc-section-header';
+          header.textContent = item.label;
+          container.appendChild(header);
+          return;
+        }
+
+        const div = document.createElement('div');
+        div.className = 'toc-item';
+        
+        const leftSpan = document.createElement('span');
+        leftSpan.textContent = item.label;
+        if (item.section === 'appendix') {
+          const badge = document.createElement('span');
+          badge.className = 'toc-badge-pdf';
+          badge.textContent = 'PDF';
+          leftSpan.appendChild(badge);
+        }
+        
+        const rightSpan = document.createElement('span');
+        rightSpan.className = 'page';
+        rightSpan.textContent = item.page;
+
+        div.appendChild(leftSpan);
+        div.appendChild(rightSpan);
+
+        div.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.jumpToChapter(item.page);
+        });
+
+        container.appendChild(div);
       });
-    }
 
-    // ========== INITIALIZATION ==========
-    const savedNarrator = localStorage.getItem('preferredNarrator') || 'cole';
-    updateNarrator(savedNarrator);
-
-  })();
-</script>
+      // Also ensure that the appendix links in the audiobook section call the same function
+      // They already use onclick="jumpToChapter(...)" which now triggers scroll+highlight.
+    })();
+  </script>
 
 </body>
 </html>
