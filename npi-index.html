@@ -268,6 +268,13 @@
         font-size: 0.85rem;
     }
 }
+
+@media (max-width: 768px) {
+  .faq-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
@@ -847,47 +854,49 @@
       </div>
 
       <!-- Q3 -->
-      <div class="accordion-item" style="border-bottom:1px solid var(--border-divider);">
-        <div class="accordion-toggle" onclick="toggleAccordion(this)">
-          <span>⚖️ What are the three weight modes?</span>
-          <span class="arrow">▼</span>
-        </div>
-        <div class="accordion-content">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:0.5rem 0;">
-            <div style="background:var(--bg-body); border-radius:8px; padding:0.8rem 1rem; border:1px solid var(--border-divider);">
-              <div style="font-weight:700; color:#4f46e5;">📘 Book NPI</div>
-              <div style="font-size:0.85rem; color:var(--text-secondary);">Fixed weights: 40% Labour · 25% Energy · 20% Materials · 15% Capital. This is the canonical version defined in <em>The Infinite Debt Problem</em>.</div>
-            </div>
-            <div style="background:var(--bg-body); border-radius:8px; padding:0.8rem 1rem; border:1px solid var(--border-divider);">
-              <div style="font-weight:700; color:#34d399;">🌍 Country Preset</div>
-              <div style="font-size:0.85rem; color:var(--text-secondary);">Weights auto‑adjust based on the country's economic category (Tech, Resource, Manufacturing, Developing, Service, Mixed).</div>
-            </div>
-            <div style="background:var(--bg-body); border-radius:8px; padding:0.8rem 1rem; border:1px solid var(--border-divider); grid-column:1/-1;">
-              <div style="font-weight:700; color:#f59e0b;">⚙️ Custom</div>
-              <div style="font-size:0.85rem; color:var(--text-secondary);">Fully adjustable sliders that automatically rebalance to sum to 100% – perfect for exploring alternative assumptions.</div>
-            </div>
-          </div>
-        </div>
+<div class="accordion-item" style="border-bottom:1px solid var(--border-divider);">
+  <div class="accordion-toggle" onclick="toggleAccordion(this)">
+    <span>⚖️ What are the three weight modes?</span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="accordion-content">
+    <!-- ✅ Moved faq-grid to THIS inner wrapper that holds the 3 cards -->
+    <div class="faq-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:0.5rem 0;">
+      <div style="background:var(--bg-body); border-radius:8px; padding:0.8rem 1rem; border:1px solid var(--border-divider);">
+        <div style="font-weight:700; color:#4f46e5;">📘 Book NPI</div>
+        <div style="font-size:0.85rem; color:var(--text-secondary);">Fixed weights: 40% Labour · 25% Energy · 20% Materials · 15% Capital. This is the canonical version defined in <em>The Infinite Debt Problem</em>.</div>
       </div>
+      <div style="background:var(--bg-body); border-radius:8px; padding:0.8rem 1rem; border:1px solid var(--border-divider);">
+        <div style="font-weight:700; color:#34d399;">🌍 Country Preset</div>
+        <div style="font-size:0.85rem; color:var(--text-secondary);">Weights auto‑adjust based on the country's economic category (Tech, Resource, Manufacturing, Developing, Service, Mixed).</div>
+      </div>
+      <div style="background:var(--bg-body); border-radius:8px; padding:0.8rem 1rem; border:1px solid var(--border-divider); grid-column:1/-1;">
+        <div style="font-weight:700; color:#f59e0b;">⚙️ Custom</div>
+        <div style="font-size:0.85rem; color:var(--text-secondary);">Fully adjustable sliders that automatically rebalance to sum to 100% – perfect for exploring alternative assumptions.</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-      <!-- Q4 -->
-      <div class="accordion-item" style="border-bottom:1px solid var(--border-divider);">
-        <div class="accordion-toggle" onclick="toggleAccordion(this)">
-          <span>📂 Where does the data come from?</span>
-          <span class="arrow">▼</span>
-        </div>
-        <div class="accordion-content">
-          <p style="color:var(--text-secondary);">All data is sourced from publicly available international databases:</p>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem 1.5rem; margin:0.5rem 0; font-size:0.9rem;">
-            <div><span style="font-weight:600;">GDP</span> – <a href="https://data.worldbank.org/" style="color:#b388ff;">World Bank</a></div>
-            <div><span style="font-weight:600;">Hours Worked</span> – <a href="https://ilostat.ilo.org/" style="color:#b388ff;">ILO</a> / <a href="https://www.oecd.org/" style="color:#b388ff;">OECD</a></div>
-            <div><span style="font-weight:600;">Energy Consumption</span> – <a href="https://www.iea.org/" style="color:#b388ff;">IEA</a></div>
-            <div><span style="font-weight:600;">Materials Consumption</span> – <a href="https://www.unep.org/" style="color:#b388ff;">UNEP</a></div>
-            <div style="grid-column:1/-1;"><span style="font-weight:600;">Capital Stock</span> – <a href="https://www.oecd.org/" style="color:#b388ff;">OECD</a> / <a href="https://www.rug.nl/ggdc/productivity/pwt/" style="color:#b388ff;">Penn World Table</a></div>
-          </div>
-          <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:0.5rem;">⚠️ Capital stock data is estimated. This is an <strong>empirical proxy</strong> for the NPI framework – not an official government statistic.</p>
-        </div>
-      </div>
+<!-- Q4 -->
+<div class="accordion-item" style="border-bottom:1px solid var(--border-divider);">
+  <div class="accordion-toggle" onclick="toggleAccordion(this)">
+    <span>📂 Where does the data come from?</span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="accordion-content">
+    <p style="color:var(--text-secondary);">All data is sourced from publicly available international databases:</p>
+    <!-- ✅ Added class="faq-grid" to this inner grid container -->
+    <div class="faq-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem 1.5rem; margin:0.5rem 0; font-size:0.9rem;">
+      <div><span style="font-weight:600;">GDP</span> – <a href="https://data.worldbank.org/" style="color:#b388ff;">World Bank</a></div>
+      <div><span style="font-weight:600;">Hours Worked</span> – <a href="https://ilostat.ilo.org/" style="color:#b388ff;">ILO</a> / <a href="https://www.oecd.org/" style="color:#b388ff;">OECD</a></div>
+      <div><span style="font-weight:600;">Energy Consumption</span> – <a href="https://www.iea.org/" style="color:#b388ff;">IEA</a></div>
+      <div><span style="font-weight:600;">Materials Consumption</span> – <a href="https://www.unep.org/" style="color:#b388ff;">UNEP</a></div>
+      <div style="grid-column:1/-1;"><span style="font-weight:600;">Capital Stock</span> – <a href="https://www.oecd.org/" style="color:#b388ff;">OECD</a> / <a href="https://www.rug.nl/ggdc/productivity/pwt/" style="color:#b388ff;">Penn World Table</a></div>
+    </div>
+    <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:0.5rem;">⚠️ Capital stock data is estimated. This is an <strong>empirical proxy</strong> for the NPI framework – not an official government statistic.</p>
+  </div>
+</div>
 
       <!-- Q5 -->
       <div class="accordion-item" style="border-bottom:1px solid var(--border-divider);">
@@ -922,33 +931,34 @@
         </div>
       </div>
 
-      <!-- Q7 -->
-      <div class="accordion-item" style="border-bottom:1px solid var(--border-divider);">
-        <div class="accordion-toggle" onclick="toggleAccordion(this)">
-          <span>🧪 What are the other tools in the PBM Productivity Lab?</span>
-          <span class="arrow">▼</span>
-        </div>
-        <div class="accordion-content">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin:0.5rem 0;">
-            <div style="background:var(--bg-body); border-radius:8px; padding:0.8rem 1rem; border:1px solid var(--border-divider);">
-              <div style="font-weight:700; color:#f472b6;">🌿 Wellbeing Index</div>
-              <div style="font-size:0.85rem; color:var(--text-secondary);">Measure your work‑life balance, mental health, sleep, resilience, and productivity. Generates a 0–100 wellbeing score with radar chart and 10‑year projection.</div>
-              <div style="margin-top:0.3rem;"><a href="wellbeing-index.html" style="color:#b388ff; font-size:0.85rem;">Try it →</a></div>
-            </div>
-            <div style="background:var(--bg-body); border-radius:8px; padding:0.8rem 1rem; border:1px solid var(--border-divider);">
-              <div style="font-weight:700; color:#ff6b6b;">💳 Debt Reality</div>
-              <div style="font-size:0.85rem; color:var(--text-secondary);">Diagnose your financial situation. See your payoff timeline, total interest, debt‑to‑income ratio, and the impact of extra payments.</div>
-              <div style="margin-top:0.3rem;"><a href="debt-reality.html" style="color:#b388ff; font-size:0.85rem;">Try it →</a></div>
-            </div>
-            <div style="background:var(--bg-body); border-radius:8px; padding:0.8rem 1rem; border:1px solid var(--border-divider); grid-column:1/-1;">
-              <div style="font-weight:700; color:#ffd43b;">📈 Compound Curve</div>
-              <div style="font-size:0.85rem; color:var(--text-secondary);">Visualise how debt compounds over time and how small changes bend the curve. See the power of compounding – for better or worse.</div>
-              <div style="margin-top:0.3rem;"><a href="compound-curve.html" style="color:#b388ff; font-size:0.85rem;">Try it →</a></div>
-            </div>
-          </div>
-          <p style="color:var(--text-secondary); margin-top:0.5rem;"><a href="tools.html" style="color:#b388ff;">Visit the PBM Productivity Lab →</a></p>
-        </div>
+<!-- Q7 -->
+<div class="accordion-item" style="border-bottom:1px solid var(--border-divider);">
+  <div class="accordion-toggle" onclick="toggleAccordion(this)">
+    <span>🧪 What are the other tools in the PBM Productivity Lab?</span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="accordion-content">
+    <!-- ✅ Added class="faq-grid" to this inner grid container -->
+    <div class="faq-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin:0.5rem 0;">
+      <div style="background:var(--bg-body); border-radius:8px; padding:0.8rem 1rem; border:1px solid var(--border-divider);">
+        <div style="font-weight:700; color:#f472b6;">🌿 Wellbeing Index</div>
+        <div style="font-size:0.85rem; color:var(--text-secondary);">Measure your work‑life balance, mental health, sleep, resilience, and productivity. Generates a 0–100 wellbeing score with radar chart and 10‑year projection.</div>
+        <div style="margin-top:0.3rem;"><a href="wellbeing-index.html" style="color:#b388ff; font-size:0.85rem;">Try it →</a></div>
       </div>
+      <div style="background:var(--bg-body); border-radius:8px; padding:0.8rem 1rem; border:1px solid var(--border-divider);">
+        <div style="font-weight:700; color:#ff6b6b;">💳 Debt Reality</div>
+        <div style="font-size:0.85rem; color:var(--text-secondary);">Diagnose your financial situation. See your payoff timeline, total interest, debt‑to‑income ratio, and the impact of extra payments.</div>
+        <div style="margin-top:0.3rem;"><a href="debt-reality.html" style="color:#b388ff; font-size:0.85rem;">Try it →</a></div>
+      </div>
+      <div style="background:var(--bg-body); border-radius:8px; padding:0.8rem 1rem; border:1px solid var(--border-divider); grid-column:1/-1;">
+        <div style="font-weight:700; color:#ffd43b;">📈 Compound Curve</div>
+        <div style="font-size:0.85rem; color:var(--text-secondary);">Visualise how debt compounds over time and how small changes bend the curve. See the power of compounding – for better or worse.</div>
+        <div style="margin-top:0.3rem;"><a href="compound-curve.html" style="color:#b388ff; font-size:0.85rem;">Try it →</a></div>
+      </div>
+    </div>
+    <p style="color:var(--text-secondary); margin-top:0.5rem;"><a href="tools.html" style="color:#b388ff;">Visit the PBM Productivity Lab →</a></p>
+  </div>
+</div>
 
       <!-- Q8 -->
       <div class="accordion-item" style="border-bottom:1px solid var(--border-divider);">
