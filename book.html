@@ -36,10 +36,6 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" media="print" onload="this.media='all'" crossorigin="anonymous" />
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" crossorigin="anonymous" /></noscript>
 
-  <!-- PDF.js CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf_viewer.css" />
-
   <!-- Preconnect for AddToAny -->
   <link rel="preconnect" href="https://static.addtoany.com" />
 
@@ -76,11 +72,6 @@
       --text-secondary: #c7d2fe;
       --text-muted: #a5b4fc;
       --border-divider: rgba(255,255,255,0.04);
-      --bar-conv: #4b5563;
-      --bar-ilb: #3b82f6;
-      --bar-gdp: #8b5cf6;
-      --bar-prod: #a78bfa;
-      --bar-hybrid: #f59e0b;
       --bg-input: rgba(255,255,255,0.06);
       --bg-code: rgba(0,0,0,0.25);
       --bg-diagram: rgba(0,0,0,0.15);
@@ -104,11 +95,6 @@
       --text-secondary: #2d2f3e;
       --text-muted: #4a4a6a;
       --border-divider: rgba(0,0,0,0.06);
-      --bar-conv: #9ca3af;
-      --bar-ilb: #60a5fa;
-      --bar-gdp: #a78bfa;
-      --bar-prod: #7c3aed;
-      --bar-hybrid: #f59e0b;
       --bg-input: rgba(0,0,0,0.05);
       --bg-code: rgba(0,0,0,0.04);
       --bg-diagram: rgba(0,0,0,0.03);
@@ -239,7 +225,7 @@
     .book-cover { width:100%; max-width:280px; aspect-ratio:3/4; border-radius:1.5rem; border:1px solid var(--border-card); box-shadow:var(--shadow-card); overflow:hidden; background:var(--bg-var); }
     .book-cover img { width:100%; height:100%; object-fit:cover; display:block; }
     
-    /* PDF.js viewer container */
+    /* PDF viewer iframe */
     .viewer-container {
       width:100%;
       max-width:1000px;
@@ -250,39 +236,25 @@
       overflow:hidden;
       box-shadow:var(--shadow-card);
       transition: box-shadow 0.3s ease, border-color 0.3s ease;
-      padding:20px 0;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      min-height:60vh;
+      height:80vh;
+      min-height:50vh;
     }
-    .viewer-container canvas {
-      max-width:95%;
-      height:auto !important;
-      box-shadow:0 4px 20px rgba(0,0,0,0.5);
-      border-radius:4px;
-      background:#fff;
-    }
-    .viewer-container .page-label {
-      margin-top:12px;
-      font-size:14px;
-      color:var(--text-muted);
-      text-align:center;
+    .viewer-container iframe {
+      width:100%;
+      height:100%;
+      border:none;
+      display:block;
     }
     .viewer-container .loading {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:100%;
       color:var(--text-muted);
       font-size:18px;
-      padding:40px;
-    }
-    .viewer-container .error {
-      color:#f44;
-      font-size:16px;
-      padding:20px;
     }
     @media (max-width:768px) {
-      .viewer-container { padding:10px 0; min-height:50vh; }
-      .viewer-container canvas { max-width:98%; }
+      .viewer-container { height:70vh; }
     }
 
     .book-key-features { display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:0.8rem; margin:1.5rem 0; padding:1rem; background:var(--bg-diagram); border-radius:1.5rem; border:1px solid var(--border-divider); }
@@ -560,13 +532,13 @@
     <li><a href="index.html">🏠 Home</a></li>
     <li class="dropdown">
       <span class="dropdown-toggle">🧰 Tools ▼</span>
-<ul class="dropdown-menu">
-  <li><a href="tools.html">⚙️ All Tools</a></li>
-  <li><a href="wellbeing-index.html">🌿 Wellbeing Index</a></li>
-  <li><a href="debt-reality.html">💳 Debt Reality</a></li>
-  <li><a href="compound-curve.html">📈 Compound Curve</a></li>
-  <li><a href="npi-index.html">📊 NPI Index</a></li>
-</ul>
+      <ul class="dropdown-menu">
+        <li><a href="tools.html">⚙️ All Tools</a></li>
+        <li><a href="wellbeing-index.html">🌿 Wellbeing Index</a></li>
+        <li><a href="debt-reality.html">💳 Debt Reality</a></li>
+        <li><a href="compound-curve.html">📈 Compound Curve</a></li>
+        <li><a href="npi-index.html">📊 NPI Index</a></li>
+      </ul>
     </li>
     <li class="dropdown"><span class="dropdown-toggle">About ▼</span><ul class="dropdown-menu"><li><a href="news.html">News</a></li><li><a href="about.html">Traffic Torch</a></li><li><a href="changelog.html">Change Log</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="contact.html">Contact</a></li></ul></li>
     <li class="dropdown"><span class="dropdown-toggle">Abstract ▼</span><ul class="dropdown-menu"><li><a href="index.html#abstract">The Abstract</a></li><li><a href="index.html#problem-visualized">The Problem</a></li><li><a href="index.html#wellbeing">Wellbeing</a></li></ul></li>
@@ -758,7 +730,7 @@
           </div>
         </div>
 
-        <!-- ===== PDF VIEWER WITH PDF.JS ===== -->
+        <!-- ===== PDF VIEWER (empty iframe – loads on chapter click) ===== -->
         <div style="margin:2rem 0; text-align:center;">
           <h3 style="font-size:1.1rem; font-weight:600; color:var(--text-primary); margin-bottom:0.5rem;">📄 The Infinite Debt Problem PDF</h3>
           
@@ -769,12 +741,8 @@
 
           <!-- Viewer -->
           <div class="viewer-container" id="viewerContainer">
-            <div id="pdfViewer" style="width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center;">
-              <div class="loading" id="pdfLoading">⏳ Loading PDF…</div>
-              <canvas id="pdfCanvas" style="display:none; max-width:95%; height:auto; background:#fff; box-shadow:0 4px 20px rgba(0,0,0,0.5); border-radius:4px;"></canvas>
-              <div class="page-label" id="pageLabel"></div>
-              <div class="error" id="pdfError" style="display:none;"></div>
-            </div>
+            <div id="pdfLoading" class="loading">📖 Click a chapter above to load the PDF</div>
+            <iframe id="pdfViewer" style="display:none; width:100%; height:100%; border:none;"></iframe>
           </div>
           <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.5rem;">
             <a href="https://traffictorch.github.io/productivity-bond-model/book/The_Infinite_Debt_Problem.pdf" target="_blank" style="color:#4f46e5;">⬇ Download full PDF</a>
@@ -803,8 +771,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">INTRODUCTION – The Chart That Changed Everything</span>
-                <audio controls preload="none" data-filename="INTRODUCTION_The_Chart_That_Changed_Everything.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="INTRODUCTION_The_Chart_That_Changed_Everything.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -812,8 +779,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 1 – The Problem</span>
-                <audio controls preload="none" data-filename="Chapter_1_The_Problem.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_1_The_Problem.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -821,8 +787,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 2 – Introducing the Productivity Bond</span>
-                <audio controls preload="none" data-filename="Chapter_2_Introducing_The_Productivity_Bond.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_2_Introducing_The_Productivity_Bond.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -830,8 +795,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 3 – The Productivity Dividend</span>
-                <audio controls preload="none" data-filename="Chapter_3_The_Productivity_Dividend.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_3_The_Productivity_Dividend.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -839,8 +803,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 4 – No Infinite Compounding</span>
-                <audio controls preload="none" data-filename="Chapter_4_No_Infinite_Compounding.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_4_No_Infinite_Compounding.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -848,8 +811,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 5 – Productivity Instead of Extraction</span>
-                <audio controls preload="none" data-filename="Chapter_5_Productivity_Instead_Of_Extraction.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_5_Productivity_Instead_Of_Extraction.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -857,8 +819,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 6 – The AI Dividend</span>
-                <audio controls preload="none" data-filename="Chapter_6_The_AI_Dividend.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_6_The_AI_Dividend.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -866,8 +827,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 7 – The Economy of Enough</span>
-                <audio controls preload="none" data-filename="Chapter_7_The_Economy_Of_Enough.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_7_The_Economy_Of_Enough.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -875,8 +835,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 8 – The First Productivity Bond</span>
-                <audio controls preload="none" data-filename="Chapter_8_The_First_Productivity_Bond.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_8_The_First_Productivity_Bond.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -884,8 +843,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 9 – The Transition</span>
-                <audio controls preload="none" data-filename="Chapter_9_The_Transition.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_9_The_Transition.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -893,8 +851,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 10 – The New Social Contract</span>
-                <audio controls preload="none" data-filename="Chapter_10_The_New_Social_Contract.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_10_The_New_Social_Contract.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -902,8 +859,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 11 – The Roadmap</span>
-                <audio controls preload="none" data-filename="Chapter_11_The_Roadmap.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_11_The_Roadmap.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -911,8 +867,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 12 – CONCLUSION</span>
-                <audio controls preload="none" data-filename="Chapter_12_CONCLUSION.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_12_CONCLUSION.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -920,8 +875,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 13 – The Ancient Problem of Debt</span>
-                <audio controls preload="none" data-filename="Chapter_13_The_Ancient_Problem_Of_Debt.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_13_The_Ancient_Problem_Of_Debt.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -929,8 +883,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 14 – THE Birth of Compound Growth</span>
-                <audio controls preload="none" data-filename="Chapter_14_THE_Birth_Of_Compound_Growth.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_14_THE_Birth_Of_Compound_Growth.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -938,8 +891,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 15 – The Great Expansion</span>
-                <audio controls preload="none" data-filename="Chapter_15_The_Great_Expansion.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_15_The_Great_Expansion.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -947,8 +899,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 16 – When Growth Became the Answer</span>
-                <audio controls preload="none" data-filename="Chapter_16_When_Growth_Became_The_Answer.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_16_When_Growth_Became_The_Answer.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -956,8 +907,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 17 – The Arithmetic of Tomorrow</span>
-                <audio controls preload="none" data-filename="Chapter_17_The_Arithmetic_Of_Tomorrow.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_17_The_Arithmetic_Of_Tomorrow.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -965,8 +915,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 18 – The Worker Who Wasn't There</span>
-                <audio controls preload="none" data-filename="Chapter_18_The_Worker_Who_Wasnt_There.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_18_The_Worker_Who_Wasnt_There.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -974,8 +923,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 19 – Who Owns the Machines</span>
-                <audio controls preload="none" data-filename="Chapter_19_Who_Owns_The_Machines.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_19_Who_Owns_The_Machines.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -983,8 +931,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 20 – The Strange Economics of Abundance</span>
-                <audio controls preload="none" data-filename="Chapter_20_The_Strange_Economics_Of_Abundance.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_20_The_Strange_Economics_Of_Abundance.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -992,8 +939,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 21 – From Labour to Productivity</span>
-                <audio controls preload="none" data-filename="Chapter_21_From_Labour_To_Productivity.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_21_From_Labour_To_Productivity.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -1001,8 +947,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 22 – The Global Financial Architecture</span>
-                <audio controls preload="none" data-filename="Chapter_22_The_Global_Financial_Architecture.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_22_The_Global_Financial_Architecture.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -1010,8 +955,7 @@
             <div class="chapter-item" style="background:var(--bg-card); border-radius:1rem; padding:0.8rem 1rem; border-left:4px solid #d4af37; text-align:left;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
                 <span style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">Chapter 23 – Simulation Code and License</span>
-                <audio controls preload="none" data-filename="Chapter_23_Simulation_Code_And_License.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;">
-                </audio>
+                <audio controls preload="none" data-filename="Chapter_23_Simulation_Code_And_License.mp3" style="width:100%; max-width:300px; height:36px; margin:0.2rem 0;"></audio>
               </div>
             </div>
 
@@ -1023,7 +967,6 @@
               📘 Appendices (PDF only)
             </h4>
             <div style="max-width:700px; margin:0 auto; padding:0.2rem 0;">
-              <!-- Each item uses data-page attribute for event delegation -->
               <div class="toc-item" data-page="106">
                 <span>Appendix A: Mathematical Appendix <span class="toc-badge-pdf">PDF</span></span>
                 <span class="page">106</span>
@@ -1391,7 +1334,7 @@
     })();
   </script>
 
-  <!-- ====== PDF.JS CONTROLLER ====== -->
+  <!-- ====== PDF IFRAME CONTROLLER (force reload) ====== -->
   <script>
     (function() {
       if (document.readyState === 'loading') {
@@ -1401,95 +1344,34 @@
       }
 
       function init() {
-        console.log('📦 [PDF.js] Initializing…');
-
         const container = document.getElementById('tocContainer');
-        const canvas = document.getElementById('pdfCanvas');
+        const iframe = document.getElementById('pdfViewer');
         const loading = document.getElementById('pdfLoading');
-        const pageLabel = document.getElementById('pageLabel');
-        const errorDiv = document.getElementById('pdfError');
         const viewerContainer = document.getElementById('viewerContainer');
 
-        if (!container || !canvas) {
-          console.error('❌ Required elements not found');
-          return;
-        }
+        if (!container || !iframe) return;
 
         const pdfUrl = 'https://traffictorch.github.io/productivity-bond-model/book/The_Infinite_Debt_Problem.pdf';
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-        let pdfDoc = null;
-        let currentPage = 1;
-        let totalPages = 0;
-
-        // ---- Render a page ----
-        function renderPage(pageNum) {
-          if (!pdfDoc) return;
-          if (pageNum < 1) pageNum = 1;
-          if (pageNum > totalPages) pageNum = totalPages;
-
-          pdfDoc.getPage(pageNum).then(function(page) {
-            // Compute scale to fit container width (with margin)
-            const containerWidth = viewerContainer.clientWidth - 40;
-            const viewport = page.getViewport({ scale: 1 });
-            const scale = Math.min(1.5, containerWidth / viewport.width);
-            const scaledViewport = page.getViewport({ scale: scale });
-
-            canvas.width = scaledViewport.width;
-            canvas.height = scaledViewport.height;
-            canvas.style.width = scaledViewport.width + 'px';
-            canvas.style.height = scaledViewport.height + 'px';
-            canvas.style.display = 'block';
-            loading.style.display = 'none';
-            errorDiv.style.display = 'none';
-
-            const ctx = canvas.getContext('2d');
-            const renderContext = {
-              canvasContext: ctx,
-              viewport: scaledViewport
-            };
-            page.render(renderContext).promise.then(function() {
-              pageLabel.textContent = 'Page ' + pageNum + ' of ' + totalPages;
-              console.log('✅ Page ' + pageNum + ' rendered');
-            });
-          }).catch(function(err) {
-            console.error('❌ Render error:', err);
-            errorDiv.textContent = 'Failed to render page: ' + err.message;
-            errorDiv.style.display = 'block';
-          });
-        }
-
-        // ---- Load PDF ----
-        function loadPDF() {
+        // ---- Jump to page (force reload) ----
+        window.jumpToChapter = function(pageNum) {
+          if (!pageNum) return;
+          // Show loading, hide iframe
           loading.style.display = 'block';
-          loading.textContent = '⏳ Loading PDF…';
-          canvas.style.display = 'none';
-          pageLabel.textContent = '';
+          iframe.style.display = 'none';
+          
+          // Clear src to force reload
+          iframe.src = '';
+          
+          // After a tiny delay, set new src with cache-buster
+          setTimeout(function() {
+            const src = pdfUrl + '#page=' + pageNum + '&t=' + Date.now();
+            iframe.src = src;
+            iframe.style.display = 'block';
+            loading.style.display = 'none';
+          }, 80);
 
-          pdfjsLib.getDocument(pdfUrl).promise.then(function(doc) {
-            pdfDoc = doc;
-            totalPages = doc.numPages;
-            console.log('✅ PDF loaded. Pages:', totalPages);
-            renderPage(currentPage);
-          }).catch(function(err) {
-            console.error('❌ Load error:', err);
-            loading.textContent = '❌ Failed to load PDF: ' + err.message;
-          });
-        }
-
-        // ---- Jump function ----
-        window.jumpToChapter = function(page) {
-          if (!pdfDoc) {
-            console.warn('⏳ PDF not loaded, retrying…');
-            loadPDF();
-            setTimeout(function() { window.jumpToChapter(page); }, 1500);
-            return;
-          }
-          if (!page) return;
-          currentPage = page;
-          renderPage(page);
-
-          // Scroll and highlight
+          // Scroll viewer into view
           if (viewerContainer) {
             const rect = viewerContainer.getBoundingClientRect();
             window.scrollTo({ top: window.scrollY + rect.top - 80, behavior: 'smooth' });
@@ -1498,6 +1380,7 @@
               viewerContainer.style.boxShadow = '';
             }, 1200);
           }
+          console.log('📖 Loaded page', pageNum);
         };
 
         // ---- Build TOC ----
@@ -1578,35 +1461,7 @@
           }
         });
 
-        // ---- Load PDF ----
-        loadPDF();
-
-        // ---- Toast feedback ----
-        const toast = document.createElement('div');
-        toast.style.cssText = `
-          position: fixed; bottom: 100px; left: 10px;
-          background: rgba(0,0,0,0.85); color: #0f0;
-          font-size: 14px; padding: 8px 14px; border-radius: 8px;
-          max-width: 90%; z-index: 9999; font-family: monospace;
-          pointer-events: none; opacity: 0.95;
-          transition: opacity 0.3s ease;
-        `;
-        document.body.appendChild(toast);
-
-        function showToast(msg) {
-          toast.textContent = msg;
-          toast.style.opacity = '1';
-          clearTimeout(toast._hideTimer);
-          toast._hideTimer = setTimeout(function() { toast.style.opacity = '0'; }, 3000);
-        }
-
-        const origJump = window.jumpToChapter;
-        window.jumpToChapter = function(page) {
-          origJump(page);
-          showToast('📖 Jumped to page ' + page);
-        };
-
-        console.log('✅ PDF.js ready. Test: jumpToChapter(106)');
+        console.log('✅ PDF iframe ready (force reload enabled). Click a chapter to load.');
       }
     })();
   </script>
