@@ -445,10 +445,10 @@ a:hover {
     background: rgba(0, 0, 0, 0.06);
 }
 .section-spacing {
-    padding: 6rem 0;
+    padding: 2rem 0;
 }
 .section-spacing-sm {
-    padding: 3rem 0;
+    padding: 2rem 0;
 }
 .grid-2col {
     display: grid;

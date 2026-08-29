@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🌍 Global Vital Signs Dashboard – Live Data | PBM Productivity Lab</title>
+  <meta name="description" content="Live dashboard tracking 14+ planetary & societal indicators – CO₂, GDP, debt, poverty, infant mortality. Updated automatically from public APIs." />
+  <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/global-dashboard.html" />
+  <meta property="og:title" content="Global Vital Signs Dashboard – Live Data" />
+  <meta property="og:description" content="Live dashboard tracking 14+ planetary & societal indicators – CO₂, GDP, debt, poverty, infant mortality. Updated automatically from public APIs." />
+  <meta property="og:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://traffictorch.github.io/productivity-bond-model/global-dashboard.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Global Vital Signs Dashboard – Live Data" />
+  <meta name="twitter:description" content="Live dashboard tracking 14+ planetary & societal indicators – CO₂, GDP, debt, poverty, infant mortality. Updated automatically from public APIs." />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="icon-512.png" />
+
+  <!-- ===== FONTS ===== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=block" crossorigin="anonymous" />
+
+  <!-- ===== CORE CSS ===== -->
+  <link rel="stylesheet" href="css/core.min.css" />
+
+  <!-- ===== PAGE‑SPECIFIC STYLES ===== -->
+  <style>
+    /* Safety net */
+    html { opacity: 0; transition: opacity 0.12s ease; }
+    html.loaded { opacity: 1; }
+
+    .hero { min-height:20vh; padding:1rem 0; }
+    .section-spacing { padding:3rem 0; }
+
+    .iframe-wrapper {
+      position: relative;
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #0b1120;
+      border: 1px solid var(--border-divider);
+    }
+    .iframe-wrapper iframe {
+      display: block;
+      width: 100%;
+      height: 800px;
+      border: none;
+      background: #0b1120;
+    }
+    @media (max-width: 768px) {
+      .iframe-wrapper iframe { height: 600px; }
+    }
+
+    /* Share module – adapted for generic sharing */
+    .share-module .btn-secondary {
+      background: var(--bg-input);
+      border: 1px solid var(--border-divider);
+    }
+    .share-module .btn-secondary:hover {
+      background: var(--bg-body);
+      border-color: var(--text-muted);
+    }
+  </style>
+
+  <!-- ===== GA4 ===== -->
+  <script src="js/ga4.js" defer></script>
+
+  <!-- ===== SCHEMA.ORG (Global Dashboard) ===== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://traffictorch.github.io/productivity-bond-model/global-dashboard.html#webpage",
+      "url": "https://traffictorch.github.io/productivity-bond-model/global-dashboard.html",
+      "name": "Global Vital Signs Dashboard – Live Data | PBM Productivity Lab",
+      "description": "Live dashboard tracking 14+ planetary & societal indicators – CO₂, GDP, debt, poverty, infant mortality. Updated automatically from public APIs.",
+      "inLanguage": "en-US",
+      "dateModified": "2026-08-29",
+      "isPartOf": {
+        "@id": "https://traffictorch.github.io/productivity-bond-model/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://traffictorch.github.io/productivity-bond-model/global-dashboard.html#breadcrumb"
+      },
+      "mainEntity": {
+        "@id": "https://traffictorch.github.io/productivity-bond-model/global-dashboard.html#software"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://traffictorch.github.io/productivity-bond-model/global-dashboard.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://traffictorch.github.io/productivity-bond-model/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tools",
+          "item": "https://traffictorch.github.io/productivity-bond-model/tools.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Global Dashboard"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://traffictorch.github.io/productivity-bond-model/global-dashboard.html#software",
+      "name": "Global Vital Signs Dashboard",
+      "description": "Live dashboard tracking 14+ planetary & societal indicators – CO₂, GDP, debt, poverty, infant mortality. Updated automatically from public APIs (World Bank, NASA, Global Warming API).",
+      "url": "https://traffictorch.github.io/productivity-bond-model/global-dashboard.html",
+      "applicationCategory": "WebApplication",
+      "applicationSubCategory": "DataVisualization",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript",
+      "softwareVersion": "1.0.0",
+      "dateModified": "2026-08-29",
+      "author": {
+        "@type": "Person",
+        "@id": "https://yliacallan.github.io/#person",
+        "name": "Ylia Callan",
+        "url": "https://yliacallan.github.io/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://traffictorch.net/#organization",
+        "name": "Traffic Torch",
+        "url": "https://traffictorch.net"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Live climate, economy & social indicators",
+        "14+ key metrics (CO₂, GDP, debt, poverty, infant mortality)",
+        "Auto-updates from public APIs (World Bank, NASA)",
+        "AI Data Interpreter for instant plain-English summaries",
+        "Interactive charts with adjustable date ranges"
+      ],
+      "image": "https://traffictorch.github.io/productivity-bond-model/og-image-1200w.png"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://traffictorch.github.io/productivity-bond-model/global-dashboard.html#webpage",
+      "url": "https://traffictorch.github.io/productivity-bond-model/global-dashboard.html",
+      "name": "Global Vital Signs Dashboard – Live Data | PBM Productivity Lab",
+      "description": "Live dashboard tracking 14+ planetary & societal indicators – CO₂, GDP, debt, poverty, infant mortality. Updated automatically from public APIs.",
+      "inLanguage": "en-US",
+      "dateModified": "2026-08-29",
+      "isPartOf": {
+        "@id": "https://traffictorch.github.io/productivity-bond-model/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://traffictorch.github.io/productivity-bond-model/global-dashboard.html#breadcrumb"
+      },
+      "mainEntity": {
+        "@id": "https://traffictorch.github.io/productivity-bond-model/global-dashboard.html#software"
+      },
+      "hasPart": {
+        "@id": "https://traffictorch.github.io/productivity-bond-model/global-dashboard.html#faq"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://traffictorch.github.io/productivity-bond-model/global-dashboard.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://traffictorch.github.io/productivity-bond-model/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tools",
+          "item": "https://traffictorch.github.io/productivity-bond-model/tools.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Global Dashboard"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://traffictorch.github.io/productivity-bond-model/global-dashboard.html#software",
+      "name": "Global Vital Signs Dashboard",
+      "description": "Live dashboard tracking 14+ planetary & societal indicators – CO₂, GDP, debt, poverty, infant mortality. Updated automatically from public APIs (World Bank, NASA, Global Warming API).",
+      "url": "https://traffictorch.github.io/productivity-bond-model/global-dashboard.html",
+      "applicationCategory": "WebApplication",
+      "applicationSubCategory": "DataVisualization",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript",
+      "softwareVersion": "1.0.0",
+      "dateModified": "2026-08-29",
+      "author": {
+        "@type": "Person",
+        "@id": "https://yliacallan.github.io/#person",
+        "name": "Ylia Callan",
+        "url": "https://yliacallan.github.io/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://traffictorch.net/#organization",
+        "name": "Traffic Torch",
+        "url": "https://traffictorch.net"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Live climate, economy & social indicators",
+        "14+ key metrics (CO₂, GDP, debt, poverty, infant mortality)",
+        "Auto-updates from public APIs (World Bank, NASA)",
+        "AI Data Interpreter for instant plain-English summaries",
+        "Interactive charts with adjustable date ranges"
+      ],
+      "image": "https://traffictorch.github.io/productivity-bond-model/og-image-1200w.png"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://traffictorch.github.io/productivity-bond-model/global-dashboard.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Global Vital Signs Dashboard?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Global Vital Signs Dashboard is a live, open‑source data platform that tracks 14+ key indicators of planetary and societal health – including atmospheric CO₂, global temperature anomalies, GDP, government debt, poverty, and infant mortality. It provides a real‑time snapshot of the world’s climate, economy, and social conditions, sourced directly from public APIs like the World Bank, NASA, and the Global Warming API."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What data sources power the dashboard?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "All data is pulled from reputable public APIs: the World Bank for economic indicators (GDP, government debt, poverty rates, etc.), NASA and the Global Warming API for atmospheric CO₂ and temperature anomalies, and other open data providers for social indicators like infant mortality and literacy rates."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often is the data updated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The dashboard updates automatically whenever the underlying APIs refresh their data. Most economic indicators (GDP, debt) are updated quarterly or annually, while climate data (CO₂, temperature) is updated in near‑real‑time. The timestamp of the latest update is displayed on each chart."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the AI Data Interpreter and how does it work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The AI Data Interpreter is a built‑in tool that analyses the latest global data across all 14+ indicators and generates a concise, plain‑English summary of current trends. With one click, you get an instant snapshot of planetary and societal health – perfect for quick briefings, research, or decision‑making. The AI does not store or share your data; all analysis happens in your browser."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I adjust the date ranges on the charts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Each metric is presented as an interactive chart with adjustable date ranges. You can zoom in on specific periods (e.g., the last 10 years, the post‑pandemic era, or the entire available dataset) to better understand short‑term fluctuations and long‑term trends."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the Global Vital Signs Dashboard free to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, completely free and open source. The dashboard is provided as a public good by Traffic Torch and the PBM Productivity Lab. You can use it for research, policy work, journalism, or personal curiosity – no registration or payment required."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I embed this dashboard on my own website?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely. The dashboard is designed to be easily embedded via a simple iframe. You can find the embed code on the dashboard page itself. It adapts to dark/light mode and works on all screen sizes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What specific indicators are tracked on the dashboard?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The dashboard tracks a curated set of 14+ indicators across three domains: Climate (atmospheric CO₂, global temperature anomaly), Economy (global GDP, government debt as % of GDP, inflation, unemployment), and Social (poverty rate, infant mortality, life expectancy, literacy rate, and more). New indicators are added periodically – check the dashboard for the full list."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<!-- ===== Floating Orbs ===== -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- ===== NAV ===== -->
+<nav class="sticky-nav no-print" id="mainNav">
+  <div class="nav-left">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-pressed="false"><span id="themeIcon">🌙</span></button>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">🏠 Home</a></li>
+    <li class="dropdown">
+      <span class="dropdown-toggle">🧰 Tools ▼</span>
+      <ul class="dropdown-menu">
+        <li><a href="tools.html">⚙️ All Tools</a></li>
+        <li><a href="wellbeing-index.html">🌿 Wellbeing Index</a></li>
+        <li><a href="debt-reality.html">💳 Debt Reality</a></li>
+        <li><a href="compound-curve.html">📈 Compound Curve</a></li>
+        <li><a href="npi-index.html">📊 NPI Index</a></li>
+        <li><a href="global-vitals-dashboard.html">🌍 Global Vitals</a></li>
+      </ul>
+    </li>
+    <li class="dropdown"><span class="dropdown-toggle">About ▼</span><ul class="dropdown-menu"><li><a href="news.html">News</a></li><li><a href="about.html">Traffic Torch</a></li><li><a href="changelog.html">Change Log</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="contact.html">Contact</a></li></ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">Abstract ▼</span><ul class="dropdown-menu"><li><a href="index.html#abstract">The Abstract</a></li><li><a href="index.html#problem-visualized">The Problem</a></li><li><a href="index.html#wellbeing">Wellbeing</a></li></ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">PBM ▼</span><ul class="dropdown-menu">
+      <li><a href="appendix.html">📑 Appendices</a></li>
+      <li><a href="index.html#model-definition">Model</a></li>
+      <li><a href="index.html#mechanism">Mechanism</a></li>
+      <li><a href="index.html#glossary">Glossary</a></li>
+      <li><a href="index.html#limitations">Limitations</a></li>
+      <li><a href="index.html#related">Related</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+      <li><a href="index.html#citation">Cite</a></li>
+    </ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">Simulation ▼</span><ul class="dropdown-menu"><li><a href="index.html#simulator">Live Simulator</a></li><li><a href="index.html#results-data">Results</a></li><li><a href="index.html#sensitivity">Sensitivity</a></li><li><a href="index.html#adoption">Scenarios</a></li><li><a href="index.html#implement">Implementation</a></li></ul></li>
+    <li><a href="book.html">🎧 Books</a></li>
+    <li><a href="appendix.html">📑 Appendices</a></li>
+    <li><a href="index.html#learn">💸 Learn</a></li>
+  </ul>
+</nav>
+
+<main>
+  <!-- ===== BREADCRUMB ===== -->
+  <div class="container" style="padding-top:1.5rem; padding-bottom:0;">
+    <nav class="breadcrumb">
+      <a href="index.html">🏠 Home</a><span style="opacity:0.5;">/</span>
+      <a href="tools.html">🧰 Tools</a><span style="opacity:0.5;">/</span>
+      <span style="color:var(--text-primary); font-weight:500;">Global Dashboard</span>
+    </nav>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section class="container hero">
+    <div>
+      <span class="badge-glow" style="margin-bottom:0.5rem;">🌍 Live Data Platform</span>
+      <h1 class="text-gradient" style="font-size:clamp(2.8rem,6vw,4rem); font-weight:800; letter-spacing:-0.03em; line-height:1.1;">Global Vital Signs Dashboard</h1>
+      <p style="font-size:clamp(1.2rem,2vw,1.6rem); font-weight:300; opacity:0.8; max-width:700px; margin:0.5rem 0 1.5rem; color:var(--text-secondary);">
+        Track 14+ key indicators of planetary and societal health – climate, economy, and social conditions – updated live from public APIs.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== DASHBOARD EMBED ===== -->
+  <section class="container section-spacing" style="padding-top:0.5rem;">
+    <div class="glass-card" style="padding:0; overflow:hidden; border:1px solid rgba(255,255,255,0.06);">
+      <div class="iframe-wrapper">
+        <iframe 
+          src="https://global-vitals-dashboard.traffictorch.workers.dev/" 
+          loading="lazy"
+          title="Global Vital Signs Dashboard"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div style="padding:0.75rem 1.5rem; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:0.75rem; border-top:1px solid var(--border-divider);">
+        <div style="display:flex; flex-wrap:wrap; gap:0.5rem 1.25rem; font-size:0.75rem; color:var(--text-secondary);">
+          <span>📊 <strong style="font-weight:500; color:var(--text-primary);">14+</strong> indicators</span>
+          <span>🔄 <strong style="font-weight:500; color:var(--text-primary);">Auto‑updates</strong> from public APIs</span>
+          <span>🧠 <strong style="font-weight:500; color:var(--text-primary);">AI Data Interpreter</strong> built in</span>
+        </div>
+        <a href="https://global-vitals-dashboard.traffictorch.workers.dev/" target="_blank" rel="noopener" class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.8rem; white-space:nowrap;">
+          Open Full Dashboard ↗
+        </a>
+      </div>
+    </div>
+    
+    <noscript>
+  <div style="padding:1.5rem 1.5rem 2rem;">
+    <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap; margin-bottom:0.75rem;">
+      <span style="font-size:2rem;">🌍</span>
+      <h3 style="font-size:clamp(1.3rem,1.8vw,1.6rem); font-weight:700; margin:0; background:linear-gradient(135deg,#60a5fa,#a78bfa); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">
+        Global Vital Signs Dashboard
+      </h3>
+      <span style="font-size:0.6rem; background:rgba(251,191,36,0.15); color:#fbbf24; padding:0.15rem 0.7rem; border-radius:20px; font-weight:600; letter-spacing:0.3px;">⚠️ JS OFF</span>
+    </div>
+    <p style="color:var(--text-secondary);">
+      <strong>JavaScript is disabled.</strong> To view the interactive dashboard, please enable JavaScript or visit the 
+      <a href="https://global-vitals-dashboard.traffictorch.workers.dev/" target="_blank" rel="noopener" style="color:#4f46e5; font-weight:500;">live standalone version ↗</a>.
+    </p>
+
+    <!-- Detailed description for AI / SEO -->
+    <div style="background:var(--bg-body); border-radius:10px; padding:1.2rem 1.5rem; margin-top:1.2rem; border-left:4px solid #4f46e5;">
+
+      <p style="font-weight:600; margin-bottom:0.2rem; color:var(--text-primary);">📌 What this tool does:</p>
+      <p style="color:var(--text-secondary); font-size:0.95rem; margin-bottom:0.8rem;">
+        The <strong>Global Vital Signs Dashboard</strong> is a live, open‑source data platform that tracks <strong>14+ key indicators</strong> of planetary and societal health – from atmospheric CO₂ and global temperature anomalies to GDP, government debt, poverty, and infant mortality. All data is sourced from public APIs and updates automatically, giving a real‑time snapshot of the world’s climate, economy, and social conditions.
+      </p>
+
+      <p style="font-weight:600; margin:1rem 0 0.2rem 0; color:var(--text-primary);">📊 Data Sources:</p>
+      <ul style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
+        <li><strong>World Bank</strong> – economic indicators (GDP, government debt, poverty rates, inflation, unemployment, etc.)</li>
+        <li><strong>NASA / Global Warming API</strong> – atmospheric CO₂ levels and global temperature anomalies</li>
+        <li><strong>Other open data providers</strong> – social indicators (infant mortality, life expectancy, literacy rate, and more)</li>
+      </ul>
+
+      <p style="font-weight:600; margin:1rem 0 0.2rem 0; color:var(--text-primary);">🧠 Key Features:</p>
+      <ul style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
+        <li><strong>Interactive charts</strong> – each metric has its own chart with adjustable date ranges (zoom, pan, and filter)</li>
+        <li><strong>AI Data Interpreter</strong> – a built‑in AI that analyses the latest data and generates a concise plain‑English summary of current global trends with one click</li>
+        <li><strong>Auto‑updating</strong> – pulls fresh data directly from public APIs in near‑real time; the timestamp of the latest update is displayed on every chart</li>
+        <li><strong>Fully responsive</strong> – adapts to dark/light mode and works on desktop, tablet, and mobile</li>
+      </ul>
+
+      <p style="font-weight:600; margin:1rem 0 0.2rem 0; color:var(--text-primary);">📈 Full List of Indicators (14+):</p>
+      <ul style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
+        <li><strong>Climate:</strong> Atmospheric CO₂ (ppm), Global Temperature Anomaly (°C)</li>
+        <li><strong>Economy:</strong> Global GDP, Government Debt (% of GDP), Inflation Rate, Unemployment Rate</li>
+        <li><strong>Social:</strong> Poverty Rate, Infant Mortality (per 1,000 live births), Life Expectancy (years), Literacy Rate, and several other health &amp; development metrics</li>
+      </ul>
+
+      <p style="margin-top:1.2rem; padding-top:0.8rem; border-top:1px solid var(--border-divider);">
+        🔗 <a href="https://global-vitals-dashboard.traffictorch.workers.dev/" target="_blank" rel="noopener" style="color:#4f46e5; font-weight:600;">Open the standalone dashboard →</a>
+        <span style="color:var(--text-muted); font-size:0.85rem; margin-left:0.75rem;">(works without JavaScript)</span>
+      </p>
+    </div>
+  </div>
+</noscript>
+
+    <!-- ===== SHARE & REPORT MODULE (Generic) ===== -->
+    <div class="share-module" style="margin-top:1.5rem;">
+      <div class="glass-card" style="border-color:rgba(251,191,36,0.25);">
+        <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap; margin-bottom:0.8rem;">
+          <span class="badge-glow" style="background:rgba(251,191,36,0.15); color:#fbbf24;">📋 Share</span>
+          <h3 style="font-weight:700; font-size:1rem; margin:0; color:var(--text-primary);">Share this dashboard</h3>
+        </div>
+
+        <div style="display:flex; flex-wrap:wrap; gap:0.6rem; align-items:center;">
+          <!-- 1. Copy Link -->
+          <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="copyDashboardLink()">🔗 Copy Link</button>
+
+          <!-- 2. Print / PDF -->
+          <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="window.print()">🖨️ Print / PDF</button>
+
+          <!-- 3. Share on X -->
+          <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="shareDashboard('x')">🐦 X</button>
+
+          <!-- 4. Share on LinkedIn -->
+          <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="shareDashboard('linkedin')">💼 LinkedIn</button>
+        </div>
+
+        <div style="margin-top:0.6rem; font-size:0.75rem; color:var(--text-muted);">
+          ⚡ Share the live dashboard with colleagues, researchers, or anyone interested in global trends.
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ===== FAQ ACCORDION ===== -->
+<section class="container section-spacing" style="padding-top:1rem; padding-bottom:1rem;">
+  <div class="glass-card">
+    <h2 style="font-size:clamp(1.6rem,2.5vw,2rem); font-weight:700; margin-bottom:0.5rem; color:var(--text-primary);">Frequently Asked Questions</h2>
+    <p style="color:var(--text-secondary); margin-bottom:1.5rem; max-width:700px;">
+      Find answers to the most common questions about the Global Vital Signs Dashboard, its data, and features.
+    </p>
+
+    <!-- Q1 -->
+    <div class="accordion-item">
+      <div class="accordion-toggle"><span>🌍 What is the Global Vital Signs Dashboard?</span><span class="arrow">▼</span></div>
+      <div class="accordion-content">
+        <p style="color:var(--text-secondary);">The Global Vital Signs Dashboard is a live, open‑source data platform that tracks 14+ key indicators of planetary and societal health – including atmospheric CO₂, global temperature anomalies, GDP, government debt, poverty, and infant mortality. It provides a real‑time snapshot of the world’s climate, economy, and social conditions, sourced directly from public APIs.</p>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="accordion-item">
+      <div class="accordion-toggle"><span>📊 What data sources power the dashboard?</span><span class="arrow">▼</span></div>
+      <div class="accordion-content">
+        <p style="color:var(--text-secondary);">All data is pulled from reputable public APIs:</p>
+        <ul style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
+          <li><strong>World Bank</strong> – economic indicators (GDP, government debt, poverty rates, etc.)</li>
+          <li><strong>NASA / Global Warming API</strong> – atmospheric CO₂ levels and global temperature anomalies</li>
+          <li><strong>Other open data providers</strong> – social indicators like infant mortality and literacy rates</li>
+        </ul>
+        <p style="color:var(--text-secondary); margin-top:0.5rem;">All sources are clearly cited within the dashboard itself.</p>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="accordion-item">
+      <div class="accordion-toggle"><span>🔄 How often is the data updated?</span><span class="arrow">▼</span></div>
+      <div class="accordion-content">
+        <p style="color:var(--text-secondary);">The dashboard updates automatically whenever the underlying APIs refresh their data. Most economic indicators (GDP, debt) are updated quarterly or annually, while climate data (CO₂, temperature) is updated in near‑real‑time. The timestamp of the latest update is displayed on each chart.</p>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="accordion-item">
+      <div class="accordion-toggle"><span>🤖 What is the AI Data Interpreter?</span><span class="arrow">▼</span></div>
+      <div class="accordion-content">
+        <p style="color:var(--text-secondary);">The AI Data Interpreter is a built‑in tool that analyses the latest global data across all 14+ indicators and generates a concise, plain‑English summary of current trends. With one click, you get an instant snapshot of planetary and societal health – perfect for quick briefings, research, or decision‑making. The AI does not store or share your data; all analysis happens in your browser.</p>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="accordion-item">
+      <div class="accordion-toggle"><span>📅 Can I adjust the date ranges on the charts?</span><span class="arrow">▼</span></div>
+      <div class="accordion-content">
+        <p style="color:var(--text-secondary);">Yes. Each metric is presented as an interactive chart with adjustable date ranges. You can zoom in on specific periods (e.g., the last 10 years, the post‑pandemic era, or the entire available dataset) to better understand short‑term fluctuations and long‑term trends.</p>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="accordion-item">
+      <div class="accordion-toggle"><span>💰 Is this dashboard free to use?</span><span class="arrow">▼</span></div>
+      <div class="accordion-content">
+        <p style="color:var(--text-secondary);">Yes, completely free and open source. The dashboard is provided as a public good by <strong>Traffic Torch</strong> and the <strong>PBM Productivity Lab</strong>. You can use it for research, policy work, journalism, or personal curiosity – no registration or payment required.</p>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="accordion-item">
+      <div class="accordion-toggle"><span>🔗 Can I embed this dashboard on my own website?</span><span class="arrow">▼</span></div>
+      <div class="accordion-content">
+        <p style="color:var(--text-secondary);">Absolutely. The dashboard is designed to be easily embedded via a simple <code style="background:var(--bg-body); padding:0.1rem 0.4rem; border-radius:4px;">iframe</code>. You can find the embed code on the dashboard page itself. It adapts to dark/light mode and works on all screen sizes.</p>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="accordion-item">
+      <div class="accordion-toggle"><span>📋 What specific indicators are tracked?</span><span class="arrow">▼</span></div>
+      <div class="accordion-content">
+        <p style="color:var(--text-secondary);">The dashboard tracks a curated set of 14+ indicators across three domains:</p>
+        <ul style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
+          <li><strong>Climate:</strong> Atmospheric CO₂ (ppm), Global Temperature Anomaly (°C)</li>
+          <li><strong>Economy:</strong> Global GDP, Government Debt (% of GDP), Inflation, Unemployment</li>
+          <li><strong>Social:</strong> Poverty Rate, Infant Mortality, Life Expectancy, Literacy Rate, and more</li>
+        </ul>
+        <p style="color:var(--text-secondary); margin-top:0.5rem;">New indicators are added periodically – check the dashboard for the full list.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- ===== TOOL CARDS ROW (unchanged) ===== -->
+  <section class="container section-spacing" style="padding-bottom:3;">
+    <h2 class="text-gradient" style="font-size:clamp(1.8rem,3vw,2.2rem); font-weight:700; text-align:center; margin-bottom:0.5rem;">Explore the Tools</h2>
+    <p style="text-align:center; color:var(--text-secondary); max-width:600px; margin:0 auto 2rem; font-size:clamp(0.95rem,1.1vw,1.05rem);">
+      Interactive calculators to help you understand your financial and personal wellbeing.
+    </p>
+    <div class="tool-cards-grid">
+
+      <!-- ===== CARD 1: NPI Index ===== -->
+      <div class="tool-card">
+        <div class="tool-card-icon">📊</div>
+        <h3 class="tool-card-title">NPI Index Tracker</h3>
+        <p class="tool-card-desc">Track the National Productivity Index (NPI) with real-world data from 50+ countries. See how efficiently your economy turns inputs into value.</p>
+        <a href="npi-index.html" class="btn-primary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Try It →</a>
+      </div>
+
+      <!-- ===== CARD 2: Debt Reality ===== -->
+      <div class="tool-card">
+        <div class="tool-card-icon">💳</div>
+        <h3 class="tool-card-title">Debt Reality</h3>
+        <p class="tool-card-desc">Diagnose your financial situation, see the true cost of debt, and get a personalized plan.</p>
+        <a href="debt-reality.html" class="btn-secondary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Try It →</a>
+      </div>
+
+      <!-- ===== CARD 3: All Tools ===== -->
+      <div class="tool-card">
+        <div class="tool-card-icon">🧰</div>
+        <h3 class="tool-card-title">All Tools</h3>
+        <p class="tool-card-desc">Explore all 4 interactive tools in the PBM Productivity Lab.</p>
+        <a href="tools.html" class="btn-primary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Launch Lab →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== LEARN SECTION (unchanged) ===== -->
+  <section id="learn" class="container section-spacing" style="padding-top:2rem;">
+    <div class="glass-card" style="border-color:rgba(251,191,36,0.2); padding:1.5rem 1.2rem;">
+      <span class="badge-glow" style="background:rgba(251,191,36,0.15); color:#fbbf24; border-color:rgba(251,191,36,0.15); margin-bottom:0.6rem;">📖 Learn</span>
+      <h2 style="font-size:clamp(1.4rem,3vw,1.8rem); font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">Master the Productivity Bond Model</h2>
+      <p style="color:var(--text-secondary); margin-bottom:0.8rem; max-width:800px;">
+        The tools on this page are powered by the <strong>Productivity Bond Model (PBM)</strong> — a revolutionary framework for replacing perpetual-growth-dependent debt with productivity-linked prosperity.
+        These interactive calculators give you a personal glimpse into the mechanics of the model, but the <strong>full theory</strong> — including the mathematical proofs, simulation code, and a complete implementation roadmap for policymakers — is contained in the book.
+      </p>
+      <p style="color:var(--text-secondary); margin-bottom:1rem; max-width:800px;">
+        If you're a citizen exploring your financial future, a researcher studying alternative debt systems, or a policymaker considering real-world adoption, the book provides the depth and rigour these tools only hint at.
+      </p>
+      <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:1.5rem;">📚 ISBN: 979-8-23578-956-2</p>
+
+      <div style="display:flex; flex-wrap:wrap; gap:0.6rem; margin-bottom:1.2rem; padding-bottom:1.2rem; border-bottom:1px solid var(--border-divider);">
+        <a href="book.html#download" class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;">📄 Read the PDF</a>
+        <a href="book.html#audiobook-chapters" class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;">🎧 Listen to Audiobook</a>
+      </div>
+
+      <div style="margin-bottom:0.8rem;">
+        <strong style="color:var(--text-primary); font-size:0.9rem;">🍏 Apple</strong>
+        <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.3rem;">
+          <a href="https://books.apple.com/au/book/the-infinite-debt-problem-how-to-replace-perpetual/id6801656366" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;">📚 Ebook</a>
+          <span class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem; opacity:0.4; cursor:not-allowed;">🎧 Audiobook (Soon)</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom:0.8rem;">
+        <strong style="color:var(--text-primary); font-size:0.9rem;">📚 Google</strong>
+        <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.3rem;">
+          <a href="https://play.google.com/store/books/details/Ylia_Callan_The_Infinite_Debt_Problem?id=6bIBEgAAQBAJ" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;">📚 Ebook</a>
+          <a href="https://play.google.com/store/audiobooks/details/Ylia_Callan_The_Infinite_Debt_Problem?id=AQAAAED6F3ZXnM" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;">🎧 Audiobook</a>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; gap:0.6rem; padding-top:0.8rem; border-top:1px solid var(--border-divider);">
+        <a href="index.html#simulator" class="btn-primary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">💸 Run Live Simulation</a>
+        <a href="index.html#model-definition" class="btn-secondary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">📐 View the Model</a>
+        <a href="changelog.html" class="btn-secondary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">📋 Changelog</a>
+        <a href="about.html" class="btn-secondary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">ℹ️ About</a>
+      </div>
+
+      <div style="margin-top:2rem; padding-top:1.5rem; text-align:center; border-top:1px solid var(--border-divider);">
+        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.75rem;">
+          <strong style="font-size:1.1rem; font-weight:600; color:var(--text-secondary); letter-spacing:0.02em;">Share this toolkit?</strong>
+          <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+            <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+            <a class="a2a_button_facebook_messenger"></a>
+            <a class="a2a_button_email"></a>
+            <a class="a2a_button_pinterest"></a>
+            <a class="a2a_button_reddit"></a>
+            <a class="a2a_button_copy_link"></a>
+          </div>
+        </div>
+      </div>
+      <script defer src="https://static.addtoany.com/menu/page.js"></script>
+    </div>
+  </section>
+
+  <!-- ===== FEEDBACK SECTION (BETA) ===== -->
+  <section class="container section-spacing" style="padding-top:1rem; padding-bottom:2rem;">
+    <div class="glass-card feedback-container" id="feedback-container">
+      <div class="feedback-header">
+        <span class="badge-glow" style="background:rgba(251,191,36,0.15); color:#fbbf24; border-color:rgba(251,191,36,0.15);">🧪 Beta</span>
+        <h2>Help Us Improve</h2>
+        <p>
+          This website is <strong>new and in beta</strong>. If you find bugs - especially in the simulations or tools - 
+          please let us know. Your feedback helps us fix issues and make the tools better for everyone.
+        </p>
+      </div>
+
+      <button class="btn-primary feedback-toggle-btn" id="feedbackToggleBtn">
+        📝 Submit Feedback
+      </button>
+
+      <div class="feedback-form-container" id="feedbackFormContainer">
+        <p class="form-title">Feedback for <strong>this tool</strong> (beta)</p>
+
+        <form class="feedback-form" id="feedbackForm">
+          <!-- Rating -->
+          <div class="feedback-field">
+            <label>Rate your experience (optional)</label>
+            <div class="feedback-rating-group" role="radiogroup" aria-label="Feedback rating">
+              <button type="button" class="rating-btn" data-rating="1" aria-label="Very dissatisfied">😞</button>
+              <button type="button" class="rating-btn" data-rating="2" aria-label="Dissatisfied">🙁</button>
+              <button type="button" class="rating-btn" data-rating="3" aria-label="Neutral">😐</button>
+              <button type="button" class="rating-btn" data-rating="4" aria-label="Satisfied">🙂</button>
+              <button type="button" class="rating-btn" data-rating="5" aria-label="Very satisfied">😍</button>
+            </div>
+            <input type="hidden" class="feedback-rating-input" value="">
+          </div>
+
+          <!-- Reply checkbox -->
+          <div class="feedback-field">
+            <label class="checkbox-label">
+              <input type="checkbox" class="feedback-reply-checkbox">
+              <span>Request a reply (we'll email you)</span>
+            </label>
+          </div>
+
+          <!-- Email (hidden) -->
+          <div class="feedback-field feedback-email-group hidden">
+            <label for="feedbackEmail">Your email address</label>
+            <input type="email" id="feedbackEmail" class="feedback-email-input" placeholder="you@example.com">
+            <div class="field-hint">We'll only use this to respond to your feedback.</div>
+          </div>
+
+          <!-- Feedback text -->
+          <div class="feedback-field">
+            <label for="feedbackText">Your feedback <span style="color:var(--text-muted);font-weight:400;">(required)</span></label>
+            <textarea id="feedbackText" class="feedback-text-input" rows="4" maxlength="1000" placeholder="Describe the issue, suggestion, or what you'd like to see improved."></textarea>
+            <div class="char-count"><span class="feedback-char-count">0</span> / 1000 characters</div>
+          </div>
+
+          <!-- Submit -->
+          <div class="feedback-submit-row">
+            <button type="submit" class="btn-primary feedback-submit-btn">Send Feedback</button>
+            <span style="font-size:0.7rem; color:var(--text-muted);">100% anonymous unless you request a reply</span>
+          </div>
+        </form>
+
+        <div class="feedback-message" id="feedbackMessage"></div>
+      </div>
+    </div>
+  </section>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof initFeedbackForm === 'function') {
+        initFeedbackForm('feedback-container');
+      }
+    });
+  </script>
+
+</main>
+
+<!-- ===== FLOATING RETURN TO TOP ===== -->
+<button class="floating-return-top" id="floatingReturnTop" aria-label="Return to top">⬆ Top</button>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+  <div class="container">
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1rem 1.5rem; margin-bottom:1.5rem; font-size:0.85rem;">
+      <a href="index.html" style="color:var(--text-muted); text-decoration:none;">🏠 Home</a>
+      <a href="news.html" style="color:var(--text-muted); text-decoration:none;">News</a>
+      <a href="about.html" style="color:var(--text-muted); text-decoration:none;">About</a>
+      <a href="book.html" style="color:var(--text-muted); text-decoration:none;">Book</a>
+      <a href="changelog.html" style="color:var(--text-muted); text-decoration:none;">Changelog</a>
+      <a href="tools.html" style="color:#b388ff;">🧰 Tools</a>
+      <a href="privacy.html" style="color:var(--text-muted); text-decoration:none;">Privacy</a>
+      <a href="terms.html" style="color:var(--text-muted); text-decoration:none;">Terms</a>
+      <a href="contact.html" style="color:var(--text-muted); text-decoration:none;">Contact</a>
+      <a href="index.html#simulator" style="color:var(--text-muted); text-decoration:none;">Simulator</a>
+      <a href="index.html#learn" style="color:var(--text-muted); text-decoration:none;">Learn 💸</a>
+    </div>
+    <p>
+      © 2026 <a href="https://traffictorch.net">Traffic Torch</a> ·
+      <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> ·
+      Version 0.8.0 ·
+      <a href="https://zenodo.org/records/21970090" target="_blank" rel="external noopener">Simulation Code (Zenodo)</a> ·
+      <button class="share-btn" style="background:transparent; border:none; color:#4f46e5; padding:0; font-size:0.85rem; cursor:pointer;">📤 Share</button>
+    </p>
+    <p style="font-size:0.7rem; margin-top:0.3rem;">
+      Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI · <span id="last-updated"></span>
+    </p>
+    <p style="font-size:0.65rem; margin-top:0.5rem; color:var(--text-muted); opacity:0.7;">
+      📌 v0.8.0 – feat: NPI Index Tracker with real-world data. Endogenous debt feedback loop implemented - reveals 2.5pp lower distress for Productivity.
+    </p>
+  </div>
+</footer>
+
+<!-- ====== PWA INSTALL BUTTON & IOS MODAL ====== -->
+<button id="pwaInstallBtn" class="pwa-install-btn">
+  <span class="icon">📱</span>
+  <span class="btn-text">Install Apps</span>
+  <span class="icon">💻</span>
+</button>
+<div id="pwaIosOverlay" class="pwa-ios-overlay">
+  <div class="pwa-ios-modal">
+    <h3>Install on iPhone</h3>
+    <p>To add this app to your home screen:</p>
+    <div class="step"><span>1.</span><span class="step-icon">⬆️</span><span>In <strong>Safari</strong> tap the <strong>Share</strong> button at the bottom.</span></div>
+    <div class="step"><span>2.</span><span class="step-icon">➕</span><span>Scroll down and tap <strong>"Add to Home Screen"</strong>.</span></div>
+    <button id="pwaCloseIosModal" class="close-btn">Got it</button>
+  </div>
+</div>
+
+<!-- ===== SERVICE WORKER ===== -->
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/productivity-bond-model/sw.js')
+      .then(r => console.log('SW registered:', r))
+      .catch(e => console.log('SW failed:', e));
+  }
+</script>
+
+<!-- ===== CORE JS ===== -->
+<script src="js/core.min.js" defer></script>
+
+<!-- ===== PAGE‑SPECIFIC JS (generic sharing) ===== -->
+<script>
+  // Fade in after load
+  window.addEventListener('load', function() {
+    document.documentElement.classList.add('loaded');
+  });
+
+  // Generic share functions for the dashboard
+  function copyDashboardLink() {
+    const url = window.location.href;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(() => alert('Link copied!')).catch(() => prompt('Copy this link manually:', url));
+    } else {
+      prompt('Copy this link manually:', url);
+    }
+  }
+
+  function shareDashboard(platform) {
+    const url = window.location.href;
+    const text = 'Check out the Global Vital Signs Dashboard – live data on climate, economy, and social indicators:';
+    let shareUrl = '';
+    if (platform === 'x') {
+      shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+    } else if (platform === 'linkedin') {
+      shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+    }
+    if (shareUrl) {
+      window.open(shareUrl, '_blank', 'width=600,height=400');
+    }
+  }
+</script>
+
+</body>
+</html>

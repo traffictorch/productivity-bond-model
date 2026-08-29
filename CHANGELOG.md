@@ -4,7 +4,50 @@ All notable changes to the Productivity Bond Model and this website.
 
 ## [0.8.0] – 2026-08-29
 
-### Added – Appendix Page
+### Added
+
+#### Global Vital Signs Dashboard
+Embedded a live, open‑source dashboard at `/global-vitals-dashboard.html` – a real‑time data platform tracking 14+ indicators of planetary and societal health.
+
+**Features:**
+- **14+ interactive charts** – CO₂, temperature anomaly, GDP, government debt, poverty, infant mortality, inflation, unemployment, and more.
+- **Date‑range presets** – Quickly filter data (Since 2000, Last 10y, Last 5y, Max).
+- **AI Data Interpreter** – One‑click generation of a concise plain‑English summary covering climate, economy, and social outlook.
+- **Dark / Light mode** – Toggleable theme for comfortable viewing.
+- **Fully responsive** – Works on desktop, tablet, and mobile.
+- **Auto‑updating** – Data syncs monthly via public APIs (World Bank, NASA, Global Warming API).
+
+**Integration:** Added a navigation link and embedded the dashboard using a responsive `<iframe>`.
+
+### Added
+- **Appendix Page (`appendix.html`)**: A fully responsive, navigable HTML version of all book appendices.
+  - **Appendix A – Mathematical Appendix**: Compound interest formulas, Productivity Bond arithmetic, NPI definition, pricing model, welfare function, portfolio optimisation, failure conditions, simulation framework, and key equations.
+  - **Appendix B – National Productivity Index (NPI) – Detailed Methodology**: NPI formula, data sources, measurement protocols, payment rules, and governance structure.
+  - **Appendix C – Simulation Results**: Complete 10,000‑path Monte Carlo output for all bond types, parameter sensitivity, portfolio optimisation, and key takeaways (including the feedback loop insight).
+  - **Appendix D – The Asteria Pilot – Full Term Sheet and Prospectus**: Comprehensive legal and financial document for the first Productivity Bond issuance.
+  - **Appendix E – The Productivity Dividend – Legal and Institutional Design**: Framework for designing, funding, and distributing the Productivity Dividend, with model legislation and economic impact simulations.
+  - **Appendix F – Policy Implementation – Legislative Framework and Transition Path**: Detailed roadmap for legislative, regulatory, and institutional changes, with phased transition and risk management.
+  - **Appendix G – Investor Materials – Marketing and Disclosure Documents**: Executive summary, investor presentation, FAQ, risk disclosure, performance simulation, and glossary.
+  - **Appendix H – Simulation Code & License**: Link to GitHub repository, reproducibility instructions, and licensing information (CC‑BY‑NC‑ND for the book, MIT for the simulation code).
+
+- **Features**:
+  - Book‑style table of contents at the top with links to each appendix section.
+  - “Back to TOC”, “Back to Book”, and “Back to Top” links within each section for easy navigation.
+  - Responsive layout – works on desktop, tablet, and mobile (iPhone‑friendly).
+  - Full dark/light theme support – inherits the site’s theme toggle.
+  - Schema.org structured data for improved search engine discoverability.
+  - Consistent navigation – the “Appendices” link is now active in the PBM dropdown and as a standalone nav item.
+  - Inter‑page links – the book page now links to `appendix.html` (HTML format) instead of only the PDF, with clear “HTML” badges.
+
+- **Book Page Updates**:
+  - Replaced the PDF‑only appendix list with HTML links to `appendix.html` sections.
+  - Updated the “Appendices (PDF only)” section to “📘 Appendices” with HTML and PDF download options.
+
+### Fixed
+- Fixed the day/night theme toggle on the appendix page – now works reliably without conflicting scripts.
+- Fixed mobile hamburger menu and dropdown toggles on the appendix page – now consistent with the book page’s navigation logic.
+
+## [0.7.0] – 2026-08-28
 
 ### Added – NPI Index Tracker (Tool #4)
 
@@ -72,7 +115,7 @@ Added country-specific weight presets based on economic categories:
 - **File size** – `npi-index.html` is ~1,500 lines including all JavaScript logic.
 
 
-## [0.7.0] – 2026-08-24
+## [0.6.0] – 2026-08-24
 
 ### Added
 - **PBM Productivity Lab** – a central `tools.html` page housing all three interactive tools with tabbed navigation and consistent glass‑morphism design.
@@ -103,7 +146,7 @@ Added country-specific weight presets based on economic categories:
 - All async font loading from tool pages (`display=swap` removed in favour of `display=block`).
 - Duplicated accordion initialisation logic from page‑specific scripts (now handled by `core.min.js` or direct `onclick`).
 
-## [0.6.0] – 2026-08-21
+## [0.5.0] – 2026-08-21
 
 ### Added
 - **Endogenous debt feedback loop** – Monte Carlo simulator now models the full debt dynamics, revealing 77.2pp distress increase for Productivity bonds (raw model).
@@ -160,7 +203,7 @@ Added country-specific weight presets based on economic categories:
 - `main.js` (split into `core.min.js` and `home.js`).
 - `main.css` (split into `core.min.css` and `home.css`).
 
-## [0.5.0] – 2026-08-20
+## [0.4.0] – 2026-08-20
 
 ### Added
 - Happiness Curve and Bond Strength dashboard.
@@ -170,7 +213,7 @@ Added country-specific weight presets based on economic categories:
 - Bar chart visualisation in the simulator.
 - Responsive layout for mobile devices.
 
-## [0.4.0] – 2026-08-19
+## [0.3.0] – 2026-08-19
 
 ### Added
 - Initial public release of the canonical website.

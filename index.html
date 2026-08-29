@@ -468,6 +468,7 @@
         <li><a href="debt-reality.html">💳 Debt Reality</a></li>
         <li><a href="compound-curve.html">📈 Compound Curve</a></li>
         <li><a href="npi-index.html">📊 NPI Index</a></li>
+        <li><a href="global-vitals-dashboard.html">🌍 Global Vitals</a></li>
       </ul>
     </li>
     <li class="dropdown"><span class="dropdown-toggle">About ▼</span><ul class="dropdown-menu"><li><a href="news.html">News</a></li><li><a href="about.html">Traffic Torch</a></li><li><a href="changelog.html">Change Log</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="contact.html">Contact</a></li></ul></li>
@@ -654,28 +655,63 @@
     <p style="font-size:1rem; line-height:1.7; max-width:900px; margin-bottom:1rem;">
       <strong>🧪 Live Interactive Tools</strong> – Explore the model in action with four hands-on tools:
     </p>
-    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:0.8rem; max-width:900px; margin-bottom:0.5rem;">
-      <a href="npi-index.html" style="background:var(--bg-input); padding:0.8rem 1.2rem; border-radius:10px; border:1px solid var(--border-divider); text-decoration:none; color:var(--text-primary); transition:0.2s;">
-        <div style="font-size:1.5rem; line-height:1.2;">📊</div>
-        <div style="font-weight:600; font-size:0.9rem;">NPI Index Tracker</div>
-        <div style="font-size:0.75rem; color:var(--text-muted);">47 countries · real data</div>
-      </a>
-      <a href="wellbeing-index.html" style="background:var(--bg-input); padding:0.8rem 1.2rem; border-radius:10px; border:1px solid var(--border-divider); text-decoration:none; color:var(--text-primary); transition:0.2s;">
-        <div style="font-size:1.5rem; line-height:1.2;">🌿</div>
-        <div style="font-weight:600; font-size:0.9rem;">Wellbeing Index</div>
-        <div style="font-size:0.75rem; color:var(--text-muted);">Work-life balance</div>
-      </a>
-      <a href="debt-reality.html" style="background:var(--bg-input); padding:0.8rem 1.2rem; border-radius:10px; border:1px solid var(--border-divider); text-decoration:none; color:var(--text-primary); transition:0.2s;">
-        <div style="font-size:1.5rem; line-height:1.2;">💳</div>
-        <div style="font-weight:600; font-size:0.9rem;">Debt Reality</div>
-        <div style="font-size:0.75rem; color:var(--text-muted);">Payoff calculator</div>
-      </a>
-      <a href="compound-curve.html" style="background:var(--bg-input); padding:0.8rem 1.2rem; border-radius:10px; border:1px solid var(--border-divider); text-decoration:none; color:var(--text-primary); transition:0.2s;">
-        <div style="font-size:1.5rem; line-height:1.2;">📈</div>
-        <div style="font-weight:600; font-size:0.9rem;">Compound Curve</div>
-        <div style="font-size:0.75rem; color:var(--text-muted);">Compounding visualiser</div>
-      </a>
+<!-- ===== TOOL CARDS ROW ===== -->
+<section class="container section-spacing" style="padding-top:0; padding-bottom:3rem;">
+  <h2 class="text-gradient" style="font-size:clamp(1.8rem,3vw,2.2rem); font-weight:700; text-align:center; margin-bottom:0.5rem;">Explore the Tools</h2>
+  <p style="text-align:center; color:var(--text-secondary); max-width:600px; margin:0 auto 2rem; font-size:clamp(0.95rem,1.1vw,1.05rem);">
+    Interactive calculators to help you understand your financial and personal wellbeing.
+  </p>
+
+  <!-- ===== TWO‑COLUMN ROW: NPI + Global Dashboard ===== -->
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;">
+
+    <!-- NPI Index Tracker -->
+    <div class="tool-card">
+      <div class="tool-card-icon">📊</div>
+      <h3 class="tool-card-title">NPI Index Tracker</h3>
+      <p class="tool-card-desc">Track the National Productivity Index with real‑world data from 50+ countries. See how efficiently your economy turns inputs into value.</p>
+      <a href="npi-index.html" class="btn-primary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Try It →</a>
     </div>
+
+    <!-- Global Vital Signs Dashboard -->
+    <div class="tool-card">
+      <div class="tool-card-icon">🌍</div>
+      <h3 class="tool-card-title">Global Vital Signs Dashboard</h3>
+      <p class="tool-card-desc">Live dashboard tracking 14+ planetary &amp; societal indicators – CO₂, GDP, debt, poverty, infant mortality, and more. Updated automatically from public APIs.</p>
+      <a href="global-vitals-dashboard.html" class="btn-primary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Explore →</a>
+    </div>
+
+  </div>
+
+  <!-- ===== THREE‑COLUMN ROW: Wellbeing + Debt Reality + Compound Curve ===== -->
+  <div class="tool-cards-grid">
+
+    <!-- Wellbeing Index -->
+    <div class="tool-card">
+      <div class="tool-card-icon">🌿</div>
+      <h3 class="tool-card-title">Wellbeing Index</h3>
+      <p class="tool-card-desc">Measure your work-life balance, mental health, and productivity to find your harmony zone.</p>
+      <a href="wellbeing-index.html" class="btn-secondary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Try It →</a>
+    </div>
+
+    <!-- Debt Reality -->
+    <div class="tool-card">
+      <div class="tool-card-icon">💳</div>
+      <h3 class="tool-card-title">Debt Reality</h3>
+      <p class="tool-card-desc">Diagnose your financial situation, see the true cost of debt, and get a personalized plan.</p>
+      <a href="debt-reality.html" class="btn-secondary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Try It →</a>
+    </div>
+
+    <!-- Compound Curve -->
+    <div class="tool-card">
+      <div class="tool-card-icon">📈</div>
+      <h3 class="tool-card-title">Compound Curve</h3>
+      <p class="tool-card-desc">See how debt compounds over time and how small changes bend the curve.</p>
+      <a href="compound-curve.html" class="btn-secondary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Try It →</a>
+    </div>
+
+  </div>
+</section>
 
     <div style="display:flex; flex-wrap:wrap; gap:0.5rem 1.5rem; margin-top:1.5rem; font-size:0.85rem; color:var(--text-muted);">
       <span>📅 Published: 2026-08-12</span>
@@ -1756,15 +1792,45 @@
         </div>
       </section>
       
-      <!-- ===== TOOL CARDS ROW ===== -->
-<section class="container section-spacing" style="padding-top:0; -bottom:3;">
+<!-- ===== TOOL CARDS ROW ===== -->
+<section class="container section-spacing" style="padding-top:0; padding-bottom:3rem;">
   <h2 class="text-gradient" style="font-size:clamp(1.8rem,3vw,2.2rem); font-weight:700; text-align:center; margin-bottom:0.5rem;">Explore the Tools</h2>
   <p style="text-align:center; color:var(--text-secondary); max-width:600px; margin:0 auto 2rem; font-size:clamp(0.95rem,1.1vw,1.05rem);">
     Interactive calculators to help you understand your financial and personal wellbeing.
   </p>
+
+  <!-- ===== NEW CARD: Global Vital Signs Dashboard (above the 3) ===== -->
+  <div class="tool-card" style="margin-bottom:2rem; padding:1.5rem 2rem; border:1px solid rgba(255,255,255,0.06);">
+    <div style="display:flex; flex-wrap:wrap; align-items:center; gap:1rem 2rem;">
+      <div style="flex:1; min-width:200px;">
+        <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap; margin-bottom:0.15rem;">
+          <span style="font-size:2rem;">🌍</span>
+          <h3 style="font-size:clamp(1.3rem,1.8vw,1.6rem); font-weight:700; margin:0; background:linear-gradient(135deg,#60a5fa,#a78bfa); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">
+            Global Vital Signs Dashboard
+          </h3>
+          <span style="font-size:0.6rem; background:rgba(96,165,250,0.15); color:#60a5fa; padding:0.15rem 0.7rem; border-radius:20px; font-weight:600; letter-spacing:0.3px; -webkit-text-fill-color:#60a5fa;">LIVE</span>
+        </div>
+        <p style="color:var(--text-secondary); font-size:clamp(0.9rem,1vw,1rem); margin:0.1rem 0 0.5rem 0;">
+          Real‑time climate, economy &amp; social indicators — CO₂, GDP, debt, poverty, infant mortality, and more. Updated live from public APIs (World Bank, NASA).
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap:0.5rem 1.25rem; font-size:0.75rem; color:var(--text-secondary);">
+          <span>📊 14+ key metrics</span>
+          <span>🔄 Auto‑updates</span>
+          <span>🧠 AI Data Interpreter</span>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+        <a href="global-vitals-dashboard.html" class="btn-primary" style="padding:0.5rem 1.6rem; font-size:0.85rem; white-space:nowrap;">
+          Explore Dashboard →
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ORIGINAL 3 TOOL CARDS (Wellbeing, Debt Reality, Compound Curve) ===== -->
   <div class="tool-cards-grid">
 
-    <!-- ===== CARD 1: Wellbeing Index ===== -->
+    <!-- Wellbeing Index -->
     <div class="tool-card">
       <div class="tool-card-icon">🌿</div>
       <h3 class="tool-card-title">Wellbeing Index</h3>
@@ -1772,7 +1838,7 @@
       <a href="wellbeing-index.html" class="btn-secondary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Try It →</a>
     </div>
 
-    <!-- ===== CARD 2: Debt Reality ===== -->
+    <!-- Debt Reality -->
     <div class="tool-card">
       <div class="tool-card-icon">💳</div>
       <h3 class="tool-card-title">Debt Reality</h3>
@@ -1780,7 +1846,7 @@
       <a href="debt-reality.html" class="btn-secondary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Try It →</a>
     </div>
 
-    <!-- ===== CARD 3: Compound Curve ===== -->
+    <!-- Compound Curve -->
     <div class="tool-card">
       <div class="tool-card-icon">📈</div>
       <h3 class="tool-card-title">Compound Curve</h3>
