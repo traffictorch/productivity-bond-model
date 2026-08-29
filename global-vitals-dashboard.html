@@ -63,6 +63,54 @@
       background: var(--bg-body);
       border-color: var(--text-muted);
     }
+    
+    /* ===== ACCORDION STYLES ===== */
+.accordion-item {
+  border-bottom: 1px solid var(--border-divider);
+}
+.accordion-item:last-child {
+  border-bottom: none;
+}
+.accordion-toggle {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 0.2rem;
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: background 0.2s, border-radius 0.2s;
+}
+.accordion-toggle:hover {
+  background: rgba(255,255,255,0.03);
+  border-radius: 8px;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+}
+.accordion-toggle .arrow {
+  transition: transform 0.25s ease;
+  display: inline-block;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+.accordion-toggle.open .arrow {
+  transform: rotate(180deg);
+}
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.3s ease;
+  padding: 0 0.2rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.accordion-content.open {
+  max-height: 600px;
+  padding: 0.2rem 0.2rem 1rem 0.2rem;
+}
   </style>
 
   <!-- ===== GA4 ===== -->
