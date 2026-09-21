@@ -68,6 +68,28 @@
       --bar-prod: #a78bfa;
       --bar-hybrid: #f59e0b;
     }
+    /* --- Fix: stop sideways scroll on mobile --- */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  /* 4-column "who wins" grid -> 2 columns */
+  .who-wins-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  /* Old Way / New Way -> single column */
+  .old-new-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .who-wins-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
     [data-theme="light"] {
       --bg-body: #f0f2f8;
       --bg-card: rgba(255,255,255,0.85);
@@ -2119,6 +2141,38 @@ function shareSimSocial(platform) {
 document.addEventListener('DOMContentLoaded', function() {
   applySimParams();
 });
+</script>
+
+<script>
+  // ---- Fix: iOS "Copy" in native share sheet drops the url field.
+  // Put the URL inside `text` so copy always includes the link.
+  document.addEventListener('DOMContentLoaded', function () {
+    var oldBtn = document.getElementById('nativeShareBtn');
+    if (!oldBtn) return;
+
+    // Clone the button to strip the original listener(s), then re-bind.
+    var newBtn = oldBtn.cloneNode(true);
+    oldBtn.parentNode.replaceChild(newBtn, oldBtn);
+
+    newBtn.addEventListener('click', async function () {
+      var pageUrl = window.location.href;
+      var title = 'The Productivity Bond Model';
+      var text  = 'The Productivity Bond Model — financing prosperity without infinite growth.\n' + pageUrl;
+
+      try {
+        if (navigator.share) {
+          await navigator.share({ title: title, text: text, url: pageUrl });
+        } else if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(text);
+          alert('Link copied to clipboard.');
+        } else {
+          prompt('Copy this link:', pageUrl);
+        }
+      } catch (err) {
+        // User dismissed the share sheet — no action needed.
+      }
+    });
+  });
 </script>
 
 </body>
