@@ -20,11 +20,12 @@
       window.gtag = gtag;
 
       gtag('js', new Date());
-      gtag('config', MEASUREMENT_ID, {
-        cookie_expires: 63072000,   // 2 years
-        cookie_prefix: '_ga',
-        send_page_view: true
-      });
+gtag('config', MEASUREMENT_ID, {
+  cookie_expires: 63072000,
+  cookie_domain: 'none',
+  cookie_flags: 'SameSite=None;Secure',
+  send_page_view: true
+});
     };
   }
 
