@@ -2,7 +2,7 @@
 
 All notable changes to the Productivity Bond Model and this website.
 
-## [0.8.0] – 2026-08-29
+## [1.0.0] – 2026-09-22
 
 ### Added
 
@@ -42,10 +42,12 @@ Embedded a live, open‑source dashboard at `/global-vitals-dashboard.html` – 
 - **Book Page Updates**:
   - Replaced the PDF‑only appendix list with HTML links to `appendix.html` sections.
   - Updated the “Appendices (PDF only)” section to “📘 Appendices” with HTML and PDF download options.
+  - Added link to apple audiobook.
 
 ### Fixed
 - Fixed the day/night theme toggle on the appendix page – now works reliably without conflicting scripts.
 - Fixed mobile hamburger menu and dropdown toggles on the appendix page – now consistent with the book page’s navigation logic.
+- Fixed copy link + home page side shift + cleaned up book links.
 
 ## [0.7.0] – 2026-08-28
 
