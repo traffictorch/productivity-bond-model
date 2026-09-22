@@ -70,7 +70,7 @@
     }
     /* --- Fix: stop sideways scroll on mobile --- */
 html, body {
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100%;
 }
 
@@ -283,7 +283,7 @@ html, body {
       "alternateName": "The Productivity Bond Model",
       "description": "A sovereign debt instrument whose return is linked to measurable productivity gains (NPI), designed to replace perpetual-growth-dependent financing with productivity-linked prosperity. This book presents the full theory, simulation results, and implementation roadmap.",
       "isbn": "979-8-23578-956-2",
-      "version": "0.8.0",
+      "version": "1.0.0",
       "datePublished": "2026-08-12",
       "author": {
         "@type": "Person",
@@ -321,7 +321,7 @@ html, body {
         "description": "Complete Python implementation of the 10,000-path Monte Carlo simulation used in the book, including all bond types, portfolio optimisation, and sensitivity analysis.",
         "applicationCategory": "Simulation",
         "operatingSystem": "Linux, macOS, Windows",
-        "softwareVersion": "0.8.0",
+        "softwareVersion": "1.0.0",
         "url": "https://zenodo.org/records/21970090",
         "sameAs": "https://github.com/traffictorch/productivity-bond-model",
         "citation": "https://doi.org/10.5281/zenodo.21970090",
@@ -521,7 +521,7 @@ html, body {
       <section id="hero" class="container hero" style="min-height:80vh; display:flex; align-items:center; padding:4rem 6px 2rem;">
         <div>
           <span class="badge-glow" style="margin-bottom:0.5rem;">📘 Canonical Reference</span>
-          <span class="badge-glow badge-version" style="margin-left:0.5rem;">v0.8.0</span>
+          <span class="badge-glow badge-version" style="margin-left:0.5rem;">v1.0.0</span>
           <h1 class="text-gradient" style="font-size:clamp(2.5rem,8vw,4rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">
             The Productivity<br />Bond Model
           </h1>
@@ -737,7 +737,7 @@ html, body {
 
     <div style="display:flex; flex-wrap:wrap; gap:0.5rem 1.5rem; margin-top:1.5rem; font-size:0.85rem; color:var(--text-muted);">
       <span>📅 Published: 2026-08-12</span>
-      <span>📌 Version: 0.8.0</span>
+      <span>📌 Version: 1.0.0</span>
       <span>🔗 <a href="#citation" style="color:#b388ff;">Cite this work</a></span>
       <span>📊 <a href="npi-index.html" style="color:#b388ff;">Try the NPI Tracker →</a></span>
     </div>
@@ -866,7 +866,7 @@ html, body {
                 <div class="param-row"><span class="sym">Cost saving</span><span class="val" style="color:#34d399;">−3.1%</span></div>
                 <div class="param-row"><span class="sym">Distress</span><span class="val" style="color:#f87171;">+77.2pp</span></div>
                 <div class="param-row"><span class="sym">Optimal share</span><span class="val">30%</span></div>
-                <div class="param-row"><span class="sym">Version</span><span class="val">v0.8.0</span></div>
+                <div class="param-row"><span class="sym">Version</span><span class="val">v1.0.0</span></div>
               </div>
             </div>
             <div style="margin-top:0.5rem; padding-top:0.5rem; border-top:1px solid var(--border-divider);"><a href="#citation">📖 Cite this model</a></div>
@@ -978,7 +978,7 @@ html, body {
           <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">How It Works</h2>
           <p style="color:var(--text-secondary); margin-bottom:1.5rem;">This diagram shows the cycle of the Productivity Bond in action: The Government issues the bond, the economy grows, the return is calculated based on NPI, and the gains are shared with investors and citizens.</p>
           <div class="diagram-container">
-            <svg viewBox="0 0 800 180" preserveAspectRatio="xMidYMid meet" style="max-width:100%; height:auto;">
+            <svg viewBox="0 1.0.0 180" preserveAspectRatio="xMidYMid meet" style="max-width:100%; height:auto;">
               <defs>
                 <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#4f46e5" /></marker>
               </defs>
@@ -1765,20 +1765,20 @@ html, body {
           <span class="badge-glow" style="margin-bottom:0.8rem;">Cite This Work</span>
           <h2 style="font-size:1.8rem; font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">🔗 Canonical Reference</h2>
           <p style="color:var(--text-secondary); margin-bottom:1.5rem;">How to cite the Productivity Bond Model in academic work.</p>
-          <div class="citation-block"><div class="label">APA 7th</div>Callan, Y. (2026). <em>The Productivity Bond Model</em> (Version 0.8.0). Traffic Torch. ISBN 979-8-23578-956-2. https://traffictorch.github.io/productivity-bond-model/</div>
+          <div class="citation-block"><div class="label">APA 7th</div>Callan, Y. (2026). <em>The Productivity Bond Model</em> (Version 1.0.0). Traffic Torch. ISBN 979-8-23578-956-2. https://traffictorch.github.io/productivity-bond-model/</div>
           <div class="citation-block"><div class="label">BibTeX</div><pre style="margin:0; white-space:pre-wrap; color:var(--text-primary); font-family:'Courier New',monospace; font-size:0.8rem;">@misc{callan2026productivitybond,
   author = {Ylia Callan},
   title = {The Productivity Bond Model},
   year = {2026},
   publisher = {Traffic Torch},
   url = {https://traffictorch.github.io/productivity-bond-model/},
-  version = {0.8.0},
+  version = {1.0.0},
   isbn = {979-8-23578-956-2},
   note = {Canonical reference for the Productivity Bond Model}
 }</pre></div>
           <div style="display:flex; flex-wrap:wrap; gap:1rem; margin-top:1rem;">
-            <a href="#" onclick="navigator.clipboard.writeText('Callan, Y. (2026). The Productivity Bond Model (Version 0.8.0). Traffic Torch. https://traffictorch.github.io/productivity-bond-model/'); alert('Copied APA citation!'); return false;" class="btn-secondary" style="padding:0.4rem 1.5rem;">📋 Copy APA</a>
-            <a href="#" onclick="navigator.clipboard.writeText('@misc{callan2026productivitybond,\n  author = {Ylia Callan},\n  title = {The Productivity Bond Model},\n  year = {2026},\n  publisher = {Traffic Torch},\n  url = {https://traffictorch.github.io/productivity-bond-model/},\n  version = {0.8.0}\n}'); alert('Copied BibTeX!'); return false;" class="btn-secondary" style="padding:0.4rem 1.5rem;">📋 Copy BibTeX</a>
+            <a href="#" onclick="navigator.clipboard.writeText('Callan, Y. (2026). The Productivity Bond Model (Version 1.0.0). Traffic Torch. https://traffictorch.github.io/productivity-bond-model/'); alert('Copied APA citation!'); return false;" class="btn-secondary" style="padding:0.4rem 1.5rem;">📋 Copy APA</a>
+            <a href="#" onclick="navigator.clipboard.writeText('@misc{callan2026productivitybond,\n  author = {Ylia Callan},\n  title = {The Productivity Bond Model},\n  year = {2026},\n  publisher = {Traffic Torch},\n  url = {https://traffictorch.github.io/productivity-bond-model/},\n  version = {1.0.0}\n}'); alert('Copied BibTeX!'); return false;" class="btn-secondary" style="padding:0.4rem 1.5rem;">📋 Copy BibTeX</a>
             <a href="https://github.com/traffictorch/productivity-bond-model" target="_blank" class="btn-secondary" style="padding:0.4rem 1.5rem;">📁 Repository</a>
           </div>
         </div>
@@ -1893,24 +1893,6 @@ html, body {
       <a href="book.html#audiobook-chapters" class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;">🎧 Listen to Audiobook</a>
     </div>
 
-    <!-- Apple Books -->
-    <div style="margin-bottom:0.8rem;">
-      <strong style="color:var(--text-primary); font-size:0.9rem;">🍏 Apple</strong>
-      <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.3rem;">
-        <a href="https://books.apple.com/au/book/the-infinite-debt-problem-how-to-replace-perpetual/id6801656366" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;">📚 Ebook</a>
-        <span class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem; opacity:0.4; cursor:not-allowed;">🎧 Audiobook (Soon)</span>
-      </div>
-    </div>
-
-    <!-- Google Books -->
-    <div style="margin-bottom:0.8rem;">
-      <strong style="color:var(--text-primary); font-size:0.9rem;">📚 Google</strong>
-      <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.3rem;">
-        <a href="https://play.google.com/store/books/details/Ylia_Callan_The_Infinite_Debt_Problem?id=6bIBEgAAQBAJ" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;">📚 Ebook</a>
-        <a href="https://play.google.com/store/audiobooks/details/Ylia_Callan_The_Infinite_Debt_Problem?id=AQAAAED6F3ZXnM" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;">🎧 Audiobook</a>
-      </div>
-    </div>
-
     <!-- Model & Reference Links -->
     <div style="display:flex; flex-wrap:wrap; gap:0.6rem; padding-top:0.8rem; border-top:1px solid var(--border-divider);">
       <a href="index.html#simulator" class="btn-primary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">💸 Run Live Simulation</a>
@@ -1963,7 +1945,7 @@ html, body {
     <p>
       © 2026 <a href="https://traffictorch.net">Traffic Torch</a> ·
       <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> ·
-      Version 0.8.0 ·
+      Version 1.0.0 ·
       <a href="https://zenodo.org/records/21970090" target="_blank" rel="external noopener">Simulation Code (Zenodo)</a> ·
       <button class="share-btn" style="background:transparent; border:none; color:#4f46e5; padding:0; font-size:0.85rem; cursor:pointer;">📤 Share</button>
     </p>
@@ -1971,7 +1953,7 @@ html, body {
       Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI · <span id="last-updated"></span>
     </p>
     <p style="font-size:0.65rem; margin-top:0.5rem; color:var(--text-muted); opacity:0.7;">
-      📌 v0.8.0 – feat: NPI Index Tracker with real-world data. Endogenous debt feedback loop implemented - reveals 2.5pp lower distress for Productivity.
+      📌 v1.0.0 – feat: NPI Index Tracker with real-world data. Endogenous debt feedback loop implemented - reveals 2.5pp lower distress for Productivity.
     </p>
   </div>
 </footer>
@@ -2160,7 +2142,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       try {
         if (navigator.share) {
-          await navigator.share({ title: title, text: text, url: pageUrl });
+          await navigator.share({ text: text });
         } else if (navigator.clipboard && navigator.clipboard.writeText) {
           await navigator.clipboard.writeText(text);
           alert('Link copied to clipboard.');
