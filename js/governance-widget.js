@@ -26,7 +26,7 @@
       '    <a href="https://traffictorch.net/community/" class="btn-secondary" style="padding:0.6rem 1.7rem; font-size:0.9rem;">🤝 Community</a>',
       '  </div>',
       '  <p style="font-size:0.75rem; color:var(--text-muted); margin-top:1rem;">',
-      '    Part of the <a href="https://traffictorch.net" target="_blank" rel="noopener noreferrer" style="color:#a78bfa; text-decoration:underline;">Traffic Torch</a> platform. Free, open source, no paywalls.',
+      '    Part of the <a href="https://traffictorch.net" target="_blank" rel="noopener noreferrer" style="color:#a78bfa; text-decoration:underline;">Traffic Torch</a> platform. Freemium, open source and decentralised.',
       '  </p>',
       '</div>'
     ].join('\n');
