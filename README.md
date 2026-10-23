@@ -1,5 +1,15 @@
 # Productivity Bond Model
 
+## 📌 Important Note on Portfolio Optimisation
+
+The simulation reveals a **trade-off** between cost reduction and fiscal distress:
+- **30% Productivity Bonds** = minimises distress probability (34%)
+- **50% Productivity Bonds** = lower expected cost on paper, but distress jumps to 48%
+
+"Optimal" depends on what you're optimising for. The book recommends 30% as a prudent starting point.
+
+---
+
 **Simulation code, canonical reference, and interactive web platform for *The Infinite Debt Problem: How to Replace Perpetual Growth with Productive Prosperity***
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
