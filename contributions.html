@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contributions | The Infinite Debt Problem</title>
+    <link rel="stylesheet" href="critical.css">
+    <style>
+        .contributors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .contributor-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .contributor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .contributor-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary, #fff);
+        }
+        .contributor-role {
+            font-size: 0.95rem;
+            color: #60a5fa;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        .contributor-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .contributor-links a {
+            font-size: 0.85rem;
+            color: var(--text-muted, #ccc);
+            text-decoration: underline;
+            transition: color 0.2s;
+        }
+        .contributor-links a:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER INJECTION -->
+    <header class="site-header">
+        <div class="container">
+            <nav class="main-nav">
+                <a href="index.html">Home</a>
+                <a href="book.html">Book</a>
+                <a href="tools.html">Simulation</a>
+                <a href="about.html">About</a>
+                <a href="contributions.html" class="active" style="color:#fbbf24;">Contributions</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container" style="padding: 6rem 2rem; max-width: 1200px; margin: 0 auto;">
+        <h1 style="font-size: 3rem; margin-bottom: 1rem; color: var(--text-primary, #fff);">Project Contributors</h1>
+        <p style="color: var(--text-muted, #ccc); font-size: 1.1rem; max-width: 800px;">
+            The Productivity Bond Model and the broader "Infinite Debt Problem" framework are built on the feedback, expertise, and rigorous testing of an incredible community of thinkers. Thank you to everyone who has contributed.
+        </p>
+
+        <div class="contributors-grid">
+            <!-- CONTRIBUTOR CARD TEMPLATE (Copy and paste this block to add new contributors) -->
+            
+            <div class="contributor-card">
+                <div class="contributor-name">Ylia Callan</div>
+                <div class="contributor-role">Creator & Project Lead</div>
+                <div class="contributor-links">
+                    <a href="https://traffictorch.net/" target="_blank">TrafficTorch</a>
+                    <a href="https://www.linkedin.com/in/ylia-callan-8b889976/" target="_blank">LinkedIn</a>
+                </div>
+            </div>
+
+            <div class="contributor-card">
+                <div class="contributor-name">Suzie Mylecharane</div>
+                <div class="contributor-role">Overall Education & Feedback</div>
+                <div class="contributor-links">
+                    <a href="https://www.facebook.com/Suzie.Mylecharane" target="_blank">Facebook</a>
+                </div>
+            </div>
+
+            <div class="contributor-card">
+                <div class="contributor-name">Pablo Daverio</div>
+                <div class="contributor-role">Website Flow & User Experience Feedback</div>
+                <div class="contributor-links">
+                    <a href="https://daverio1933.it/en/" target="_blank">Daverio 1933</a>
+                    <a href="https://www.linkedin.com/in/pablo-daverio-3264b22a9/" target="_blank">LinkedIn</a>
+                </div>
+            </div>
+            
+            <!-- END CONTRIBUTOR CARD TEMPLATE -->
+
+        </div>
+    </main>
+
+    <!-- FOOTER INJECTION -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+                <a href="contributions.html">Contributions</a>
+            </div>
+            <p>&copy; 2026 Ylia Callan. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
