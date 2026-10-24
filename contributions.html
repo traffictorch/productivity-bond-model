@@ -1,122 +1,275 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contributions | The Infinite Debt Problem</title>
-    <link rel="stylesheet" href="critical.css">
-    <style>
-        .contributors-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        .contributor-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 2rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .contributor-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-        .contributor-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary, #fff);
-        }
-        .contributor-role {
-            font-size: 0.95rem;
-            color: #60a5fa;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-        .contributor-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        .contributor-links a {
-            font-size: 0.85rem;
-            color: var(--text-muted, #ccc);
-            text-decoration: underline;
-            transition: color 0.2s;
-        }
-        .contributor-links a:hover {
-            color: #fff;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contributors | The Infinite Debt Problem</title>
+  <meta name="description" content="Meet the thinkers, builders, and reviewers who are contributing to the Productivity Bond Model." />
+  <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/contributions.html" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="icon-512.png" />
+
+  <!-- FONTS & CORE CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=block" crossorigin="anonymous" />
+  <link rel="stylesheet" href="css/core.min.css" />
+
+  <style>
+    html { opacity: 0; transition: opacity 0.12s ease; }
+    html.loaded { opacity: 1; }
+    
+    .hero { min-height:50vh; display:flex; align-items:center; padding:4rem 6px 2rem; background:transparent; }
+    
+    .contributors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .contributor-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-divider);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .contributor-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(79,70,229,0.4);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    
+    .contributor-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4f46e5, #a78bfa);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1.5rem;
+    }
+
+    .contributor-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.2rem;
+    }
+    
+    .contributor-role {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #60a5fa;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    
+    .contributor-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      flex-grow: 1;
+      margin-bottom: 1.5rem;
+    }
+    
+    .contributor-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+    
+    .contributor-links a {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      background: var(--bg-input);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      border: 1px solid var(--border-divider);
+      transition: all 0.2s;
+    }
+    
+    .contributor-links a:hover {
+      color: var(--text-primary);
+      border-color: var(--text-muted);
+      background: rgba(255,255,255,0.05);
+    }
+  </style>
 </head>
 <body>
-    <!-- HEADER INJECTION -->
-    <header class="site-header">
-        <div class="container">
-            <nav class="main-nav">
-                <a href="index.html">Home</a>
-                <a href="book.html">Book</a>
-                <a href="tools.html">Simulation</a>
-                <a href="about.html">About</a>
-                <a href="contributions.html" class="active" style="color:#fbbf24;">Contributions</a>
-                <a href="contact.html">Contact</a>
-            </nav>
+
+<!-- ===== SENATE SUBMISSION BANNER ===== -->
+<div style="background: linear-gradient(90deg, #1e3a8a 0%, #3b82f6 100%); color: white; text-align: center; padding: 10px; font-size: 0.9rem; position: relative; z-index: 1000;">
+    🏛️ <strong>Official Submission:</strong> Accepted and published by the Senate Select Committee on Productivity in Australia (Submission #240). 
+    <a href="https://www.aph.gov.au/DocumentStore.ashx?id=25e9d73e-76be-4f7f-87af-5fb5b3e71058&subId=805961" target="_blank" style="color: #fbbf24; text-decoration: underline; margin-left: 8px;">Read the submission here</a>
+</div>
+
+<!-- ===== NAV ===== -->
+<nav class="sticky-nav no-print" id="mainNav">
+  <div class="nav-left">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-pressed="false"><span id="themeIcon">🌙</span></button>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">🏠 Home</a></li>
+    <li class="dropdown">
+      <span class="dropdown-toggle">🧰 Tools ▼</span>
+      <ul class="dropdown-menu">
+        <li><a href="tools.html">⚙️ All Tools</a></li>
+        <li><a href="wellbeing-index.html">🌿 Wellbeing Index</a></li>
+        <li><a href="debt-reality.html">💳 Debt Reality</a></li>
+        <li><a href="compound-curve.html">📈 Compound Curve</a></li>
+        <li><a href="npi-index.html">📊 NPI Index</a></li>
+        <li><a href="global-vitals-dashboard.html">🌍 Global Vitals</a></li>
+      </ul>
+    </li>
+    <li class="dropdown"><span class="dropdown-toggle">About ▼</span><ul class="dropdown-menu"><li><a href="news.html">News</a></li><li><a href="contributions.html" style="color:#fbbf24;">Contributions</a></li><li><a href="about.html">Traffic Torch</a></li><li><a href="changelog.html">Change Log</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="contact.html">Contact</a></li></ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">Abstract ▼</span><ul class="dropdown-menu"><li><a href="index.html#abstract">The Abstract</a></li><li><a href="index.html#problem-visualized">The Problem</a></li><li><a href="index.html#wellbeing">Wellbeing</a></li></ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">PBM ▼</span><ul class="dropdown-menu">
+      <li><a href="appendix.html">📑 Appendices</a></li>
+      <li><a href="index.html#model-definition">Model</a></li>
+      <li><a href="index.html#mechanism">Mechanism</a></li>
+      <li><a href="index.html#glossary">Glossary</a></li>
+      <li><a href="index.html#limitations">Limitations</a></li>
+      <li><a href="index.html#related">Related</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+      <li><a href="index.html#citation">Cite</a></li>
+    </ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">Simulation ▼</span><ul class="dropdown-menu"><li><a href="index.html#simulator">Live Simulator</a></li><li><a href="index.html#results-data">Results</a></li><li><a href="index.html#sensitivity">Sensitivity</a></li><li><a href="index.html#adoption">Scenarios</a></li><li><a href="index.html#implement">Implementation</a></li></ul></li>
+    <li><a href="book.html">🎧 Books</a></li>
+    <li><a href="appendix.html">📑 Appendices</a></li>
+    <li><a href="index.html#learn">💸 Learn</a></li>
+  </ul>
+</nav>
+
+<main id="main-content">
+  <!-- ===== HERO ===== -->
+  <section id="hero" class="container hero">
+    <div>
+      <span class="badge-glow" style="margin-bottom:1rem; background:rgba(167,139,250,0.15); color:#a78bfa;">🤝 Community</span>
+      <h1 class="text-gradient" style="font-size:clamp(2.5rem,8vw,4rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">Project Contributors</h1>
+      <p style="font-size:clamp(1.1rem,2vw,1.4rem); font-weight:300; opacity:0.8; max-width:800px; margin:1rem 0 1.5rem; color:var(--text-secondary);">
+        The Productivity Bond Model and the broader "Infinite Debt Problem" framework are built on the feedback, expertise, and rigorous testing of an incredible community of thinkers. Thank you to everyone who has contributed their time and brilliance.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== BREADCRUMB ===== -->
+  <div class="container" style="padding-top:0.8rem; padding-bottom:0;">
+    <nav class="breadcrumb" style="font-size:0.85rem; color:var(--text-muted); display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+      <a href="index.html" style="color:var(--text-muted); text-decoration:none;">🏠 Home</a>
+      <span style="opacity:0.5;">/</span>
+      <span style="color:var(--text-primary); font-weight:500;">Contributors</span>
+    </nav>
+  </div>
+
+  <!-- ===== CONTRIBUTORS GRID ===== -->
+  <section class="container section-spacing">
+    <div class="contributors-grid">
+      
+      <!-- YLIA CALLAN -->
+      <div class="contributor-card">
+        <div class="contributor-avatar">YC</div>
+        <div class="contributor-name">Ylia Callan</div>
+        <div class="contributor-role">Creator & Project Lead</div>
+        <div class="contributor-desc">
+          Conceptualized the Productivity Bond Model and the National Productivity Index (NPI). Authored "The Infinite Debt Problem," developed the Python Monte Carlo simulation engine, and leads the overall strategic direction and policy outreach.
         </div>
-    </header>
-
-    <main class="container" style="padding: 6rem 2rem; max-width: 1200px; margin: 0 auto;">
-        <h1 style="font-size: 3rem; margin-bottom: 1rem; color: var(--text-primary, #fff);">Project Contributors</h1>
-        <p style="color: var(--text-muted, #ccc); font-size: 1.1rem; max-width: 800px;">
-            The Productivity Bond Model and the broader "Infinite Debt Problem" framework are built on the feedback, expertise, and rigorous testing of an incredible community of thinkers. Thank you to everyone who has contributed.
-        </p>
-
-        <div class="contributors-grid">
-            <!-- CONTRIBUTOR CARD TEMPLATE (Copy and paste this block to add new contributors) -->
-            
-            <div class="contributor-card">
-                <div class="contributor-name">Ylia Callan</div>
-                <div class="contributor-role">Creator & Project Lead</div>
-                <div class="contributor-links">
-                    <a href="https://traffictorch.net/" target="_blank">TrafficTorch</a>
-                    <a href="https://www.linkedin.com/in/ylia-callan-8b889976/" target="_blank">LinkedIn</a>
-                </div>
-            </div>
-
-            <div class="contributor-card">
-                <div class="contributor-name">Suzie Mylecharane</div>
-                <div class="contributor-role">Overall Education & Feedback</div>
-                <div class="contributor-links">
-                    <a href="https://www.facebook.com/Suzie.Mylecharane" target="_blank">Facebook</a>
-                </div>
-            </div>
-
-            <div class="contributor-card">
-                <div class="contributor-name">Pablo Daverio</div>
-                <div class="contributor-role">Website Flow & User Experience Feedback</div>
-                <div class="contributor-links">
-                    <a href="https://daverio1933.it/en/" target="_blank">Daverio 1933</a>
-                    <a href="https://www.linkedin.com/in/pablo-daverio-3264b22a9/" target="_blank">LinkedIn</a>
-                </div>
-            </div>
-            
-            <!-- END CONTRIBUTOR CARD TEMPLATE -->
-
+        <div class="contributor-links">
+          <a href="https://traffictorch.net/" target="_blank">🌐 TrafficTorch</a>
+          <a href="https://www.linkedin.com/in/ylia-callan-8b889976/" target="_blank">💼 LinkedIn</a>
         </div>
-    </main>
+      </div>
 
-    <!-- FOOTER INJECTION -->
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-links">
-                <a href="privacy.html">Privacy</a>
-                <a href="terms.html">Terms</a>
-                <a href="contributions.html">Contributions</a>
-            </div>
-            <p>&copy; 2026 Ylia Callan. All rights reserved.</p>
+      <!-- SUZIE MYLECHARANE -->
+      <div class="contributor-card">
+        <div class="contributor-avatar">SM</div>
+        <div class="contributor-name">Suzie Mylecharane</div>
+        <div class="contributor-role">Education & Feedback</div>
+        <div class="contributor-desc">
+          Provided critical feedback on the educational materials and overall messaging. Ensured that the complex economic concepts were translated into clear, accessible language for a broader audience.
         </div>
-    </footer>
+        <div class="contributor-links">
+          <a href="https://www.facebook.com/Suzie.Mylecharane" target="_blank">📘 Facebook</a>
+        </div>
+      </div>
+
+      <!-- PABLO DAVERIO -->
+      <div class="contributor-card">
+        <div class="contributor-avatar">PD</div>
+        <div class="contributor-name">Pablo Daverio</div>
+        <div class="contributor-role">UX & Web Flow Feedback</div>
+        <div class="contributor-desc">
+          Reviewed the website's user experience, navigation, and information architecture. Provided expert feedback on how to present the simulation results and policy documents intuitively.
+        </div>
+        <div class="contributor-links">
+          <a href="https://daverio1933.it/en/" target="_blank">🌐 Daverio 1933</a>
+          <a href="https://www.linkedin.com/in/pablo-daverio-3264b22a9/" target="_blank">💼 LinkedIn</a>
+        </div>
+      </div>
+
+      <!-- FUTURE CONTRIBUTOR PLACEHOLDER -->
+      <div class="contributor-card" style="border-style: dashed; background: transparent; justify-content: center; align-items: center; text-align: center; opacity: 0.6;">
+        <div style="font-size: 2rem; margin-bottom: 1rem;">✨</div>
+        <div class="contributor-name" style="font-size: 1.2rem;">Your Name Here</div>
+        <div class="contributor-desc" style="margin-top: 0.5rem;">
+          We are actively looking for economists, developers, and policy experts to review and stress-test the model. 
+        </div>
+        <a href="contact.html" class="btn-primary" style="margin-top: 1rem; padding: 0.5rem 1.5rem;">Get Involved</a>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<!-- ===== FLOATING RETURN TO TOP ===== -->
+<button class="floating-return-top" id="floatingReturnTop" aria-label="Return to top">⬆ Top</button>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+  <div class="container">
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1rem 1.5rem; margin-bottom:1.5rem; font-size:0.85rem;">
+      <a href="index.html" style="color:var(--text-muted); text-decoration:none;">🏠 Home</a>
+      <a href="news.html" style="color:var(--text-muted); text-decoration:none;">News</a>
+      <a href="contributions.html" style="color:#fbbf24; text-decoration:none;">Contributions</a>
+      <a href="about.html" style="color:var(--text-muted); text-decoration:none;">About</a>
+      <a href="book.html" style="color:var(--text-muted); text-decoration:none;">Book</a>
+      <a href="changelog.html" style="color:var(--text-muted); text-decoration:none;">Changelog</a>
+      <a href="tools.html" style="color:var(--text-muted); text-decoration:none;">🧰 Tools</a>
+      <a href="privacy.html" style="color:var(--text-muted); text-decoration:none;">Privacy</a>
+      <a href="terms.html" style="color:var(--text-muted); text-decoration:none;">Terms</a>
+      <a href="contact.html" style="color:var(--text-muted); text-decoration:none;">Contact</a>
+    </div>
+    <p>
+      © 2026 <a href="https://traffictorch.net">Traffic Torch</a> ·
+      <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> ·
+      Version 1.0.0 ·
+      <a href="https://zenodo.org/records/21970090" target="_blank" rel="external noopener">Simulation Code (Zenodo)</a>
+    </p>
+    <p style="font-size:0.7rem; margin-top:0.3rem;">
+      Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI · <span id="last-updated"></span>
+    </p>
+  </div>
+
+  <div style="margin-top:1.5rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.1); font-size:0.85rem; color:var(--text-muted); text-align: center;">
+      <p>🏛️ Official Submission #240 to the <a href="https://www.aph.gov.au/DocumentStore.ashx?id=25e9d73e-76be-4f7f-87af-5fb5b3e71058&subId=805961" target="_blank" style="color:#60a5fa; text-decoration:underline;">Senate Select Committee on Productivity in Australia</a>.</p>
+  </div>
+</footer>
+
+<!-- ===== CORE JS ===== -->
+<script src="js/core.min.js" defer></script>
 </body>
 </html>
