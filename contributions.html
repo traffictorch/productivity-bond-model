@@ -3,119 +3,239 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contributors | The Infinite Debt Problem</title>
+  <title>🤝 Contributors | Traffic Torch</title>
   <meta name="description" content="Meet the thinkers, builders, and reviewers who are contributing to the Productivity Bond Model." />
-  <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/contributions.html" />
+  <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/tools.html" />
+  <meta property="og:title" content="PBM Productivity Lab – 3 Tools" />
+  <meta property="og:description" content="Interactive tools for the Productivity Bond Model." />
+  <meta property="og:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://traffictorch.github.io/productivity-bond-model/tools.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PBM Productivity Lab – 3 Tools" />
+  <meta name="twitter:description" content="Diagnose debt, measure wellbeing, project your future." />
+  <meta name="twitter:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.png" />
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="favicon.ico" />
   <link rel="apple-touch-icon" href="icon-512.png" />
+  <link rel="preconnect" href="https://static.addtoany.com" />
 
-  <!-- FONTS & CORE CSS -->
+  <!-- ===== FONTS (synchronous) ===== -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=block" crossorigin="anonymous" />
+
+  <!-- ===== CORE CSS (synchronous) ===== -->
   <link rel="stylesheet" href="css/core.min.css" />
 
+  <!-- ===== TOOL‑SPECIFIC OVERRIDES ===== -->
   <style>
-    /* Opacity fixed */
+    html { opacity: 0; transition: opacity 0.12s ease; }
     html.loaded { opacity: 1; }
-    
-    .hero { min-height:50vh; display:flex; align-items:center; padding:4rem 6px 2rem; background:transparent; }
-    
-    .contributors-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
+
+    :root {
+      --color-safe: #69db7c;
+      --color-burnout: #ff6b6b;
+      --color-stagnant: #4dabf7;
     }
-    
-    .contributor-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border-divider);
-      border-radius: 16px;
-      padding: 2rem;
-      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .contributor-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(79,70,229,0.4);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    }
-    
-    .contributor-avatar {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #4f46e5, #a78bfa);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: white;
-      margin-bottom: 1.5rem;
+    [data-theme="light"] {
+      --color-safe: #2b8a3e;
+      --color-burnout: #e03131;
+      --color-stagnant: #1971c2;
     }
 
-    .contributor-name {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 0.2rem;
+    .hero { min-height:60vh; display:flex; align-items:center; padding:2rem 6px 1rem; background:transparent; }
+    .section-spacing { padding:3rem 0; }
+    @media (max-width:768px) {
+      .hero { min-height:40vh; padding:1rem 0; }
     }
-    
-    .contributor-role {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #60a5fa;
-      font-weight: 600;
-      margin-bottom: 1rem;
+
+    .hero-tabs { display:flex; flex-wrap:wrap; gap:0.6rem; align-items:center; margin-bottom:0.8rem; }
+    .hero-tab-btn {
+      background:none;
+      border:1px solid var(--border-divider);
+      color:var(--text-muted);
+      font-size:0.9rem;
+      font-weight:600;
+      padding:0.5rem 1.2rem;
+      border-radius:40px;
+      cursor:pointer;
+      transition:0.2s;
+      font-family:inherit;
     }
-    
-    .contributor-desc {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      flex-grow: 1;
-      margin-bottom: 1.5rem;
+    .hero-tab-btn:hover { color:var(--text-primary); background:var(--bg-input); border-color:var(--text-muted); }
+    .hero-tab-btn.active { background:rgba(79,70,229,0.2); color:#b388ff; border-color:rgba(79,70,229,0.4); }
+
+    .tool-panel { display:none; animation:fade 0.2s ease; }
+    .tool-panel.active { display:block; }
+    @keyframes fade { 0%{opacity:0.4;transform:translateY(4px)} 100%{opacity:1;transform:translateY(0)} }
+
+    .desc { color:var(--text-muted); font-size:0.95rem; margin-bottom:1.5rem; }
+
+    .input-group {
+      display:flex; flex-wrap:wrap; gap:1rem 2rem; margin-bottom:1.5rem;
+      background:var(--bg-input); padding:1.2rem 1.5rem;
+      border-radius:12px; border:1px solid var(--border-divider);
     }
-    
-    .contributor-links {
+    .input-group label {
+      display:flex; flex-direction:column;
+      font-size:0.75rem; text-transform:uppercase; letter-spacing:0.04em;
+      color:var(--text-muted); gap:0.3rem; flex:1 1 140px;
+    }
+    .input-group input[type="number"],
+    .input-group input[type="range"] {
+      background:var(--bg-body);
+      border:1px solid var(--border-divider);
+      border-radius:8px;
+      padding:0.5rem 0.75rem;
+      color:var(--text-primary);
+      font-weight:500;
+      width:100%;
+      font-family:inherit;
+    }
+    .input-group input[type="range"] { padding:0; accent-color:#4f46e5; }
+
+    .result-box {
+      background:var(--bg-input);
+      border-radius:12px;
+      padding:1.5rem;
+      border-left:4px solid #4f46e5;
+      margin-top:1rem;
+    }
+    .result-box .stat { font-size:2rem; font-weight:700; color:var(--text-primary); }
+    .result-box .stat span { color:#4f46e5; }
+    .result-box .sub-stat { color:var(--text-muted); font-size:0.9rem; }
+    .risk-low { color:var(--color-safe); font-weight:600; }
+    .risk-med { color:#ffd43b; font-weight:600; }
+    .risk-high { color:var(--color-burnout); font-weight:600; }
+
+    .chart-container { max-height:300px; margin:1rem 0; }
+
+    .prescription-box {
+      background: var(--bg-body);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-left: 4px solid #f59e0b;
+    }
+    .prescription-box .label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700; }
+    .prescription-box .solution { color: #f59e0b; font-weight: 600; margin-top: 0.2rem; }
+    .prescription-box .action { color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.2rem; }
+
+    .ai-power-wrapper { margin-top: 1.5rem; }
+    .ai-power-wrapper .glass-card { padding: 1.2rem 1.5rem; border-color: rgba(167,139,250,0.3); }
+    .ai-output {
+      margin-top: 0.8rem;
+      padding: 0.8rem 1.2rem;
+      background: var(--bg-body);
+      border-radius: 0.8rem;
+      border-left: 4px solid #a78bfa;
+      min-height: 50px;
+      font-size: 0.9rem;
+      color: var(--text-body);
+    }
+    .ai-output .summary { color: var(--text-primary); font-weight: 500; margin-bottom: 0.3rem; }
+    .ai-output .advice { color: var(--text-secondary); }
+    .ai-output .placeholder { opacity: 0.5; }
+
+    .ask-ai-section { margin-top:1rem; border-top:1px solid var(--border-divider); padding-top:1rem; }
+    .ask-ai-section label { font-weight:600; display:block; margin-bottom:0.3rem; }
+
+    .range-value { font-weight: 600; color: var(--text-primary); min-width: 2.5rem; text-align: center; }
+    #wellProjectionContainer { min-height:180px; height:200px; max-height:250px; }
+    @media (max-width: 640px) {
+      #wellProjectionContainer { height:160px; min-height:140px; }
+    }
+
+    /* ===== FIXED ACCORDION ===== */
+    .accordion-toggle {
+      cursor: pointer;
+      user-select: none;
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-    }
-    
-    .contributor-links a {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      text-decoration: none;
-      background: var(--bg-input);
-      padding: 0.4rem 1rem;
-      border-radius: 20px;
-      border: 1px solid var(--border-divider);
-      transition: all 0.2s;
-    }
-    
-    .contributor-links a:hover {
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 1rem;
       color: var(--text-primary);
-      border-color: var(--text-muted);
-      background: rgba(255,255,255,0.05);
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: background 0.2s, border-radius 0.2s;
+    }
+    .accordion-toggle:hover { background: rgba(255,255,255,0.03); border-radius: 8px; }
+    .accordion-toggle .arrow { transition: transform 0.25s ease; display: inline-block; font-size: 0.7rem; color: var(--text-muted); }
+    .accordion-toggle.open .arrow { transform: rotate(180deg); }
+    .accordion-content {
+      max-height: 0 !important;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.3s ease;
+      padding: 0 1rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .accordion-content.open {
+      max-height: 600px !important;
+      padding: 0.2rem 1rem 1rem 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .floating-return-top { display: none !important; }
     }
   </style>
+
+  <!-- ===== CHART.JS (deferred) ===== -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+  <script src="js/ga4.js" defer></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "CollectionPage",
+          "@id": "https://traffictorch.github.io/productivity-bond-model/tools.html#collectionpage",
+          "url": "https://traffictorch.github.io/productivity-bond-model/tools.html",
+          "name": "PBM Productivity Lab – 3 Tools",
+          "description": "Interactive tools to diagnose your debt, measure your wellbeing, and project your financial future using the Productivity Bond Model framework.",
+          "inLanguage": "en-US",
+          "dateModified": "2026-08-23",
+          "publisher": { "@type": "Organization", "@id": "https://traffictorch.net/#organization" }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://traffictorch.github.io/productivity-bond-model/tools.html#breadcrumb",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://traffictorch.github.io/productivity-bond-model/" },
+            { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://traffictorch.github.io/productivity-bond-model/tools.html" }
+          ]
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://traffictorch.net/#organization",
+          "name": "Traffic Torch",
+          "url": "https://traffictorch.net",
+          "description": "Research initiative exploring innovative economic and financial models.",
+          "logo": "https://traffictorch.github.io/productivity-bond-model/icon-512.png"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://traffictorch.github.io/productivity-bond-model/tools.html#software",
+          "name": "PBM Productivity Lab",
+          "description": "A suite of 3 interactive web tools for diagnosing personal debt, measuring wellbeing, and projecting financial sustainability.",
+          "applicationCategory": "FinancialApplication",
+          "operatingSystem": "All",
+          "browserRequirements": "Requires JavaScript",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        }
+      ]
+    }
+  </script>
 </head>
 <body>
-
-<!-- ===== SENATE SUBMISSION BANNER ===== -->
-<div style="background: linear-gradient(90deg, #1e3a8a 0%, #3b82f6 100%); color: white; text-align: center; padding: 10px; font-size: 0.9rem; position: relative; z-index: 1000;">
-    🏛️ <strong>Official Submission:</strong> Accepted and published by the Senate Select Committee on Productivity in Australia (Submission #240). 
-    <a href="https://www.aph.gov.au/DocumentStore.ashx?id=25e9d73e-76be-4f7f-87af-5fb5b3e71058&subId=805961" target="_blank" style="color: #fbbf24; text-decoration: underline; margin-left: 8px;">Read the submission here</a>
-</div>
 
 <!-- ===== NAV ===== -->
 <nav class="sticky-nav no-print" id="mainNav">
@@ -136,7 +256,7 @@
         <li><a href="global-vitals-dashboard.html">🌍 Global Vitals</a></li>
       </ul>
     </li>
-    <li class="dropdown"><span class="dropdown-toggle">About ▼</span><ul class="dropdown-menu"><li><a href="news.html">News</a></li><li><a href="contributions.html" style="color:#fbbf24;">Contributions</a></li><li><a href="about.html">Traffic Torch</a></li><li><a href="changelog.html">Change Log</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="contact.html">Contact</a></li></ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">About ▼</span><ul class="dropdown-menu"><li><a href="news.html">News</a></li><li><a href="contributions.html">Contributions</a></li><li><a href="about.html">Traffic Torch</a></li><li><a href="changelog.html">Change Log</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="contact.html">Contact</a></li></ul></li>
     <li class="dropdown"><span class="dropdown-toggle">Abstract ▼</span><ul class="dropdown-menu"><li><a href="index.html#abstract">The Abstract</a></li><li><a href="index.html#problem-visualized">The Problem</a></li><li><a href="index.html#wellbeing">Wellbeing</a></li></ul></li>
     <li class="dropdown"><span class="dropdown-toggle">PBM ▼</span><ul class="dropdown-menu">
       <li><a href="appendix.html">📑 Appendices</a></li>
@@ -156,18 +276,16 @@
 </nav>
 
 <main id="main-content">
-  <!-- ===== HERO ===== -->
-  <section id="hero" class="container hero">
+  <section id="hero" class="container hero" style="padding-top: 2rem; padding-bottom: 1rem;">
     <div>
       <span class="badge-glow" style="margin-bottom:1rem; background:rgba(167,139,250,0.15); color:#a78bfa;">🤝 Community</span>
       <h1 class="text-gradient" style="font-size:clamp(2.5rem,8vw,4rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">Project Contributors</h1>
       <p style="font-size:clamp(1.1rem,2vw,1.4rem); font-weight:300; opacity:0.8; max-width:800px; margin:1rem 0 1.5rem; color:var(--text-secondary);">
-        The Productivity Bond Model and the broader "Infinite Debt Problem" framework are built on the feedback, expertise, and rigorous testing of an incredible community of thinkers. Thank you to everyone who has contributed their time and brilliance.
+        The Productivity Bond Model and the broader "Infinite Debt Problem" framework are built on the feedback, expertise, and rigorous testing of an incredible community of thinkers.
       </p>
     </div>
   </section>
 
-  <!-- ===== BREADCRUMB ===== -->
   <div class="container" style="padding-top:0.8rem; padding-bottom:0;">
     <nav class="breadcrumb" style="font-size:0.85rem; color:var(--text-muted); display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
       <a href="index.html" style="color:var(--text-muted); text-decoration:none;">🏠 Home</a>
@@ -176,61 +294,55 @@
     </nav>
   </div>
 
-  <!-- ===== CONTRIBUTORS GRID ===== -->
   <section class="container section-spacing">
+    <style>
+      .contributors-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 2rem; }
+      .contributor-card { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-divider); border-radius: 16px; padding: 2rem; transition: transform 0.3s ease, border-color 0.3s ease; display: flex; flex-direction: column; }
+      .contributor-card:hover { transform: translateY(-5px); border-color: rgba(79,70,229,0.4); }
+      .contributor-avatar { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #4f46e5, #a78bfa); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 1.5rem; }
+      .contributor-name { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.2rem; }
+      .contributor-role { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: #60a5fa; font-weight: 600; margin-bottom: 1rem; }
+      .contributor-desc { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; flex-grow: 1; margin-bottom: 1.5rem; }
+      .contributor-links { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+      .contributor-links a { font-size: 0.85rem; color: var(--text-muted); text-decoration: none; background: var(--bg-input); padding: 0.4rem 1rem; border-radius: 20px; border: 1px solid var(--border-divider); transition: all 0.2s; }
+      .contributor-links a:hover { color: var(--text-primary); border-color: var(--text-muted); background: rgba(255,255,255,0.05); }
+    </style>
     <div class="contributors-grid">
-      
-      <!-- YLIA CALLAN -->
       <div class="contributor-card">
         <div class="contributor-avatar">YC</div>
         <div class="contributor-name">Ylia Callan</div>
         <div class="contributor-role">Creator & Project Lead</div>
-        <div class="contributor-desc">
-          Conceptualized the Productivity Bond Model and the National Productivity Index (NPI). Authored "The Infinite Debt Problem," developed the Python Monte Carlo simulation engine, and leads the overall strategic direction and policy outreach.
-        </div>
+        <div class="contributor-desc">Conceptualized the Productivity Bond Model and the National Productivity Index (NPI). Authored "The Infinite Debt Problem," developed the Python Monte Carlo simulation engine, and leads overall strategic direction.</div>
         <div class="contributor-links">
           <a href="https://traffictorch.net/" target="_blank">🌐 TrafficTorch</a>
           <a href="https://www.linkedin.com/in/ylia-callan-8b889976/" target="_blank">💼 LinkedIn</a>
         </div>
       </div>
-
-      <!-- SUZIE MYLECHARANE -->
       <div class="contributor-card">
         <div class="contributor-avatar">SM</div>
         <div class="contributor-name">Suzie Mylecharane</div>
         <div class="contributor-role">Education & Feedback</div>
-        <div class="contributor-desc">
-          Provided critical feedback on the educational materials and overall messaging. Ensured that the complex economic concepts were translated into clear, accessible language for a broader audience.
-        </div>
+        <div class="contributor-desc">Provided critical feedback on the educational materials and overall messaging. Ensured that complex economic concepts were translated into clear, accessible language for a broader audience.</div>
         <div class="contributor-links">
           <a href="https://www.facebook.com/Suzie.Mylecharane" target="_blank">📘 Facebook</a>
         </div>
       </div>
-
-      <!-- PABLO DAVERIO -->
       <div class="contributor-card">
         <div class="contributor-avatar">PD</div>
         <div class="contributor-name">Pablo Daverio</div>
         <div class="contributor-role">UX & Web Flow Feedback</div>
-        <div class="contributor-desc">
-          Reviewed the website's user experience, navigation, and information architecture. Provided expert feedback on how to present the simulation results and policy documents intuitively.
-        </div>
+        <div class="contributor-desc">Reviewed the website's user experience, navigation, and information architecture. Provided expert feedback on presenting the simulation results and policy documents intuitively.</div>
         <div class="contributor-links">
           <a href="https://daverio1933.it/en/" target="_blank">🌐 Daverio 1933</a>
           <a href="https://www.linkedin.com/in/pablo-daverio-3264b22a9/" target="_blank">💼 LinkedIn</a>
         </div>
       </div>
-
-      <!-- FUTURE CONTRIBUTOR PLACEHOLDER -->
       <div class="contributor-card" style="border-style: dashed; background: transparent; justify-content: center; align-items: center; text-align: center; opacity: 0.6;">
         <div style="font-size: 2rem; margin-bottom: 1rem;">✨</div>
         <div class="contributor-name" style="font-size: 1.2rem;">Your Name Here</div>
-        <div class="contributor-desc" style="margin-top: 0.5rem;">
-          We are actively looking for economists, developers, and policy experts to review and stress-test the model. 
-        </div>
+        <div class="contributor-desc" style="margin-top: 0.5rem;">We are actively looking for economists, developers, and policy experts to review and stress-test the model.</div>
         <a href="contact.html" class="btn-primary" style="margin-top: 1rem; padding: 0.5rem 1.5rem;">Get Involved</a>
       </div>
-
     </div>
   </section>
 </main>
@@ -239,37 +351,761 @@
 <button class="floating-return-top" id="floatingReturnTop" aria-label="Return to top">⬆ Top</button>
 
 <!-- ====== FOOTER ====== -->
+
+<div id="gov-widget"></div>
+<script src="js/governance-widget.js" defer></script>
+
 <footer class="footer">
   <div class="container">
     <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1rem 1.5rem; margin-bottom:1.5rem; font-size:0.85rem;">
       <a href="index.html" style="color:var(--text-muted); text-decoration:none;">🏠 Home</a>
       <a href="news.html" style="color:var(--text-muted); text-decoration:none;">News</a>
-      <a href="contributions.html" style="color:#fbbf24; text-decoration:none;">Contributions</a>
-      <a href="about.html" style="color:var(--text-muted); text-decoration:none;">About</a>
+      <a href="contributions.html">Contributions</a>
+            <a href="about.html" style="color:var(--text-muted); text-decoration:none;">About</a>
       <a href="book.html" style="color:var(--text-muted); text-decoration:none;">Book</a>
       <a href="changelog.html" style="color:var(--text-muted); text-decoration:none;">Changelog</a>
-      <a href="tools.html" style="color:var(--text-muted); text-decoration:none;">🧰 Tools</a>
+      <a href="tools.html" style="color:#b388ff;">🧰 Tools</a>
       <a href="privacy.html" style="color:var(--text-muted); text-decoration:none;">Privacy</a>
       <a href="terms.html" style="color:var(--text-muted); text-decoration:none;">Terms</a>
       <a href="contact.html" style="color:var(--text-muted); text-decoration:none;">Contact</a>
+      <a href="index.html#simulator" style="color:var(--text-muted); text-decoration:none;">Simulator</a>
+      <a href="index.html#learn" style="color:var(--text-muted); text-decoration:none;">Learn 💸</a>
     </div>
     <p>
       © 2026 <a href="https://traffictorch.net">Traffic Torch</a> ·
       <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> ·
       Version 1.0.0 ·
-      <a href="https://zenodo.org/records/21970090" target="_blank" rel="external noopener">Simulation Code (Zenodo)</a>
+      <a href="https://zenodo.org/records/21970090" target="_blank" rel="external noopener">Simulation Code (Zenodo)</a> ·
+      <button class="share-btn" style="background:transparent; border:none; color:#4f46e5; padding:0; font-size:0.85rem; cursor:pointer;">📤 Share</button>
     </p>
     <p style="font-size:0.7rem; margin-top:0.3rem;">
       Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI · <span id="last-updated"></span>
     </p>
+    <p style="font-size:0.65rem; margin-top:0.5rem; color:var(--text-muted); opacity:0.7;">
+      📌 v1.0.0 – feat: NPI Index Tracker with real-world data. Endogenous debt feedback loop implemented - reveals 2.5pp lower distress for Productivity.
+    </p>
   </div>
 
-  <div style="margin-top:1.5rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.1); font-size:0.85rem; color:var(--text-muted); text-align: center;">
-      <p>🏛️ Official Submission #240 to the <a href="https://www.aph.gov.au/DocumentStore.ashx?id=25e9d73e-76be-4f7f-87af-5fb5b3e71058&subId=805961" target="_blank" style="color:#60a5fa; text-decoration:underline;">Senate Select Committee on Productivity in Australia</a>.</p>
-  </div>
+<div style="margin-top:1.5rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.1); font-size:0.85rem; color:var(--text-muted);">
+    <p>🏛️ Official Submission #240 to the <a href="https://www.aph.gov.au/DocumentStore.ashx?id=25e9d73e-76be-4f7f-87af-5fb5b3e71058&subId=805961" target="_blank" style="color:#60a5fa; text-decoration:underline;">Senate Select Committee on Productivity in Australia</a>.</p>
+</div>
+
 </footer>
+
+<!-- ===== PWA ===== -->
+<button id="pwaInstallBtn" class="pwa-install-btn">
+  <span class="icon">📱</span>
+  <span class="btn-text">Install Apps</span>
+  <span class="icon">💻</span>
+</button>
+<div id="pwaIosOverlay" class="pwa-ios-overlay">
+  <div class="pwa-ios-modal">
+    <h3>Install on iPhone</h3>
+    <p>To add this app to your home screen:</p>
+    <div class="step"><span>1.</span><span class="step-icon">⬆️</span><span>In <strong>Safari</strong> tap the <strong>Share</strong> button at the bottom.</span></div>
+    <div class="step"><span>2.</span><span class="step-icon">➕</span><span>Scroll down and tap <strong>"Add to Home Screen"</strong>.</span></div>
+    <button id="pwaCloseIosModal" class="close-btn">Got it</button>
+  </div>
+</div>
+
+<!-- ===== SERVICE WORKER ===== -->
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/productivity-bond-model/sw.js')
+      .then(r => console.log('SW registered:', r))
+      .catch(e => console.log('SW failed:', e));
+  }
+</script>
 
 <!-- ===== CORE JS ===== -->
 <script src="js/core.min.js" defer></script>
+
+<!-- ===== TOOL SCRIPTS ===== -->
+<script>
+  window.addEventListener('load', function() {
+    document.documentElement.classList.add('loaded');
+    // Run the active tool after a short delay
+    setTimeout(function() {
+      if (document.getElementById('tab1').classList.contains('active')) {
+        calculateWellbeing();
+      }
+      if (document.getElementById('tab2').classList.contains('active')) {
+        calculateDebtReality();
+      }
+      if (document.getElementById('tab3').classList.contains('active')) {
+        runCompoundCurve();
+      }
+    }, 300);
+  });
+
+  // ============================================================
+  // HERO TAB SWITCHING – FIXED AUTO‑SCROLL
+  // ============================================================
+  function switchTab(tabId, updateHash = true) {
+    // Update UI
+    document.querySelectorAll('.hero-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+    const activeBtn = document.querySelector(`.hero-tab-btn[data-tab="${tabId}"]`);
+    if (activeBtn) activeBtn.classList.add('active');
+    const panel = document.getElementById(tabId);
+    if (panel) panel.classList.add('active');
+
+    // Update URL hash WITHOUT causing a scroll (only when user clicks)
+    if (updateHash) {
+      if (window.location.hash !== '#' + tabId) {
+        history.replaceState(null, null, '#' + tabId);
+      }
+    }
+
+    // Run the corresponding calculator
+    if (tabId === 'tab2') setTimeout(calculateDebtReality, 300);
+    if (tabId === 'tab1') setTimeout(calculateWellbeing, 300);
+    if (tabId === 'tab3') setTimeout(runCompoundCurve, 300);
+  }
+
+  // Handle initial load / deep linking
+  function handleHash() {
+    const hash = window.location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) {
+      // User arrived with a hash – switch tab AND update hash (but the hash is already set, so no scroll)
+      // But we need to avoid a second scroll. Use replaceState to keep the hash but no scroll.
+      // Actually, if the hash is already in the URL, the browser may have already scrolled.
+      // We'll scroll to the top to override it.
+      switchTab(hash, false);
+      // If the hash is present, the browser may have already scrolled. Force scroll to top.
+      window.scrollTo(0, 0);
+    } else {
+      // No hash – show first tab, don't set hash (no scroll)
+      switchTab('tab1', false);
+    }
+  }
+
+  // Listen for hash changes (user clicking back/forward)
+  window.addEventListener('hashchange', function() {
+    const hash = window.location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) {
+      switchTab(hash, false);
+    }
+  });
+
+  // Run on load
+  window.addEventListener('load', handleHash);
+
+  // ============================================================
+  // TOOL FUNCTIONS (unchanged)
+  // ============================================================
+  const state = { hourlyRate: 35, workDays: 5, wastedHours: 2.0 };
+  let debtChartInstance = null;
+  let radarChartInstance = null;
+  let projectionChartInstance = null;
+  let compChartInstance = null;
+
+  function calculateDebtReality() {
+    const debt = parseFloat(document.getElementById('debtTotal').value) || 0;
+    const rate = parseFloat(document.getElementById('debtRate').value) || 0;
+    const payment = parseFloat(document.getElementById('debtPayment').value) || 1;
+    const income = parseFloat(document.getElementById('debtIncome').value) || 1;
+    const extra = parseFloat(document.getElementById('debtExtraSlider').value) || 0;
+
+    const monthlyRate = rate / 100 / 12;
+    const totalPayment = payment + extra;
+
+    function simulate(paymentAmount) {
+      let months = 0;
+      let balance = debt;
+      let totalInterest = 0;
+      let history = [];
+      const maxMonths = 600;
+      while (balance > 0 && months < maxMonths) {
+        const interest = balance * monthlyRate;
+        totalInterest += interest;
+        const principal = Math.min(paymentAmount - interest, balance);
+        balance -= principal;
+        months++;
+        history.push({ month: months, interestPaid: interest, principalPaid: principal, balance: Math.max(0, balance) });
+      }
+      if (balance <= 0 && months === 0) { months = 0; totalInterest = 0; }
+      return { months, totalInterest, history };
+    }
+
+    const baseline = simulate(payment);
+    const withExtra = simulate(totalPayment);
+    const displayResult = withExtra.months > 0 ? withExtra : baseline;
+    const months = displayResult.months;
+    const totalInterest = displayResult.totalInterest;
+    const history = displayResult.history;
+
+    const dti = (payment / income) * 100;
+    document.getElementById('debtMonths').textContent = months;
+    document.getElementById('debtTotalInterest').textContent = totalInterest.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    const solution = document.getElementById('debtSolution');
+    const action = document.getElementById('debtAction');
+
+    if (debt === 0) {
+      solution.textContent = '✅ You have no debt! You are financially free.';
+      action.textContent = 'Focus on building your savings and investing.';
+    } else if (baseline.months === 0 && payment > 0) {
+      solution.textContent = '⚠️ Your monthly payment is too low to cover the interest. You are in a debt spiral.';
+      action.textContent = 'Increase your payment immediately. Even $50 extra per month can stop the spiral.';
+    } else {
+      const baselineYears = (baseline.months / 12).toFixed(1);
+      const withExtraYears = (withExtra.months / 12).toFixed(1);
+      const yearsSaved = (baseline.months - withExtra.months) / 12;
+      const interestSaved = baseline.totalInterest - withExtra.totalInterest;
+
+      if (extra > 0) {
+        solution.textContent = `💡 Your DTI is ${dti.toFixed(1)}%. By adding $${extra}/month, you save ${yearsSaved.toFixed(1)} years and $${interestSaved.toFixed(0)} in interest.`;
+        action.textContent = `Action: Increase payment to $${totalPayment.toFixed(0)} (extra $${extra}/mo). Freedom in ${withExtraYears} years instead of ${baselineYears}.`;
+      } else {
+        if (dti > 40) {
+          solution.textContent = `⚠️ Your DTI is ${dti.toFixed(1)}% (High). Consider debt consolidation.`;
+          action.textContent = `Even $50/month extra saves you about ${(yearsSaved > 0 ? yearsSaved.toFixed(1) : '0.5')} years.`;
+        } else {
+          solution.textContent = `✅ Your DTI is ${dti.toFixed(1)}%. You are on track.`;
+          action.textContent = `A $50/month extra payment cuts your payoff time significantly.`;
+        }
+      }
+    }
+
+    const ctx = document.getElementById('debtChart').getContext('2d');
+    if (debtChartInstance) debtChartInstance.destroy();
+
+    const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+    const textColor = theme === 'dark' ? '#eef2f8' : '#0f111a';
+    const gridColor = theme === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+
+    const yearlyData = {};
+    history.forEach(h => {
+      const year = Math.ceil(h.month / 12);
+      if (!yearlyData[year]) yearlyData[year] = { interest: 0, principal: 0 };
+      yearlyData[year].interest += h.interestPaid;
+      yearlyData[year].principal += h.principalPaid;
+    });
+    const labels = Object.keys(yearlyData);
+    const interestData = labels.map(y => yearlyData[y].interest);
+    const principalData = labels.map(y => yearlyData[y].principal);
+
+    debtChartInstance = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels.map(y => 'Year ' + y),
+        datasets: [
+          { label: 'Interest Paid', data: interestData, backgroundColor: '#ff6b6b', borderRadius: 4 },
+          { label: 'Principal Paid', data: principalData, backgroundColor: '#69db7c', borderRadius: 4 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: { legend: { labels: { color: textColor, boxWidth: 12, padding: 12, font: { size: 11 } } } },
+        scales: {
+          x: { stacked: true, grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 } } },
+          y: { stacked: true, grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 }, callback: v => '$' + v.toLocaleString() } }
+        }
+      }
+    });
+  }
+  
+function calculateWellbeing() {
+  const work = parseFloat(document.getElementById('wellWork').value) || 8;
+  const days = parseFloat(document.getElementById('wellDays').value) || 5;
+  const sleep = parseFloat(document.getElementById('wellSleep').value) || 7;
+  const happiness = parseFloat(document.getElementById('wellHappiness').value) || 5;
+  const chaos = parseFloat(document.getElementById('wellChaos').value) || 5;
+
+  let prodScore = Math.min(100, Math.max(0, 100 - (Math.abs(work - 8) * 5) - (Math.abs(days - 5) * 3)));
+  let workScore = Math.min(100, Math.max(0, 100 - (Math.abs(work - 8) * 8)));
+  let sleepScore = Math.min(100, Math.max(0, 100 - (Math.abs(sleep - 7.5) * 12)));
+  let mentalScore = Math.min(100, Math.max(0, (happiness * 10) - (chaos * 4)));
+  let resilienceScore = Math.min(100, Math.max(0, (sleepScore * 0.5) + (workScore * 0.5)));
+
+  // ===== FIX: Financial score is always 100 =====
+  // Wellbeing Index is about work-life balance, not debt.
+  // Debt is handled separately by the Debt Reality tool.
+  let financialScore = 100;
+
+  const overall = Math.round((workScore + financialScore + mentalScore + sleepScore + resilienceScore + prodScore) / 6);
+
+  document.getElementById('wellScore').textContent = overall;
+  let resilienceText = overall > 70 ? 'High' : overall > 45 ? 'Moderate' : 'Low';
+  let resClass = overall > 70 ? 'risk-low' : overall > 45 ? 'risk-med' : 'risk-high';
+  document.getElementById('wellResilience').textContent = resilienceText;
+  document.getElementById('wellResilience').className = `sub-stat ${resClass}`;
+
+  let interpretation = overall > 70 ? '🌟 You are thriving!' : overall > 45 ? '📈 Stable, room to grow.' : '⚠️ Prioritize rest and financial clarity.';
+  document.getElementById('wellInterpretation').textContent = interpretation;
+
+  const solution = document.getElementById('wellSolution');
+  let weakSpots = [];
+  if (workScore < 50) weakSpots.push('Work/Life');
+  if (sleepScore < 50) weakSpots.push('Sleep');
+  if (mentalScore < 50) weakSpots.push('Mental');
+  if (financialScore < 50) weakSpots.push('Financial');
+  if (prodScore < 50) weakSpots.push('Productivity');
+
+  if (weakSpots.length === 0) {
+    solution.textContent = '✅ All systems balanced! You are in the harmony zone.';
+  } else {
+    solution.textContent = `⚠️ Weak spots: ${weakSpots.join(', ')}. Focus on the lowest score first.`;
+  }
+
+  // Radar chart
+  const ctx = document.getElementById('wellRadar').getContext('2d');
+  if (radarChartInstance) radarChartInstance.destroy();
+
+  const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+  const textColor = theme === 'dark' ? '#eef2f8' : '#0f111a';
+  const gridColor = theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
+
+  radarChartInstance = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: ['Work/Life', 'Financial', 'Mental', 'Sleep', 'Resilience', 'Productivity'],
+      datasets: [{
+        label: 'Your Wellbeing',
+        data: [workScore, financialScore, mentalScore, sleepScore, resilienceScore, prodScore],
+        backgroundColor: 'rgba(79, 70, 229, 0.2)',
+        borderColor: '#4f46e5',
+        pointBackgroundColor: '#4f46e5',
+        borderWidth: 2,
+        pointRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        r: {
+          beginAtZero: true,
+          max: 100,
+          ticks: { color: textColor, font: { size: 9 }, stepSize: 25, backdropColor: 'transparent' },
+          grid: { color: gridColor },
+          angleLines: { color: gridColor },
+          pointLabels: { color: textColor, font: { size: 10 } }
+        }
+      },
+      plugins: { legend: { labels: { color: textColor, font: { size: 11 } } } }
+    }
+  });
+
+  // 10‑year projection
+  const projCtx = document.getElementById('wellProjection').getContext('2d');
+  if (projectionChartInstance) projectionChartInstance.destroy();
+
+  let wellbeing = overall;
+  let productivity = prodScore;
+  let financial = financialScore;
+
+  const years = 10;
+  const labels = Array.from({ length: years }, (_, i) => `Y${i+1}`);
+  const wellbeingData = [];
+  const productivityData = [];
+  const financialData = [];
+
+  for (let i = 0; i < years; i++) {
+    wellbeing += (happiness > 7 ? 2 : (happiness < 4 ? -1 : 0));
+    wellbeing += (sleep > 8 ? 3 : (sleep < 6 ? -2 : 0));
+    wellbeing += (chaos > 6 ? -2 : (chaos < 4 ? 1 : 0));
+    wellbeing = Math.min(100, Math.max(0, wellbeing));
+
+    if (work > 9) productivity -= 5;
+    else if (work > 8) productivity -= 1;
+    else if (work >= 7) productivity += 1;
+    else productivity -= 2;
+    if (days > 5) productivity -= 2;
+    else if (days < 4) productivity -= 3;
+    productivity = Math.min(100, Math.max(0, productivity));
+
+    // Financial in projection – fixed at 100
+    financial = 100;
+    financialData.push(Math.round(financial));
+
+    wellbeingData.push(Math.round(wellbeing));
+    productivityData.push(Math.round(productivity));
+  }
+
+  projectionChartInstance = new Chart(projCtx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        { label: 'Wellbeing', data: wellbeingData, borderColor: '#f472b6', backgroundColor: 'rgba(244,114,182,0.05)', fill: true, tension: 0.3, pointRadius: 3 },
+        { label: 'Productivity', data: productivityData, borderColor: '#34d399', backgroundColor: 'rgba(52,211,153,0.05)', fill: true, tension: 0.3, pointRadius: 3 },
+        { label: 'Financial Sustainability', data: financialData, borderColor: '#fbbf24', backgroundColor: 'rgba(251,191,36,0.05)', fill: true, tension: 0.3, pointRadius: 3 }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { color: textColor, boxWidth: 12, padding: 12, font: { size: 10 } } }
+      },
+      scales: {
+        x: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 9 } } },
+        y: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 9 }, callback: v => v + '%' }, min: 0, max: 100 }
+      }
+    }
+  });
+}
+  
+  function runCompoundCurve() {
+    const base = parseFloat(document.getElementById('compBase').value) || 0;
+    const rate = parseFloat(document.getElementById('compRate').value) / 100;
+    const years = parseInt(document.getElementById('compYears').value) || 10;
+    const reduction = parseFloat(document.getElementById('compReduction').value) || 0;
+
+    const reducedBase = Math.max(0, base - reduction);
+    let data = [];
+    let cum1 = 0, cum2 = 0;
+    for (let i = 1; i <= years; i++) {
+      const val1 = base * Math.pow(1 + rate, i);
+      const val2 = reducedBase * Math.pow(1 + rate, i);
+      cum1 += val1;
+      cum2 += val2;
+      data.push({ year: i, original: cum1, reduced: cum2 });
+    }
+
+    document.getElementById('compTotal').textContent = data[data.length-1].reduced.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    document.getElementById('compFinal').textContent = (base * Math.pow(1 + rate, years)).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    document.getElementById('compYearsOut').textContent = years;
+    const savings = data[data.length-1].original - data[data.length-1].reduced;
+    document.getElementById('compSavings').textContent = '$' + savings.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    const solution = document.getElementById('compSolution');
+    const action = document.getElementById('compAction');
+    if (reduction > 0) {
+      const savedYears = Math.round((years * (1 - (data[data.length-1].reduced / data[data.length-1].original))) * 10) / 10;
+      solution.textContent = `✅ You are taking action! Reducing by $${reduction.toLocaleString()} saves $${savings.toFixed(0).toLocaleString()}.`;
+      action.textContent = `Action: This is equivalent to cutting ${Math.round((reduction / (state.hourlyRate * state.workDays * 48)) * 100)}% of your daily waste.`;
+    } else {
+      solution.textContent = `⚠️ Your debt grows exponentially. At ${rate*100}%, it will ${(Math.pow(1+rate, years) > 2) ? 'more than double' : 'grow significantly'}.`;
+      action.textContent = `Action: Even a $500 reduction saves $${Math.round(base * Math.pow(1+rate, years) - (base-500) * Math.pow(1+rate, years)).toLocaleString()} in the final year.`;
+    }
+
+    const ctx = document.getElementById('compChart').getContext('2d');
+    if (compChartInstance) compChartInstance.destroy();
+
+    const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+    const textColor = theme === 'dark' ? '#eef2f8' : '#0f111a';
+    const gridColor = theme === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+
+    compChartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: data.map(d => d.year),
+        datasets: [
+          { label: 'Current Path', data: data.map(d => d.original), borderColor: '#ff6b6b', fill: false, tension: 0.3, borderDash: [4, 4] },
+          { label: 'Optimized Path', data: data.map(d => d.reduced), borderColor: '#69db7c', fill: true, backgroundColor: 'rgba(105,219,124,0.1)', tension: 0.3 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: { legend: { labels: { color: textColor, boxWidth: 12, padding: 12, font: { size: 11 } } } },
+        scales: {
+          x: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 } } },
+          y: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 }, callback: v => '$' + v.toLocaleString() } }
+        }
+      }
+    });
+  }
+
+  // ============================================================
+  // AI FUNCTIONS (unchanged)
+  // ============================================================
+  const WORKER_URLS = {
+    debt: 'https://ai-debt.traffictorch.workers.dev',
+    wellbeing: 'https://ai-wellbeing.traffictorch.workers.dev',
+    compound: 'https://ai-compound.traffictorch.workers.dev'
+  };
+
+  async function generateAI(tool) {
+    const status = document.getElementById(`ai-${tool}-status`);
+    const output = document.getElementById(`ai-${tool}-output`);
+    if (!status || !output) return;
+
+    status.textContent = '⏳ Thinking...';
+    output.innerHTML = '<span style="opacity:0.6;">Generating your personalized advice...</span>';
+
+    let data = {};
+    if (tool === 'debt') {
+      const debt = parseFloat(document.getElementById('debtTotal').value) || 0;
+      const rate = parseFloat(document.getElementById('debtRate').value) || 0;
+      const payment = parseFloat(document.getElementById('debtPayment').value) || 1;
+      const income = parseFloat(document.getElementById('debtIncome').value) || 1;
+      const extra = parseFloat(document.getElementById('debtExtraSlider').value) || 0;
+      const monthlyRate = rate / 100 / 12;
+      const totalPayment = payment + extra;
+
+      function simulate(paymentAmount) {
+        let months = 0, balance = debt, totalInterest = 0;
+        const maxMonths = 600;
+        while (balance > 0 && months < maxMonths) {
+          const interest = balance * monthlyRate;
+          totalInterest += interest;
+          const principal = Math.min(paymentAmount - interest, balance);
+          balance -= principal;
+          months++;
+        }
+        return { months, totalInterest };
+      }
+
+      const baseline = simulate(payment);
+      const withExtra = simulate(totalPayment);
+      const dti = (payment / income) * 100;
+
+      data = {
+        debt, rate, payment, income, extra,
+        baselineMonths: baseline.months,
+        baselineInterest: baseline.totalInterest,
+        withExtraMonths: withExtra.months,
+        withExtraInterest: withExtra.totalInterest,
+        dti
+      };
+    } else if (tool === 'wellbeing') {
+      data = {
+        work: document.getElementById('wellWork').value,
+        days: document.getElementById('wellDays').value,
+        sleep: document.getElementById('wellSleep').value,
+        happiness: document.getElementById('wellHappiness').value,
+        chaos: document.getElementById('wellChaos').value
+      };
+    } else if (tool === 'compound') {
+      const base = parseFloat(document.getElementById('compBase').value) || 0;
+      const rate = parseFloat(document.getElementById('compRate').value) || 0;
+      const years = parseInt(document.getElementById('compYears').value) || 10;
+      const reduction = parseFloat(document.getElementById('compReduction').value) || 0;
+      const r = rate / 100;
+      const effectiveBase = Math.max(0, base - reduction);
+
+      const futureWithout = base * Math.pow(1 + r, years);
+      const futureWith = effectiveBase * Math.pow(1 + r, years);
+      const savings = futureWithout - futureWith;
+
+      let cumWithout = 0, cumWith = 0;
+      for (let i = 1; i <= years; i++) {
+        cumWithout += base * Math.pow(1 + r, i);
+        cumWith += effectiveBase * Math.pow(1 + r, i);
+      }
+      const cumulativeSavings = cumWithout - cumWith;
+
+      data = {
+        base, rate, years, reduction,
+        futureWithout, futureWith, savings,
+        cumulativeWithout: cumWithout,
+        cumulativeWith: cumWith,
+        cumulativeSavings
+      };
+    }
+
+    try {
+      const response = await fetch(WORKER_URLS[tool], {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const result = await response.json();
+      if (result.error) throw new Error(result.error);
+
+      let html = '';
+      if (result.summary) html += `<div class="summary">📌 ${result.summary}</div>`;
+      if (result.advice) html += `<div class="advice">✅ ${result.advice}</div>`;
+      if (!html) html = `<span style="opacity:0.6;">No advice received.</span>`;
+      output.innerHTML = html;
+      status.textContent = '✅ Done';
+    } catch (error) {
+      console.error('AI Error:', error);
+      output.innerHTML = `<span style="color: var(--color-burnout);">⚠️ Could not reach AI advisor. Please try again later. (${error.message})</span>`;
+      status.textContent = '❌ Error';
+    }
+  }
+  
+      // ============================
+  // Share Report
+  // ============================
+  
+  // ---- URL parameter handling ----
+function getUrlParams() {
+  const params = new URLSearchParams(window.location.search);
+  const obj = {};
+  for (const [key, value] of params) {
+    obj[key] = value;
+  }
+  return obj;
+}
+
+function applyUrlParams() {
+  const params = getUrlParams();
+  // Map each input ID to its parameter name
+  const mapping = {
+    // For Wellbeing:
+    'wellWork': 'work',
+    'wellDays': 'days',
+    'wellSleep': 'sleep',
+    'wellHappiness': 'happiness',
+    'wellChaos': 'chaos',
+    // For Debt:
+    'debtTotal': 'debt',
+    'debtRate': 'rate',
+    'debtPayment': 'payment',
+    'debtIncome': 'income',
+    'debtExtraSlider': 'extra',
+    // For Compound:
+    'compBase': 'annual',
+    'compRate': 'growth',
+    'compYears': 'years',
+    'compReduction': 'reduction'
+  };
+  let applied = false;
+  for (const [id, param] of Object.entries(mapping)) {
+    const el = document.getElementById(id);
+    if (el && params[param] !== undefined) {
+      el.value = params[param];
+      applied = true;
+      // Update any display spans (if any)
+      const displayId = id + 'Display';
+      const displayEl = document.getElementById(displayId);
+      if (displayEl) {
+        if (id === 'compRate') displayEl.textContent = params[param] + '%';
+        else if (id === 'compReduction' || id === 'debtExtraSlider') displayEl.textContent = '$' + params[param];
+        else displayEl.textContent = params[param];
+      }
+    }
+  }
+  if (applied) {
+    // Re-run the appropriate calculation
+    if (document.getElementById('wellWork')) calculateWellbeing();
+    else if (document.getElementById('debtTotal')) calculateDebtReality();
+    else if (document.getElementById('compBase')) runCompoundCurve();
+  }
+}
+
+function buildShareUrl() {
+  const base = window.location.href.split('?')[0];
+  const params = new URLSearchParams();
+  // Gather all relevant inputs based on what exists
+  const inputs = document.querySelectorAll('.input-group input, #debtExtraSlider, #compReduction');
+  const paramMap = {
+    'wellWork': 'work',
+    'wellDays': 'days',
+    'wellSleep': 'sleep',
+    'wellHappiness': 'happiness',
+    'wellChaos': 'chaos',
+    'debtTotal': 'debt',
+    'debtRate': 'rate',
+    'debtPayment': 'payment',
+    'debtIncome': 'income',
+    'debtExtraSlider': 'extra',
+    'compBase': 'annual',
+    'compRate': 'growth',
+    'compYears': 'years',
+    'compReduction': 'reduction'
+  };
+  inputs.forEach(el => {
+    const id = el.id;
+    if (paramMap[id] && el.value) {
+      params.set(paramMap[id], el.value);
+    }
+  });
+  return base + '?' + params.toString();
+}
+
+function copyShareLink() {
+  const url = buildShareUrl();
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(() => alert('Link copied!')).catch(() => prompt('Copy this link manually:', url));
+  } else {
+    prompt('Copy this link manually:', url);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  applyUrlParams();
+  // if no params, run the default calculation (already done by the initial button)
+});
+
+// ---- SHARE & REPORT FUNCTIONS ----
+
+// 1. Get the current diagnosis text (prescription box)
+function getSummaryText() {
+  // Try to get the diagnosis/solution text from the prescription box
+  const solutionEl = document.querySelector('.prescription-box .solution, #wellSolution, #debtSolution, #compSolution');
+  const actionEl = document.querySelector('.prescription-box .action, #debtAction, #compAction');
+  const scoreEl = document.querySelector('.stat span, #wellScore, #debtMonths, #compTotal');
+  
+  let text = 'PBM Productivity Lab Report\n';
+  text += '-------------------------\n';
+  
+  // Gather current input values
+  const inputs = document.querySelectorAll('.input-group input, #debtExtraSlider, #compReduction');
+  inputs.forEach(el => {
+    if (el.id && el.value) {
+      text += `${el.id}: ${el.value}\n`;
+    }
+  });
+  
+  if (solutionEl) text += `\nDiagnosis: ${solutionEl.textContent.trim()}`;
+  if (actionEl) text += `\nAction: ${actionEl.textContent.trim()}`;
+  if (scoreEl) text += `\nKey Metric: ${scoreEl.textContent.trim()}`;
+  
+  return text;
+}
+
+// 2. Copy Summary to clipboard
+function copySummary() {
+  const text = getSummaryText();
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => alert('Summary copied!')).catch(() => prompt('Copy manually:', text));
+  } else {
+    prompt('Copy manually:', text);
+  }
+}
+
+// 3. Export CSV
+function exportCSV() {
+  let csv = 'Parameter,Value\n';
+  const inputs = document.querySelectorAll('.input-group input, #debtExtraSlider, #compReduction');
+  inputs.forEach(el => {
+    if (el.id && el.value) {
+      csv += `${el.id},${el.value}\n`;
+    }
+  });
+  // Add results
+  const results = document.querySelectorAll('.result-box .stat span, .result-box .sub-stat');
+  results.forEach(el => {
+    if (el.id) {
+      csv += `${el.id},${el.textContent.trim()}\n`;
+    }
+  });
+  
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'pbm-report.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// 4. Social Sharing
+function shareSocial(platform) {
+  const url = buildShareUrl(); // uses your existing function
+  const text = 'Check out my PBM Productivity Lab results: ';
+  let shareUrl = '';
+  
+  if (platform === 'x') {
+    shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+  } else if (platform === 'linkedin') {
+    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+  }
+  
+  if (shareUrl) {
+    window.open(shareUrl, '_blank', 'width=600,height=400');
+  }
+}
+
+</script>
 </body>
 </html>
