@@ -325,7 +325,7 @@
       <!-- ===== WHAT IS THIS? ===== -->
       <div style="background:var(--bg-input); border-radius:12px; padding:0.2rem; margin-bottom:1.5rem; border:1px solid var(--border-divider);">
         <div class="accordion-item">
-          <div class="accordion-toggle" onclick="toggleAccordion(this)">
+          <div class="accordion-toggle">
             <span>📖 What is the Policy Lab?</span>
             <span class="arrow">▼</span>
           </div>
@@ -565,7 +565,7 @@
       <div style="background:var(--bg-input); border-radius:16px; border:1px solid var(--border-divider); overflow:hidden;">
 
         <div class="accordion-item" style="border-bottom:1px solid var(--border-divider);">
-          <div class="accordion-toggle" onclick="toggleAccordion(this)">
+          <div class="accordion-toggle">
             <span>🏛️ What does the Policy Lab do?</span>
             <span class="arrow">▼</span>
           </div>
@@ -584,7 +584,7 @@
         </div>
 
         <div class="accordion-item" style="border-bottom:1px solid var(--border-divider);">
-          <div class="accordion-toggle" onclick="toggleAccordion(this)">
+          <div class="accordion-toggle">
             <span>⚙️ What is the PAM toggle?</span>
             <span class="arrow">▼</span>
           </div>
@@ -596,7 +596,7 @@
         </div>
 
         <div class="accordion-item" style="border-bottom:1px solid var(--border-divider);">
-          <div class="accordion-toggle" onclick="toggleAccordion(this)">
+          <div class="accordion-toggle">
             <span>🎯 What is θ_AI and why does it matter?</span>
             <span class="arrow">▼</span>
           </div>
@@ -608,7 +608,7 @@
         </div>
 
         <div class="accordion-item" style="border-bottom:1px solid var(--border-divider);">
-          <div class="accordion-toggle" onclick="toggleAccordion(this)">
+          <div class="accordion-toggle">
             <span>📊 How do the results compare to the book's Appendix C?</span>
             <span class="arrow">▼</span>
           </div>
@@ -625,7 +625,7 @@
         </div>
 
         <div class="accordion-item">
-          <div class="accordion-toggle" onclick="toggleAccordion(this)">
+          <div class="accordion-toggle">
             <span>🔧 Is the Policy Lab open source?</span>
             <span class="arrow">▼</span>
           </div>
@@ -1401,15 +1401,37 @@ window.addEventListener('load',function(){
 
 <script>
 // Accordion + feedback wiring (uses existing site helpers if available)
-window.toggleAccordion=function(el){
-  var content=el.nextElementSibling;
-  var arrow=el.querySelector('.arrow');
-  if(content){
-    content.classList.toggle('open');
-    el.classList.toggle('open');
-    if(arrow)arrow.classList.toggle('open');
-  }
-};
+document.addEventListener('DOMContentLoaded', function() {
+  // Find all toggles
+  document.querySelectorAll('.accordion-toggle').forEach(function(el) {
+    // Clone the node to strip any conflicting event listeners from core.min.js
+    var newEl = el.cloneNode(true);
+    el.parentNode.replaceChild(newEl, el);
+    
+    newEl.setAttribute('role', 'button');
+    newEl.setAttribute('tabindex', '0');
+    
+    // Add our clean, isolated listener
+    newEl.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var content = this.nextElementSibling;
+      var arrow = this.querySelector('.arrow');
+      if (content) {
+        content.classList.toggle('open');
+        this.classList.toggle('open');
+        if (arrow) arrow.classList.toggle('open');
+      }
+    });
+
+    newEl.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.click();
+      }
+    });
+  });
+});
 
 // Feedback form (reuse site pattern)
 document.addEventListener('DOMContentLoaded',function(){
