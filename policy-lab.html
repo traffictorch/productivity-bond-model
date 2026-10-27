@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=block" crossorigin="anonymous" />
-  <link rel="stylesheet" href="css/core.min.css?v=1.2" />
+  <link rel="stylesheet" href="css/core.min.css?v=1.4" />
   <noscript><style>html{opacity:1!important}</style></noscript>
 
   <style>
@@ -217,7 +217,7 @@
 
   <script>setTimeout(function(){document.documentElement.classList.add('loaded');},2000);</script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
-  <script src="js/ga4.js?v=1.2" defer></script>
+  <script src="js/ga4.js?v=1.4" defer></script>
 
   <script type="application/ld+json">
   {
@@ -706,7 +706,7 @@
 
 
 <div id="gov-widget"></div>
-<script src="js/governance-widget.js?v=1.2" defer></script>
+<script src="js/governance-widget.js?v=1.4" defer></script>
 
 <button id="pwaInstallBtn" class="pwa-install-btn">
   <span class="icon">📱</span>
@@ -759,7 +759,7 @@
   </div>
 </footer>
 
-<script src="js/core.min.js?v=1.2" defer></script>
+<script src="js/core.min.js?v=1.4" defer></script>
 
 <script>
 // ============================================================
@@ -1180,8 +1180,6 @@ function renderVerdict(p,conv,prod,port,ilb){
   const sol=document.getElementById('verdictSolution');
   const act=document.getElementById('verdictAction');
   const parts=[];
-  const saving=((prod.expectedCost-conv.expectedCost)/conv.expectedCost*100);
-  const distressDiff=prod.distressProb-conv.distressProb;
   
   if (conv.distressProb > 0.5) {
     parts.push('⚠️ <strong>Unsustainable baseline.</strong> Conventional distress is already above 50%. Changing the bond structure won\'t fix a structural deficit — look at primary balances.');
@@ -1350,11 +1348,7 @@ async function generateAI(){
   // Rule-based fallback (works without worker)
   setTimeout(()=>{
     const{p,conv,prod,port}=lastResult;
-    const saving=((prod.expectedCost-conv.expectedCost)/conv.expectedCost*100);
-    const distDiff=prod.distressProb-conv.distressProb;
     let summary='📌 ',advice='';
-    const saving=((prod.expectedCost-conv.expectedCost)/conv.expectedCost*100);
-    const distDiff=prod.distressProb-conv.distressProb;
     
     if (conv.distressProb > 0.5) {
       summary='⚠️ The sovereign is already in a high-distress regime (>50%). Bond structure changes alone will not fix this.';
