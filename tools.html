@@ -7,15 +7,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>🧰 PBM Productivity Lab | Traffic Torch</title>
-  <meta name="description" content="7 interactive tools to diagnose your debt, measure your wellbeing, and project your financial future." />
+  <meta name="description" content="6 interactive tools to diagnose your debt, measure your wellbeing, and project your financial future." />
   <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/tools.html" />
-  <meta property="og:title" content="PBM Productivity Lab – 3 Tools" />
+  <meta property="og:title" content="PBM Productivity Lab – 6 Tools" />
   <meta property="og:description" content="Interactive tools for the Productivity Bond Model." />
   <meta property="og:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.png" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://traffictorch.github.io/productivity-bond-model/tools.html" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="PBM Productivity Lab – 3 Tools" />
+  <meta name="twitter:title" content="PBM Productivity Lab – 6 Tools" />
   <meta name="twitter:description" content="Diagnose debt, measure wellbeing, project your future." />
   <meta name="twitter:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.png" />
   <link rel="manifest" href="manifest.json" />
@@ -198,10 +198,10 @@
           "@type": "CollectionPage",
           "@id": "https://traffictorch.github.io/productivity-bond-model/tools.html#collectionpage",
           "url": "https://traffictorch.github.io/productivity-bond-model/tools.html",
-          "name": "PBM Productivity Lab – 3 Tools",
-          "description": "Interactive tools to diagnose your debt, measure your wellbeing, and project your financial future using the Productivity Bond Model framework.",
+          "name": "PBM Productivity Lab – 6 Tools",
+          "description": "Six interactive tools to diagnose your debt, measure your wellbeing, and project your financial future using the Productivity Bond Model framework.",
           "inLanguage": "en-US",
-          "dateModified": "2026-08-23",
+          "dateModified": "2026-10-27",
           "publisher": { "@type": "Organization", "@id": "https://traffictorch.net/#organization" }
         },
         {
@@ -224,7 +224,7 @@
           "@type": "SoftwareApplication",
           "@id": "https://traffictorch.github.io/productivity-bond-model/tools.html#software",
           "name": "PBM Productivity Lab",
-          "description": "A suite of 3 interactive web tools for diagnosing personal debt, measuring wellbeing, and projecting financial sustainability.",
+          "description": "A suite of 6 interactive web tools for diagnosing personal debt, measuring wellbeing, projecting financial sustainability, tracking productivity, and modelling sovereign debt.",
           "applicationCategory": "FinancialApplication",
           "operatingSystem": "All",
           "browserRequirements": "Requires JavaScript",
@@ -264,6 +264,7 @@
     <li class="dropdown"><span class="dropdown-toggle">Abstract ▼</span><ul class="dropdown-menu"><li><a href="index.html#abstract">The Abstract</a></li><li><a href="index.html#problem-visualized">The Problem</a></li><li><a href="index.html#wellbeing">Wellbeing</a></li></ul></li>
     <li class="dropdown"><span class="dropdown-toggle">PBM ▼</span><ul class="dropdown-menu">
       <li><a href="appendix.html">📑 Appendices</a></li>
+      <li><a href="model-notes.html">📐 Model Notes</a></li>
       <li><a href="index.html#model-definition">Model</a></li>
       <li><a href="index.html#mechanism">Mechanism</a></li>
       <li><a href="index.html#glossary">Glossary</a></li>
@@ -286,7 +287,7 @@
       <span class="badge-glow" style="margin-bottom:0.5rem;">🧪 Interactive Lab</span>
       <span class="badge-glow badge-version" style="margin-left:0.5rem;">v1.0.0</span>
       <h1 class="text-gradient" style="font-size:clamp(2.5rem,8vw,4rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05;">PBM Productivity Lab</h1>
-      <p style="font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:300; opacity:0.8; max-width:600px; margin:0.8rem 0 1.5rem; color:var(--text-secondary);">7 interactive tools to diagnose your debt, measure your wellbeing, and project your financial future.</p>
+      <p style="font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:300; opacity:0.8; max-width:600px; margin:0.8rem 0 1.5rem; color:var(--text-secondary);">6 interactive tools to diagnose your debt, measure your wellbeing, and project your financial future.</p>
       <!-- Tool Tabs -->
 <div class="hero-tabs" style="display:flex; flex-wrap:wrap; gap:0.6rem; align-items:center; margin-top:0.5rem;">
 <button class="hero-tab-btn" data-tab="tab1" onclick="switchTab(this.dataset.tab)">🌿 1. Wellbeing Index</button>
@@ -294,6 +295,7 @@
 <button class="hero-tab-btn" data-tab="tab3" onclick="switchTab(this.dataset.tab)">📈 3. Compound Curve</button>
   <button class="hero-tab-btn" onclick="location.href='npi-index.html'" style="background:var(--bg-input); border:1px solid var(--border-divider); border-radius:30px; padding:0.4rem 1.2rem; font-size:0.85rem; color:var(--text-primary); cursor:pointer; transition:0.2s; font-weight:500;">📊 4. NPI Index Tracker</button>
   <button class="hero-tab-btn" onclick="location.href='global-vitals-dashboard.html'" style="background:#4f46e5; border:1px solid #4f46e5; border-radius:30px; padding:0.4rem 1.2rem; font-size:0.85rem; color:#fff; cursor:pointer; transition:0.2s; font-weight:500;">🌍 5. Global Dashboard</button>
+  <button class="hero-tab-btn" onclick="location.href='policy-lab.html'" style="background:var(--bg-input); border:1px solid var(--border-divider); border-radius:30px; padding:0.4rem 1.2rem; font-size:0.85rem; color:var(--text-primary); cursor:pointer; transition:0.2s; font-weight:500;">🏛️ 6. Policy Lab</button>
   <button class="share-btn" id="nativeShareBtn" onclick="shareDashboard()" style="background:var(--bg-input); border:1px solid var(--border-divider); border-radius:30px; padding:0.4rem 1.2rem; font-size:0.85rem; color:var(--text-primary); cursor:pointer; transition:0.2s;">📤 Share</button>
 </div>
     </div>
@@ -541,13 +543,13 @@
     <div class="glass-card" style="border-color:var(--color-burnout);">
       <h2 style="font-size:1.5rem; font-weight:700; color:var(--color-burnout);">⚠️ JavaScript is disabled</h2>
 
-      <h3 style="font-size:1.2rem; font-weight:600; margin-top:0.5rem; color:var(--text-primary);">🧪 The PBM Productivity Lab – 4 Tools</h3>
+      <h3 style="font-size:1.2rem; font-weight:600; margin-top:0.5rem; color:var(--text-primary);">🧪 The PBM Productivity Lab – 6 Tools</h3>
       <p style="color:var(--text-secondary);">
-        The <strong>Productivity Lab</strong> brings you four interactive calculators powered by the Productivity Bond Model (PBM) framework. Each tool helps you diagnose a different aspect of your personal and financial health:
+        The <strong>Productivity Lab</strong> brings you six interactive calculators powered by the Productivity Bond Model (PBM) framework. Each tool helps you diagnose a different aspect of your personal, financial, or sovereign health:
       </p>
       <ul style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
         <li>
-          <strong>📊 NPI Index Tracker</strong> – track real‑world productivity for 50+ countries with live data, AI analysis, and exportable insights.
+          <strong>📊 NPI Index Tracker</strong> – track real‑world productivity for 47+ countries with live data, AI analysis, and exportable insights.
         </li>
         <li>
           <strong>🌿 Wellbeing Index</strong> – measures work‑life balance, mental health, sleep, resilience, and productivity (0–100 score + radar chart + 10‑year projection).
@@ -557,6 +559,12 @@
         </li>
         <li>
           <strong>📈 Compound Curve</strong> – projects how annual debt grows exponentially and shows how small reductions bend the curve downward.
+        </li>
+        <li>
+          <strong>🌍 Global Vital Signs Dashboard</strong> – tracks 14+ planetary and societal indicators (CO₂, GDP, debt, poverty) from live public APIs.
+        </li>
+        <li>
+          <strong>🏛️ Policy Lab</strong> – a sovereign debt scenario builder that models conventional vs productivity-linked bond trajectories with endogenous feedback loops.
         </li>
       </ul>
       <p style="color:var(--text-secondary);">
@@ -684,7 +692,7 @@
   });
 </script>
 
-        <!-- ===== NPI + GVD FEATURE ROW ===== -->
+        <!-- ===== FEATURE ROW: NPI + GVD + POLICY LAB ===== -->
 <section class="container section-spacing">
   <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
 
@@ -726,6 +734,26 @@
         <span>🤖 AI Interpreter</span>
         <span>📊 Interactive charts</span>
         <span>📥 Embeddable</span>
+      </div>
+    </div>
+
+    <!-- ===== CARD 3: Policy Lab ===== -->
+    <div class="glass-card" style="border-color:rgba(52,211,153,0.2); display:flex; flex-direction:column; align-items:center; text-align:center; padding:1.5rem;">
+      <span class="badge-glow" style="margin-bottom:0.5rem; background:rgba(52,211,153,0.15); color:#34d399;">🏛️ NEW TOOL</span>
+      <h2 style="font-size:clamp(1.5rem,2.5vw,2rem); font-weight:700; margin-bottom:0.5rem;">Policy Lab</h2>
+      <p style="color:var(--text-secondary); max-width:600px; margin:0 auto 1rem; font-size:clamp(0.9rem,1vw,1rem);">
+        Model sovereign debt trajectories under conventional vs productivity-linked issuance with endogenous feedback loops. Built for finance ministries and researchers.
+      </p>
+      <div style="display:flex; flex-wrap:wrap; gap:0.8rem; margin-top:0.5rem;">
+        <a href="policy-lab.html" class="btn-primary" style="padding:0.6rem 2rem; background:linear-gradient(135deg,#059669,#34d399);">Open Policy Lab →</a>
+        <a href="model-notes.html" class="btn-secondary" style="padding:0.6rem 2rem;">Model Notes</a>
+      </div>
+      <div style="margin-top:0.8rem; display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; font-size:0.8rem; color:var(--text-muted);">
+        <span>📊 Monte Carlo</span>
+        <span>🔁 Endogenous debt</span>
+        <span>⚖️ PAM toggle</span>
+        <span>📈 ILB comparison</span>
+        <span>🤖 AI verdict</span>
       </div>
     </div>
 
@@ -814,6 +842,7 @@
       <a href="book.html" style="color:var(--text-muted); text-decoration:none;">Book</a>
       <a href="changelog.html" style="color:var(--text-muted); text-decoration:none;">Changelog</a>
       <a href="tools.html" style="color:#b388ff;">🧰 Tools</a>
+      <a href="policy-lab.html" style="color:#b388ff;">🏛️ Policy Lab</a>
       <a href="privacy.html" style="color:var(--text-muted); text-decoration:none;">Privacy</a>
       <a href="terms.html" style="color:var(--text-muted); text-decoration:none;">Terms</a>
       <a href="contact.html" style="color:var(--text-muted); text-decoration:none;">Contact</a>
@@ -916,15 +945,9 @@
   function handleHash() {
     const hash = window.location.hash.replace('#', '');
     if (hash && document.getElementById(hash)) {
-      // User arrived with a hash – switch tab AND update hash (but the hash is already set, so no scroll)
-      // But we need to avoid a second scroll. Use replaceState to keep the hash but no scroll.
-      // Actually, if the hash is already in the URL, the browser may have already scrolled.
-      // We'll scroll to the top to override it.
       switchTab(hash, false);
-      // If the hash is present, the browser may have already scrolled. Force scroll to top.
       window.scrollTo(0, 0);
     } else {
-      // No hash – show first tab, don't set hash (no scroll)
       switchTab('tab1', false);
     }
   }
@@ -941,7 +964,7 @@
   window.addEventListener('load', handleHash);
 
   // ============================================================
-  // TOOL FUNCTIONS (unchanged)
+  // TOOL FUNCTIONS
   // ============================================================
   const state = { hourlyRate: 35, workDays: 5, wastedHours: 2.0 };
   let debtChartInstance = null;
@@ -1069,9 +1092,6 @@ function calculateWellbeing() {
   let mentalScore = Math.min(100, Math.max(0, (happiness * 10) - (chaos * 4)));
   let resilienceScore = Math.min(100, Math.max(0, (sleepScore * 0.5) + (workScore * 0.5)));
 
-  // ===== FIX: Financial score is always 100 =====
-  // Wellbeing Index is about work-life balance, not debt.
-  // Debt is handled separately by the Debt Reality tool.
   let financialScore = 100;
 
   const overall = Math.round((workScore + financialScore + mentalScore + sleepScore + resilienceScore + prodScore) / 6);
@@ -1099,7 +1119,6 @@ function calculateWellbeing() {
     solution.textContent = `⚠️ Weak spots: ${weakSpots.join(', ')}. Focus on the lowest score first.`;
   }
 
-  // Radar chart
   const ctx = document.getElementById('wellRadar').getContext('2d');
   if (radarChartInstance) radarChartInstance.destroy();
 
@@ -1138,7 +1157,6 @@ function calculateWellbeing() {
     }
   });
 
-  // 10‑year projection
   const projCtx = document.getElementById('wellProjection').getContext('2d');
   if (projectionChartInstance) projectionChartInstance.destroy();
 
@@ -1166,7 +1184,6 @@ function calculateWellbeing() {
     else if (days < 4) productivity -= 3;
     productivity = Math.min(100, Math.max(0, productivity));
 
-    // Financial in projection – fixed at 100
     financial = 100;
     financialData.push(Math.round(financial));
 
@@ -1261,7 +1278,7 @@ function calculateWellbeing() {
   }
 
   // ============================================================
-  // AI FUNCTIONS (unchanged)
+  // AI FUNCTIONS
   // ============================================================
   const WORKER_URLS = {
     debt: 'https://ai-debt.traffictorch.workers.dev',
@@ -1371,12 +1388,11 @@ function calculateWellbeing() {
     }
   }
   
-      // ============================
+  // ============================
   // Share Report
   // ============================
   
-  // ---- URL parameter handling ----
-function getUrlParams() {
+  function getUrlParams() {
   const params = new URLSearchParams(window.location.search);
   const obj = {};
   for (const [key, value] of params) {
@@ -1387,21 +1403,17 @@ function getUrlParams() {
 
 function applyUrlParams() {
   const params = getUrlParams();
-  // Map each input ID to its parameter name
   const mapping = {
-    // For Wellbeing:
     'wellWork': 'work',
     'wellDays': 'days',
     'wellSleep': 'sleep',
     'wellHappiness': 'happiness',
     'wellChaos': 'chaos',
-    // For Debt:
     'debtTotal': 'debt',
     'debtRate': 'rate',
     'debtPayment': 'payment',
     'debtIncome': 'income',
     'debtExtraSlider': 'extra',
-    // For Compound:
     'compBase': 'annual',
     'compRate': 'growth',
     'compYears': 'years',
@@ -1413,7 +1425,6 @@ function applyUrlParams() {
     if (el && params[param] !== undefined) {
       el.value = params[param];
       applied = true;
-      // Update any display spans (if any)
       const displayId = id + 'Display';
       const displayEl = document.getElementById(displayId);
       if (displayEl) {
@@ -1424,7 +1435,6 @@ function applyUrlParams() {
     }
   }
   if (applied) {
-    // Re-run the appropriate calculation
     if (document.getElementById('wellWork')) calculateWellbeing();
     else if (document.getElementById('debtTotal')) calculateDebtReality();
     else if (document.getElementById('compBase')) runCompoundCurve();
@@ -1434,7 +1444,6 @@ function applyUrlParams() {
 function buildShareUrl() {
   const base = window.location.href.split('?')[0];
   const params = new URLSearchParams();
-  // Gather all relevant inputs based on what exists
   const inputs = document.querySelectorAll('.input-group input, #debtExtraSlider, #compReduction');
   const paramMap = {
     'wellWork': 'work',
@@ -1472,14 +1481,9 @@ function copyShareLink() {
 
 document.addEventListener('DOMContentLoaded', function() {
   applyUrlParams();
-  // if no params, run the default calculation (already done by the initial button)
 });
 
-// ---- SHARE & REPORT FUNCTIONS ----
-
-// 1. Get the current diagnosis text (prescription box)
 function getSummaryText() {
-  // Try to get the diagnosis/solution text from the prescription box
   const solutionEl = document.querySelector('.prescription-box .solution, #wellSolution, #debtSolution, #compSolution');
   const actionEl = document.querySelector('.prescription-box .action, #debtAction, #compAction');
   const scoreEl = document.querySelector('.stat span, #wellScore, #debtMonths, #compTotal');
@@ -1487,7 +1491,6 @@ function getSummaryText() {
   let text = 'PBM Productivity Lab Report\n';
   text += '-------------------------\n';
   
-  // Gather current input values
   const inputs = document.querySelectorAll('.input-group input, #debtExtraSlider, #compReduction');
   inputs.forEach(el => {
     if (el.id && el.value) {
@@ -1502,7 +1505,6 @@ function getSummaryText() {
   return text;
 }
 
-// 2. Copy Summary to clipboard
 function copySummary() {
   const text = getSummaryText();
   if (navigator.clipboard) {
@@ -1512,7 +1514,6 @@ function copySummary() {
   }
 }
 
-// 3. Export CSV
 function exportCSV() {
   let csv = 'Parameter,Value\n';
   const inputs = document.querySelectorAll('.input-group input, #debtExtraSlider, #compReduction');
@@ -1521,7 +1522,6 @@ function exportCSV() {
       csv += `${el.id},${el.value}\n`;
     }
   });
-  // Add results
   const results = document.querySelectorAll('.result-box .stat span, .result-box .sub-stat');
   results.forEach(el => {
     if (el.id) {
@@ -1538,9 +1538,8 @@ function exportCSV() {
   URL.revokeObjectURL(url);
 }
 
-// 4. Social Sharing
 function shareSocial(platform) {
-  const url = buildShareUrl(); // uses your existing function
+  const url = buildShareUrl();
   const text = 'Check out my PBM Productivity Lab results: ';
   let shareUrl = '';
   

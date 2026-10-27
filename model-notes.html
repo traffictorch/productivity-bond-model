@@ -9,63 +9,150 @@
   <title>📐 Model Notes — v1.0 vs v1.1 | PBM Productivity Lab</title>
   <meta name="description" content="What changed between the book's fixed-debt model (v1.0) and the current endogenous-debt model (v1.1), and what it means for the model's claims." />
   <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/model-notes.html" />
+  <meta property="og:title" content="Model Notes – v1.0 vs v1.1" />
+  <meta property="og:description" content="Documentation of the endogenous-debt model upgrade and its impact on the Productivity Bond thesis." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://traffictorch.github.io/productivity-bond-model/model-notes.html" />
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="icon-512.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=block" crossorigin="anonymous" />
   <link rel="stylesheet" href="css/core.min.css?v=1.4" />
   <noscript><style>html{opacity:1!important}</style></noscript>
+
   <style>
     html { opacity: 0; transition: opacity 0.12s ease; }
     html.loaded { opacity: 1; }
     .hero { min-height: 22vh; padding: 1rem 0; }
-    .section-spacing { padding: 2rem 0; }
-    .data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .section-spacing { padding: 3rem 0; }
+
+    /* Accordion styles */
+    .accordion-toggle {
+      cursor: pointer; user-select: none;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.6rem 1rem;
+      color: var(--text-primary);
+      font-weight: 500; font-size: 0.9rem;
+      transition: background 0.2s, border-radius 0.2s;
+    }
+    .accordion-toggle:hover { background: rgba(255,255,255,0.03); border-radius: 8px; }
+    .accordion-toggle .arrow { transition: transform 0.25s ease; display: inline-block; font-size: 0.7rem; color: var(--text-muted); }
+    .accordion-toggle.open .arrow { transform: rotate(180deg); }
+    .accordion-content {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.3s ease;
+      padding: 0 1rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .accordion-content.open { max-height: 3000px; padding: 0.2rem 1rem 1rem 1rem; }
+
+    /* Tables */
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 1rem; }
     .data-table th { text-align: left; padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--border-divider); color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.04em; }
     .data-table td { padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--border-divider); color: var(--text-body); }
     .data-table tr:last-child td { border-bottom: none; }
     .data-table .highlight { background: rgba(79,70,229,0.08); }
+    
+    /* Badges & Callouts */
     .version-badge { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 20px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.03em; }
     .v10 { background: rgba(251,191,36,0.15); color: #f59e0b; }
     .v11 { background: rgba(52,211,153,0.15); color: #34d399; }
+    
     .callout { background: var(--bg-input); border-radius: 10px; padding: 1rem 1.2rem; margin: 1rem 0; border-left: 4px solid #4f46e5; font-size: 0.9rem; line-height: 1.7; color: var(--text-secondary); }
     .callout.warn { border-left-color: #f59e0b; }
     .callout.good { border-left-color: #34d399; }
+
+    .table-wrap { overflow-x: auto; width: 100%; }
+    
+    @media (max-width: 768px) {
+      .floating-return-top { display: none !important; }
+    }
   </style>
+
+  <script>setTimeout(function(){document.documentElement.classList.add('loaded');},2000);</script>
+  <script src="js/ga4.js?v=1.4" defer></script>
 </head>
 <body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- ===== NAV ===== -->
+<nav class="sticky-nav no-print" id="mainNav">
+  <div class="nav-left">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-pressed="false"><span id="themeIcon">🌙</span></button>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">🏠 Home</a></li>
+    <li class="dropdown">
+      <span class="dropdown-toggle">🧰 Tools ▼</span>
+      <ul class="dropdown-menu">
+        <li><a href="tools.html">⚙️ All Tools</a></li>
+        <li><a href="wellbeing-index.html">🌿 Wellbeing Index</a></li>
+        <li><a href="debt-reality.html">💳 Debt Reality</a></li>
+        <li><a href="compound-curve.html">📈 Compound Curve</a></li>
+        <li><a href="npi-index.html">📊 NPI Index</a></li>
+        <li><a href="global-vitals-dashboard.html">🌍 Global Vitals</a></li>
+        <li><a href="policy-lab.html">🏛️ Policy Lab</a></li>
+      </ul>
+    </li>
+    <li class="dropdown"><span class="dropdown-toggle">About ▼</span><ul class="dropdown-menu"><li><a href="news.html">News</a></li><li><a href="contributions.html">Contributions</a></li><li><a href="about.html">Traffic Torch</a></li><li><a href="changelog.html">Change Log</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="contact.html">Contact</a></li></ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">PBM ▼</span><ul class="dropdown-menu">
+      <li><a href="appendix.html">📑 Appendices</a></li>
+      <li><a href="model-notes.html">📐 Model Notes</a></li>
+      <li><a href="index.html#model-definition">Model</a></li>
+      <li><a href="index.html#mechanism">Mechanism</a></li>
+      <li><a href="index.html#glossary">Glossary</a></li>
+      <li><a href="index.html#limitations">Limitations</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+      <li><a href="index.html#citation">Cite</a></li>
+    </ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">Simulation ▼</span><ul class="dropdown-menu"><li><a href="index.html#simulator">Live Simulator</a></li><li><a href="index.html#results-data">Results</a></li><li><a href="index.html#sensitivity">Sensitivity</a></li><li><a href="index.html#implement">Implementation</a></li></ul></li>
+    <li><a href="book.html">🎧 Books</a></li>
+    <li><a href="appendix.html">📑 Appendices</a></li>
+    <li><a href="index.html#learn">💸 Learn</a></li>
+  </ul>
+</nav>
+
 <main>
-  <div class="container" style="padding-top:1.5rem;padding-bottom:0;">
-    <nav class="breadcrumb" style="font-size:0.85rem;color:var(--text-muted);display:flex;gap:0.5rem;flex-wrap:wrap;">
-      <a href="index.html" style="color:var(--text-muted);text-decoration:none;">🏠 Home</a>
-      <span style="opacity:0.5;">/</span>
-      <span style="color:var(--text-primary);font-weight:500;">Model Notes</span>
+  <div class="container" style="padding-top:1.5rem; padding-bottom:0;">
+    <nav class="breadcrumb">
+      <a href="index.html">🏠 Home</a><span style="opacity:0.5;">/</span>
+      <span style="color:var(--text-primary); font-weight:500;">Model Notes</span>
     </nav>
   </div>
 
   <section class="container hero">
     <div>
       <span class="badge-glow" style="margin-bottom:0.5rem;">📐 Reference</span>
-      <h1 class="text-gradient" style="font-size:clamp(2.4rem,5vw,3.4rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;">Model Notes</h1>
-      <p style="font-size:clamp(1.1rem,1.8vw,1.4rem);font-weight:300;opacity:0.8;max-width:700px;margin:0.5rem 0 1.5rem;color:var(--text-secondary);">
+      <h1 class="text-gradient" style="font-size:clamp(2.8rem,6vw,4rem); font-weight:800; letter-spacing:-0.03em; line-height:1.1;">Model Notes</h1>
+      <p style="font-size:clamp(1.2rem,2vw,1.6rem); font-weight:300; opacity:0.8; max-width:650px; margin:0.5rem 0 1.5rem; color:var(--text-secondary);">
         What changed between v1.0 (the book's Appendix C) and v1.1 (the current tools), and what it means for the model's claims.
       </p>
     </div>
   </section>
 
-  <section class="container section-spacing" style="padding-top:0;">
+  <section class="container section-spacing" style="padding-top:0.5rem;">
     <div class="glass-card">
 
-      <h2 style="font-size:1.6rem;font-weight:700;margin-bottom:0.5rem;color:var(--text-primary);">📋 The short version</h2>
+      <h2 style="font-size:1.6rem; font-weight:700; margin-bottom:0.5rem; color:var(--text-primary);">📋 The Short Version</h2>
       <div class="callout">
         <p><strong>v1.0</strong> (book, Appendix C) assumed the debt path was fixed, then computed each bond type's coupons against it. This understated the debt accumulation effect of higher coupons.</p>
         <p style="margin-top:0.5rem;"><strong>v1.1</strong> (current tools) computes a separate debt path <em>for each bond type</em> using its own coupons. This captures the feedback loop the book identifies in Chapter 14: higher coupons → higher debt service → more borrowing → higher future debt service.</p>
-        <p style="margin-top:0.5rem;">The numbers differ, but the direction of every claim still holds — except distress, which is higher in v1.0 than v1.1. The book's warning about the feedback loop was correct, but the fixed-debt model overstated the magnitude.</p>
+        <p style="margin-top:0.5rem;">The numbers differ, but the direction of every claim still holds — except distress, which is slightly lower in v1.1 than in v1.0. The book's warning about the feedback loop was correct, but the fixed-debt model overstated the magnitude.</p>
       </div>
 
-      <h2 style="font-size:1.6rem;font-weight:700;margin:2rem 0 0.5rem;color:var(--text-primary);">📊 Side-by-side comparison</h2>
-      <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:1rem;">Baseline calibration from <code>config.py</code> and <code>DEFAULT_CONFIG</code>. Seed=42. 10,000 paths, 10-year horizon. The book's fixed-debt numbers come from the earlier <code>simulation_engine.py</code>; the current numbers come from <code>run_simulation.py</code>.</p>
+      <h2 style="font-size:1.6rem; font-weight:700; margin:2rem 0 0.5rem; color:var(--text-primary);">📊 Side-by-Side Comparison</h2>
+      <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:1rem;">Baseline calibration from <code>config.py</code>. Seed=42. 10,000 paths, 10-year horizon. The book's fixed-debt numbers come from the earlier <code>simulation_engine.py</code>; the current numbers come from <code>run_simulation.py</code>.</p>
 
-      <div style="overflow-x:auto;">
+      <div class="table-wrap">
         <table class="data-table">
           <thead>
             <tr>
@@ -134,7 +221,7 @@
         </table>
       </div>
 
-      <h2 style="font-size:1.6rem;font-weight:700;margin:2rem 0 0.5rem;color:var(--text-primary);">🧭 What this means for the book's claims</h2>
+      <h2 style="font-size:1.6rem; font-weight:700; margin:2rem 0 0.5rem; color:var(--text-primary);">🧭 What This Means for the Book's Claims</h2>
 
       <div class="callout good">
         <strong>✅ Cost reduction (~3.1%)</strong> — Still holds. The productivity bond is cheaper than a conventional bond on expected cost, regardless of model version.
@@ -160,64 +247,163 @@
         <strong>📊 Optimal portfolio share</strong> — The book cites ~30%. The v1.1 model shows this is scenario-dependent: 0% for high-debt sovereigns (60%+), 30–45% for moderate debt (30–50%). The optimal share is a property of the specific calibration, not a universal recommendation.
       </div>
 
-      <h2 style="font-size:1.6rem;font-weight:700;margin:2rem 0 0.5rem;color:var(--text-primary);">❓ Common objections</h2>
+      <h2 style="font-size:1.6rem; font-weight:700; margin:2rem 0 0.5rem; color:var(--text-primary);">❓ Common Objections</h2>
 
-      <h3 style="font-size:1.1rem;font-weight:600;margin:1rem 0 0.3rem;color:var(--text-primary);">"Doesn't the ILB make the productivity bond pointless?"</h3>
-      <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;">No. An ILB protects against inflation. A productivity bond rewards efficiency. If you believe efficiency is the metric we should be rewarding — because it's what we want the economy to produce, not just what we want to protect against — then the productivity bond is the more appropriate instrument. The ILB is a defensive tool; the productivity bond is a strategic one. They serve different purposes and can coexist.</p>
+      <div style="background:var(--bg-input); border-radius:12px; padding:0.2rem; margin-bottom:1.5rem; border:1px solid var(--border-divider);">
+        <div class="accordion-item">
+          <div class="accordion-toggle" onclick="toggleAccordion(this)">
+            <span>"Doesn't the ILB make the productivity bond pointless?"</span>
+            <span class="arrow">▼</span>
+          </div>
+          <div class="accordion-content">
+            <p style="padding:0.5rem 0; color:var(--text-secondary);">No. An ILB protects against inflation. A productivity bond rewards efficiency. If you believe efficiency is the metric we should be rewarding — because it's what we want the economy to produce, not just what we want to protect against — then the productivity bond is the more appropriate instrument. The ILB is a defensive tool; the productivity bond is a strategic one. They serve different purposes and can coexist.</p>
+          </div>
+        </div>
+      </div>
 
-      <h3 style="font-size:1.1rem;font-weight:600;margin:1rem 0 0.3rem;color:var(--text-primary);">"The book says 88.17% distress but the tool says 85.68%. Which is right?"</h3>
-      <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;">Both are correct for their respective models. The book's number is from the fixed-debt model; the tool's is from the endogenous-debt model. The endogenous model is more realistic and is the current production calibration. The difference is 2.5 percentage points — small enough that the qualitative conclusion (distress rises under variable coupons without a PAM) is unchanged, but large enough that any specific numeric claim in policy discussion should cite which model produced it.</p>
+      <div style="background:var(--bg-input); border-radius:12px; padding:0.2rem; margin-bottom:1.5rem; border:1px solid var(--border-divider);">
+        <div class="accordion-item">
+          <div class="accordion-toggle" onclick="toggleAccordion(this)">
+            <span>"The book says 88.17% distress but the tool says 85.68%. Which is right?"</span>
+            <span class="arrow">▼</span>
+          </div>
+          <div class="accordion-content">
+            <p style="padding:0.5rem 0; color:var(--text-secondary);">Both are correct for their respective models. The book's number is from the fixed-debt model; the tool's is from the endogenous-debt model. The endogenous model is more realistic and is the current production calibration. The difference is 2.5 percentage points — small enough that the qualitative conclusion (distress rises under variable coupons without a PAM) is unchanged, but large enough that any specific numeric claim in policy discussion should cite which model produced it.</p>
+          </div>
+        </div>
+      </div>
 
-      <h3 style="font-size:1.1rem;font-weight:600;margin:1rem 0 0.3rem;color:var(--text-primary);">"Isn't the whole model just a simulation, not evidence?"</h3>
-      <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;">Correct. The simulation tests whether the architecture can work under specified assumptions; it does not prove it will work in reality. The assumptions — about AI shocks, about government capture, about investor behaviour — matter more than the simulation itself. Every one of those assumptions should be challenged before any real-world implementation. The simulation is a tool for designing the instrument, not a forecast of the outcome.</p>
+      <div style="background:var(--bg-input); border-radius:12px; padding:0.2rem; margin-bottom:1.5rem; border:1px solid var(--border-divider);">
+        <div class="accordion-item">
+          <div class="accordion-toggle" onclick="toggleAccordion(this)">
+            <span>"Isn't the whole model just a simulation, not evidence?"</span>
+            <span class="arrow">▼</span>
+          </div>
+          <div class="accordion-content">
+            <p style="padding:0.5rem 0; color:var(--text-secondary);">Correct. The simulation tests whether the architecture can work under specified assumptions; it does not prove it will work in reality. The assumptions — about AI shocks, about government capture, about investor behaviour — matter more than the simulation itself. Every one of those assumptions should be challenged before any real-world implementation. The simulation is a tool for designing the instrument, not a forecast of the outcome.</p>
+          </div>
+        </div>
+      </div>
 
-      <h3 style="font-size:1.1rem;font-weight:600;margin:1rem 0 0.3rem;color:var(--text-primary);">"What's actually different between v1.0 and v1.1 in code terms?"</h3>
-      <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;">In v1.0, <code>state_generator.py</code> returned a debt path of zeros. The debt stock was passed in as a fixed baseline and used only for computing debt service — it never grew. In v1.1, <code>compute_debt_path()</code> takes a coupon series and rolls forward the debt stock year by year. Each bond type gets its own debt path, so the feedback loop is captured. The GitHub repo (<a href="https://github.com/traffictorch/productivity-bond-model" style="color:#b388ff;">traffictorch/productivity-bond-model</a>) has both models in git history for verification.</p>
+      <div style="background:var(--bg-input); border-radius:12px; padding:0.2rem; margin-bottom:1.5rem; border:1px solid var(--border-divider);">
+        <div class="accordion-item">
+          <div class="accordion-toggle" onclick="toggleAccordion(this)">
+            <span>"What's actually different between v1.0 and v1.1 in code terms?"</span>
+            <span class="arrow">▼</span>
+          </div>
+          <div class="accordion-content">
+            <p style="padding:0.5rem 0; color:var(--text-secondary);">In v1.0, <code>state_generator.py</code> returned a debt path of zeros. The debt stock was passed in as a fixed baseline and used only for computing debt service — it never grew. In v1.1, <code>compute_debt_path()</code> takes a coupon series and rolls forward the debt stock year by year. Each bond type gets its own debt path, so the feedback loop is captured. The GitHub repo (<a href="https://github.com/traffictorch/productivity-bond-model" style="color:#b388ff;">traffictorch/productivity-bond-model</a>) has both models in git history for verification.</p>
+          </div>
+        </div>
+      </div>
 
-      <h2 style="font-size:1.6rem;font-weight:700;margin:2rem 0 0.5rem;color:var(--text-primary);">🔗 Related pages</h2>
-      <ul style="color:var(--text-secondary);font-size:0.9rem;line-height:1.9;padding-left:1.5rem;">
+      <h2 style="font-size:1.6rem; font-weight:700; margin:2rem 0 0.5rem; color:var(--text-primary);">📅 Version History</h2>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Version</th><th>Model</th><th>Used by</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><span class="version-badge v10">v1.0</span></td><td>Fixed debt</td><td>Book (2026), Appendix C</td><td>Debt stock assumed static per path; coupons applied against it</td></tr>
+            <tr><td><span class="version-badge v11">v1.1</span></td><td>Endogenous debt</td><td>Policy Lab, NPI Tracker, current simulation</td><td>Debt stock rolled forward per bond type; captures feedback loop</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 style="font-size:1.6rem; font-weight:700; margin:2rem 0 0.5rem; color:var(--text-primary);">🔗 Related Pages</h2>
+      <ul style="color:var(--text-secondary); font-size:0.95rem; line-height:2; padding-left:1.5rem;">
         <li><a href="policy-lab.html" style="color:#b388ff;">Policy Lab</a> — Interactive scenario builder using v1.1</li>
-        <li><a href="index.html#simulator" style="color:#b388ff;">Live Simulator</a> — Homepage simulator (browser-based summary metrics)</li>
+        <li><a href="index.html#simulator" style="color:#b388ff;">Live Simulator</a> — Homepage simulator</li>
         <li><a href="appendix.html" style="color:#b388ff;">Appendices</a> — Mathematical appendix and full specification</li>
         <li><a href="book.html" style="color:#b388ff;">The Book</a> — Full PDF and audiobook</li>
         <li><a href="changelog.html" style="color:#b388ff;">Changelog</a> — Version history</li>
         <li><a href="https://github.com/traffictorch/productivity-bond-model" style="color:#b388ff;">GitHub Repository</a> — Source code and simulation engine</li>
       </ul>
 
-      <h2 style="font-size:1.6rem;font-weight:700;margin:2rem 0 0.5rem;color:var(--text-primary);">📅 Version history</h2>
-      <table class="data-table">
-        <thead><tr><th>Version</th><th>Model</th><th>Used by</th><th>Notes</th></tr></thead>
-        <tbody>
-          <tr><td><span class="version-badge v10">v1.0</span></td><td>Fixed debt</td><td>Book (2026), Appendix C</td><td>Debt stock assumed static per path; coupons applied against it</td></tr>
-          <tr><td><span class="version-badge v11">v1.1</span></td><td>Endogenous debt</td><td>Policy Lab, NPI Tracker, current simulation</td><td>Debt stock rolled forward per bond type; captures feedback loop</td></tr>
-        </tbody>
-      </table>
-
-      <div style="margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border-divider);font-size:0.85rem;color:var(--text-muted);">
-        <p>📌 Last updated: 2026-10-27 · Maintained by <a href="https://traffictorch.net" style="color:#b388ff;">Traffic Torch</a> · <a href="changelog.html" style="color:#b388ff;">See changelog</a></p>
+      <div style="margin-top:2rem; padding-top:1rem; border-top:1px solid var(--border-divider); font-size:0.85rem; color:var(--text-muted);">
+        <p>📌 Last updated: 2026-10-27 · Maintained by <a href="https://traffictorch.net" style="color:#b388ff;">Traffic Torch</a></p>
       </div>
 
     </div>
   </section>
 </main>
 
+<div id="gov-widget"></div>
+<script src="js/governance-widget.js?v=1.4" defer></script>
+
+<button id="pwaInstallBtn" class="pwa-install-btn">
+  <span class="icon">📱</span>
+  <span class="btn-text">Install Apps</span>
+  <span class="icon">💻</span>
+</button>
+<div id="pwaIosOverlay" class="pwa-ios-overlay">
+  <div class="pwa-ios-modal">
+    <h3>Install on iPhone</h3>
+    <p>To add this app to your home screen:</p>
+    <div class="step"><span>1.</span><span class="step-icon">⬆️</span><span>In <strong>Safari</strong> tap the <strong>Share</strong> button.</span></div>
+    <div class="step"><span>2.</span><span class="step-icon">➕</span><span>Scroll down and tap <strong>"Add to Home Screen"</strong>.</span></div>
+    <button id="pwaCloseIosModal" class="close-btn">Got it</button>
+  </div>
+</div>
+
+<button class="floating-return-top" id="floatingReturnTop" aria-label="Return to top">⬆ Top</button>
+
+<!-- ====== FOOTER ====== -->
 <footer class="footer">
   <div class="container">
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1rem 1.5rem;margin-bottom:1.5rem;font-size:0.85rem;">
-      <a href="index.html" style="color:var(--text-muted);text-decoration:none;">🏠 Home</a>
-      <a href="tools.html" style="color:var(--text-muted);text-decoration:none;">🧰 Tools</a>
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1rem 1.5rem; margin-bottom:1.5rem; font-size:0.85rem;">
+      <a href="index.html" style="color:var(--text-muted); text-decoration:none;">🏠 Home</a>
+      <a href="news.html" style="color:var(--text-muted); text-decoration:none;">News</a>
+      <a href="contributions.html">Contributions</a>
+      <a href="about.html" style="color:var(--text-muted); text-decoration:none;">About</a>
+      <a href="book.html" style="color:var(--text-muted); text-decoration:none;">Book</a>
+      <a href="changelog.html" style="color:var(--text-muted); text-decoration:none;">Changelog</a>
+      <a href="tools.html" style="color:#b388ff;">🧰 Tools</a>
       <a href="policy-lab.html" style="color:#b388ff;">🏛️ Policy Lab</a>
       <a href="model-notes.html" style="color:#b388ff;">📐 Model Notes</a>
-      <a href="changelog.html" style="color:var(--text-muted);text-decoration:none;">Changelog</a>
-      <a href="book.html" style="color:var(--text-muted);text-decoration:none;">Book</a>
-      <a href="contact.html" style="color:var(--text-muted);text-decoration:none;">Contact</a>
+      <a href="privacy.html" style="color:var(--text-muted); text-decoration:none;">Privacy</a>
+      <a href="terms.html" style="color:var(--text-muted); text-decoration:none;">Terms</a>
+      <a href="contact.html" style="color:var(--text-muted); text-decoration:none;">Contact</a>
     </div>
-    <p style="font-size:0.7rem;margin-top:0.3rem;color:var(--text-muted);">Creative Commons BY-NC-ND 4.0 · Built with ♥ and AI</p>
+    <p>
+      © 2026 <a href="https://traffictorch.net">Traffic Torch</a> ·
+      <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> ·
+      Version 1.0.0 ·
+      <a href="https://zenodo.org/records/21970090" target="_blank" rel="external noopener">Simulation Code (Zenodo)</a>
+    </p>
+    <p style="font-size:0.7rem; margin-top:0.3rem;">
+      Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI
+    </p>
+  </div>
+  <div style="margin-top:1.5rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.1); font-size:0.85rem; color:var(--text-muted);">
+    <p>🏛️ Official Submission #240 to the <a href="https://www.aph.gov.au/DocumentStore.ashx?id=25e9d73e-76be-4f7f-87af-5fb5b3e71058&subId=805961" target="_blank" style="color:#60a5fa; text-decoration:underline;">Senate Select Committee on Productivity in Australia</a>.</p>
   </div>
 </footer>
 
+<script src="js/core.min.js?v=1.4" defer></script>
+
 <script>
-window.addEventListener('load',function(){document.documentElement.classList.add('loaded');});
+// Accordion wiring
+window.toggleAccordion=function(el){
+  var content=el.nextElementSibling;
+  var arrow=el.querySelector('.arrow');
+  if(content){
+    content.classList.toggle('open');
+    el.classList.toggle('open');
+    if(arrow)arrow.classList.toggle('open');
+  }
+};
+
+// Keyboard accessibility
+window.addEventListener('load',function(){
+  document.documentElement.classList.add('loaded');
+  document.querySelectorAll('.accordion-toggle').forEach(function(el){
+    el.setAttribute('role','button');
+    el.setAttribute('tabindex','0');
+    el.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click();}
+    });
+  });
+});
 </script>
+
 </body>
 </html>
