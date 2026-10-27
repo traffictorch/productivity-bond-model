@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🏛️ Policy Lab – Sovereign Debt Scenario Builder | PBM Productivity Lab</title>
+  <meta name="description" content="Model your sovereign's debt trajectory under conventional vs productivity-linked issuance. Endogenous debt model, feedback loop, PAM toggle." />
+  <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/policy-lab.html" />
+  <meta property="og:title" content="Policy Lab – Sovereign Debt Scenario Builder" />
+  <meta property="og:description" content="Model conventional vs productivity-linked sovereign debt trajectories." />
+  <meta property="og:image" content="https://traffictorch.github.io/productivity-bond-model/og-image-1200w.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://traffictorch.github.io/productivity-bond-model/policy-lab.html" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="icon-512.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=block" crossorigin="anonymous" />
+  <link rel="stylesheet" href="css/core.min.css" />
+
+  <style>
+    html { opacity: 0; transition: opacity 0.12s ease; }
+    html.loaded { opacity: 1; }
+    .hero { min-height: 22vh; padding: 1rem 0; }
+    .section-spacing { padding: 3rem 0; }
+
+    .input-group {
+      display: flex; flex-wrap: wrap; gap: 1rem 2rem; margin-bottom: 1.2rem;
+      background: var(--bg-input); padding: 1.2rem 1.5rem;
+      border-radius: 12px; border: 1px solid var(--border-divider);
+    }
+    .input-group label {
+      display: flex; flex-direction: column;
+      font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em;
+      color: var(--text-muted); gap: 0.3rem; flex: 1 1 160px;
+    }
+    .input-group input[type="number"] {
+      background: var(--bg-body);
+      border: 1px solid var(--border-divider);
+      border-radius: 8px;
+      padding: 0.6rem 0.75rem;
+      color: var(--text-primary);
+      font-weight: 500;
+      width: 100%;
+      font-family: inherit;
+    }
+    .input-group label.checkbox-label {
+      flex-direction: row; align-items: center; gap: 0.5rem;
+      text-transform: none; font-size: 0.85rem;
+      color: var(--text-primary); font-weight: 500;
+      cursor: pointer;
+    }
+
+    .preset-row {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem;
+    }
+
+    .mode-selector {
+      display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.8rem;
+    }
+    .mode-btn {
+      background: var(--bg-body);
+      border: 1px solid var(--border-divider);
+      color: var(--text-muted);
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      font-family: inherit;
+    }
+    .mode-btn:hover { border-color: var(--text-muted); color: var(--text-primary); }
+    .mode-btn.active {
+      background: rgba(79,70,229,0.2);
+      border-color: #4f46e5;
+      color: #b388ff;
+    }
+    .mode-label {
+      font-size: 0.7rem; color: var(--text-muted);
+      background: var(--bg-code);
+      padding: 0.2rem 0.8rem;
+      border-radius: 40px;
+      display: inline-block;
+      margin-bottom: 0.8rem;
+    }
+
+    .result-box {
+      background: var(--bg-input);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border-left: 4px solid #4f46e5;
+      margin-top: 1rem;
+    }
+    .result-box .stat { font-size: 1.8rem; font-weight: 700; color: var(--text-primary); }
+    .result-box .stat span { color: #4f46e5; }
+    .result-box .stat.green span { color: #34d399; }
+    .result-box .stat.red span { color: #f87171; }
+    .result-box .stat.purple span { color: #a78bfa; }
+    .result-box .sub-stat { color: var(--text-muted); font-size: 0.85rem; }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.8rem;
+      margin-bottom: 1.2rem;
+    }
+    .stat-card {
+      background: var(--bg-body);
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      border-left: 4px solid #4f46e5;
+    }
+    .stat-card.green { border-left-color: #34d399; }
+    .stat-card.red { border-left-color: #f87171; }
+    .stat-card.purple { border-left-color: #a78bfa; }
+    .stat-card .num {
+      font-size: 1.6rem; font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.1;
+    }
+    .stat-card .lbl {
+      font-size: 0.65rem; text-transform: uppercase;
+      letter-spacing: 0.05em; color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .chart-container { max-height: 320px; margin: 1rem 0; }
+
+    .prescription-box {
+      background: var(--bg-body);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-left: 4px solid #f59e0b;
+    }
+    .prescription-box .label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700; }
+    .prescription-box .solution { color: #f59e0b; font-weight: 600; margin-top: 0.3rem; }
+    .prescription-box .action { color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.3rem; }
+
+    .accordion-toggle {
+      cursor: pointer; user-select: none;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.6rem 1rem;
+      color: var(--text-primary);
+      font-weight: 500; font-size: 0.9rem;
+      transition: background 0.2s, border-radius 0.2s;
+    }
+    .accordion-toggle:hover { background: rgba(255,255,255,0.03); border-radius: 8px; }
+    .accordion-toggle .arrow { transition: transform 0.25s ease; display: inline-block; font-size: 0.7rem; color: var(--text-muted); }
+    .accordion-toggle.open .arrow { transform: rotate(180deg); }
+    .accordion-content {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.3s ease;
+      padding: 0 1rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .accordion-content.open { max-height: 3000px; padding: 0.2rem 1rem 1rem 1rem; }
+
+    .action-bar {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-top: 1rem; padding-top: 1rem;
+      border-top: 1px solid var(--border-divider);
+    }
+    .action-bar .btn-secondary, .action-bar .btn-primary { padding: 0.4rem 1rem; font-size: 0.8rem; }
+
+    .ai-output {
+      margin-top: 0.8rem;
+      padding: 0.8rem 1.2rem;
+      background: var(--bg-body);
+      border-radius: 0.8rem;
+      border-left: 4px solid #a78bfa;
+      min-height: 50px;
+      font-size: 0.9rem;
+      color: var(--text-body);
+    }
+    .ai-output .summary { color: var(--text-primary); font-weight: 500; margin-bottom: 0.3rem; }
+    .ai-output .advice { color: var(--text-secondary); }
+    .ai-output .placeholder { opacity: 0.5; }
+
+    .warn-banner {
+      background: rgba(251,191,36,0.12);
+      border-left: 4px solid #f59e0b;
+      padding: 0.8rem 1rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      margin-bottom: 1.2rem;
+      color: var(--text-secondary);
+    }
+
+    .share-module {
+      margin-top: 1.5rem; padding-top: 1.5rem;
+      border-top: 1px solid var(--border-divider);
+    }
+
+    @media (max-width: 768px) {
+      .floating-return-top { display: none !important; }
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+  <script src="js/ga4.js" defer></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://traffictorch.net/#organization",
+        "name": "Traffic Torch",
+        "url": "https://traffictorch.net",
+        "description": "Research initiative exploring innovative economic and financial models.",
+        "logo": "https://traffictorch.github.io/productivity-bond-model/icon-512.png"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://traffictorch.github.io/productivity-bond-model/policy-lab.html#software",
+        "name": "Policy Lab – Sovereign Debt Scenario Builder",
+        "description": "Model your sovereign's debt trajectory under conventional vs productivity-linked issuance. Uses the endogenous-debt model from run_simulation.py.",
+        "url": "https://traffictorch.github.io/productivity-bond-model/policy-lab.html",
+        "applicationCategory": "FinancialApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Ylia Callan" }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- ===== NAV ===== -->
+<nav class="sticky-nav no-print" id="mainNav">
+  <div class="nav-left">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-pressed="false"><span id="themeIcon">🌙</span></button>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">🏠 Home</a></li>
+    <li class="dropdown">
+      <span class="dropdown-toggle">🧰 Tools ▼</span>
+      <ul class="dropdown-menu">
+        <li><a href="tools.html">⚙️ All Tools</a></li>
+        <li><a href="wellbeing-index.html">🌿 Wellbeing Index</a></li>
+        <li><a href="debt-reality.html">💳 Debt Reality</a></li>
+        <li><a href="compound-curve.html">📈 Compound Curve</a></li>
+        <li><a href="npi-index.html">📊 NPI Index</a></li>
+        <li><a href="global-vitals-dashboard.html">🌍 Global Vitals</a></li>
+        <li><a href="policy-lab.html">🏛️ Policy Lab</a></li>
+      </ul>
+    </li>
+    <li class="dropdown"><span class="dropdown-toggle">About ▼</span><ul class="dropdown-menu"><li><a href="news.html">News</a></li><li><a href="contributions.html">Contributions</a></li><li><a href="about.html">Traffic Torch</a></li><li><a href="changelog.html">Change Log</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="contact.html">Contact</a></li></ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">PBM ▼</span><ul class="dropdown-menu">
+      <li><a href="appendix.html">📑 Appendices</a></li>
+      <li><a href="index.html#model-definition">Model</a></li>
+      <li><a href="index.html#mechanism">Mechanism</a></li>
+      <li><a href="index.html#glossary">Glossary</a></li>
+      <li><a href="index.html#limitations">Limitations</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+      <li><a href="index.html#citation">Cite</a></li>
+    </ul></li>
+    <li class="dropdown"><span class="dropdown-toggle">Simulation ▼</span><ul class="dropdown-menu"><li><a href="index.html#simulator">Live Simulator</a></li><li><a href="index.html#results-data">Results</a></li><li><a href="index.html#sensitivity">Sensitivity</a></li><li><a href="index.html#implement">Implementation</a></li></ul></li>
+    <li><a href="book.html">🎧 Books</a></li>
+    <li><a href="appendix.html">📑 Appendices</a></li>
+    <li><a href="index.html#learn">💸 Learn</a></li>
+  </ul>
+</nav>
+
+<main>
+  <div class="container" style="padding-top:1.5rem; padding-bottom:0;">
+    <nav class="breadcrumb">
+      <a href="index.html">🏠 Home</a><span style="opacity:0.5;">/</span>
+      <a href="tools.html">🧰 Tools</a><span style="opacity:0.5;">/</span>
+      <span style="color:var(--text-primary); font-weight:500;">Policy Lab</span>
+    </nav>
+  </div>
+
+  <section class="container hero">
+    <div>
+      <span class="badge-glow" style="margin-bottom:0.5rem;">🏛️ Interactive Tool</span>
+      <span class="badge-glow badge-version" style="margin-left:0.5rem;">v1.0.0</span>
+      <h1 class="text-gradient" style="font-size:clamp(2.8rem,6vw,4rem); font-weight:800; letter-spacing:-0.03em; line-height:1.1;">Policy Lab</h1>
+      <p style="font-size:clamp(1.2rem,2vw,1.6rem); font-weight:300; opacity:0.8; max-width:650px; margin:0.5rem 0 1.5rem; color:var(--text-secondary);">
+        Model your sovereign's debt trajectory under conventional vs productivity-linked issuance — with the feedback loop made explicit.
+      </p>
+    </div>
+  </section>
+
+  <section class="container section-spacing" style="padding-top:0.5rem;">
+    <div class="glass-card">
+
+      <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:1.2rem;">
+        A decision-support tool for finance ministries, central banks, and researchers. Choose a preset or tune the parameters below, then click <strong>Run Analysis</strong>.
+        <span style="font-size:0.85rem; opacity:0.7; display:block; margin-top:0.3rem;">⚡ Powered by the endogenous-debt model (v1.1) from <code>run_simulation.py</code>.</span>
+      </p>
+
+      <div class="warn-banner">
+        ⚠️ <strong>Model version note:</strong> These results use the <strong>endogenous-debt model (v1.1)</strong>. The book's Appendix C used an older fixed-debt calibration — numbers may differ. See <a href="changelog.html" style="color:#f59e0b; text-decoration:underline;">CHANGELOG</a>.
+      </div>
+
+      <!-- ===== WHAT IS THIS? ===== -->
+      <div style="background:var(--bg-input); border-radius:12px; padding:0.2rem; margin-bottom:1.5rem; border:1px solid var(--border-divider);">
+        <div class="accordion-item">
+          <div class="accordion-toggle" onclick="toggleAccordion(this)">
+            <span>📖 What is the Policy Lab?</span>
+            <span class="arrow">▼</span>
+          </div>
+          <div class="accordion-content">
+            <p style="padding:0.5rem 0; color:var(--text-secondary);">
+              The <strong>Policy Lab</strong> puts the Productivity Bond Model in the hands of a sovereign finance analyst. It answers the question every finance ministry asks: <em>"If we swap part of our issuance to Productivity Bonds, what happens to our debt trajectory, our debt service, and our risk of fiscal distress over the next decade?"</em>
+            </p>
+            <p style="padding:0.3rem 0; color:var(--text-secondary);">
+              Unlike the homepage simulator (which shows summary metrics only), the Policy Lab returns <strong>year-by-year debt/GDP and debt service ratios</strong> — so you can see <em>when</em> pressure peaks, not just whether it does.
+            </p>
+            <p style="padding:0.3rem 0; color:var(--text-secondary);">
+              <strong>The feedback loop is explicit.</strong> Higher coupons in good years increase debt service; if the government borrows to pay, the debt stock grows; when a downturn arrives, the coupon falls but the debt is bigger. This is the model's most important design problem — and the reason for the <strong>PAM toggle</strong> (Principal Adjustment Mechanism).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== PRESETS ===== -->
+      <h3 style="font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-muted); margin-bottom:0.6rem;">📋 Quick Presets</h3>
+      <div class="mode-selector" id="presetSelector">
+        <button class="mode-btn active" data-preset="asteria">Asteria Pilot</button>
+        <button class="mode-btn" data-preset="advanced">Advanced Economy</button>
+        <button class="mode-btn" data-preset="emerging">Emerging Market</button>
+        <button class="mode-btn" data-preset="smallopen">Small Open</button>
+        <button class="mode-btn" data-preset="failure">⚠️ Failure Case</button>
+      </div>
+      <div id="presetLabel" class="mode-label">🏛️ Asteria Pilot — from the book (Appendix D)</div>
+
+      <!-- ===== SOVEREIGN PROFILE ===== -->
+      <h3 style="font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-muted); margin:1.2rem 0 0.6rem;">🏛️ Sovereign Profile</h3>
+      <div class="input-group">
+        <label>GDP (billions)
+          <input type="number" id="gdp" value="250" step="10" min="10" />
+        </label>
+        <label>Debt / GDP (%)
+          <input type="number" id="debtGDP" value="60" step="1" min="0" max="300" />
+        </label>
+        <label>Nominal GDP growth (%)
+          <input type="number" id="muY" value="2.5" step="0.1" />
+        </label>
+        <label>Inflation (%)
+          <input type="number" id="muPi" value="2.0" step="0.1" />
+        </label>
+        <label>NPI growth (%)
+          <input type="number" id="muN" value="2.0" step="0.1" />
+        </label>
+        <label>Conventional coupon (%)
+          <input type="number" id="couponConv" value="4.0" step="0.1" />
+        </label>
+      </div>
+
+      <!-- ===== BOND DESIGN ===== -->
+      <h3 style="font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-muted); margin:1.2rem 0 0.6rem;">📜 Bond Design & Environment</h3>
+      <div class="input-group">
+        <label>α_N — Investor participation
+          <input type="number" id="alphaN" value="0.70" step="0.05" min="0" max="1" />
+        </label>
+        <label>Real-return cap (%)
+          <input type="number" id="cap" value="4.0" step="0.5" min="0" max="10" />
+        </label>
+        <label>θ_AI — Gov. capture of AI gains
+          <input type="number" id="thetaAI" value="0.30" step="0.05" min="0" max="1" />
+        </label>
+        <label>Portfolio share (%)
+          <input type="number" id="share" value="30" step="5" min="0" max="100" />
+        </label>
+        <label class="checkbox-label" style="flex-basis:100%;">
+          <input type="checkbox" id="pam" />
+          <span>Enable Principal-Adjustment Mechanism (PAM)</span>
+        </label>
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; gap:0.6rem; align-items:center; margin-top:0.5rem;">
+        <button class="btn-primary" onclick="runAnalysis(2000)" style="padding:0.7rem 1.8rem;">▶ Run Analysis</button>
+        <button class="btn-secondary" onclick="runAnalysis(10000)" style="padding:0.7rem 1.8rem;">⚡ Full Monte Carlo (10k paths)</button>
+        <span id="status" style="font-size:0.8rem; color:var(--text-muted);">Ready</span>
+      </div>
+
+      <!-- ===== RESULTS ===== -->
+      <div id="results" class="result-box" style="display:none;">
+        <div class="stat-grid">
+          <div class="stat-card purple">
+            <div class="num" id="statCost">—</div>
+            <div class="lbl">Expected cost (bond price)</div>
+          </div>
+          <div class="stat-card red">
+            <div class="num" id="statDistress">—</div>
+            <div class="lbl">Distress probability</div>
+          </div>
+          <div class="stat-card green">
+            <div class="num" id="statSaving">—</div>
+            <div class="lbl">Cost saving vs conventional</div>
+          </div>
+          <div class="stat-card">
+            <div class="num" id="statOptimal">—</div>
+            <div class="lbl">Recommended portfolio share</div>
+          </div>
+        </div>
+
+        <div style="margin-top:1.2rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.5rem;">
+            <span style="font-size:0.9rem; font-weight:600; color:var(--text-primary);">📈 Debt / GDP Trajectory</span>
+            <span style="font-size:0.7rem; color:var(--text-muted);">Mean across paths</span>
+          </div>
+          <div class="chart-container"><canvas id="chartTrajectory"></canvas></div>
+        </div>
+
+        <div style="margin-top:1rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.5rem;">
+            <span style="font-size:0.9rem; font-weight:600; color:var(--text-primary);">💸 Debt Service / Revenue</span>
+            <span style="font-size:0.7rem; color:var(--text-muted);">Distress threshold: 15%</span>
+          </div>
+          <div class="chart-container"><canvas id="chartDSR"></canvas></div>
+        </div>
+
+        <div class="prescription-box">
+          <div class="label">🧠 Verdict</div>
+          <div class="solution" id="verdictSolution">Run analysis to see verdict.</div>
+          <div class="action" id="verdictAction"></div>
+        </div>
+
+        <div class="action-bar">
+          <button class="btn-secondary" id="aiButton" onclick="generateAI()">🧠 Generate AI Analysis</button>
+          <span style="font-size:0.7rem; color:var(--text-muted); margin-left:0.5rem;" id="aiStatus">Ready</span>
+        </div>
+        <div id="aiOutput" class="ai-output">
+          <span class="placeholder">Click "Generate AI Analysis" for detailed interpretation.</span>
+          <div style="margin-top:0.4rem; font-size:0.65rem; color:var(--text-muted); opacity:0.6;">⚠️ AI can make mistakes. Verify with your own research.</div>
+        </div>
+      </div>
+
+      <!-- ===== SHARE & REPORT ===== -->
+      <div class="share-module">
+        <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap; margin-bottom:0.8rem;">
+          <span class="badge-glow" style="background:rgba(251,191,36,0.15); color:#60a5fa;">📋 Share & Report</span>
+          <h3 style="font-weight:700; font-size:1rem; margin:0; color:var(--text-primary);">Share your scenario</h3>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:0.6rem; align-items:center;">
+          <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="copyShareLink()">🔗 Copy Link</button>
+          <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="copySummary()">📝 Copy Summary</button>
+          <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="exportCSV()">📊 Export CSV</button>
+          <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="window.print()">🖨️ Print / PDF</button>
+          <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="shareSocial('x')">🐦 X</button>
+          <button class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;" onclick="shareSocial('linkedin')">💼 LinkedIn</button>
+        </div>
+        <div style="margin-top:0.6rem; font-size:0.75rem; color:var(--text-muted);">
+          ⚡ Share links encode all parameters, so your scenario is fully reproducible.
+        </div>
+      </div>
+
+      <!-- Data quality notice -->
+      <div style="margin-top:1rem; padding:0.8rem 1rem; background:var(--bg-code); border-radius:8px; border:1px solid var(--border-divider);">
+        <span style="font-size:0.7rem; color:var(--text-muted);">📌 Model: endogenous debt, 10-year horizon. Defaults match <code>config.py</code>.</span>
+        <span style="font-size:0.7rem; color:var(--text-muted); display:block; margin-top:0.2rem;">⚠️ Projections are not predictions. Results depend on assumptions about AI shocks, gov capture (θ_AI), and investor behaviour.</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== FEEDBACK ===== -->
+  <section class="container section-spacing" style="padding-top:0; padding-bottom:2rem;">
+    <div class="glass-card feedback-container" id="feedback-container">
+      <div class="feedback-header">
+        <span class="badge-glow" style="background:rgba(251,191,36,0.15); color:#60a5fa; border-color:rgba(251,191,36,0.15);">🧪 Development</span>
+        <h2>Help Us Improve</h2>
+        <p>
+          This tool is <strong>new and in development</strong>. If you find bugs or have suggestions, please let us know — your feedback helps us fix issues and make the Policy Lab better for everyone.
+        </p>
+      </div>
+      <button class="btn-primary feedback-toggle-btn" id="feedbackToggleBtn">📝 Submit Feedback</button>
+      <div class="feedback-form-container" id="feedbackFormContainer">
+        <p class="form-title">Feedback for <strong>Policy Lab</strong> (Development)</p>
+        <form class="feedback-form" id="feedbackForm">
+          <div class="feedback-field">
+            <label>Rate your experience (optional)</label>
+            <div class="feedback-rating-group" role="radiogroup" aria-label="Feedback rating">
+              <button type="button" class="rating-btn" data-rating="1">😞</button>
+              <button type="button" class="rating-btn" data-rating="2">🙁</button>
+              <button type="button" class="rating-btn" data-rating="3">😐</button>
+              <button type="button" class="rating-btn" data-rating="4">🙂</button>
+              <button type="button" class="rating-btn" data-rating="5">😍</button>
+            </div>
+            <input type="hidden" class="feedback-rating-input" value="">
+          </div>
+          <div class="feedback-field">
+            <label class="checkbox-label">
+              <input type="checkbox" class="feedback-reply-checkbox">
+              <span>Request a reply (we'll email you)</span>
+            </label>
+          </div>
+          <div class="feedback-field feedback-email-group hidden">
+            <label for="feedbackEmail">Your email address</label>
+            <input type="email" id="feedbackEmail" class="feedback-email-input" placeholder="you@example.com">
+            <div class="field-hint">We'll only use this to respond to your feedback.</div>
+          </div>
+          <div class="feedback-field">
+            <label for="feedbackText">Your feedback <span style="color:var(--text-muted);font-weight:400;">(required)</span></label>
+            <textarea id="feedbackText" class="feedback-text-input" rows="4" maxlength="1000" placeholder="Describe the issue or suggestion."></textarea>
+            <div class="char-count"><span class="feedback-char-count">0</span> / 1000 characters</div>
+          </div>
+          <div class="feedback-submit-row">
+            <button type="submit" class="btn-primary feedback-submit-btn">Send Feedback</button>
+            <span style="font-size:0.7rem; color:var(--text-muted);">100% anonymous unless you request a reply</span>
+          </div>
+        </form>
+        <div class="feedback-message" id="feedbackMessage"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== NOSCRIPT ===== -->
+  <noscript>
+    <section class="container section-spacing" style="padding-top:0;">
+      <div class="glass-card" style="border-color:var(--color-burnout);">
+        <h2 style="font-size:1.5rem; font-weight:700; color:var(--color-burnout);">⚠️ JavaScript is disabled</h2>
+        <p style="color:var(--text-secondary);">
+          The Policy Lab needs JavaScript to run its simulation engine. Please enable JavaScript to use this tool.
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap:0.8rem; margin-top:1rem;">
+          <a href="tools.html" class="btn-secondary">🧰 Explore Other Tools</a>
+          <a href="book.html" class="btn-secondary">📖 Read the Book</a>
+        </div>
+      </div>
+    </section>
+  </noscript>
+
+  <!-- ===== FAQ ===== -->
+  <section id="faq" class="container section-spacing">
+    <div class="glass-card">
+      <span class="badge-glow" style="margin-bottom:0.8rem; display:inline-block;">❓ FAQ</span>
+      <h2 style="font-size:clamp(2rem,3.5vw,2.8rem); font-weight:700; margin-bottom:0.5rem;">Frequently Asked Questions</h2>
+      <p style="color:var(--text-secondary); max-width:700px; margin-bottom:2rem; font-size:1.05rem;">
+        Everything you need to know about the Policy Lab and its results.
+      </p>
+
+      <div style="background:var(--bg-input); border-radius:16px; border:1px solid var(--border-divider); overflow:hidden;">
+
+        <div class="accordion-item" style="border-bottom:1px solid var(--border-divider);">
+          <div class="accordion-toggle" onclick="toggleAccordion(this)">
+            <span>🏛️ What does the Policy Lab do?</span>
+            <span class="arrow">▼</span>
+          </div>
+          <div class="accordion-content">
+            <p style="color:var(--text-secondary);">The Policy Lab is a decision-support tool for sovereign finance ministries and researchers. It simulates the debt trajectory of a country issuing a mix of conventional and productivity-linked bonds.</p>
+            <p style="color:var(--text-secondary); margin-top:0.5rem;">You get:</p>
+            <ul style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
+              <li><strong>Year-by-year debt/GDP trajectory</strong> — conventional vs productivity</li>
+              <li><strong>Debt service / revenue ratio</strong> — with the 15% distress threshold visible</li>
+              <li><strong>Expected cost</strong> — the bond price (PV of coupons + principal, risk-adjusted)</li>
+              <li><strong>Distress probability</strong> — fraction of paths where DSR exceeds 15% in any year</li>
+              <li><strong>Recommended portfolio share</strong> — optimal mix from welfare minimization</li>
+              <li><strong>PAM effect</strong> — see what happens when you enable Principal Adjustment</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="accordion-item" style="border-bottom:1px solid var(--border-divider);">
+          <div class="accordion-toggle" onclick="toggleAccordion(this)">
+            <span>⚙️ What is the PAM toggle?</span>
+            <span class="arrow">▼</span>
+          </div>
+          <div class="accordion-content">
+            <p style="color:var(--text-secondary);">PAM stands for <strong>Principal-Adjustment Mechanism</strong>. The simulation shows that variable coupons can create a feedback loop: higher coupons during productive years increase debt service, which increases the debt stock, which increases future debt service — even if the coupon later falls.</p>
+            <p style="color:var(--text-secondary); margin-top:0.5rem;">The PAM is a rule that automatically reduces outstanding principal when DSR exceeds a threshold (default 15%). When you turn it on, you'll see distress probability drop significantly — at the cost of a small hit to investor returns.</p>
+            <p style="color:var(--text-secondary); margin-top:0.5rem;">This is the model's most important design refinement. Without PAM, variable coupons may not reduce distress even though they reduce expected cost.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item" style="border-bottom:1px solid var(--border-divider);">
+          <div class="accordion-toggle" onclick="toggleAccordion(this)">
+            <span>🎯 What is θ_AI and why does it matter?</span>
+            <span class="arrow">▼</span>
+          </div>
+          <div class="accordion-content">
+            <p style="color:var(--text-secondary);"><strong>θ_AI</strong> is the fraction of AI-driven productivity gains that the government captures through taxes, royalties, or sovereign equity. It's the single most important parameter in the model.</p>
+            <p style="color:var(--text-secondary); margin-top:0.5rem;">The empirical evidence is clear:</p>
+            <ul style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
+              <li>If <strong>θ_AI &lt; 0.15</strong>, the Productivity Bond barely outperforms conventional debt</li>
+              <li>If <strong>θ_AI &gt; 0.30</strong>, it substantially outperforms</li>
+            </ul>
+            <p style="color:var(--text-secondary); margin-top:0.5rem;">This is why the verdict warns you when θ_AI is too low — the instrument only works if the gains it's linked to actually reach the public balance sheet.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item" style="border-bottom:1px solid var(--border-divider);">
+          <div class="accordion-toggle" onclick="toggleAccordion(this)">
+            <span>📊 How do the results compare to the book's Appendix C?</span>
+            <span class="arrow">▼</span>
+          </div>
+          <div class="accordion-content">
+            <p style="color:var(--text-secondary);">The book's Appendix C used a <strong>fixed-debt model</strong> (debt path was assumed, not computed). The current Python engine — and this Policy Lab — uses the <strong>endogenous-debt model</strong>, where each bond type gets its own debt path based on its own coupons.</p>
+            <p style="color:var(--text-secondary); margin-top:0.5rem;">As a result:</p>
+            <ul style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
+              <li><strong>Expected costs</strong> match closely (0.5154 vs 0.515392 for conventional)</li>
+              <li><strong>Distress probabilities</strong> differ (11.05% vs 11.05% for conventional — same; but 88.17% vs 85.68% for productivity)</li>
+              <li><strong>Portfolio optimisation</strong> produces a slightly different optimal share (30% in both, but welfare is more nuanced)</li>
+            </ul>
+            <p style="color:var(--text-secondary); margin-top:0.5rem;">The endogenous model is more realistic. The book will be updated in a future edition.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-toggle" onclick="toggleAccordion(this)">
+            <span>🔧 Is the Policy Lab open source?</span>
+            <span class="arrow">▼</span>
+          </div>
+          <div class="accordion-content">
+            <p style="color:var(--text-secondary);">Yes. The full engine mirrors <code>run_simulation.py</code>, <code>bond_valuation.py</code>, and <code>state_generator.py</code>. The source code is available on <a href="https://github.com/traffictorch/productivity-bond-model" style="color:#b388ff;">GitHub</a>, and you can run the Python version to verify every number.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TOOL CARDS ===== -->
+  <section class="container section-spacing" style="padding-bottom:3rem;">
+    <h2 class="text-gradient" style="font-size:clamp(1.8rem,3vw,2.2rem); font-weight:700; text-align:center; margin-bottom:0.5rem;">Explore the Tools</h2>
+    <p style="text-align:center; color:var(--text-secondary); max-width:600px; margin:0 auto 2rem; font-size:clamp(0.95rem,1.1vw,1.05rem);">
+      Interactive calculators to help you understand the Productivity Bond Model.
+    </p>
+
+    <div class="tool-card" style="margin-bottom:2rem; padding:1.5rem 2rem; border:1px solid rgba(79,70,229,0.3);">
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:1rem 2rem;">
+        <div style="flex:1; min-width:200px;">
+          <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap; margin-bottom:0.15rem;">
+            <span style="font-size:2rem;">📊</span>
+            <h3 style="font-size:clamp(1.3rem,1.8vw,1.6rem); font-weight:700; margin:0; background:linear-gradient(135deg,#60a5fa,#a78bfa); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">
+              NPI Index Tracker
+            </h3>
+          </div>
+          <p style="color:var(--text-secondary); font-size:clamp(0.9rem,1vw,1rem); margin:0.1rem 0 0.5rem 0;">
+            Track the National Productivity Index for 47 countries using real-world data.
+          </p>
+        </div>
+        <a href="npi-index.html" class="btn-primary" style="padding:0.5rem 1.6rem; font-size:0.85rem; white-space:nowrap;">Open NPI Tracker →</a>
+      </div>
+    </div>
+
+    <div class="tool-cards-grid">
+      <div class="tool-card">
+        <div class="tool-card-icon">🌿</div>
+        <h3 class="tool-card-title">Wellbeing Index</h3>
+        <p class="tool-card-desc">Measure your work-life balance, mental health, and productivity.</p>
+        <a href="wellbeing-index.html" class="btn-secondary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Try It →</a>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card-icon">💳</div>
+        <h3 class="tool-card-title">Debt Reality</h3>
+        <p class="tool-card-desc">Diagnose your financial situation and see the true cost of debt.</p>
+        <a href="debt-reality.html" class="btn-secondary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Try It →</a>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card-icon">📈</div>
+        <h3 class="tool-card-title">Compound Curve</h3>
+        <p class="tool-card-desc">See how debt compounds over time and how small changes bend the curve.</p>
+        <a href="compound-curve.html" class="btn-secondary" style="width:100%; text-align:center; padding:0.6rem 1.5rem; font-size:0.85rem;">Try It →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LEARN ===== -->
+  <section id="learn" class="container section-spacing" style="padding-top:2rem;">
+    <div class="glass-card" style="border-color:rgba(251,191,36,0.2); padding:1.5rem 1.2rem;">
+      <span class="badge-glow" style="background:rgba(251,191,36,0.15); color:#60a5fa; border-color:rgba(251,191,36,0.15); margin-bottom:0.6rem;">📖 Learn</span>
+      <h2 style="font-size:clamp(1.4rem,3vw,1.8rem); font-weight:700; margin-bottom:0.25rem; color:var(--text-primary);">Read the Book</h2>
+      <p style="color:var(--text-secondary); margin-bottom:0.8rem; max-width:800px;">
+        The Policy Lab is powered by the <strong>Productivity Bond Model</strong>. The full theory — including the simulation code, mathematical appendix, and implementation roadmap — is in <em>The Infinite Debt Problem</em>.
+      </p>
+      <div style="display:flex; flex-wrap:wrap; gap:0.6rem; margin-bottom:1.2rem; padding-bottom:1.2rem; border-bottom:1px solid var(--border-divider);">
+        <a href="book.html#download" class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;">📄 Read the PDF</a>
+        <a href="book.html#audiobook-chapters" class="btn-secondary" style="padding:0.4rem 1.2rem; font-size:0.85rem;">🎧 Listen to Audiobook</a>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:0.6rem; padding-top:0.8rem; border-top:1px solid var(--border-divider);">
+        <a href="index.html#simulator" class="btn-primary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">💸 Run Homepage Simulator</a>
+        <a href="index.html#model-definition" class="btn-secondary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">📐 View the Model</a>
+        <a href="changelog.html" class="btn-secondary" style="padding:0.5rem 1.2rem; font-size:0.9rem;">📋 Changelog</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<button class="floating-return-top" id="floatingReturnTop" aria-label="Return to top">⬆ Top</button>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+  <div class="container">
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1rem 1.5rem; margin-bottom:1.5rem; font-size:0.85rem;">
+      <a href="index.html" style="color:var(--text-muted); text-decoration:none;">🏠 Home</a>
+      <a href="news.html" style="color:var(--text-muted); text-decoration:none;">News</a>
+      <a href="contributions.html">Contributions</a>
+      <a href="about.html" style="color:var(--text-muted); text-decoration:none;">About</a>
+      <a href="book.html" style="color:var(--text-muted); text-decoration:none;">Book</a>
+      <a href="changelog.html" style="color:var(--text-muted); text-decoration:none;">Changelog</a>
+      <a href="tools.html" style="color:#b388ff;">🧰 Tools</a>
+      <a href="policy-lab.html" style="color:#b388ff;">🏛️ Policy Lab</a>
+      <a href="privacy.html" style="color:var(--text-muted); text-decoration:none;">Privacy</a>
+      <a href="terms.html" style="color:var(--text-muted); text-decoration:none;">Terms</a>
+      <a href="contact.html" style="color:var(--text-muted); text-decoration:none;">Contact</a>
+      <a href="index.html#simulator" style="color:var(--text-muted); text-decoration:none;">Simulator</a>
+    </div>
+    <p>
+      © 2026 <a href="https://traffictorch.net">Traffic Torch</a> ·
+      <a href="https://github.com/traffictorch/productivity-bond-model">GitHub Repository</a> ·
+      Version 1.0.0 ·
+      <a href="https://zenodo.org/records/21970090" target="_blank" rel="external noopener">Simulation Code (Zenodo)</a>
+    </p>
+    <p style="font-size:0.7rem; margin-top:0.3rem;">
+      Creative Commons BY‑NC‑ND 4.0 · Built with ♥ and AI · <span id="last-updated"></span>
+    </p>
+  </div>
+  <div style="margin-top:1.5rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.1); font-size:0.85rem; color:var(--text-muted);">
+    <p>🏛️ Official Submission #240 to the <a href="https://www.aph.gov.au/DocumentStore.ashx?id=25e9d73e-76be-4f7f-87af-5fb5b3e71058&subId=805961" target="_blank" style="color:#60a5fa; text-decoration:underline;">Senate Select Committee on Productivity in Australia</a>.</p>
+  </div>
+</footer>
+
+<script src="js/core.min.js" defer></script>
+
+<script>
+// ============================================================
+// ENGINE — mirrors run_simulation.py, bond_valuation.py, state_generator.py
+// ============================================================
+function createRNG(seed){let s=(seed>>>0)||1;return function(){s=(s+0x6D2B79F5)|0;let t=s;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296;};}
+function normal(rng){let u=0,v=0;while(u===0)u=rng();while(v===0)v=rng();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+function gamma(rng,shape,scale){if(shape<1)return gamma(rng,shape+1,scale)*Math.pow(rng(),1/shape);const d=shape-1/3,c=1/Math.sqrt(9*d);while(true){let x,v;do{x=normal(rng);v=1+c*x;}while(v<=0);v=v*v*v;const u=rng();if(u<1-0.0331*x*x*x*x)return d*v*scale;if(Math.log(u)<0.5*x*x+d*(1-v+Math.log(v)))return d*v*scale;}}
+
+const DEFAULTS={n_paths:2000,n_years:10,seed:42,mu_y:0.025,sigma_y:0.020,rho_y:0.30,mu_n:0.020,sigma_n:0.025,rho_n:0.20,rho_ny:0.60,mu_pi:0.020,sigma_pi:0.015,rho_pi:0.40,gamma_y:0.25,tau:0.32,theta_ai:0.30,g0_over_y0:0.36,d0_over_y0:0.60,y0:100.0,lambda_ai:0.05,ai_shape:2.0,ai_scale:0.03,ai_npi_mult:1.0,ai_gdp_mult:0.7,ai_pi_mult:-0.2,conventional_coupon:0.04,inflation_real_spread:0.015,alpha_n:0.70,alpha_g:0.70,alpha_f:0.30,floor:0.00,cap:0.04,r_f:0.02,gamma_risk:0.50,lambda_ai_risk:0.10,kappa:2.0,eta:5.0,distress_threshold:0.15,pam_enabled:false,pam_trigger:0.15,pam_factor:0.10};
+
+function zeros(n,m){const a=new Array(n);for(let i=0;i<n;i++)a[i]=new Float64Array(m);return a;}
+function clamp(v,lo,hi){return Math.max(lo,Math.min(hi,v));}
+function meanByYear(M){const nY=M[0].length,nP=M.length,out=[];for(let t=0;t<nY;t++){let s=0;for(let p=0;p<nP;p++)s+=M[p][t];out.push(s/nP);}return out;}
+
+function simulateEconomy(config){
+  const cfg=Object.assign({},DEFAULTS,config);
+  const nP=cfg.n_paths,nY=cfg.n_years;
+  const rng=createRNG(cfg.seed);
+  const g_y=zeros(nP,nY),g_n=zeros(nP,nY),pi=zeros(nP,nY);
+  const y=zeros(nP,nY),r=zeros(nP,nY),gS=zeros(nP,nY);
+  const g_r=zeros(nP,nY),pb=zeros(nP,nY);
+  const ai_jump=zeros(nP,nY);
+  for(let p=0;p<nP;p++)for(let t=0;t<nY;t++)if(rng()<cfg.lambda_ai)ai_jump[p][t]=gamma(rng,cfg.ai_shape,cfg.ai_scale);
+  const sqrtRho=Math.sqrt(Math.max(0,1-cfg.rho_ny*cfg.rho_ny));
+  for(let p=0;p<nP;p++){
+    let g_y_prev=cfg.mu_y,g_n_prev=cfg.mu_n,pi_prev=cfg.mu_pi,y_prev=cfg.y0,r_prev=cfg.tau*cfg.y0;
+    for(let t=0;t<nY;t++){
+      const z_y=normal(rng),z_n_indep=normal(rng),z_pi=normal(rng);
+      const z_n=cfg.rho_ny*z_y+sqrtRho*z_n_indep;
+      const aiG=cfg.ai_gdp_mult*ai_jump[p][t],aiN=cfg.ai_npi_mult*ai_jump[p][t],aiP=cfg.ai_pi_mult*ai_jump[p][t];
+      g_y[p][t]=cfg.mu_y+cfg.rho_y*(g_y_prev-cfg.mu_y)+cfg.sigma_y*z_y+aiG;
+      g_n[p][t]=cfg.mu_n+cfg.rho_n*(g_n_prev-cfg.mu_n)+cfg.sigma_n*z_n+aiN;
+      pi[p][t]=cfg.mu_pi+cfg.rho_pi*(pi_prev-cfg.mu_pi)+cfg.sigma_pi*z_pi+cfg.gamma_y*(g_y[p][t]-cfg.mu_y)+aiP;
+      y[p][t]=y_prev*(1+g_y[p][t]);
+      const aiGain=Math.max(y_prev*aiG,0);
+      r[p][t]=cfg.tau*y[p][t]+cfg.theta_ai*aiGain;
+      g_r[p][t]=r_prev>1e-8?r[p][t]/r_prev-1:0;
+      const autoStab=-0.05*(g_y[p][t]-cfg.mu_y)*y[p][t];
+      gS[p][t]=Math.max(cfg.g0_over_y0*y[p][t]*(1+0.3*(g_y[p][t]-cfg.mu_y))+autoStab,0.10*y[p][t]);
+      pb[p][t]=r[p][t]-gS[p][t];
+      g_y_prev=g_y[p][t];g_n_prev=g_n[p][t];pi_prev=pi[p][t];y_prev=y[p][t];r_prev=r[p][t];
+    }
+  }
+  return{g_y,g_n,pi,y,r,g:gS,g_r,primary_balance:pb,config:cfg};
+}
+
+function computeCoupons(economy,bondType,config){
+  const cfg=Object.assign({},DEFAULTS,economy.config,config);
+  const nP=economy.g_y.length,nY=economy.g_y[0].length;
+  const out=zeros(nP,nY);
+  for(let p=0;p<nP;p++)for(let t=0;t<nY;t++){
+    const pi=economy.pi[p][t],gN=economy.g_n[p][t],gY=economy.g_y[p][t],gR=economy.g_r[p][t];
+    let c;
+    switch(bondType){
+      case'conventional':c=cfg.conventional_coupon;break;
+      case'gdp_linked':c=(1+pi)*(1+clamp(cfg.alpha_g*gY,cfg.floor,cfg.cap))-1;break;
+      case'productivity':c=(1+pi)*(1+clamp(cfg.alpha_n*gN,cfg.floor,cfg.cap))-1;break;
+      case'hybrid':c=(1+pi)*(1+clamp(cfg.alpha_n*gN+cfg.alpha_f*gR,cfg.floor,cfg.cap))-1;break;
+      default:throw new Error('Unknown bond type');
+    }
+    out[p][t]=Math.max(c,0);
+  }
+  return out;
+}
+
+function computeDebtPath(cfg,economy,coupons){
+  const nP=coupons.length,nY=coupons[0].length;
+  const d=zeros(nP,nY);
+  const initialDebt=cfg.d0_over_y0*cfg.y0;
+  for(let p=0;p<nP;p++){
+    let d_prev=initialDebt;
+    for(let t=0;t<nY;t++){
+      const c=coupons[p][t];
+      const ds=d_prev*c;
+      const rev=economy.r[p][t];
+      let dNew=d_prev*(1+c)-economy.primary_balance[p][t];
+      if(cfg.pam_enabled&&rev>0&&ds/rev>cfg.pam_trigger)dNew*=(1-cfg.pam_factor);
+      d[p][t]=Math.max(dNew,0);
+      d_prev=d[p][t];
+    }
+  }
+  return d;
+}
+
+function presentValueCost(coupons,economy,cfg){
+  const nP=coupons.length,nY=coupons[0].length;
+  const pv=new Float64Array(nP);
+  for(let p=0;p<nP;p++){
+    let cumEps=0,sum=0,dfLast=0;
+    for(let t=0;t<nY;t++){
+      cumEps+=economy.g_y[p][t]-cfg.mu_y;
+      const tY=t+1;
+      const df=Math.exp(-cfg.r_f*tY-cfg.gamma_risk*cumEps-cfg.lambda_ai_risk*tY);
+      sum+=coupons[p][t]*df;
+      if(t===nY-1)dfLast=df;
+    }
+    pv[p]=sum+dfLast;
+  }
+  return pv;
+}
+
+function evaluateBond(economy,bondType,config){
+  const cfg=Object.assign({},DEFAULTS,economy.config,config);
+  const coupons=computeCoupons(economy,bondType,config);
+  const debt=computeDebtPath(cfg,economy,coupons);
+  const nP=coupons.length,nY=coupons[0].length;
+  const pvCost=presentValueCost(coupons,economy,cfg);
+  let mean=0;for(let p=0;p<nP;p++)mean+=pvCost[p];mean/=nP;
+  let varSum=0;for(let p=0;p<nP;p++){const d=pvCost[p]-mean;varSum+=d*d;}
+  const costVol=Math.sqrt(varSum/nP);
+  const dsr=zeros(nP,nY);
+  let distressCount=0;
+  for(let p=0;p<nP;p++){
+    let ever=false;
+    for(let t=0;t<nY;t++){
+      const ds=coupons[p][t]*debt[p][t];
+      dsr[p][t]=ds/Math.max(economy.r[p][t],1e-8);
+      if(dsr[p][t]>cfg.distress_threshold)ever=true;
+    }
+    if(ever)distressCount++;
+  }
+  const distressProb=distressCount/nP;
+  const welfare=mean+cfg.kappa*costVol*costVol+cfg.eta*distressProb;
+  const meanDebt=meanByYear(debt);
+  const meanGDP=meanByYear(economy.y);
+  const meanRevenue=meanByYear(economy.r);
+  const meanDSR=meanByYear(dsr);
+  return{
+    bondType,expectedCost:mean,costVolatility:costVol,distressProb,welfare,
+    trajectory:{years:Array.from({length:nY},(_,i)=>i+1),meanDebt,meanGDP,meanRevenue,meanDSR,
+      meanDebtToGDP:meanDebt.map((v,i)=>v/meanGDP[i]),
+      meanDebtToRevenue:meanDebt.map((v,i)=>v/meanRevenue[i])},
+    raw:{coupons,debt,debtServiceRatio:dsr}
+  };
+}
+
+function computePortfolio(economy,config,shares){
+  const cfg=Object.assign({},DEFAULTS,economy.config,config);
+  const sharesList=shares||[0,0.05,0.10,0.15,0.20,0.25,0.30,0.35,0.40,0.45,0.50];
+  const conv=evaluateBond(economy,'conventional',config);
+  const prod=evaluateBond(economy,'productivity',config);
+  const results=[];
+  const nP=cfg.n_paths,nY=cfg.n_years;
+  for(let si=0;si<sharesList.length;si++){
+    const s=sharesList[si];
+    const bc=zeros(nP,nY);
+    for(let p=0;p<nP;p++)for(let t=0;t<nY;t++)bc[p][t]=(1-s)*conv.raw.coupons[p][t]+s*prod.raw.coupons[p][t];
+    const pv=presentValueCost(bc,economy,cfg);
+    let mean=0;for(let p=0;p<nP;p++)mean+=pv[p];mean/=nP;
+    let varSum=0;for(let p=0;p<nP;p++){const d=pv[p]-mean;varSum+=d*d;}
+    const vol=Math.sqrt(varSum/nP);
+    let distCount=0;
+    for(let p=0;p<nP;p++){
+      let ever=false;
+      for(let t=0;t<nY;t++){
+        const bd=(1-s)*conv.raw.debt[p][t]+s*prod.raw.debt[p][t];
+        const ds=bc[p][t]*bd;
+        if(ds/Math.max(economy.r[p][t],1e-8)>cfg.distress_threshold){ever=true;break;}
+      }
+      if(ever)distCount++;
+    }
+    const distProb=distCount/nP;
+    const welfare=mean+cfg.kappa*vol*vol+cfg.eta*distProb;
+    results.push({share:s,expectedCost:mean,costVolatility:vol,distressProb:distProb,welfare});
+  }
+  let optimal=results[0];
+  for(let i=0;i<results.length;i++)if(results[i].welfare<optimal.welfare)optimal=results[i];
+  return{results,optimal};
+}
+
+// ============================================================
+// UI STATE
+// ============================================================
+let currentScenario=null;
+let lastResult=null;
+let chart1=null,chart2=null;
+
+const PRESETS={
+  asteria:{gdp:250,debtGDP:60,muY:2.5,muPi:2.0,muN:2.0,couponConv:4.0,alphaN:0.70,cap:4.0,thetaAI:0.30,share:30,pam:false,label:'🏛️ Asteria Pilot — from the book (Appendix D)'},
+  advanced:{gdp:1500,debtGDP:90,muY:1.8,muPi:2.0,muN:1.5,couponConv:3.5,alphaN:0.70,cap:4.0,thetaAI:0.35,share:30,pam:true,label:'🌍 Advanced Economy — high debt, ageing population'},
+  emerging:{gdp:400,debtGDP:50,muY:4.0,muPi:4.0,muN:2.5,couponConv:6.5,alphaN:0.65,cap:5.0,thetaAI:0.25,share:20,pam:true,label:'🚀 Emerging Market — growth potential, capacity building'},
+  smallopen:{gdp:80,debtGDP:45,muY:2.5,muPi:2.5,muN:2.0,couponConv:3.0,alphaN:0.75,cap:3.5,thetaAI:0.45,share:25,pam:true,label:'🏝️ Small Open Economy — strong institutions, global hub'},
+  failure:{gdp:500,debtGDP:80,muY:2.0,muPi:2.0,muN:2.0,couponConv:5.0,alphaN:0.80,cap:4.0,thetaAI:0.10,share:50,pam:false,label:'⚠️ Failure Case — θ_AI = 0.10, below threshold'}
+};
+
+function loadPreset(name){
+  const p=PRESETS[name];
+  if(!p)return;
+  document.getElementById('gdp').value=p.gdp;
+  document.getElementById('debtGDP').value=p.debtGDP;
+  document.getElementById('muY').value=p.muY;
+  document.getElementById('muPi').value=p.muPi;
+  document.getElementById('muN').value=p.muN;
+  document.getElementById('couponConv').value=p.couponConv;
+  document.getElementById('alphaN').value=p.alphaN;
+  document.getElementById('cap').value=p.cap;
+  document.getElementById('thetaAI').value=p.thetaAI;
+  document.getElementById('share').value=p.share;
+  document.getElementById('pam').checked=p.pam;
+  document.getElementById('presetLabel').textContent=p.label;
+  document.querySelectorAll('#presetSelector .mode-btn').forEach(b=>b.classList.toggle('active',b.dataset.preset===name));
+  runAnalysis(2000);
+}
+
+function readInputs(){
+  return{
+    gdp:parseFloat(document.getElementById('gdp').value)||250,
+    debtGDP:parseFloat(document.getElementById('debtGDP').value)||60,
+    muY:(parseFloat(document.getElementById('muY').value)||2.5)/100,
+    muPi:(parseFloat(document.getElementById('muPi').value)||2.0)/100,
+    muN:(parseFloat(document.getElementById('muN').value)||2.0)/100,
+    couponConv:(parseFloat(document.getElementById('couponConv').value)||4.0)/100,
+    alphaN:parseFloat(document.getElementById('alphaN').value)||0.7,
+    cap:(parseFloat(document.getElementById('cap').value)||4.0)/100,
+    thetaAI:parseFloat(document.getElementById('thetaAI').value)||0.3,
+    share:(parseFloat(document.getElementById('share').value)||30)/100,
+    pam:document.getElementById('pam').checked
+  };
+}
+
+function buildConfig(p,nPaths){
+  return{
+    n_paths:nPaths||2000,
+    n_years:10,
+    seed:42,
+    mu_y:p.muY,mu_n:p.muN,mu_pi:p.muPi,
+    conventional_coupon:p.couponConv,
+    alpha_n:p.alphaN,cap:p.cap,
+    theta_ai:p.thetaAI,
+    d0_over_y0:p.debtGDP/100,
+    pam_enabled:p.pam,pam_trigger:0.15,pam_factor:0.10
+  };
+}
+
+// ============================================================
+// RUN
+// ============================================================
+function runAnalysis(nPaths){
+  nPaths=nPaths||2000;
+  document.getElementById('status').textContent='Running '+(nPaths===10000?'10,000':'2,000')+' paths…';
+  setTimeout(()=>{
+    try{
+      const p=readInputs();
+      const cfg=buildConfig(p,nPaths);
+      currentScenario=p;
+      const econ=simulateEconomy(cfg);
+      const conv=evaluateBond(econ,'conventional',cfg);
+      const prod=evaluateBond(econ,'productivity',cfg);
+      const port=computePortfolio(econ,cfg,[0,0.1,0.2,0.3,0.4,0.5,0.75,1.0]);
+      lastResult={p,cfg,conv,prod,port};
+      renderResults(p,conv,prod,port);
+      document.getElementById('status').textContent='✅ Done — '+(nPaths===10000?'10,000':'2,000')+' paths';
+    }catch(e){
+      console.error(e);
+      document.getElementById('status').textContent='❌ '+e.message;
+    }
+  },20);
+}
+
+function renderResults(p,conv,prod,port){
+  document.getElementById('results').style.display='block';
+  document.getElementById('statCost').textContent=prod.expectedCost.toFixed(3);
+  document.getElementById('statDistress').textContent=(prod.distressProb*100).toFixed(1)+'%';
+  const saving=((prod.expectedCost-conv.expectedCost)/conv.expectedCost*100);
+  document.getElementById('statSaving').textContent=saving.toFixed(2)+'%';
+  document.getElementById('statOptimal').textContent=(port.optimal.share*100).toFixed(0)+'%';
+  drawTrajectory(conv,prod);
+  drawDSR(conv,prod);
+  renderVerdict(p,conv,prod,port);
+}
+
+function drawTrajectory(conv,prod){
+  const ctx=document.getElementById('chartTrajectory').getContext('2d');
+  if(chart1)chart1.destroy();
+  const theme=document.documentElement.getAttribute('data-theme')||'dark';
+  const textColor=theme==='dark'?'#eef2f8':'#0f111a';
+  const gridColor=theme==='dark'?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)';
+  chart1=new Chart(ctx,{
+    type:'line',
+    data:{
+      labels:conv.trajectory.years.map(y=>'Y'+y),
+      datasets:[
+        {label:'Conventional',data:conv.trajectory.meanDebtToGDP,borderColor:'#f87171',backgroundColor:'rgba(248,113,113,0.1)',fill:true,tension:0.3,pointRadius:3},
+        {label:'Productivity',data:prod.trajectory.meanDebtToGDP,borderColor:'#4f46e5',backgroundColor:'rgba(79,70,229,0.1)',fill:true,tension:0.3,pointRadius:3}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{labels:{color:textColor,boxWidth:12,padding:12,font:{size:11}}}},
+      scales:{
+        x:{grid:{color:gridColor},ticks:{color:textColor,font:{size:10}}},
+        y:{grid:{color:gridColor},ticks:{color:textColor,font:{size:10},callback:v=>(v*100).toFixed(0)+'%'}}
+      }
+    }
+  });
+}
+
+function drawDSR(conv,prod){
+  const ctx=document.getElementById('chartDSR').getContext('2d');
+  if(chart2)chart2.destroy();
+  const theme=document.documentElement.getAttribute('data-theme')||'dark';
+  const textColor=theme==='dark'?'#eef2f8':'#0f111a';
+  const gridColor=theme==='dark'?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)';
+  chart2=new Chart(ctx,{
+    type:'line',
+    data:{
+      labels:conv.trajectory.years.map(y=>'Y'+y),
+      datasets:[
+        {label:'Conventional DSR',data:conv.trajectory.meanDSR,borderColor:'#f87171',tension:0.3,pointRadius:3},
+        {label:'Productivity DSR',data:prod.trajectory.meanDSR,borderColor:'#4f46e5',tension:0.3,pointRadius:3},
+        {label:'Distress threshold (15%)',data:conv.trajectory.years.map(()=>0.15),borderColor:'#fbbf24',borderDash:[4,4],tension:0,pointRadius:0}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{labels:{color:textColor,boxWidth:12,padding:12,font:{size:11}}}},
+      scales:{
+        x:{grid:{color:gridColor},ticks:{color:textColor,font:{size:10}}},
+        y:{grid:{color:gridColor},ticks:{color:textColor,font:{size:10},callback:v=>(v*100).toFixed(0)+'%'}}
+      }
+    }
+  });
+}
+
+function renderVerdict(p,conv,prod,port){
+  const sol=document.getElementById('verdictSolution');
+  const act=document.getElementById('verdictAction');
+  const parts=[];
+  if(p.thetaAI<0.15){
+    parts.push('⚠️ θ_AI = '+p.thetaAI.toFixed(2)+' is <strong>below the critical threshold (0.15)</strong>. The bond will barely outperform conventional debt — prioritize policies that capture AI gains before issuing.');
+  }else if(p.thetaAI>0.30){
+    parts.push('✅ θ_AI = '+p.thetaAI.toFixed(2)+' is <strong>above 0.30</strong> — the bond outperforms conventional debt. The government captures enough AI gains to make the instrument viable.');
+  }else{
+    parts.push('📊 θ_AI = '+p.thetaAI.toFixed(2)+' is <strong>between 0.15 and 0.30</strong>. The bond has modest advantages but is sensitive to capture policies.');
+  }
+  const saving=((prod.expectedCost-conv.expectedCost)/conv.expectedCost*100);
+  parts.push('Expected cost: <strong>'+prod.expectedCost.toFixed(3)+'</strong> vs conventional <strong>'+conv.expectedCost.toFixed(3)+'</strong> ('+saving.toFixed(2)+'%).');
+  parts.push('Distress probability: <strong>'+(prod.distressProb*100).toFixed(1)+'%</strong> vs <strong>'+(conv.distressProb*100).toFixed(1)+'%</strong> conventional.');
+  if(!p.pam&&prod.distressProb>conv.distressProb+0.05){
+    parts.push('⚠️ <strong>Enable PAM</strong> — without it, the feedback loop dominates and productivity issuance may increase distress.');
+  }else if(p.pam){
+    parts.push('✅ PAM enabled — principal adjusts when DSR exceeds 15%, mitigating the feedback loop.');
+  }
+  parts.push('Recommended portfolio share: <strong>'+(port.optimal.share*100).toFixed(0)+'%</strong>.');
+  sol.innerHTML=parts.join('<br>');
+  act.textContent='Model: endogenous debt · '+(currentScenario?'θ_AI='+p.thetaAI.toFixed(2)+', α_N='+p.alphaN.toFixed(2)+', cap='+(p.cap*100).toFixed(1)+'%':'');
+}
+
+// ============================================================
+// SHARE / EXPORT / AI
+// ============================================================
+function buildShareUrl(){
+  const p=readInputs();
+  const base=window.location.href.split('?')[0];
+  const params=new URLSearchParams();
+  for(const k of ['gdp','debtGDP','muY','muPi','muN','couponConv','alphaN','cap','thetaAI','share'])params.set(k,p[k]);
+  params.set('pam',p.pam?'1':'0');
+  return base+'?'+params.toString();
+}
+
+function applyUrlParams(){
+  const params=new URLSearchParams(window.location.search);
+  let any=false;
+  const map={gdp:'gdp',debtGDP:'debtGDP',muY:'muY',muPi:'muPi',muN:'muN',couponConv:'couponConv',alphaN:'alphaN',cap:'cap',thetaAI:'thetaAI',share:'share'};
+  for(const k in map){
+    const v=params.get(map[k]);
+    if(v!==null){const el=document.getElementById(k);if(el){el.value=v;any=true;}}
+  }
+  const pam=params.get('pam');
+  if(pam!==null){document.getElementById('pam').checked=pam==='1';any=true;}
+  if(any){document.querySelectorAll('#presetSelector .mode-btn').forEach(b=>b.classList.remove('active'));document.getElementById('presetLabel').textContent='⚙️ Custom scenario';runAnalysis(2000);}
+  else{loadPreset('asteria');}
+}
+
+function copyShareLink(){
+  const url=buildShareUrl();
+  if(navigator.clipboard){navigator.clipboard.writeText(url).then(()=>{alert('Share link copied! It reproduces this exact scenario.');}).catch(()=>{prompt('Copy:',url);});}
+  else{prompt('Copy:',url);}
+}
+
+function copySummary(){
+  if(!lastResult){alert('Run analysis first.');return;}
+  const{p,conv,prod,port}=lastResult;
+  let text='🏛️ Policy Lab — Scenario Report\n';
+  text+='-------------------------------\n';
+  text+='Sovereign: GDP $'+p.gdp+'B, debt/GDP '+(p.debtGDP)+'%, growth '+(p.muY*100).toFixed(1)+'%, inflation '+(p.muPi*100).toFixed(1)+'%\n';
+  text+='Bond: α_N='+p.alphaN.toFixed(2)+', cap='+(p.cap*100).toFixed(1)+'%, θ_AI='+p.thetaAI.toFixed(2)+', share='+(p.share*100)+'%, PAM='+(p.pam?'on':'off')+'\n\n';
+  text+='Expected cost:\n';
+  text+='  Conventional: '+conv.expectedCost.toFixed(4)+'\n';
+  text+='  Productivity: '+prod.expectedCost.toFixed(4)+'\n';
+  text+='  Saving: '+(((prod.expectedCost-conv.expectedCost)/conv.expectedCost)*100).toFixed(2)+'%\n\n';
+  text+='Distress probability:\n';
+  text+='  Conventional: '+(conv.distressProb*100).toFixed(2)+'%\n';
+  text+='  Productivity: '+(prod.distressProb*100).toFixed(2)+'%\n\n';
+  text+='Recommended portfolio share: '+(port.optimal.share*100).toFixed(0)+'%\n';
+  text+='\nGenerated by Policy Lab v1.0.0';
+  if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>alert('Summary copied!')).catch(()=>prompt('Copy:',text));}
+  else{prompt('Copy:',text);}
+}
+
+function exportCSV(){
+  if(!lastResult){alert('Run analysis first.');return;}
+  const{p,conv,prod}=lastResult;
+  let csv='Year,Conv_Coupon,Prod_Coupon,Conv_Debt_to_GDP,Prod_Debt_to_GDP,Conv_DSR,Prod_DSR\n';
+  for(let i=0;i<10;i++){
+    csv+=(i+1)+',';
+    csv+=conv.raw.coupons[0][i].toFixed(4)+',';
+    csv+=prod.raw.coupons[0][i].toFixed(4)+',';
+    csv+=conv.trajectory.meanDebtToGDP[i].toFixed(4)+',';
+    csv+=prod.trajectory.meanDebtToGDP[i].toFixed(4)+',';
+    csv+=conv.trajectory.meanDSR[i].toFixed(4)+',';
+    csv+=prod.trajectory.meanDSR[i].toFixed(4)+'\n';
+  }
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='policy-lab-scenario.csv';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function shareSocial(platform){
+  const url=buildShareUrl();
+  const text=encodeURIComponent('🏛️ Check out this Policy Lab scenario: ');
+  let shareUrl='';
+  if(platform==='x')shareUrl='https://twitter.com/intent/tweet?text='+text+'&url='+encodeURIComponent(url);
+  else if(platform==='linkedin')shareUrl='https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(url);
+  if(shareUrl)window.open(shareUrl,'_blank','width=600,height=400');
+}
+
+async function generateAI(){
+  if(!lastResult){alert('Run analysis first.');return;}
+  const btn=document.getElementById('aiButton');
+  const status=document.getElementById('aiStatus');
+  const out=document.getElementById('aiOutput');
+  btn.disabled=true;
+  status.textContent='⏳ Thinking…';
+  out.innerHTML='<span style="opacity:0.6;">Analyzing scenario…</span>';
+  // Rule-based fallback (works without worker)
+  setTimeout(()=>{
+    const{p,conv,prod,port}=lastResult;
+    const saving=((prod.expectedCost-conv.expectedCost)/conv.expectedCost*100);
+    const distDiff=prod.distressProb-conv.distressProb;
+    let summary='📌 ',advice='';
+    if(p.thetaAI<0.15){
+      summary='⚠️ θ_AI is below the 0.15 critical threshold. The productivity bond barely outperforms conventional debt in this scenario.';
+      advice='✅ Policy recommendation: prioritize policies that capture AI gains (taxes, royalties, sovereign equity) before issuing Productivity Bonds. Without these, the instrument cannot deliver its promised cost reduction.';
+    }else if(p.thetaAI>0.30){
+      summary='✅ θ_AI is above 0.30 — the bond is structurally viable. Expected cost saving: '+saving.toFixed(2)+'%.';
+      advice='✅ Policy recommendation: proceed with a pilot issuance at ~'+(port.optimal.share*100).toFixed(0)+'% of new debt. '+(p.pam?'PAM enabled provides additional distress protection.':'Consider enabling PAM to mitigate the feedback loop.');
+    }else{
+      summary='📊 θ_AI = '+p.thetaAI.toFixed(2)+' sits between the failure threshold and the outperformance threshold. Modest advantage only.';
+      advice='✅ Policy recommendation: test with a small pilot first. Strengthen AI capture mechanisms to move θ_AI above 0.30.';
+    }
+    if(distDiff>0.05&&!p.pam){
+      advice+=' Note: distress probability rises '+(distDiff*100).toFixed(1)+'pp vs conventional — enable PAM to mitigate.';
+    }
+    out.innerHTML='<div class="summary">'+summary+'</div><div class="advice" style="margin-top:0.5rem;">'+advice+'</div><div style="margin-top:0.5rem;font-size:0.6rem;color:var(--text-muted);opacity:0.6;">⚠️ Rule-based analysis (deterministic). Connect AI worker for LLM interpretation.</div>';
+    status.textContent='✅ Done';
+    btn.disabled=false;
+  },400);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+window.addEventListener('load',function(){
+  document.documentElement.classList.add('loaded');
+  document.querySelectorAll('#presetSelector .mode-btn').forEach(btn=>{
+    btn.addEventListener('click',function(){
+      loadPreset(this.dataset.preset);
+    });
+  });
+  setTimeout(applyUrlParams,200);
+});
+</script>
+
+<script>
+// Accordion + feedback wiring (uses existing site helpers if available)
+window.toggleAccordion=function(el){
+  var content=el.nextElementSibling;
+  var arrow=el.querySelector('.arrow');
+  if(content){
+    content.classList.toggle('open');
+    el.classList.toggle('open');
+    if(arrow)arrow.classList.toggle('open');
+  }
+};
+
+// Feedback form (reuse site pattern)
+document.addEventListener('DOMContentLoaded',function(){
+  if(typeof initFeedbackForm==='function'){
+    initFeedbackForm('feedback-container');
+  }
+});
+</script>
+
+</body>
+</html>
