@@ -205,8 +205,8 @@
       .input-group input[type="number"] { width: 100%; }
       .chart-container { max-height: 250px !important; height: 250px !important; overflow: hidden; width: 100%; }
       .stat-card .num { font-size: 1.4rem; }
-      .presets { display: grid; grid-template-columns: 1fr 1fr; }
-      .presets button { width: 100%; margin: 0; font-size: 0.75rem; }
+      .mode-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+      .mode-selector .mode-btn { width: 100%; margin: 0; font-size: 0.75rem; text-align: center; }
       canvas { max-width: 100% !important; height: auto !important; }
     }
     /* MOBILE FIX */
@@ -420,7 +420,7 @@
           </div>
         </div>
         <div style="font-size:0.75rem;color:var(--text-muted);margin-top:-0.4rem;margin-bottom:1rem;">
-          Cards above show <strong>100% productivity issuance</strong>. At your chosen <strong><span id="shareDisplay">30</span>% share</strong>, blended results differ — see verdict below.
+          Cards above show <strong>100% productivity issuance</strong>. At your chosen <strong><span id="shareDisplay">30</span>% share</strong>, the actual blended results would be between these and conventional.
         </div>
 
         <div style="margin-top:1.2rem;">
@@ -587,8 +587,8 @@
           </div>
           <div class="accordion-content">
             <p style="color:var(--text-secondary);">PAM stands for <strong>Principal-Adjustment Mechanism</strong>. The simulation shows that variable coupons can create a feedback loop: higher coupons during productive years increase debt service, which increases the debt stock, which increases future debt service — even if the coupon later falls.</p>
-            <p style="color:var(--text-secondary); margin-top:0.5rem;">The PAM is a rule that automatically reduces outstanding principal when DSR exceeds a threshold (default 15%). When you turn it on, you'll see distress probability drop significantly — at the cost of a small hit to investor returns.</p>
-            <p style="color:var(--text-secondary); margin-top:0.5rem;">This is the model's most important design refinement. Without PAM, variable coupons may not reduce distress even though they reduce expected cost.</p>
+            <p style="color:var(--text-secondary); margin-top:0.5rem;">The PAM is a rule that automatically reduces outstanding principal when DSR exceeds a threshold (default 15%). When you turn it on, the debt/GDP ratio drops (e.g., from 107% to 94%), which improves long-run sustainability.</p>
+            <p style="color:var(--text-secondary); margin-top:0.5rem;"><strong>Note on distress metrics:</strong> The PAM lowers debt/GDP, but the binary "ever above 15%" distress metric may not change much if the baseline deficit is large. This is a known limitation of binary distress metrics in highly stressed scenarios.</p>
           </div>
         </div>
 
@@ -1016,7 +1016,6 @@ function parseNum(id, fallback) {
 
 function readInputs(){
   return{
-    gdp: parseNum('gdp', 250),
     debtGDP: parseNum('debtGDP', 60),
     muY: parseNum('muY', 2.5)/100,
     muPi: parseNum('muPi', 2.0)/100,
@@ -1136,8 +1135,8 @@ function drawTrajectory(conv,prod,ilb){
       ]
     },
     options:{
-      responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{color:textColor,boxWidth:12,padding:12,font:{size:11}}},tooltip:{backgroundColor:'rgba(12,15,25,0.9)'}},backgroundColor:'transparent',
-      plugins:{legend:{labels:{color:textColor,boxWidth:12,padding:12,font:{size:11}}}},
+      responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{labels:{color:textColor,boxWidth:12,padding:12,font:{size:11}}},tooltip:{backgroundColor:'rgba(12,15,25,0.9)'}},
       scales:{
         x:{grid:{color:gridColor},ticks:{color:textColor,font:{size:10}}},
         y:{grid:{color:gridColor},ticks:{color:textColor,font:{size:10},callback:v=>(v*100).toFixed(0)+'%'}}
@@ -1164,8 +1163,8 @@ function drawDSR(conv,prod,ilb){
       ]
     },
     options:{
-      responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{color:textColor,boxWidth:12,padding:12,font:{size:11}}},tooltip:{backgroundColor:'rgba(12,15,25,0.9)'}},backgroundColor:'transparent',
-      plugins:{legend:{labels:{color:textColor,boxWidth:12,padding:12,font:{size:11}}}},
+      responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{labels:{color:textColor,boxWidth:12,padding:12,font:{size:11}}},tooltip:{backgroundColor:'rgba(12,15,25,0.9)'}},
       scales:{
         x:{grid:{color:gridColor},ticks:{color:textColor,font:{size:10}}},
         y:{grid:{color:gridColor},ticks:{color:textColor,font:{size:10},callback:v=>(v*100).toFixed(0)+'%'}}
@@ -1181,14 +1180,18 @@ function renderVerdict(p,conv,prod,port,ilb){
   const saving=((prod.expectedCost-conv.expectedCost)/conv.expectedCost*100);
   const distressDiff=prod.distressProb-conv.distressProb;
   
-  if (saving < -2 && distressDiff < 0.05) {
+  if (conv.distressProb > 0.5) {
+    parts.push('⚠️ <strong>Unsustainable baseline.</strong> Conventional distress is already above 50%. Changing the bond structure won\'t fix a structural deficit — look at primary balances.');
+  } else if (saving < -2 && distressDiff <= 0.02) {
     parts.push('✅ <strong>Clear win.</strong> The bond is cheaper ('+saving.toFixed(2)+'%) AND has similar or lower distress.');
-  } else if (saving < -2 && distressDiff > 0.10) {
+  } else if (saving < -2 && distressDiff > 0.05) {
     parts.push('⚠️ <strong>Trade-off.</strong> The bond is cheaper ('+saving.toFixed(2)+'%), but carries significantly higher distress (+'+(distressDiff*100).toFixed(1)+'pp). This is the feedback loop in action.');
   } else if (saving > 1) {
-    parts.push('❌ <strong>Does not outperform.</strong> The bond is more expensive (+'+saving.toFixed(2)+'%) and riskier.');
+    parts.push('❌ <strong>Does not outperform.</strong> The bond is more expensive (+'+saving.toFixed(2)+'%).');
+  } else if (saving < -2 && distressDiff > 0.02 && distressDiff <= 0.05) {
+    parts.push('📊 <strong>Mixed result.</strong> Cheaper ('+saving.toFixed(2)+'%), but slightly riskier (+'+(distressDiff*100).toFixed(1)+'pp distress).');
   } else {
-    parts.push('📊 <strong>Neutral.</strong> The bond is roughly cost-equivalent to conventional debt, but changes the risk profile.');
+    parts.push('📊 <strong>Neutral.</strong> The bond is roughly cost-equivalent to conventional debt.');
   }
   
   if(p.thetaAI<0.15){
@@ -1268,7 +1271,7 @@ function copySummary(){
   const{p,conv,prod,port}=lastResult;
   let text='🏛️ Policy Lab — Scenario Report\n';
   text+='-------------------------------\n';
-  text+='Sovereign: GDP $'+p.gdp+'B, debt/GDP '+(p.debtGDP)+'%, growth '+(p.muY*100).toFixed(1)+'%, inflation '+(p.muPi*100).toFixed(1)+'%\n';
+  text+='Sovereign: debt/GDP '+(p.debtGDP)+'%, growth '+(p.muY*100).toFixed(1)+'%, inflation '+(p.muPi*100).toFixed(1)+'%\n';
   text+='Bond: α_N='+p.alphaN.toFixed(2)+', cap='+(p.cap*100).toFixed(1)+'%, θ_AI='+p.thetaAI.toFixed(2)+', share='+(p.share*100)+'%, PAM='+(p.pam?'on':'off')+'\n\n';
   text+='Expected cost:\n';
   text+='  Conventional: '+conv.expectedCost.toFixed(4)+'\n';
@@ -1347,18 +1350,21 @@ async function generateAI(){
     const saving=((prod.expectedCost-conv.expectedCost)/conv.expectedCost*100);
     const distDiff=prod.distressProb-conv.distressProb;
     let summary='📌 ',advice='';
-    if(p.thetaAI<0.15){
-      summary='⚠️ θ_AI is below the 0.15 critical threshold. The productivity bond barely outperforms conventional debt in this scenario.';
-      advice='✅ Policy recommendation: prioritize policies that capture AI gains (taxes, royalties, sovereign equity) before issuing Productivity Bonds. Without these, the instrument cannot deliver its promised cost reduction.';
-    }else if(p.thetaAI>0.30){
-      summary='✅ θ_AI is above 0.30 — the bond is structurally viable. Expected cost saving: '+saving.toFixed(2)+'%.';
-      advice='✅ Policy recommendation: proceed with a pilot issuance at ~'+(port.optimal.share*100).toFixed(0)+'% of new debt. '+(p.pam?'PAM enabled provides additional distress protection.':'Consider enabling PAM to mitigate the feedback loop.');
-    }else{
-      summary='📊 θ_AI = '+p.thetaAI.toFixed(2)+' sits between the failure threshold and the outperformance threshold. Modest advantage only.';
-      advice='✅ Policy recommendation: test with a small pilot first. Strengthen AI capture mechanisms to move θ_AI above 0.30.';
-    }
-    if(distDiff>0.05&&!p.pam){
-      advice+=' Note: distress probability rises '+(distDiff*100).toFixed(1)+'pp vs conventional — enable PAM to mitigate.';
+    const saving=((prod.expectedCost-conv.expectedCost)/conv.expectedCost*100);
+    const distDiff=prod.distressProb-conv.distressProb;
+    
+    if (conv.distressProb > 0.5) {
+      summary='⚠️ The sovereign is already in a high-distress regime (>50%). Bond structure changes alone will not fix this.';
+      advice='✅ Policy recommendation: focus on primary balance and fiscal consolidation before issuing new bond structures.';
+    } else if (saving < -2 && distDiff <= 0.02) {
+      summary='✅ The productivity bond is a clear win: cheaper ('+saving.toFixed(2)+'%) and no worse on distress.';
+      advice='✅ Policy recommendation: proceed with a pilot issuance at ~'+(port.optimal.share*100).toFixed(0)+'% of new debt.';
+    } else if (saving < -2 && distDiff > 0.05) {
+      summary='⚠️ Trade-off: the bond is cheaper ('+saving.toFixed(2)+'%), but significantly riskier (+'+(distDiff*100).toFixed(1)+'pp distress).';
+      advice='✅ Policy recommendation: '+(p.pam?'PAM is enabled, which helps, but further principal adjustment may be needed.':'Enable PAM or add a debt ceiling. Without safeguards, the feedback loop dominates.');
+    } else {
+      summary='📊 Neutral outcome: saving is '+saving.toFixed(2)+'%, distress change is +'+(distDiff*100).toFixed(1)+'pp.';
+      advice='✅ Policy recommendation: the instrument doesn\'t materially improve this specific scenario. Review debt baseline and coupon design.';
     }
     out.innerHTML='<div class="summary">'+summary+'</div><div class="advice" style="margin-top:0.5rem;">'+advice+'</div><div style="margin-top:0.5rem;font-size:0.6rem;color:var(--text-muted);opacity:0.6;">⚠️ Rule-based analysis (deterministic). Connect AI worker for LLM interpretation.</div>';
     status.textContent='✅ Done';
@@ -1411,19 +1417,7 @@ document.addEventListener('DOMContentLoaded',function(){
   if(typeof initFeedbackForm==='function'){
     initFeedbackForm('feedback-container');
   }
-  // Ensure accordions toggle even if an earlier JS error occurred
-  document.querySelectorAll('.accordion-toggle').forEach(function(el){
-    el.addEventListener('click', function(e){
-      e.preventDefault();
-      const content = this.nextElementSibling;
-      const arrow = this.querySelector('.arrow');
-      if(content){
-        content.classList.toggle('open');
-        this.classList.toggle('open');
-        if(arrow) arrow.classList.toggle('open');
-      }
-    });
-  });
+  /* ACCORDION FIXED */
 });
 </script>
 
