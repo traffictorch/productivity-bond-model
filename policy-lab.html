@@ -1180,6 +1180,8 @@ function renderVerdict(p,conv,prod,port,ilb){
   const sol=document.getElementById('verdictSolution');
   const act=document.getElementById('verdictAction');
   const parts=[];
+  const saving=((prod.expectedCost-conv.expectedCost)/conv.expectedCost*100);
+  const distressDiff=prod.distressProb-conv.distressProb;
   
   if (conv.distressProb > 0.5) {
     parts.push('⚠️ <strong>Unsustainable baseline.</strong> Conventional distress is already above 50%. Changing the bond structure won\'t fix a structural deficit — look at primary balances.');
