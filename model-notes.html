@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📐 Model Notes — v1.0 vs v1.1 | PBM Productivity Lab</title>
+  <meta name="description" content="What changed between the book's fixed-debt model (v1.0) and the current endogenous-debt model (v1.1), and what it means for the model's claims." />
+  <link rel="canonical" href="https://traffictorch.github.io/productivity-bond-model/model-notes.html" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="favicon.ico" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=block" crossorigin="anonymous" />
+  <link rel="stylesheet" href="css/core.min.css" />
+  <noscript><style>html{opacity:1!important}</style></noscript>
+  <style>
+    html { opacity: 0; transition: opacity 0.12s ease; }
+    html.loaded { opacity: 1; }
+    .hero { min-height: 22vh; padding: 1rem 0; }
+    .section-spacing { padding: 2rem 0; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .data-table th { text-align: left; padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--border-divider); color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.04em; }
+    .data-table td { padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--border-divider); color: var(--text-body); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table .highlight { background: rgba(79,70,229,0.08); }
+    .version-badge { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 20px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.03em; }
+    .v10 { background: rgba(251,191,36,0.15); color: #f59e0b; }
+    .v11 { background: rgba(52,211,153,0.15); color: #34d399; }
+    .callout { background: var(--bg-input); border-radius: 10px; padding: 1rem 1.2rem; margin: 1rem 0; border-left: 4px solid #4f46e5; font-size: 0.9rem; line-height: 1.7; color: var(--text-secondary); }
+    .callout.warn { border-left-color: #f59e0b; }
+    .callout.good { border-left-color: #34d399; }
+  </style>
+</head>
+<body>
+<main>
+  <div class="container" style="padding-top:1.5rem;padding-bottom:0;">
+    <nav class="breadcrumb" style="font-size:0.85rem;color:var(--text-muted);display:flex;gap:0.5rem;flex-wrap:wrap;">
+      <a href="index.html" style="color:var(--text-muted);text-decoration:none;">🏠 Home</a>
+      <span style="opacity:0.5;">/</span>
+      <span style="color:var(--text-primary);font-weight:500;">Model Notes</span>
+    </nav>
+  </div>
+
+  <section class="container hero">
+    <div>
+      <span class="badge-glow" style="margin-bottom:0.5rem;">📐 Reference</span>
+      <h1 class="text-gradient" style="font-size:clamp(2.4rem,5vw,3.4rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;">Model Notes</h1>
+      <p style="font-size:clamp(1.1rem,1.8vw,1.4rem);font-weight:300;opacity:0.8;max-width:700px;margin:0.5rem 0 1.5rem;color:var(--text-secondary);">
+        What changed between v1.0 (the book's Appendix C) and v1.1 (the current tools), and what it means for the model's claims.
+      </p>
+    </div>
+  </section>
+
+  <section class="container section-spacing" style="padding-top:0;">
+    <div class="glass-card">
+
+      <h2 style="font-size:1.6rem;font-weight:700;margin-bottom:0.5rem;color:var(--text-primary);">📋 The short version</h2>
+      <div class="callout">
+        <p><strong>v1.0</strong> (book, Appendix C) assumed the debt path was fixed, then computed each bond type's coupons against it. This understated the debt accumulation effect of higher coupons.</p>
+        <p style="margin-top:0.5rem;"><strong>v1.1</strong> (current tools) computes a separate debt path <em>for each bond type</em> using its own coupons. This captures the feedback loop the book identifies in Chapter 14: higher coupons → higher debt service → more borrowing → higher future debt service.</p>
+        <p style="margin-top:0.5rem;">The numbers differ, but the direction of every claim still holds — except distress, which is higher in v1.0 than v1.1. The book's warning about the feedback loop was correct, but the fixed-debt model overstated the magnitude.</p>
+      </div>
+
+      <h2 style="font-size:1.6rem;font-weight:700;margin:2rem 0 0.5rem;color:var(--text-primary);">📊 Side-by-side comparison</h2>
+      <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:1rem;">Baseline calibration from <code>config.py</code> and <code>DEFAULT_CONFIG</code>. Seed=42. 10,000 paths, 10-year horizon. The book's fixed-debt numbers come from the earlier <code>simulation_engine.py</code>; the current numbers come from <code>run_simulation.py</code>.</p>
+
+      <div style="overflow-x:auto;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>v1.0 (Book) <span class="version-badge v10">fixed debt</span></th>
+              <th>v1.1 (Current) <span class="version-badge v11">endogenous debt</span></th>
+              <th>Direction</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Conventional expected cost</td>
+              <td>0.5154</td>
+              <td>0.5154</td>
+              <td style="color:#34d399;">Same</td>
+            </tr>
+            <tr>
+              <td>Productivity expected cost</td>
+              <td>0.4994</td>
+              <td>0.4994</td>
+              <td style="color:#34d399;">Same</td>
+            </tr>
+            <tr>
+              <td>Productivity cost saving</td>
+              <td>−3.1%</td>
+              <td>−3.1%</td>
+              <td style="color:#34d399;">Same</td>
+            </tr>
+            <tr class="highlight">
+              <td>Conventional distress</td>
+              <td>11.05%</td>
+              <td>11.05%</td>
+              <td style="color:#34d399;">Same</td>
+            </tr>
+            <tr class="highlight">
+              <td><strong>Productivity distress</strong></td>
+              <td><strong>88.17%</strong></td>
+              <td><strong>85.68%</strong></td>
+              <td style="color:#f59e0b;">Slightly lower (−2.5pp)</td>
+            </tr>
+            <tr>
+              <td>Inflation-linked cost</td>
+              <td>0.4896</td>
+              <td>0.4896</td>
+              <td style="color:#34d399;">Same</td>
+            </tr>
+            <tr>
+              <td>Inflation-linked distress</td>
+              <td>70.22%</td>
+              <td>67.0%</td>
+              <td style="color:#f59e0b;">Lower (−3.2pp)</td>
+            </tr>
+            <tr>
+              <td>Productivity effective yield</td>
+              <td>3.74%</td>
+              <td>3.74%</td>
+              <td style="color:#34d399;">Same</td>
+            </tr>
+            <tr>
+              <td>Optimal portfolio share</td>
+              <td>~30%</td>
+              <td>Scenario-dependent (30–45%)</td>
+              <td style="color:#f59e0b;">Sensitive to debt/GDP</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 style="font-size:1.6rem;font-weight:700;margin:2rem 0 0.5rem;color:var(--text-primary);">🧭 What this means for the book's claims</h2>
+
+      <div class="callout good">
+        <strong>✅ Cost reduction (~3.1%)</strong> — Still holds. The productivity bond is cheaper than a conventional bond on expected cost, regardless of model version.
+      </div>
+
+      <div class="callout good">
+        <strong>✅ Feedback loop</strong> — Still holds, and is now visible in the tool. Higher coupons in good years increase the debt stock, which increases future debt service. The book's identification of this as the central design problem was correct.
+      </div>
+
+      <div class="callout warn">
+        <strong>⚠️ Productivity distress (88.17%)</strong> — The v1.1 number is 85.68%, not 88.17%. The book's number was from the fixed-debt model, which overstates the effect because it doesn't let the debt stock adjust per bond type. The v1.1 number is more realistic.
+      </div>
+
+      <div class="callout warn">
+        <strong>⚠️ Inflation-linked comparison</strong> — ILB outperforms the productivity bond on both cost (0.4896 vs 0.4994) and distress (67% vs 86%) under the default calibration. The book frames the productivity bond as the primary alternative to conventional, but on cost-minimisation grounds, an ILB is a cheaper answer. The case for the productivity bond rests on alignment with efficiency metrics — not on cost minimisation. This distinction is important and should be explicit in any policy discussion.
+      </div>
+
+      <div class="callout warn">
+        <strong>⚠️ θ_AI</strong> — The book treats θ_AI as the single most important parameter, with thresholds at 0.15 and 0.30. In the current calibration, AI shocks are rare (5% per year) and modest, so θ_AI affects outcomes primarily through those shocks. The thresholds are from the book's analytical framework, not from the simulation. A simulation with larger or more frequent AI shocks would give θ_AI more influence.
+      </div>
+
+      <div class="callout">
+        <strong>📊 Optimal portfolio share</strong> — The book cites ~30%. The v1.1 model shows this is scenario-dependent: 0% for high-debt sovereigns (60%+), 30–45% for moderate debt (30–50%). The optimal share is a property of the specific calibration, not a universal recommendation.
+      </div>
+
+      <h2 style="font-size:1.6rem;font-weight:700;margin:2rem 0 0.5rem;color:var(--text-primary);">❓ Common objections</h2>
+
+      <h3 style="font-size:1.1rem;font-weight:600;margin:1rem 0 0.3rem;color:var(--text-primary);">"Doesn't the ILB make the productivity bond pointless?"</h3>
+      <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;">No. An ILB protects against inflation. A productivity bond rewards efficiency. If you believe efficiency is the metric we should be rewarding — because it's what we want the economy to produce, not just what we want to protect against — then the productivity bond is the more appropriate instrument. The ILB is a defensive tool; the productivity bond is a strategic one. They serve different purposes and can coexist.</p>
+
+      <h3 style="font-size:1.1rem;font-weight:600;margin:1rem 0 0.3rem;color:var(--text-primary);">"The book says 88.17% distress but the tool says 85.68%. Which is right?"</h3>
+      <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;">Both are correct for their respective models. The book's number is from the fixed-debt model; the tool's is from the endogenous-debt model. The endogenous model is more realistic and is the current production calibration. The difference is 2.5 percentage points — small enough that the qualitative conclusion (distress rises under variable coupons without a PAM) is unchanged, but large enough that any specific numeric claim in policy discussion should cite which model produced it.</p>
+
+      <h3 style="font-size:1.1rem;font-weight:600;margin:1rem 0 0.3rem;color:var(--text-primary);">"Isn't the whole model just a simulation, not evidence?"</h3>
+      <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;">Correct. The simulation tests whether the architecture can work under specified assumptions; it does not prove it will work in reality. The assumptions — about AI shocks, about government capture, about investor behaviour — matter more than the simulation itself. Every one of those assumptions should be challenged before any real-world implementation. The simulation is a tool for designing the instrument, not a forecast of the outcome.</p>
+
+      <h3 style="font-size:1.1rem;font-weight:600;margin:1rem 0 0.3rem;color:var(--text-primary);">"What's actually different between v1.0 and v1.1 in code terms?"</h3>
+      <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;">In v1.0, <code>state_generator.py</code> returned a debt path of zeros. The debt stock was passed in as a fixed baseline and used only for computing debt service — it never grew. In v1.1, <code>compute_debt_path()</code> takes a coupon series and rolls forward the debt stock year by year. Each bond type gets its own debt path, so the feedback loop is captured. The GitHub repo (<a href="https://github.com/traffictorch/productivity-bond-model" style="color:#b388ff;">traffictorch/productivity-bond-model</a>) has both models in git history for verification.</p>
+
+      <h2 style="font-size:1.6rem;font-weight:700;margin:2rem 0 0.5rem;color:var(--text-primary);">🔗 Related pages</h2>
+      <ul style="color:var(--text-secondary);font-size:0.9rem;line-height:1.9;padding-left:1.5rem;">
+        <li><a href="policy-lab.html" style="color:#b388ff;">Policy Lab</a> — Interactive scenario builder using v1.1</li>
+        <li><a href="index.html#simulator" style="color:#b388ff;">Live Simulator</a> — Homepage simulator (browser-based summary metrics)</li>
+        <li><a href="appendix.html" style="color:#b388ff;">Appendices</a> — Mathematical appendix and full specification</li>
+        <li><a href="book.html" style="color:#b388ff;">The Book</a> — Full PDF and audiobook</li>
+        <li><a href="changelog.html" style="color:#b388ff;">Changelog</a> — Version history</li>
+        <li><a href="https://github.com/traffictorch/productivity-bond-model" style="color:#b388ff;">GitHub Repository</a> — Source code and simulation engine</li>
+      </ul>
+
+      <h2 style="font-size:1.6rem;font-weight:700;margin:2rem 0 0.5rem;color:var(--text-primary);">📅 Version history</h2>
+      <table class="data-table">
+        <thead><tr><th>Version</th><th>Model</th><th>Used by</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><span class="version-badge v10">v1.0</span></td><td>Fixed debt</td><td>Book (2026), Appendix C</td><td>Debt stock assumed static per path; coupons applied against it</td></tr>
+          <tr><td><span class="version-badge v11">v1.1</span></td><td>Endogenous debt</td><td>Policy Lab, NPI Tracker, current simulation</td><td>Debt stock rolled forward per bond type; captures feedback loop</td></tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border-divider);font-size:0.85rem;color:var(--text-muted);">
+        <p>📌 Last updated: 2026-10-27 · Maintained by <a href="https://traffictorch.net" style="color:#b388ff;">Traffic Torch</a> · <a href="changelog.html" style="color:#b388ff;">See changelog</a></p>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1rem 1.5rem;margin-bottom:1.5rem;font-size:0.85rem;">
+      <a href="index.html" style="color:var(--text-muted);text-decoration:none;">🏠 Home</a>
+      <a href="tools.html" style="color:var(--text-muted);text-decoration:none;">🧰 Tools</a>
+      <a href="policy-lab.html" style="color:#b388ff;">🏛️ Policy Lab</a>
+      <a href="model-notes.html" style="color:#b388ff;">📐 Model Notes</a>
+      <a href="changelog.html" style="color:var(--text-muted);text-decoration:none;">Changelog</a>
+      <a href="book.html" style="color:var(--text-muted);text-decoration:none;">Book</a>
+      <a href="contact.html" style="color:var(--text-muted);text-decoration:none;">Contact</a>
+    </div>
+    <p style="font-size:0.7rem;margin-top:0.3rem;color:var(--text-muted);">Creative Commons BY-NC-ND 4.0 · Built with ♥ and AI</p>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('load',function(){document.documentElement.classList.add('loaded');});
+</script>
+</body>
+</html>

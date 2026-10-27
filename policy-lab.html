@@ -19,6 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=block" crossorigin="anonymous" />
   <link rel="stylesheet" href="css/core.min.css" />
+  <noscript><style>html{opacity:1!important}</style></noscript>
 
   <style>
     html { opacity: 0; transition: opacity 0.12s ease; }
@@ -199,10 +200,19 @@
 
     @media (max-width: 768px) {
       .floating-return-top { display: none !important; }
-      .stat-grid { grid-template-columns: 1fr 1fr; }
+      .stat-grid { grid-template-columns: 1fr !important; }
+      .input-group label { flex: 1 1 100% !important; width: 100%; }
+      .input-group input[type="number"] { width: 100%; }
+      .chart-container { max-height: 250px !important; height: 250px !important; overflow: hidden; width: 100%; }
+      .stat-card .num { font-size: 1.4rem; }
+      .presets { display: grid; grid-template-columns: 1fr 1fr; }
+      .presets button { width: 100%; margin: 0; font-size: 0.75rem; }
+      canvas { max-width: 100% !important; height: auto !important; }
     }
+    /* MOBILE FIX */
   </style>
 
+  <script>setTimeout(function(){document.documentElement.classList.add('loaded');},2000);</script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
   <script src="js/ga4.js" defer></script>
 
@@ -306,7 +316,7 @@
       </p>
 
       <div class="warn-banner">
-        ⚠️ <strong>Model version note:</strong> These results use the <strong>endogenous-debt model (v1.1)</strong>. The book's Appendix C used an older fixed-debt calibration — numbers may differ. See <a href="changelog.html" style="color:#f59e0b; text-decoration:underline;">CHANGELOG</a>.
+        ⚠️ <strong>Model v1.1 (endogenous debt).</strong> Book Appendix C uses v1.0 (fixed debt). Numbers differ by design. <a href="model-notes.html" style="color:#f59e0b;text-decoration:underline;font-weight:600;">Full model notes →</a>
       </div>
 
       <!-- ===== WHAT IS THIS? ===== -->
@@ -344,9 +354,6 @@
       <!-- ===== SOVEREIGN PROFILE ===== -->
       <h3 style="font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-muted); margin:1.2rem 0 0.6rem;">🏛️ Sovereign Profile</h3>
       <div class="input-group">
-        <label>GDP (billions)
-          <input type="number" id="gdp" value="250" step="10" min="10" />
-        </label>
         <label>Debt / GDP (%)
           <input type="number" id="debtGDP" value="60" step="1" min="0" max="300" />
         </label>
@@ -386,30 +393,34 @@
       </div>
 
       <div style="display:flex; flex-wrap:wrap; gap:0.6rem; align-items:center; margin-top:0.5rem;">
-        <button class="btn-primary" onclick="runAnalysis(2000)" style="padding:0.7rem 1.8rem;">▶ Run Analysis</button>
-        <button class="btn-secondary" onclick="runAnalysis(10000)" style="padding:0.7rem 1.8rem;">⚡ Full Monte Carlo (10k paths)</button>
+        <button class="btn-primary" id="runBtn" onclick="runAnalysisAsync(2000)" style="padding:0.7rem 1.8rem;">▶ Run Analysis</button>
+        <button class="btn-secondary" id="mcBtn" onclick="runAnalysisAsync(10000)" style="padding:0.7rem 1.8rem;">⚡ Full Monte Carlo (10k paths)</button>
         <span id="status" style="font-size:0.8rem; color:var(--text-muted);">Ready</span>
       </div>
 
       <!-- ===== RESULTS ===== -->
+      <div id="staleBanner" style="display:none;margin-bottom:1rem;padding:0.6rem 1rem;background:rgba(251,191,36,0.12);border-left:3px solid #f59e0b;border-radius:4px;font-size:0.85rem;color:var(--text-secondary);">⚠️ Inputs changed since last run — click Run Analysis to update.</div>
       <div id="results" class="result-box" style="display:none;">
         <div class="stat-grid">
           <div class="stat-card purple">
             <div class="num" id="statCost">—</div>
-            <div class="lbl">Expected cost (bond price)</div>
+            <div class="lbl">Expected cost (100% prod issuance)</div>
           </div>
           <div class="stat-card red">
             <div class="num" id="statDistress">—</div>
-            <div class="lbl">Distress probability</div>
+            <div class="lbl">Distress (100% prod issuance)</div>
           </div>
-          <div class="stat-card green">
+          <div class="stat-card" id="statSavingCard">
             <div class="num" id="statSaving">—</div>
-            <div class="lbl">Cost saving vs conventional</div>
+            <div class="lbl">Saving vs conventional (100% prod)</div>
           </div>
           <div class="stat-card">
             <div class="num" id="statOptimal">—</div>
             <div class="lbl">Recommended portfolio share</div>
           </div>
+        </div>
+        <div style="font-size:0.75rem;color:var(--text-muted);margin-top:-0.4rem;margin-bottom:1rem;">
+          Cards above show <strong>100% productivity issuance</strong>. At your chosen <strong><span id="shareDisplay">30</span>% share</strong>, blended results differ — see verdict below.
         </div>
 
         <div style="margin-top:1.2rem;">
@@ -435,12 +446,12 @@
         </div>
 
         <div class="action-bar">
-          <button class="btn-secondary" id="aiButton" onclick="generateAI()">🧠 Generate AI Analysis</button>
+          <button class="btn-secondary" id="aiButton" onclick="generateAI()">📝 Interpret this scenario</button>
           <span style="font-size:0.7rem; color:var(--text-muted); margin-left:0.5rem;" id="aiStatus">Ready</span>
         </div>
         <div id="aiOutput" class="ai-output">
-          <span class="placeholder">Click "Generate AI Analysis" for detailed interpretation.</span>
-          <div style="margin-top:0.4rem; font-size:0.65rem; color:var(--text-muted); opacity:0.6;">⚠️ AI can make mistakes. Verify with your own research.</div>
+          <span class="placeholder">Click "Interpret this scenario" for a rule-based analysis.</span>
+          <div style="margin-top:0.4rem; font-size:0.65rem; color:var(--text-muted); opacity:0.6;">Rule-based interpretation. LLM worker not yet connected.</div>
         </div>
       </div>
 
@@ -587,13 +598,9 @@
             <span class="arrow">▼</span>
           </div>
           <div class="accordion-content">
-            <p style="color:var(--text-secondary);"><strong>θ_AI</strong> is the fraction of AI-driven productivity gains that the government captures through taxes, royalties, or sovereign equity. It's the single most important parameter in the model.</p>
-            <p style="color:var(--text-secondary); margin-top:0.5rem;">The empirical evidence is clear:</p>
-            <ul style="color:var(--text-secondary); margin-left:1.5rem; line-height:1.8;">
-              <li>If <strong>θ_AI &lt; 0.15</strong>, the Productivity Bond barely outperforms conventional debt</li>
-              <li>If <strong>θ_AI &gt; 0.30</strong>, it substantially outperforms</li>
-            </ul>
-            <p style="color:var(--text-secondary); margin-top:0.5rem;">This is why the verdict warns you when θ_AI is too low — the instrument only works if the gains it's linked to actually reach the public balance sheet.</p>
+            <p style="color:var(--text-secondary);"><strong>θ_AI</strong> is the fraction of AI-driven productivity gains that the government captures through taxes, royalties, or sovereign equity.</p>
+            <p style="color:var(--text-secondary); margin-top:0.5rem;">In the book's analytical framework, θ_AI is a critical threshold: below 0.15 the bond barely works, above 0.30 it substantially outperforms. However, in the current simulation (v1.1), AI shocks are rare (5% per year) and modest, so θ_AI affects outcomes primarily through those shocks.</p>
+            <p style="color:var(--text-secondary); margin-top:0.5rem;">This means the thresholds are a theoretical guideline, not a guaranteed simulation result. <a href="model-notes.html" style="color:#b388ff;">See Model Notes for the full explanation.</a></p>
           </div>
         </div>
 
@@ -694,6 +701,25 @@
     </div>
   </section>
 
+
+<div id="gov-widget"></div>
+<script src="js/governance-widget.js" defer></script>
+
+<button id="pwaInstallBtn" class="pwa-install-btn">
+  <span class="icon">📱</span>
+  <span class="btn-text">Install Apps</span>
+  <span class="icon">💻</span>
+</button>
+<div id="pwaIosOverlay" class="pwa-ios-overlay">
+  <div class="pwa-ios-modal">
+    <h3>Install on iPhone</h3>
+    <p>To add this app to your home screen:</p>
+    <div class="step"><span>1.</span><span class="step-icon">⬆️</span><span>In <strong>Safari</strong> tap the <strong>Share</strong> button.</span></div>
+    <div class="step"><span>2.</span><span class="step-icon">➕</span><span>Scroll down and tap <strong>"Add to Home Screen"</strong>.</span></div>
+    <button id="pwaCloseIosModal" class="close-btn">Got it</button>
+  </div>
+</div>
+
 </main>
 
 <button class="floating-return-top" id="floatingReturnTop" aria-label="Return to top">⬆ Top</button>
@@ -778,6 +804,50 @@ function simulateEconomy(config){
   return{g_y,g_n,pi,y,r,g:gS,g_r,primary_balance:pb,config:cfg};
 }
 
+// Async chunked engine — yields to UI between batches
+function simulateEconomyAsync(config, onProgress) {
+  return new Promise(function(resolve) {
+    const cfg = Object.assign({}, DEFAULTS, config);
+    const nP = cfg.n_paths, nY = cfg.n_years;
+    const rng = createRNG(cfg.seed);
+    const g_y = zeros(nP, nY), g_n = zeros(nP, nY), pi = zeros(nP, nY);
+    const y = zeros(nP, nY), r = zeros(nP, nY), gS = zeros(nP, nY);
+    const g_r = zeros(nP, nY), pb = zeros(nP, nY);
+    const ai_jump = zeros(nP, nY);
+    for (let p = 0; p < nP; p++) for (let t = 0; t < nY; t++) if (rng() < cfg.lambda_ai) ai_jump[p][t] = gamma(rng, cfg.ai_shape, cfg.ai_scale);
+    const sqrtRho = Math.sqrt(Math.max(0, 1 - cfg.rho_ny * cfg.rho_ny));
+    let pIdx = 0;
+    const chunkSize = Math.max(200, Math.floor(nP / 20));
+    function processChunk() {
+      const end = Math.min(pIdx + chunkSize, nP);
+      for (; pIdx < end; pIdx++) {
+        const pp = pIdx;
+        let g_y_prev = cfg.mu_y, g_n_prev = cfg.mu_n, pi_prev = cfg.mu_pi, y_prev = cfg.y0, r_prev = cfg.tau * cfg.y0;
+        for (let t = 0; t < nY; t++) {
+          const z_y = normal(rng), z_n_indep = normal(rng), z_pi = normal(rng);
+          const z_n = cfg.rho_ny * z_y + sqrtRho * z_n_indep;
+          const aiG = cfg.ai_gdp_mult * ai_jump[pp][t], aiN = cfg.ai_npi_mult * ai_jump[pp][t], aiP = cfg.ai_pi_mult * ai_jump[pp][t];
+          g_y[pp][t] = cfg.mu_y + cfg.rho_y * (g_y_prev - cfg.mu_y) + cfg.sigma_y * z_y + aiG;
+          g_n[pp][t] = cfg.mu_n + cfg.rho_n * (g_n_prev - cfg.mu_n) + cfg.sigma_n * z_n + aiN;
+          pi[pp][t] = cfg.mu_pi + cfg.rho_pi * (pi_prev - cfg.mu_pi) + cfg.sigma_pi * z_pi + cfg.gamma_y * (g_y[pp][t] - cfg.mu_y) + aiP;
+          y[pp][t] = y_prev * (1 + g_y[pp][t]);
+          const aiGain = Math.max(y_prev * aiG, 0);
+          r[pp][t] = cfg.tau * y[pp][t] + cfg.theta_ai * aiGain;
+          g_r[pp][t] = r_prev > 1e-8 ? r[pp][t] / r_prev - 1 : 0;
+          const autoStab = -0.05 * (g_y[pp][t] - cfg.mu_y) * y[pp][t];
+          gS[pp][t] = Math.max(cfg.g0_over_y0 * y[pp][t] * (1 + 0.3 * (g_y[pp][t] - cfg.mu_y)) + autoStab, 0.10 * y[pp][t]);
+          pb[pp][t] = r[pp][t] - gS[pp][t];
+          g_y_prev = g_y[pp][t]; g_n_prev = g_n[pp][t]; pi_prev = pi[pp][t]; y_prev = y[pp][t]; r_prev = r[pp][t];
+        }
+      }
+      if (onProgress) onProgress(pIdx, nP);
+      if (pIdx < nP) setTimeout(processChunk, 0);
+      else resolve({g_y, g_n, pi, y, r, g: gS, g_r, primary_balance: pb, config: cfg});
+    }
+    processChunk();
+  });
+}
+
 function computeCoupons(economy,bondType,config){
   const cfg=Object.assign({},DEFAULTS,economy.config,config);
   const nP=economy.g_y.length,nY=economy.g_y[0].length;
@@ -787,6 +857,7 @@ function computeCoupons(economy,bondType,config){
     let c;
     switch(bondType){
       case'conventional':c=cfg.conventional_coupon;break;
+      case'inflation_linked':c=(1+pi)*(1+cfg.inflation_real_spread)-1;break;
       case'gdp_linked':c=(1+pi)*(1+clamp(cfg.alpha_g*gY,cfg.floor,cfg.cap))-1;break;
       case'productivity':c=(1+pi)*(1+clamp(cfg.alpha_n*gN,cfg.floor,cfg.cap))-1;break;
       case'hybrid':c=(1+pi)*(1+clamp(cfg.alpha_n*gN+cfg.alpha_f*gR,cfg.floor,cfg.cap))-1;break;
@@ -797,10 +868,11 @@ function computeCoupons(economy,bondType,config){
   return out;
 }
 
-function computeDebtPath(cfg,economy,coupons){
+function computeDebtPath(cfg,economy,coupons,bondType){
   const nP=coupons.length,nY=coupons[0].length;
   const d=zeros(nP,nY);
   const initialDebt=cfg.d0_over_y0*cfg.y0;
+  const pamApplies=(bondType==='productivity'||bondType==='hybrid')&&cfg.pam_enabled;
   for(let p=0;p<nP;p++){
     let d_prev=initialDebt;
     for(let t=0;t<nY;t++){
@@ -808,7 +880,7 @@ function computeDebtPath(cfg,economy,coupons){
       const ds=d_prev*c;
       const rev=economy.r[p][t];
       let dNew=d_prev*(1+c)-economy.primary_balance[p][t];
-      if(cfg.pam_enabled&&rev>0&&ds/rev>cfg.pam_trigger)dNew*=(1-cfg.pam_factor);
+      if(pamApplies&&rev>0&&ds/rev>cfg.pam_trigger)dNew*=(1-cfg.pam_factor);
       d[p][t]=Math.max(dNew,0);
       d_prev=d[p][t];
     }
@@ -836,7 +908,7 @@ function presentValueCost(coupons,economy,cfg){
 function evaluateBond(economy,bondType,config){
   const cfg=Object.assign({},DEFAULTS,economy.config,config);
   const coupons=computeCoupons(economy,bondType,config);
-  const debt=computeDebtPath(cfg,economy,coupons);
+  const debt=computeDebtPath(cfg,economy,coupons,bondType);
   const nP=coupons.length,nY=coupons[0].length;
   const pvCost=presentValueCost(coupons,economy,cfg);
   let mean=0;for(let p=0;p<nP;p++)mean+=pvCost[p];mean/=nP;
@@ -914,13 +986,12 @@ const PRESETS={
   advanced:{gdp:1500,debtGDP:90,muY:1.8,muPi:2.0,muN:1.5,couponConv:3.5,alphaN:0.70,cap:4.0,thetaAI:0.35,share:30,pam:true,label:'🌍 Advanced Economy — high debt, ageing population'},
   emerging:{gdp:400,debtGDP:50,muY:4.0,muPi:4.0,muN:2.5,couponConv:6.5,alphaN:0.65,cap:5.0,thetaAI:0.25,share:20,pam:true,label:'🚀 Emerging Market — growth potential, capacity building'},
   smallopen:{gdp:80,debtGDP:45,muY:2.5,muPi:2.5,muN:2.0,couponConv:3.0,alphaN:0.75,cap:3.5,thetaAI:0.45,share:25,pam:true,label:'🏝️ Small Open Economy — strong institutions, global hub'},
-  failure:{gdp:500,debtGDP:80,muY:2.0,muPi:2.0,muN:2.0,couponConv:5.0,alphaN:0.80,cap:4.0,thetaAI:0.10,share:50,pam:false,label:'⚠️ Failure Case — θ_AI = 0.10, below threshold'}
+  failure:{gdp:500,debtGDP:80,muY:2.0,muPi:2.0,muN:2.0,couponConv:4.0,alphaN:0.80,cap:4.0,thetaAI:0.05,share:50,pam:false,label:'⚠️ Failure Case — θ_AI = 0.05, far below threshold'}
 };
 
 function loadPreset(name){
   const p=PRESETS[name];
   if(!p)return;
-  document.getElementById('gdp').value=p.gdp;
   document.getElementById('debtGDP').value=p.debtGDP;
   document.getElementById('muY').value=p.muY;
   document.getElementById('muPi').value=p.muPi;
@@ -933,22 +1004,29 @@ function loadPreset(name){
   document.getElementById('pam').checked=p.pam;
   document.getElementById('presetLabel').textContent=p.label;
   document.querySelectorAll('#presetSelector .mode-btn').forEach(b=>b.classList.toggle('active',b.dataset.preset===name));
-  runAnalysis(2000);
+  runAnalysisAsync(2000);
+}
+
+function parseNum(id, fallback) {
+  const el = document.getElementById(id);
+  if (!el) return fallback;
+  const v = parseFloat(el.value);
+  return isNaN(v) ? fallback : v;
 }
 
 function readInputs(){
   return{
-    gdp:parseFloat(document.getElementById('gdp').value)||250,
-    debtGDP:parseFloat(document.getElementById('debtGDP').value)||60,
-    muY:(parseFloat(document.getElementById('muY').value)||2.5)/100,
-    muPi:(parseFloat(document.getElementById('muPi').value)||2.0)/100,
-    muN:(parseFloat(document.getElementById('muN').value)||2.0)/100,
-    couponConv:(parseFloat(document.getElementById('couponConv').value)||4.0)/100,
-    alphaN:parseFloat(document.getElementById('alphaN').value)||0.7,
-    cap:(parseFloat(document.getElementById('cap').value)||4.0)/100,
-    thetaAI:parseFloat(document.getElementById('thetaAI').value)||0.3,
-    share:(parseFloat(document.getElementById('share').value)||30)/100,
-    pam:document.getElementById('pam').checked
+    gdp: parseNum('gdp', 250),
+    debtGDP: parseNum('debtGDP', 60),
+    muY: parseNum('muY', 2.5)/100,
+    muPi: parseNum('muPi', 2.0)/100,
+    muN: parseNum('muN', 2.0)/100,
+    couponConv: parseNum('couponConv', 4.0)/100,
+    alphaN: parseNum('alphaN', 0.7),
+    cap: parseNum('cap', 4.0)/100,
+    thetaAI: parseNum('thetaAI', 0.3),
+    share: parseNum('share', 30)/100,
+    pam: document.getElementById('pam').checked
   };
 }
 
@@ -980,9 +1058,10 @@ function runAnalysis(nPaths){
       const econ=simulateEconomy(cfg);
       const conv=evaluateBond(econ,'conventional',cfg);
       const prod=evaluateBond(econ,'productivity',cfg);
+      const ilb=evaluateBond(econ,'inflation_linked',cfg);
       const port=computePortfolio(econ,cfg,[0,0.1,0.2,0.3,0.4,0.5,0.75,1.0]);
-      lastResult={p,cfg,conv,prod,port};
-      renderResults(p,conv,prod,port);
+      lastResult={p,cfg,conv,prod,port,ilb};
+      renderResults(p,conv,prod,port,ilb);
       document.getElementById('status').textContent='✅ Done — '+(nPaths===10000?'10,000':'2,000')+' paths';
     }catch(e){
       console.error(e);
@@ -991,19 +1070,56 @@ function runAnalysis(nPaths){
   },20);
 }
 
-function renderResults(p,conv,prod,port){
+async function runAnalysisAsync(nPaths){
+  nPaths=nPaths||2000;
+  const runBtn=document.getElementById('runBtn');
+  const mcBtn=document.getElementById('mcBtn');
+  if(runBtn)runBtn.disabled=true;
+  if(mcBtn)mcBtn.disabled=true;
+  const status=document.getElementById('status');
+  try{
+    const p=readInputs();
+    const cfg=buildConfig(p,nPaths);
+    currentScenario=p;
+    if(status)status.textContent='Running 0 / '+nPaths.toLocaleString()+' paths…';
+    const econ=await simulateEconomyAsync(cfg,function(done,total){
+      if(status)status.textContent='Running '+done.toLocaleString()+' / '+total.toLocaleString()+' paths…';
+    });
+    const conv=evaluateBond(econ,'conventional',cfg);
+    const prod=evaluateBond(econ,'productivity',cfg);
+    const ilb=evaluateBond(econ,'inflation_linked',cfg);
+    const port=computePortfolio(econ,cfg,[0,0.1,0.2,0.3,0.4,0.5,0.75,1.0]);
+    lastResult={p,cfg,conv,prod,port,ilb};
+    renderResults(p,conv,prod,port,ilb);
+    if(status)status.textContent='✅ Done — '+nPaths.toLocaleString()+' paths';
+    const sb=document.getElementById('staleBanner');
+    if(sb)sb.style.display='none';
+  }catch(e){
+    console.error(e);
+    if(status)status.textContent='❌ '+e.message;
+  }finally{
+    if(runBtn)runBtn.disabled=false;
+    if(mcBtn)mcBtn.disabled=false;
+  }
+}
+
+function renderResults(p,conv,prod,port,ilb){
   document.getElementById('results').style.display='block';
   document.getElementById('statCost').textContent=prod.expectedCost.toFixed(3);
   document.getElementById('statDistress').textContent=(prod.distressProb*100).toFixed(1)+'%';
   const saving=((prod.expectedCost-conv.expectedCost)/conv.expectedCost*100);
   document.getElementById('statSaving').textContent=saving.toFixed(2)+'%';
+  const savingCard=document.getElementById('statSavingCard');
+  if(savingCard)savingCard.className='stat-card '+(saving<0?'green':'red');
   document.getElementById('statOptimal').textContent=(port.optimal.share*100).toFixed(0)+'%';
-  drawTrajectory(conv,prod);
-  drawDSR(conv,prod);
-  renderVerdict(p,conv,prod,port);
+  const sd=document.getElementById('shareDisplay');
+  if(sd)sd.textContent=(p.share*100).toFixed(0);
+  drawTrajectory(conv,prod,ilb);
+  drawDSR(conv,prod,ilb);
+  renderVerdict(p,conv,prod,port,ilb);
 }
 
-function drawTrajectory(conv,prod){
+function drawTrajectory(conv,prod,ilb){
   const ctx=document.getElementById('chartTrajectory').getContext('2d');
   if(chart1)chart1.destroy();
   const theme=document.documentElement.getAttribute('data-theme')||'dark';
@@ -1015,11 +1131,12 @@ function drawTrajectory(conv,prod){
       labels:conv.trajectory.years.map(y=>'Y'+y),
       datasets:[
         {label:'Conventional',data:conv.trajectory.meanDebtToGDP,borderColor:'#f87171',backgroundColor:'rgba(248,113,113,0.1)',fill:true,tension:0.3,pointRadius:3},
-        {label:'Productivity',data:prod.trajectory.meanDebtToGDP,borderColor:'#4f46e5',backgroundColor:'rgba(79,70,229,0.1)',fill:true,tension:0.3,pointRadius:3}
+        {label:'Productivity',data:prod.trajectory.meanDebtToGDP,borderColor:'#4f46e5',backgroundColor:'rgba(79,70,229,0.1)',fill:true,tension:0.3,pointRadius:3},
+        {label:'Inflation-linked',data:(ilb&&ilb.trajectory)?ilb.trajectory.meanDebtToGDP:null,borderColor:'#34d399',backgroundColor:'transparent',fill:false,tension:0.3,pointRadius:3,borderDash:[6,3]}
       ]
     },
     options:{
-      responsive:true,maintainAspectRatio:true,
+      responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{color:textColor,boxWidth:12,padding:12,font:{size:11}}},tooltip:{backgroundColor:'rgba(12,15,25,0.9)'}},backgroundColor:'transparent',
       plugins:{legend:{labels:{color:textColor,boxWidth:12,padding:12,font:{size:11}}}},
       scales:{
         x:{grid:{color:gridColor},ticks:{color:textColor,font:{size:10}}},
@@ -1029,7 +1146,7 @@ function drawTrajectory(conv,prod){
   });
 }
 
-function drawDSR(conv,prod){
+function drawDSR(conv,prod,ilb){
   const ctx=document.getElementById('chartDSR').getContext('2d');
   if(chart2)chart2.destroy();
   const theme=document.documentElement.getAttribute('data-theme')||'dark';
@@ -1042,11 +1159,12 @@ function drawDSR(conv,prod){
       datasets:[
         {label:'Conventional DSR',data:conv.trajectory.meanDSR,borderColor:'#f87171',tension:0.3,pointRadius:3},
         {label:'Productivity DSR',data:prod.trajectory.meanDSR,borderColor:'#4f46e5',tension:0.3,pointRadius:3},
+        {label:'Inflation-linked DSR',data:(ilb&&ilb.trajectory)?ilb.trajectory.meanDSR:null,borderColor:'#34d399',tension:0.3,pointRadius:3,borderDash:[6,3]},
         {label:'Distress threshold (15%)',data:conv.trajectory.years.map(()=>0.15),borderColor:'#fbbf24',borderDash:[4,4],tension:0,pointRadius:0}
       ]
     },
     options:{
-      responsive:true,maintainAspectRatio:true,
+      responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{color:textColor,boxWidth:12,padding:12,font:{size:11}}},tooltip:{backgroundColor:'rgba(12,15,25,0.9)'}},backgroundColor:'transparent',
       plugins:{legend:{labels:{color:textColor,boxWidth:12,padding:12,font:{size:11}}}},
       scales:{
         x:{grid:{color:gridColor},ticks:{color:textColor,font:{size:10}}},
@@ -1056,18 +1174,31 @@ function drawDSR(conv,prod){
   });
 }
 
-function renderVerdict(p,conv,prod,port){
+function renderVerdict(p,conv,prod,port,ilb){
   const sol=document.getElementById('verdictSolution');
   const act=document.getElementById('verdictAction');
   const parts=[];
-  if(p.thetaAI<0.15){
-    parts.push('⚠️ θ_AI = '+p.thetaAI.toFixed(2)+' is <strong>below the critical threshold (0.15)</strong>. The bond will barely outperform conventional debt — prioritize policies that capture AI gains before issuing.');
-  }else if(p.thetaAI>0.30){
-    parts.push('✅ θ_AI = '+p.thetaAI.toFixed(2)+' is <strong>above 0.30</strong> — the bond outperforms conventional debt. The government captures enough AI gains to make the instrument viable.');
-  }else{
-    parts.push('📊 θ_AI = '+p.thetaAI.toFixed(2)+' is <strong>between 0.15 and 0.30</strong>. The bond has modest advantages but is sensitive to capture policies.');
-  }
   const saving=((prod.expectedCost-conv.expectedCost)/conv.expectedCost*100);
+  const distressDiff=prod.distressProb-conv.distressProb;
+  
+  if (saving < -2 && distressDiff < 0.05) {
+    parts.push('✅ <strong>Clear win.</strong> The bond is cheaper ('+saving.toFixed(2)+'%) AND has similar or lower distress.');
+  } else if (saving < -2 && distressDiff > 0.10) {
+    parts.push('⚠️ <strong>Trade-off.</strong> The bond is cheaper ('+saving.toFixed(2)+'%), but carries significantly higher distress (+'+(distressDiff*100).toFixed(1)+'pp). This is the feedback loop in action.');
+  } else if (saving > 1) {
+    parts.push('❌ <strong>Does not outperform.</strong> The bond is more expensive (+'+saving.toFixed(2)+'%) and riskier.');
+  } else {
+    parts.push('📊 <strong>Neutral.</strong> The bond is roughly cost-equivalent to conventional debt, but changes the risk profile.');
+  }
+  
+  if(p.thetaAI<0.15){
+    parts.push('⚠️ θ_AI = '+p.thetaAI.toFixed(2)+' is below 0.15. Government capture is very weak.');
+  }else if(p.thetaAI>0.30){
+    parts.push('✅ θ_AI = '+p.thetaAI.toFixed(2)+' is above 0.30. Strong capture supports the instrument.');
+  }else{
+    parts.push('📊 θ_AI = '+p.thetaAI.toFixed(2)+' is between 0.15 and 0.30. Moderate capture.');
+  }
+  
   parts.push('Expected cost: <strong>'+prod.expectedCost.toFixed(3)+'</strong> vs conventional <strong>'+conv.expectedCost.toFixed(3)+'</strong> ('+saving.toFixed(2)+'%).');
   parts.push('Distress probability: <strong>'+(prod.distressProb*100).toFixed(1)+'%</strong> vs <strong>'+(conv.distressProb*100).toFixed(1)+'%</strong> conventional.');
   if(!p.pam&&prod.distressProb>conv.distressProb+0.05){
@@ -1076,6 +1207,10 @@ function renderVerdict(p,conv,prod,port){
     parts.push('✅ PAM enabled — principal adjusts when DSR exceeds 15%, mitigating the feedback loop.');
   }
   parts.push('Recommended portfolio share: <strong>'+(port.optimal.share*100).toFixed(0)+'%</strong>.');
+  if(ilb && ilb.expectedCost < prod.expectedCost && ilb.distressProb < prod.distressProb){
+    parts.push('<div style="margin-top:0.6rem;padding:0.7rem 1rem;background:rgba(251,191,36,0.15);border-left:3px solid #f59e0b;border-radius:4px;"><strong>⚠️ Inflation-linked comparison:</strong> Under these parameters, an ILB would be both cheaper (cost '+ilb.expectedCost.toFixed(3)+') and less distress-prone ('+(ilb.distressProb*100).toFixed(1)+'%) than a productivity bond. The case for the productivity bond rests on alignment with efficiency metrics, not cost minimisation.</div>');
+  }
+  parts.push('<div style="font-size:0.78rem;color:var(--text-muted);margin-top:0.6rem;padding-top:0.5rem;border-top:1px solid var(--border-divider);"><strong>Note:</strong> θ_AI affects outcomes primarily through rare AI shocks in this calibration. The 0.15 / 0.30 thresholds are from the book\'s analytical framework, not this simulation.</div>');
   sol.innerHTML=parts.join('<br>');
   act.textContent='Model: endogenous debt · '+(currentScenario?'θ_AI='+p.thetaAI.toFixed(2)+', α_N='+p.alphaN.toFixed(2)+', cap='+(p.cap*100).toFixed(1)+'%':'');
 }
@@ -1083,12 +1218,28 @@ function renderVerdict(p,conv,prod,port){
 // ============================================================
 // SHARE / EXPORT / AI
 // ============================================================
+function toast(msg){
+  let t=document.getElementById('pbm-toast');
+  if(!t){
+    t=document.createElement('div');
+    t.id='pbm-toast';
+    t.style.cssText='position:fixed;bottom:2rem;right:2rem;background:rgba(12,15,25,0.95);color:#eef2f8;padding:0.7rem 1.2rem;border-radius:8px;border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:99999;font-size:0.85rem;font-weight:500;opacity:0;transition:opacity 0.2s,transform 0.2s;transform:translateY(10px);pointer-events:none;';
+    document.body.appendChild(t);
+  }
+  t.textContent=msg;
+  requestAnimationFrame(function(){t.style.opacity='1';t.style.transform='translateY(0)';});
+  clearTimeout(t._timer);
+  t._timer=setTimeout(function(){t.style.opacity='0';t.style.transform='translateY(10px)';},2000);
+}
+
 function buildShareUrl(){
-  const p=readInputs();
   const base=window.location.href.split('?')[0];
   const params=new URLSearchParams();
-  for(const k of ['gdp','debtGDP','muY','muPi','muN','couponConv','alphaN','cap','thetaAI','share'])params.set(k,p[k]);
-  params.set('pam',p.pam?'1':'0');
+  ['gdp','debtGDP','muY','muPi','muN','couponConv','alphaN','cap','thetaAI','share'].forEach(function(k){
+    const el=document.getElementById(k);
+    if(el)params.set(k,el.value);
+  });
+  params.set('pam',document.getElementById('pam').checked?'1':'0');
   return base+'?'+params.toString();
 }
 
@@ -1108,12 +1259,12 @@ function applyUrlParams(){
 
 function copyShareLink(){
   const url=buildShareUrl();
-  if(navigator.clipboard){navigator.clipboard.writeText(url).then(()=>{alert('Share link copied! It reproduces this exact scenario.');}).catch(()=>{prompt('Copy:',url);});}
+  if(navigator.clipboard){navigator.clipboard.writeText(url).then(()=>{toast('Share link copied');}).catch(()=>{prompt('Copy:',url);});}
   else{prompt('Copy:',url);}
 }
 
 function copySummary(){
-  if(!lastResult){alert('Run analysis first.');return;}
+  if(!lastResult){toast('Run analysis first.');return;}
   const{p,conv,prod,port}=lastResult;
   let text='🏛️ Policy Lab — Scenario Report\n';
   text+='-------------------------------\n';
@@ -1128,30 +1279,49 @@ function copySummary(){
   text+='  Productivity: '+(prod.distressProb*100).toFixed(2)+'%\n\n';
   text+='Recommended portfolio share: '+(port.optimal.share*100).toFixed(0)+'%\n';
   text+='\nGenerated by Policy Lab v1.0.0';
-  if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>alert('Summary copied!')).catch(()=>prompt('Copy:',text));}
+  if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>toast('Summary copied')).catch(()=>prompt('Copy:',text));}
   else{prompt('Copy:',text);}
 }
 
 function exportCSV(){
-  if(!lastResult){alert('Run analysis first.');return;}
-  const{p,conv,prod}=lastResult;
-  let csv='Year,Conv_Coupon,Prod_Coupon,Conv_Debt_to_GDP,Prod_Debt_to_GDP,Conv_DSR,Prod_DSR\n';
+  if(!lastResult){toast('Run analysis first.');return;}
+  const{p,conv,prod,ilb,port}=lastResult;
+  let csv='Policy Lab Export,'+new Date().toISOString().slice(0,10)+'\n\n';
+  csv+='INPUTS\n';
+  csv+='Debt/GDP,'+p.debtGDP+'%\n';
+  csv+='Nominal growth,'+(p.muY*100).toFixed(2)+'%\n';
+  csv+='Inflation,'+(p.muPi*100).toFixed(2)+'%\n';
+  csv+='NPI growth,'+(p.muN*100).toFixed(2)+'%\n';
+  csv+='Coupon conv,'+(p.couponConv*100).toFixed(2)+'%\n';
+  csv+='alpha_N,'+p.alphaN+'\n';
+  csv+='Cap,'+(p.cap*100).toFixed(2)+'%\n';
+  csv+='theta_AI,'+p.thetaAI+'\n';
+  csv+='Share,'+(p.share*100).toFixed(0)+'%\n';
+  csv+='PAM,'+(p.pam?'on':'off')+'\n\n';
+  csv+='SUMMARY\nMetric,Conventional,Productivity,Inflation-Linked\n';
+  csv+='Expected cost,'+conv.expectedCost.toFixed(4)+','+prod.expectedCost.toFixed(4)+','+(ilb?ilb.expectedCost.toFixed(4):'')+'\n';
+  csv+='Distress prob,'+(conv.distressProb*100).toFixed(2)+'%,'+(prod.distressProb*100).toFixed(2)+'%,'+(ilb?(ilb.distressProb*100).toFixed(2):'')+'%\n';
+  csv+='Welfare,'+conv.welfare.toFixed(4)+','+prod.welfare.toFixed(4)+','+(ilb?ilb.welfare.toFixed(4):'')+'\n';
+  csv+='Optimal portfolio share,'+(port.optimal.share*100).toFixed(0)+'%\n\n';
+  csv+='TRAJECTORY (mean across paths)\n';
+  csv+='Year,Conv_Debt/GDP,Prod_Debt/GDP,ILB_Debt/GDP,Conv_DSR,Prod_DSR,ILB_DSR\n';
   for(let i=0;i<10;i++){
     csv+=(i+1)+',';
-    csv+=conv.raw.coupons[0][i].toFixed(4)+',';
-    csv+=prod.raw.coupons[0][i].toFixed(4)+',';
     csv+=conv.trajectory.meanDebtToGDP[i].toFixed(4)+',';
     csv+=prod.trajectory.meanDebtToGDP[i].toFixed(4)+',';
+    csv+=(ilb?ilb.trajectory.meanDebtToGDP[i].toFixed(4):'')+',';
     csv+=conv.trajectory.meanDSR[i].toFixed(4)+',';
-    csv+=prod.trajectory.meanDSR[i].toFixed(4)+'\n';
+    csv+=prod.trajectory.meanDSR[i].toFixed(4)+',';
+    csv+=(ilb?ilb.trajectory.meanDSR[i].toFixed(4):'')+'\n';
   }
   const blob=new Blob([csv],{type:'text/csv'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
   a.href=url;
-  a.download='policy-lab-scenario.csv';
+  a.download='policy-lab-'+new Date().toISOString().slice(0,10)+'.csv';
   document.body.appendChild(a);a.click();document.body.removeChild(a);
   URL.revokeObjectURL(url);
+  toast('CSV exported');
 }
 
 function shareSocial(platform){
@@ -1164,7 +1334,7 @@ function shareSocial(platform){
 }
 
 async function generateAI(){
-  if(!lastResult){alert('Run analysis first.');return;}
+  if(!lastResult){toast('Run analysis first.');return;}
   const btn=document.getElementById('aiButton');
   const status=document.getElementById('aiStatus');
   const out=document.getElementById('aiOutput');
@@ -1201,6 +1371,20 @@ async function generateAI(){
 // ============================================================
 window.addEventListener('load',function(){
   document.documentElement.classList.add('loaded');
+  ['debtGDP','muY','muPi','muN','couponConv','alphaN','cap','thetaAI','share','pam'].forEach(function(id){
+    const el=document.getElementById(id);
+    if(el)el.addEventListener('change',function(){
+      const sb=document.getElementById('staleBanner');
+      if(sb&&lastResult)sb.style.display='block';
+    });
+  });
+  document.querySelectorAll('.accordion-toggle').forEach(function(el){
+    el.setAttribute('role','button');
+    el.setAttribute('tabindex','0');
+    el.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click();}
+    });
+  });
   document.querySelectorAll('#presetSelector .mode-btn').forEach(btn=>{
     btn.addEventListener('click',function(){
       loadPreset(this.dataset.preset);
@@ -1227,6 +1411,19 @@ document.addEventListener('DOMContentLoaded',function(){
   if(typeof initFeedbackForm==='function'){
     initFeedbackForm('feedback-container');
   }
+  // Ensure accordions toggle even if an earlier JS error occurred
+  document.querySelectorAll('.accordion-toggle').forEach(function(el){
+    el.addEventListener('click', function(e){
+      e.preventDefault();
+      const content = this.nextElementSibling;
+      const arrow = this.querySelector('.arrow');
+      if(content){
+        content.classList.toggle('open');
+        this.classList.toggle('open');
+        if(arrow) arrow.classList.toggle('open');
+      }
+    });
+  });
 });
 </script>
 
