@@ -1,77 +1,87 @@
+const CORS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Max-Age": "86400"
+};
+
+const json = (body, status = 200) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { "Content-Type": "application/json", ...CORS }
+  });
+
 export default {
   async fetch(request, env) {
-    if (request.method !== "POST") {
-      return new Response("Method not allowed", { status: 405 });
+    if (request.method === "OPTIONS") {
+      return new Response(null, { status: 204, headers: CORS });
     }
+    if (request.method !== "POST") return json({ error: "Method not allowed" }, 405);
 
     try {
       const data = await request.json();
-      
-      const ilbLine = data.ilb 
-        ? `- Inflation-linked bond (reference): cost ${data.ilb.cost.toFixed(3)}, distress ${(data.ilb.distress * 100).toFixed(1)}%`
+      const scenario = data.scenario || {};
+      const conventional = data.conventional || {};
+      const productivity = data.productivity || {};
+      const ilb = data.ilb || null;
+
+      const ilbLine = ilb
+        ? `- Inflation-linked bond (reference): cost ${ilb.cost.toFixed(3)}, distress ${(ilb.distress * 100).toFixed(1)}%`
         : `- Inflation-linked bond: not computed`;
 
-      const prompt = `You are a sovereign debt advisor. Analyze this Policy Lab scenario:
+      const prompt = `You are a sovereign debt advisor. Analyze this Policy Lab scenario.
 
 SOVEREIGN PROFILE:
-- Debt/GDP: ${data.scenario.debtGDP}%
-- Nominal growth: ${(data.scenario.muY * 100).toFixed(1)}%
-- Inflation: ${(data.scenario.muPi * 100).toFixed(1)}%
-- NPI growth: ${(data.scenario.muN * 100).toFixed(1)}%
+- Debt/GDP: ${scenario.debtGDP}%
+- Nominal growth: ${(scenario.muY * 100).toFixed(1)}%
+- Inflation: ${(scenario.muPi * 100).toFixed(1)}%
+- NPI growth: ${(scenario.muN * 100).toFixed(1)}%
 
 BOND COMPARISON (endogenous debt model, 10-year horizon):
-- Conventional bond: cost ${data.conventional.cost.toFixed(3)}, distress ${(data.conventional.distress * 100).toFixed(1)}%
-- Productivity bond: cost ${data.productivity.cost.toFixed(3)}, distress ${(data.productivity.distress * 100).toFixed(1)}%
+- Conventional bond: cost ${conventional.cost.toFixed(3)}, distress ${(conventional.distress * 100).toFixed(1)}%
+- Productivity bond: cost ${productivity.cost.toFixed(3)}, distress ${(productivity.distress * 100).toFixed(1)}%
 ${ilbLine}
 
 POLICY LEVERS:
-- Principal-Adjustment Mechanism (PAM): ${data.scenario.pam ? "enabled" : "disabled"}
-- Government capture of AI gains (theta_AI): ${data.scenario.thetaAI}
+- Principal-Adjustment Mechanism (PAM): ${scenario.pam ? "enabled" : "disabled"}
+- Government capture of AI gains (theta_AI): ${scenario.thetaAI}
 - Recommended portfolio share: ${(data.optimalShare * 100).toFixed(0)}%
 
-DETERMINISTIC VERDICT (from rule engine): ${data.verdict}
+RULE-ENGINE VERDICT: ${data.verdict}
 
-Write a 2-sentence summary of the key trade-off, then 1 sentence of concrete policy recommendation. Be direct and professional. Do not invent numbers not provided.`;
+Respond in EXACTLY this format, nothing before or after:
+SUMMARY: <two sentences describing the key trade-off, using only the numbers above>
+RECOMMENDATION: <one sentence of concrete policy advice>`;
 
-      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${env.GROQ_API_KEY}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          model: "llama3-8b-8192",
-          messages: [{ role: "user", content: prompt }],
-          temperature: 0.6,
-          max_tokens: 250
-        })
+      const response = await env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
+        messages: [{ role: "user", content: prompt }],
+        temperature: 0.5,
+        max_tokens: 300
       });
 
-      if (!response.ok) {
-        const errText = await response.text();
-        return new Response(JSON.stringify({ error: 'Groq API error: ' + errText }), { 
-          status: 500, 
-          headers: { "Content-Type": "application/json" } 
-        });
+      const aiText = (response.response || "").trim();
+      if (!aiText) throw new Error("Empty response from Workers AI");
+
+      // Structured parse
+      let summary = "", advice = "";
+      const sumMatch = aiText.match(/SUMMARY:\s*([\s\S]+?)(?=\n?RECOMMENDATION:|$)/i);
+      const recMatch = aiText.match(/RECOMMENDATION:\s*([\s\S]+?)$/i);
+
+      if (sumMatch && recMatch) {
+        summary = sumMatch[1].trim();
+        advice  = recMatch[1].trim();
+      } else {
+        // Fallback: split on sentence ends only when followed by space + capital letter
+        const sentences = aiText.match(/[^.!?]+[.!?]+(?=\s+[A-Z]|\s*$)/g) || [aiText];
+        summary = sentences.slice(0, 2).join(" ").trim();
+        advice  = sentences.slice(2).join(" ").trim()
+               || "Review the recommended portfolio share before issuance.";
       }
 
-      const result = await response.json();
-      const aiText = result.choices[0].message.content.trim();
-
-      // Split into summary (first 2 sentences) and advice (rest)
-      const sentences = aiText.match(/[^.!?]+[.!?]+/g) || [aiText];
-      const summary = sentences.slice(0, 2).join(' ').trim();
-      const advice = sentences.slice(2).join(' ').trim() || "Review the recommended portfolio share before issuance.";
-
-      return new Response(JSON.stringify({ summary, advice }), {
-        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
-      });
+      return json({ summary, advice });
 
     } catch (error) {
-      return new Response(JSON.stringify({ error: error.message }), { 
-        status: 500, 
-        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" } 
-      });
+      return json({ error: error.message }, 500);
     }
   }
 };
