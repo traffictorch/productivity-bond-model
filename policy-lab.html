@@ -415,7 +415,7 @@
           </div>
           <div class="stat-card" id="statSavingCard">
             <div class="num" id="statSaving">—</div>
-            <div class="lbl">Saving vs conventional (100% prod)</div>
+            <div class="lbl">Cost vs conventional (100% prod)</div>
           </div>
           <div class="stat-card">
             <div class="num" id="statOptimal">—</div>
@@ -1112,7 +1112,7 @@ function renderResults(p,conv,prod,port,ilb){
   const saving=((prod.expectedCost-conv.expectedCost)/conv.expectedCost*100);
   document.getElementById('statSaving').textContent=saving.toFixed(2)+'%';
   const savingCard=document.getElementById('statSavingCard');
-  if(savingCard)savingCard.className='stat-card '+(saving<0?'green':'red');
+  if(savingCard)savingCard.className='stat-card '+(saving<-0.01?'green':saving>0.01?'red':'');
   document.getElementById('statOptimal').textContent=(port.optimal.share*100).toFixed(0)+'%';
   const sd=document.getElementById('shareDisplay');
   if(sd)sd.textContent=(p.share*100).toFixed(0);
@@ -1212,7 +1212,11 @@ function renderVerdict(p,conv,prod,port,ilb){
   }else if(p.pam){
     parts.push('✅ PAM enabled — principal adjusts when DSR exceeds 15%, mitigating the feedback loop.');
   }
-  parts.push('Recommended portfolio share: <strong>'+(port.optimal.share*100).toFixed(0)+'%</strong>.');
+  if (conv.distressProb <= 0.5) {
+    parts.push('Recommended portfolio share: <strong>'+(port.optimal.share*100).toFixed(0)+'%</strong>.');
+  } else {
+    parts.push('<span style="color:#f87171;">Portfolio optimizer suppressed — in a high-distress regime (>50%), bond-mix optimisation is unreliable. Fix the primary balance first.</span>');
+  }
   if(ilb && ilb.expectedCost < prod.expectedCost && ilb.distressProb < prod.distressProb){
     parts.push('<div style="margin-top:0.6rem;padding:0.7rem 1rem;background:rgba(251,191,36,0.15);border-left:3px solid #f59e0b;border-radius:4px;"><strong>⚠️ Inflation-linked comparison:</strong> Under these parameters, an ILB would be both cheaper (cost '+ilb.expectedCost.toFixed(3)+') and less distress-prone ('+(ilb.distressProb*100).toFixed(1)+'%) than a productivity bond. The case for the productivity bond rests on alignment with efficiency metrics, not cost minimisation.</div>');
   }

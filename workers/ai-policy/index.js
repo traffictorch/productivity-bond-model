@@ -25,23 +25,36 @@ export default {
       const productivity = data.productivity || {};
       const ilb = data.ilb || null;
 
-      const ilbLine = ilb
-        ? `- Inflation-linked bond: cost ${ilb.cost.toFixed(3)}, distress ${(ilb.distress * 100).toFixed(1)}%`
-        : `- Inflation-linked bond: not computed`;
+      // Build bond list
+      const bonds = [
+        { name: "Conventional", cost: conventional.cost, distress: conventional.distress },
+        { name: "Productivity", cost: productivity.cost, distress: productivity.distress }
+      ];
+      if (ilb) bonds.push({ name: "Inflation-linked", cost: ilb.cost, distress: ilb.distress });
 
-      // Compute dominance explicitly so the LLM cannot miss it
+      // Pre-computed rankings — LLM cannot mis-order these
+      const costRank = [...bonds].sort((a, b) => a.cost - b.cost)
+        .map((b, i) => `  ${i + 1}. ${b.name}: cost ${b.cost.toFixed(3)}`).join('\n');
+      const distressRank = [...bonds].sort((a, b) => a.distress - b.distress)
+        .map((b, i) => `  ${i + 1}. ${b.name}: distress ${(b.distress * 100).toFixed(1)}%`).join('\n');
+
+      // Dominance classification
       let dominanceLine = "";
       if (ilb) {
         const ilbCheaper = ilb.cost < conventional.cost && ilb.cost < productivity.cost;
         const ilbSafer = ilb.distress < conventional.distress && ilb.distress < productivity.distress;
         if (ilbCheaper && ilbSafer) {
-          dominanceLine = "\nILB DOMINANCE: YES. The inflation-linked bond is BOTH cheaper and less distress-prone than every other option. Your recommendation MUST state this and recommend the ILB.";
-        } else if (ilbCheaper || ilbSafer) {
-          dominanceLine = "\nILB DOMINANCE: PARTIAL. The ILB wins on one dimension but not both. Mention the specific trade-off.";
+          dominanceLine = "ILB DOMINANCE: FULL — ILB is BOTH cheapest and safest.";
+        } else if (ilbCheaper) {
+          dominanceLine = "ILB DOMINANCE: COST — ILB is cheapest but not safest.";
+        } else if (ilbSafer) {
+          dominanceLine = "ILB DOMINANCE: SAFETY — ILB is safest but not cheapest.";
         } else {
-          dominanceLine = "\nILB DOMINANCE: NO. The ILB does not beat the alternatives on both dimensions.";
+          dominanceLine = "ILB DOMINANCE: NONE.";
         }
       }
+
+      const optimalPct = (data.optimalShare * 100).toFixed(0);
 
       const prompt = `You are a sovereign debt advisor. Analyze this Policy Lab scenario.
 
@@ -51,26 +64,31 @@ SOVEREIGN PROFILE:
 - Inflation: ${(scenario.muPi * 100).toFixed(1)}%
 - NPI growth: ${(scenario.muN * 100).toFixed(1)}%
 
-BOND COMPARISON (endogenous debt model, 10-year horizon):
-- Conventional bond: cost ${conventional.cost.toFixed(3)}, distress ${(conventional.distress * 100).toFixed(1)}%
-- Productivity bond: cost ${productivity.cost.toFixed(3)}, distress ${(productivity.distress * 100).toFixed(1)}%
-${ilbLine}
+BOND DATA (10-year endogenous debt model):
+${bonds.map(b => `- ${b.name}: cost ${b.cost.toFixed(3)}, distress ${(b.distress * 100).toFixed(1)}%`).join('\n')}
+
+EXPLICIT RANKINGS — USE THESE VERBATIM, DO NOT RE-DERIVE:
+Cost ranking (cheapest first):
+${costRank}
+
+Distress ranking (safest first):
+${distressRank}
 
 POLICY LEVERS:
-- Principal-Adjustment Mechanism (PAM): ${scenario.pam ? "enabled" : "disabled"}
-- Government capture of AI gains (theta_AI): ${scenario.thetaAI}
-- Recommended portfolio share: ${(data.optimalShare * 100).toFixed(0)}%
+- PAM: ${scenario.pam ? "enabled" : "disabled"}
+- theta_AI (AI gain capture): ${scenario.thetaAI}
+- Portfolio optimizer recommends ${optimalPct}% of NEW issuance in PRODUCTIVITY bonds. This is NOT an ILB allocation.
 
 RULE-ENGINE VERDICT: ${data.verdict}
 ${dominanceLine}
 
 Respond in EXACTLY this format, nothing before or after:
-SUMMARY: <two sentences describing the key trade-off, using only the numbers above>
-RECOMMENDATION: <one sentence of concrete policy advice. If ILB dominance is YES, recommend the ILB.>`;
+SUMMARY: <two sentences. When naming which bond is cheapest, use the cost ranking verbatim. When naming which is safest, use the distress ranking verbatim.>
+RECOMMENDATION: <one sentence of concrete policy advice. Rules: (a) If conventional distress > 50%, say the optimizer is unreliable in this regime and advise fixing the primary balance. (b) If a bond is both cheapest AND safest, recommend that bond — ignore the ${optimalPct}% optimizer share as it conflicts with the ranking. (c) If ILB dominance is FULL, recommend the ILB.>`;
 
       const response = await env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
         messages: [{ role: "user", content: prompt }],
-        temperature: 0.4,
+        temperature: 0.3,
         max_tokens: 300
       });
 
