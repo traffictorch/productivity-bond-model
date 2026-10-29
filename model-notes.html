@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=block" crossorigin="anonymous" />
-  <link rel="stylesheet" href="css/core.min.css?v=1.5" />
+  <link rel="stylesheet" href="css/core.min.css?v=1.6" />
   <noscript><style>html{opacity:1!important}</style></noscript>
 
   <style>
@@ -75,7 +75,7 @@
   </style>
 
   <script>setTimeout(function(){document.documentElement.classList.add('loaded');},2000);</script>
-  <script src="js/ga4.js?v=1.5" defer></script>
+  <script src="js/ga4.js?v=1.6" defer></script>
 </head>
 <body>
 
@@ -214,7 +214,7 @@
             <tr>
               <td>Optimal portfolio share</td>
               <td>~30%</td>
-              <td>Scenario-dependent (30–45%)</td>
+              <td>0–45% (regime-dependent)</td>
               <td style="color:#f59e0b;">Sensitive to debt/GDP</td>
             </tr>
           </tbody>
@@ -232,7 +232,7 @@
       </div>
 
       <div class="callout warn">
-        <strong>⚠️ Productivity distress (88.17%)</strong> — The v1.1 number is 85.68%, not 88.17%. The book's number was from the fixed-debt model, which overstates the effect because it doesn't let the debt stock adjust per bond type. The v1.1 number is more realistic.
+        <strong>⚠️ Productivity distress (88.17%)</strong> — The v1.1 number is 85.68%, not 88.17%. <strong>Both are pre-PAM figures.</strong> The book identifies 88.17% as the unacceptable baseline and argues in Chapter 14 that the Principal-Adjustment Mechanism is <em>"not an optional refinement. It is part of the architecture."</em> The v1.1 figure is slightly lower because the endogenous model lets each bond type roll its own debt path. The conclusion is unchanged: without PAM, variable coupons are not viable.
       </div>
 
       <div class="callout warn">
@@ -251,7 +251,7 @@
 
       <div style="background:var(--bg-input); border-radius:12px; padding:0.2rem; margin-bottom:1.5rem; border:1px solid var(--border-divider);">
         <div class="accordion-item">
-          <div class="accordion-toggle" onclick="toggleAccordion(this)">
+          <div class="accordion-toggle">
             <span>"Doesn't the ILB make the productivity bond pointless?"</span>
             <span class="arrow">▼</span>
           </div>
@@ -263,7 +263,7 @@
 
       <div style="background:var(--bg-input); border-radius:12px; padding:0.2rem; margin-bottom:1.5rem; border:1px solid var(--border-divider);">
         <div class="accordion-item">
-          <div class="accordion-toggle" onclick="toggleAccordion(this)">
+          <div class="accordion-toggle">
             <span>"The book says 88.17% distress but the tool says 85.68%. Which is right?"</span>
             <span class="arrow">▼</span>
           </div>
@@ -275,7 +275,7 @@
 
       <div style="background:var(--bg-input); border-radius:12px; padding:0.2rem; margin-bottom:1.5rem; border:1px solid var(--border-divider);">
         <div class="accordion-item">
-          <div class="accordion-toggle" onclick="toggleAccordion(this)">
+          <div class="accordion-toggle">
             <span>"Isn't the whole model just a simulation, not evidence?"</span>
             <span class="arrow">▼</span>
           </div>
@@ -287,7 +287,7 @@
 
       <div style="background:var(--bg-input); border-radius:12px; padding:0.2rem; margin-bottom:1.5rem; border:1px solid var(--border-divider);">
         <div class="accordion-item">
-          <div class="accordion-toggle" onclick="toggleAccordion(this)">
+          <div class="accordion-toggle">
             <span>"What's actually different between v1.0 and v1.1 in code terms?"</span>
             <span class="arrow">▼</span>
           </div>
@@ -327,7 +327,7 @@
 </main>
 
 <div id="gov-widget"></div>
-<script src="js/governance-widget.js?v=1.5" defer></script>
+<script src="js/governance-widget.js?v=1.6" defer></script>
 
 <button id="pwaInstallBtn" class="pwa-install-btn">
   <span class="icon">📱</span>
@@ -378,30 +378,38 @@
   </div>
 </footer>
 
-<script src="js/core.min.js?v=1.5" defer></script>
+<script src="js/core.min.js?v=1.6" defer></script>
 
 <script>
-// Accordion wiring
-window.toggleAccordion=function(el){
-  var content=el.nextElementSibling;
-  var arrow=el.querySelector('.arrow');
-  if(content){
-    content.classList.toggle('open');
-    el.classList.toggle('open');
-    if(arrow)arrow.classList.toggle('open');
-  }
-};
-
-// Keyboard accessibility
-window.addEventListener('load',function(){
+// Page visibility
+window.addEventListener('load', function(){
   document.documentElement.classList.add('loaded');
-  document.querySelectorAll('.accordion-toggle').forEach(function(el){
-    el.setAttribute('role','button');
-    el.setAttribute('tabindex','0');
-    el.addEventListener('keydown',function(e){
-      if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click();}
+});
+
+// Isolated accordion handler — clones nodes to strip core.min.js listeners
+document.addEventListener('DOMContentLoaded', function(){
+  setTimeout(function(){
+    document.querySelectorAll('.accordion-toggle').forEach(function(el){
+      var newEl = el.cloneNode(true);
+      el.parentNode.replaceChild(newEl, el);
+      newEl.setAttribute('role', 'button');
+      newEl.setAttribute('tabindex', '0');
+      newEl.addEventListener('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        var content = this.nextElementSibling;
+        var arrow = this.querySelector('.arrow');
+        if (content) {
+          content.classList.toggle('open');
+          this.classList.toggle('open');
+          if (arrow) arrow.classList.toggle('open');
+        }
+      });
+      newEl.addEventListener('keydown', function(e){
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.click(); }
+      });
     });
-  });
+  }, 50);
 });
 </script>
 
