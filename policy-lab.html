@@ -448,14 +448,7 @@
           <div class="action" id="verdictAction"></div>
         </div>
 
-        <div class="action-bar">
-          <button class="btn-secondary" id="aiButton" onclick="generateSummary()">📊 Generate Verdict</button>
-          <span style="font-size:0.7rem; color:var(--text-muted); margin-left:0.5rem;" id="aiStatus">Ready</span>
-        </div>
-        <div id="aiOutput" class="ai-output">
-          <span class="placeholder">Click "Generate Verdict" for a deterministic analysis of the results.</span>
-          <div style="margin-top:0.4rem; font-size:0.65rem; color:var(--text-muted); opacity:0.6;">📌 Rule-based analysis. No AI, no hallucinations.</div>
-        </div>
+        
       </div>
 
       <!-- ===== SHARE & REPORT ===== -->
@@ -1220,6 +1213,23 @@ function renderVerdict(p,conv,prod,port,ilb){
   if(ilb && ilb.expectedCost < prod.expectedCost && ilb.distressProb < prod.distressProb){
     parts.push('<div style="margin-top:0.6rem;padding:0.7rem 1rem;background:rgba(251,191,36,0.15);border-left:3px solid #f59e0b;border-radius:4px;"><strong>⚠️ Inflation-linked comparison:</strong> Under these parameters, an ILB would be both cheaper (cost '+ilb.expectedCost.toFixed(3)+') and less distress-prone ('+(ilb.distressProb*100).toFixed(1)+'%) than a productivity bond. The case for the productivity bond rests on alignment with efficiency metrics, not cost minimisation.</div>');
   }
+  // Cheapest / safest ranking
+  const bonds = [{name:'Conventional',cost:conv.expectedCost,distress:conv.distressProb},{name:'Productivity',cost:prod.expectedCost,distress:prod.distressProb}];
+  if(ilb) bonds.push({name:'Inflation-linked',cost:ilb.expectedCost,distress:ilb.distressProb});
+  const cheapest = bonds.reduce((a,b)=>a.cost<b.cost?a:b);
+  const safest = bonds.reduce((a,b)=>a.distress<b.distress?a:b);
+  if(cheapest.name !== safest.name){
+    parts.push('📊 Cheapest: <strong>'+cheapest.name+'</strong> (cost '+cheapest.cost.toFixed(3)+'). Safest: <strong>'+safest.name+'</strong> (distress '+(safest.distress*100).toFixed(1)+'%).');
+  }
+
+  // Deterministic recommendation
+  let advice='';
+  if(conv.distressProb>0.5){ advice='Fix the primary balance first — bond-mix optimisation is unreliable in an unsustainable regime.'; }
+  else if(cheapest.name===safest.name){ advice='Issue '+cheapest.name+' bonds — they are both the cheapest and the safest option in this scenario.'; }
+  else if(ilb && ilb.expectedCost<conv.expectedCost && ilb.expectedCost<prod.expectedCost && ilb.distressProb<conv.distressProb && ilb.distressProb<prod.distressProb){ advice='Issue Inflation-linked bonds — they dominate the alternatives on both cost and risk.'; }
+  else { const optPct=Math.round(port.optimal.share*100); advice=optPct===0?'Skip Productivity bond issuance in this scenario — the optimizer recommends 0%.':'Pilot the optimizer\'s '+optPct+'% Productivity bond allocation, accepting higher distress for lower cost.'; }
+  parts.push('<div style="margin-top:0.6rem;padding:0.7rem 1rem;background:rgba(52,211,153,0.1);border-left:3px solid #34d399;border-radius:4px;"><strong>✅ Recommendation:</strong> '+advice+'</div>');
+
   parts.push('<div style="font-size:0.78rem;color:var(--text-muted);margin-top:0.6rem;padding-top:0.5rem;border-top:1px solid var(--border-divider);"><strong>Note:</strong> θ_AI affects outcomes primarily through rare AI shocks in this calibration. The 0.15 / 0.30 thresholds are from the book\'s analytical framework, not this simulation.</div>');
   sol.innerHTML=parts.join('<br>');
   act.textContent='Model: endogenous debt · '+(currentScenario?'θ_AI='+p.thetaAI.toFixed(2)+', α_N='+p.alphaN.toFixed(2)+', cap='+(p.cap*100).toFixed(1)+'%':'');
@@ -1343,56 +1353,6 @@ function shareSocial(platform){
   if(shareUrl)window.open(shareUrl,'_blank','width=600,height=400');
 }
 
-function generateSummary(){
-  if(!lastResult){toast('Run analysis first.');return;}
-  const{p,conv,prod,port,ilb}=lastResult;
-  
-  const bonds=[
-    {name:'Conventional',cost:conv.expectedCost,distress:conv.distressProb},
-    {name:'Productivity',cost:prod.expectedCost,distress:prod.distressProb}
-  ];
-  if(ilb)bonds.push({name:'Inflation-linked',cost:ilb.expectedCost,distress:ilb.distressProb});
-  
-  const cheapest=bonds.reduce((a,b)=>a.cost<b.cost?a:b);
-  const safest=bonds.reduce((a,b)=>a.distress<b.distress?a:b);
-  
-  let summary='';
-  let advice='';
-  
-  // Build Summary
-  summary='The ' + cheapest.name + ' bond is the cheapest option (cost ' + cheapest.cost.toFixed(3) + '), while the ' + safest.name + ' bond is the safest (distress ' + (safest.distress*100).toFixed(1) + '%). ';
-  if(conv.distressProb>0.5){
-    summary+='The baseline is already in an unsustainable regime (>50% conventional distress), meaning structural fiscal reform is required before changing the bond mix.';
-  }else if(cheapest.name===safest.name){
-    summary+='There is no cost-risk trade-off here: the ' + cheapest.name + ' bond dominates on both dimensions.';
-  }else{
-    summary+='This represents a classic trade-off: the cheapest option is not the safest, requiring careful consideration of risk tolerance.';
-  }
-  
-  // Build Recommendation (Decision Tree)
-  if(conv.distressProb>0.5){
-    advice='Fix the primary balance first — bond-mix optimisation is unreliable in an unsustainable regime.';
-  }else if(cheapest.name===safest.name){
-    advice='Issue ' + cheapest.name + ' bonds — they are both the cheapest and the safest option in this scenario.';
-  }else if(ilb && ilb.expectedCost<conv.expectedCost && ilb.expectedCost<prod.expectedCost && ilb.distressProb<conv.distressProb && ilb.distressProb<prod.distressProb){
-    advice='Issue Inflation-linked bonds — they dominate the alternatives on both cost and risk.';
-  }else{
-    const optPct=Math.round(port.optimal.share*100);
-    if(optPct===0){
-      advice='Skip Productivity bond issuance in this scenario — the optimizer recommends 0%.';
-    }else{
-      advice='Pilot the optimizer\'s ' + optPct + '% Productivity bond allocation, accepting higher distress for lower cost.';
-    }
-  }
-  
-  // Render Output
-  const out=document.getElementById('aiOutput');
-  out.innerHTML='<div class="summary" style="margin-bottom:0.5rem;">📌 ' + summary + '</div>' +
-                '<div class="advice" style="color:#f59e0b; font-weight:600;">✅ ' + advice + '</div>' +
-                '<div style="margin-top:0.5rem; font-size:0.65rem; color:var(--text-muted); opacity:0.6;">📌 Deterministic rule-based analysis.</div>';
-  
-  document.getElementById('aiStatus').textContent = '✅ Done';
-}
 
 // ============================================================
 // INIT
