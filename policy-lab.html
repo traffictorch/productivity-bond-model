@@ -449,12 +449,12 @@
         </div>
 
         <div class="action-bar">
-          <button class="btn-secondary" id="aiButton" onclick="generateAI()">📝 Interpret this scenario</button>
+          <button class="btn-secondary" id="aiButton" onclick="generateSummary()">📊 Generate Verdict</button>
           <span style="font-size:0.7rem; color:var(--text-muted); margin-left:0.5rem;" id="aiStatus">Ready</span>
         </div>
         <div id="aiOutput" class="ai-output">
-          <span class="placeholder">Click "Interpret this scenario" for AI-powered analysis.</span>
-          <div style="margin-top:0.4rem; font-size:0.65rem; color:var(--text-muted); opacity:0.6;">⚠️ AI can make mistakes. Verify with your own research.</div>
+          <span class="placeholder">Click "Generate Verdict" for a deterministic analysis of the results.</span>
+          <div style="margin-top:0.4rem; font-size:0.65rem; color:var(--text-muted); opacity:0.6;">📌 Rule-based analysis. No AI, no hallucinations.</div>
         </div>
       </div>
 
@@ -1343,93 +1343,55 @@ function shareSocial(platform){
   if(shareUrl)window.open(shareUrl,'_blank','width=600,height=400');
 }
 
-async function generateAI(){
+function generateSummary(){
   if(!lastResult){toast('Run analysis first.');return;}
-  const btn=document.getElementById('aiButton');
-  const status=document.getElementById('aiStatus');
-  const out=document.getElementById('aiOutput');
-  btn.disabled=true;
-  status.textContent='\u23f3 Thinking\u2026';
-  out.innerHTML='<span style="opacity:0.6;">Analyzing scenario via AI\u2026</span>';
-
-  const{p,conv,prod,port}=lastResult;
-  const ilb = lastResult.ilb || null;
-  const saving=((prod.expectedCost-conv.expectedCost)/conv.expectedCost*100);
-  const distDiff=prod.distressProb-conv.distressProb;
-
-  let verdictText='';
-  if (conv.distressProb > 0.5) verdictText='Unsustainable baseline (>50% distress).';
-  else if (saving < -2 && distDiff <= 0.02) verdictText='Clear win (cheaper, no worse distress).';
-  else if (saving < -2 && distDiff > 0.05) verdictText='Trade-off (cheaper but riskier).';
-  else verdictText='Neutral or worse.';
-
-  // Slim payload - do not send full matrices
-  const payload = {
-    scenario: {
-      debtGDP: p.debtGDP,
-      muY: p.muY, muPi: p.muPi, muN: p.muN,
-      couponConv: p.couponConv,
-      alphaN: p.alphaN, cap: p.cap,
-      thetaAI: p.thetaAI, share: p.share, pam: p.pam
-    },
-    conventional: {
-      cost: conv.expectedCost,
-      distress: conv.distressProb,
-      welfare: conv.welfare
-    },
-    productivity: {
-      cost: prod.expectedCost,
-      distress: prod.distressProb,
-      welfare: prod.welfare
-    },
-    ilb: ilb ? { cost: ilb.expectedCost, distress: ilb.distressProb } : null,
-    optimalShare: port.optimal.share,
-    verdict: verdictText
-  };
-
-  try {
-    // Try the Cloudflare Worker
-    const response = await fetch('https://ai-policy.traffictorch.workers.dev', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-
-    if (!response.ok) throw new Error('Worker HTTP ' + response.status);
-    const result = await response.json();
-    if (result.error) throw new Error(result.error);
-
-    let html = '';
-    if (result.summary) html += '<div class="summary">\ud83d\udccc ' + result.summary + '</div>';
-    if (result.advice) html += '<div class="advice">\u2705 ' + result.advice + '</div>';
-    html += '<div style="margin-top:0.5rem;font-size:0.6rem;color:var(--text-muted);opacity:0.6;">\u26a0\ufe0f AI-generated analysis. Verify with your own research.</div>';
-
-    out.innerHTML = html;
-    status.textContent = '\u2705 Done';
-
-  } catch (error) {
-    // Fallback to rule-based
-    console.warn('AI Worker failed, using rule-based fallback:', error);
-    let summary='\ud83d\udccc ', advice='';
-
-    if (conv.distressProb > 0.5) {
-      summary='\u26a0\ufe0f The sovereign is already in a high-distress regime (>50%).';
-      advice='\u2705 Policy recommendation: focus on primary balance before issuing new bond structures.';
-    } else if (saving < -2 && distDiff <= 0.02) {
-      summary='\u2705 The productivity bond is a clear win: cheaper ('+saving.toFixed(2)+'%).';
-      advice='\u2705 Policy recommendation: proceed with a pilot issuance at ~'+(port.optimal.share*100).toFixed(0)+'% of new debt.';
-    } else if (saving < -2 && distDiff > 0.05) {
-      summary='\u26a0\ufe0f Trade-off: the bond is cheaper ('+saving.toFixed(2)+'%), but significantly riskier (+'+(distDiff*100).toFixed(1)+'pp).';
-      advice='\u2705 Policy recommendation: '+(p.pam?'PAM is enabled, but further adjustment may be needed.':'Enable PAM to mitigate the feedback loop.');
-    } else {
-      summary='\ud83d\udcca Neutral outcome: saving is '+saving.toFixed(2)+'%, distress change is +'+(distDiff*100).toFixed(1)+'pp.';
-      advice='\u2705 Policy recommendation: the instrument does not materially improve this scenario.';
-    }
-    out.innerHTML='<div class="summary">'+summary+'</div><div class="advice" style="margin-top:0.5rem;">'+advice+'</div><div style="margin-top:0.5rem;font-size:0.6rem;color:var(--text-muted);opacity:0.6;">\u26a0\ufe0f Offline rule-based analysis (worker unavailable).</div>';
-    status.textContent = '\u2705 Done (Offline)';
-  } finally {
-    btn.disabled=false;
+  const{p,conv,prod,port,ilb}=lastResult;
+  
+  const bonds=[
+    {name:'Conventional',cost:conv.expectedCost,distress:conv.distressProb},
+    {name:'Productivity',cost:prod.expectedCost,distress:prod.distressProb}
+  ];
+  if(ilb)bonds.push({name:'Inflation-linked',cost:ilb.expectedCost,distress:ilb.distressProb});
+  
+  const cheapest=bonds.reduce((a,b)=>a.cost<b.cost?a:b);
+  const safest=bonds.reduce((a,b)=>a.distress<b.distress?a:b);
+  
+  let summary='';
+  let advice='';
+  
+  // Build Summary
+  summary='The ' + cheapest.name + ' bond is the cheapest option (cost ' + cheapest.cost.toFixed(3) + '), while the ' + safest.name + ' bond is the safest (distress ' + (safest.distress*100).toFixed(1) + '%). ';
+  if(conv.distressProb>0.5){
+    summary+='The baseline is already in an unsustainable regime (>50% conventional distress), meaning structural fiscal reform is required before changing the bond mix.';
+  }else if(cheapest.name===safest.name){
+    summary+='There is no cost-risk trade-off here: the ' + cheapest.name + ' bond dominates on both dimensions.';
+  }else{
+    summary+='This represents a classic trade-off: the cheapest option is not the safest, requiring careful consideration of risk tolerance.';
   }
+  
+  // Build Recommendation (Decision Tree)
+  if(conv.distressProb>0.5){
+    advice='Fix the primary balance first — bond-mix optimisation is unreliable in an unsustainable regime.';
+  }else if(cheapest.name===safest.name){
+    advice='Issue ' + cheapest.name + ' bonds — they are both the cheapest and the safest option in this scenario.';
+  }else if(ilb && ilb.expectedCost<conv.expectedCost && ilb.expectedCost<prod.expectedCost && ilb.distressProb<conv.distressProb && ilb.distressProb<prod.distressProb){
+    advice='Issue Inflation-linked bonds — they dominate the alternatives on both cost and risk.';
+  }else{
+    const optPct=Math.round(port.optimal.share*100);
+    if(optPct===0){
+      advice='Skip Productivity bond issuance in this scenario — the optimizer recommends 0%.';
+    }else{
+      advice='Pilot the optimizer\'s ' + optPct + '% Productivity bond allocation, accepting higher distress for lower cost.';
+    }
+  }
+  
+  // Render Output
+  const out=document.getElementById('aiOutput');
+  out.innerHTML='<div class="summary" style="margin-bottom:0.5rem;">📌 ' + summary + '</div>' +
+                '<div class="advice" style="color:#f59e0b; font-weight:600;">✅ ' + advice + '</div>' +
+                '<div style="margin-top:0.5rem; font-size:0.65rem; color:var(--text-muted); opacity:0.6;">📌 Deterministic rule-based analysis.</div>';
+  
+  document.getElementById('aiStatus').textContent = '✅ Done';
 }
 
 // ============================================================
