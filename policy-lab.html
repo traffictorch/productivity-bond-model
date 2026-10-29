@@ -1351,6 +1351,8 @@ async function generateAI(){
   setTimeout(()=>{
     const{p,conv,prod,port}=lastResult;
     let summary='📌 ',advice='';
+    const saving=((prod.expectedCost-conv.expectedCost)/conv.expectedCost*100);
+    const distDiff=prod.distressProb-conv.distressProb;
     
     if (conv.distressProb > 0.5) {
       summary='⚠️ The sovereign is already in a high-distress regime (>50%). Bond structure changes alone will not fix this.';
