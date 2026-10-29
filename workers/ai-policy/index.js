@@ -34,9 +34,9 @@ export default {
 
       // Pre-computed rankings — LLM cannot mis-order these
       const costRank = [...bonds].sort((a, b) => a.cost - b.cost)
-        .map((b, i) => `  ${i + 1}. ${b.name}: cost ${b.cost.toFixed(3)}`).join('\n');
+        .map(b => `  • ${b.name}: cost ${b.cost.toFixed(3)}`).join('\n');
       const distressRank = [...bonds].sort((a, b) => a.distress - b.distress)
-        .map((b, i) => `  ${i + 1}. ${b.name}: distress ${(b.distress * 100).toFixed(1)}%`).join('\n');
+        .map(b => `  • ${b.name}: distress ${(b.distress * 100).toFixed(1)}%`).join('\n');
 
       // Dominance classification
       let dominanceLine = "";
@@ -83,7 +83,7 @@ RULE-ENGINE VERDICT: ${data.verdict}
 ${dominanceLine}
 
 Respond in EXACTLY this format, nothing before or after:
-SUMMARY: <two sentences. When naming which bond is cheapest, use the cost ranking verbatim. When naming which is safest, use the distress ranking verbatim.>
+SUMMARY: <two sentences in prose form. Do not include bullet characters, rank numbers, or list formatting. When naming which bond is cheapest, use the cost ranking verbatim. When naming which is safest, use the distress ranking verbatim.>
 RECOMMENDATION: <one sentence of concrete policy advice. Rules: (a) If conventional distress > 50%, say the optimizer is unreliable in this regime and advise fixing the primary balance. (b) If a bond is both cheapest AND safest, recommend that bond — ignore the ${optimalPct}% optimizer share as it conflicts with the ranking. (c) If ILB dominance is FULL, recommend the ILB.>`;
 
       const response = await env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
