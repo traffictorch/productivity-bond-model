@@ -1199,7 +1199,7 @@ function renderVerdict(p,conv,prod,port,ilb){
   
   if(p.thetaAI<0.15){
     parts.push('⚠️ θ_AI = '+p.thetaAI.toFixed(2)+' is below 0.15. Government capture is very weak.');
-  }else if(p.thetaAI>0.30){
+  }else if(p.thetaAI>=0.30){
     parts.push('✅ θ_AI = '+p.thetaAI.toFixed(2)+' is above 0.30. Strong capture supports the instrument.');
   }else{
     parts.push('📊 θ_AI = '+p.thetaAI.toFixed(2)+' is between 0.15 and 0.30. Moderate capture.');

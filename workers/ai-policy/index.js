@@ -26,8 +26,22 @@ export default {
       const ilb = data.ilb || null;
 
       const ilbLine = ilb
-        ? `- Inflation-linked bond (reference): cost ${ilb.cost.toFixed(3)}, distress ${(ilb.distress * 100).toFixed(1)}%`
+        ? `- Inflation-linked bond: cost ${ilb.cost.toFixed(3)}, distress ${(ilb.distress * 100).toFixed(1)}%`
         : `- Inflation-linked bond: not computed`;
+
+      // Compute dominance explicitly so the LLM cannot miss it
+      let dominanceLine = "";
+      if (ilb) {
+        const ilbCheaper = ilb.cost < conventional.cost && ilb.cost < productivity.cost;
+        const ilbSafer = ilb.distress < conventional.distress && ilb.distress < productivity.distress;
+        if (ilbCheaper && ilbSafer) {
+          dominanceLine = "\nILB DOMINANCE: YES. The inflation-linked bond is BOTH cheaper and less distress-prone than every other option. Your recommendation MUST state this and recommend the ILB.";
+        } else if (ilbCheaper || ilbSafer) {
+          dominanceLine = "\nILB DOMINANCE: PARTIAL. The ILB wins on one dimension but not both. Mention the specific trade-off.";
+        } else {
+          dominanceLine = "\nILB DOMINANCE: NO. The ILB does not beat the alternatives on both dimensions.";
+        }
+      }
 
       const prompt = `You are a sovereign debt advisor. Analyze this Policy Lab scenario.
 
@@ -48,21 +62,21 @@ POLICY LEVERS:
 - Recommended portfolio share: ${(data.optimalShare * 100).toFixed(0)}%
 
 RULE-ENGINE VERDICT: ${data.verdict}
+${dominanceLine}
 
 Respond in EXACTLY this format, nothing before or after:
 SUMMARY: <two sentences describing the key trade-off, using only the numbers above>
-RECOMMENDATION: <one sentence of concrete policy advice>`;
+RECOMMENDATION: <one sentence of concrete policy advice. If ILB dominance is YES, recommend the ILB.>`;
 
       const response = await env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
         messages: [{ role: "user", content: prompt }],
-        temperature: 0.5,
+        temperature: 0.4,
         max_tokens: 300
       });
 
       const aiText = (response.response || "").trim();
       if (!aiText) throw new Error("Empty response from Workers AI");
 
-      // Structured parse
       let summary = "", advice = "";
       const sumMatch = aiText.match(/SUMMARY:\s*([\s\S]+?)(?=\n?RECOMMENDATION:|$)/i);
       const recMatch = aiText.match(/RECOMMENDATION:\s*([\s\S]+?)$/i);
@@ -71,7 +85,6 @@ RECOMMENDATION: <one sentence of concrete policy advice>`;
         summary = sumMatch[1].trim();
         advice  = recMatch[1].trim();
       } else {
-        // Fallback: split on sentence ends only when followed by space + capital letter
         const sentences = aiText.match(/[^.!?]+[.!?]+(?=\s+[A-Z]|\s*$)/g) || [aiText];
         summary = sentences.slice(0, 2).join(" ").trim();
         advice  = sentences.slice(2).join(" ").trim()
